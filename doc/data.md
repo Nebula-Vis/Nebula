@@ -13,7 +13,7 @@
 | --- | --- | --- |
 | name | `string` | **Required** |
 | url | `string` | **Required**. Send a http get request to fetch the data. |
-| format | `string` | **Required**. `"json"|"csv"` |
+| format | `string` | **Required**. `"json"\|"csv"` |
 
 ## Examples
 
@@ -29,10 +29,10 @@
       ]
     },
 		{
-			"name": "houses2",
+      "name": "houses2",
       "url": "http://homefinder.projects.zjuidg.org/houses",
       "format": "csv"
-		}
+    }
   ]
 }
 ```

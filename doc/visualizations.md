@@ -7,7 +7,7 @@
 | id | `String` | **Required**. Non-repeatable. |
 | container | `String` | **Required**. Non-repeatable. Layout id. |
 | visualization | `String` | **Required**. Visual components, including visualizations and control widgets. |
-| data | `String|null` | Data name. |
+| data | `String\|null` | Data name. |
 | selection | `-` | |
 | encoding | `Object` | Depending on the visualization field. |
 

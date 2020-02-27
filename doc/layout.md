@@ -5,10 +5,10 @@
 | Properties | Type | Description |
 | --- | --- | --- |
 | id | `String` | Map visual components to layout containers. Non-repeatable |
-| width | `String|Number` | Fixed length, or how to grow or shrink to fit the available space in main axis. Only activated in root node. |
-| height | `String|Number` | Fixed length, or how to grow or shrink to fit the available space in main axis. Only activated in root node. |
-| length | `String|Number` | Fixed length, or how to grow or shrink to fit the available space in main axis. Only activated in non-root nodes. |
-| direction | `String` | The main axis of children elements, `"row"|"column"`. |
+| width | `String\|Number` | Fixed length, or how to grow or shrink to fit the available space in main axis. Only activated in root node. |
+| height | `String\|Number` | Fixed length, or how to grow or shrink to fit the available space in main axis. Only activated in root node. |
+| length | `String\|Number` | Fixed length, or how to grow or shrink to fit the available space in main axis. Only activated in non-root nodes. |
+| direction | `String` | The main axis of children elements, `"row"\|"column"`. |
 | children | `Array<Object>` | Layout objects. |
 
 ## Example
