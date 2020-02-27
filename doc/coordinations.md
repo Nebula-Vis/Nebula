@@ -18,24 +18,24 @@
 | Properties | Type | Description |
 | --- | --- | --- |
 | name | `String` | **Required**. Transformations name. |
-| input | `Array|Object` | **Required**. Input data (2 specification methods). |
-| output | `Array|Object` | **Required**. Output data (2 specification methods). |
+| input | `Array\|Object` | **Required**. Input data (2 specification methods). |
+| output | `Array\|Object` | **Required**. Output data (2 specification methods). |
 
 ## Example
 
 ```json
 {
-	"data": [
-		{ "name": "d1", "properties": ["scatterplot1.selection"] },
-		{ "name": "d2", "properties": ["scatterplot2.selection"] },
-		{ "name": "d3", "properties": ["scatterplot1.selection", "scatterplot2.selection"] }
-	],
-	"transformations": [
-		{
-			"name": "intersect",
-			"input": ["d1", "d2"],
-			"output": { "intersection": "d3" }
-		}
-	]
+  "data": [
+    { "name": "d1", "properties": ["scatterplot1.selection"] },
+    { "name": "d2", "properties": ["scatterplot2.selection"] },
+    { "name": "d3", "properties": ["scatterplot1.selection", "scatterplot2.selection"] }
+  ],
+  "transformations": [
+    {
+      "name": "intersect",
+      "input": ["d1", "d2"],
+      "output": { "intersection": "d3" }
+    }
+  ]
 }
 ```
