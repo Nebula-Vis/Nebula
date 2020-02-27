@@ -28,7 +28,7 @@
         { "id": 3, "name": "house3", "price": 80000 }
       ]
     },
-		{
+    {
       "name": "houses2",
       "url": "http://homefinder.projects.zjuidg.org/houses",
       "format": "csv"
