@@ -1,0 +1,37 @@
+variables:
+  # path to remote docker image, e.g. registry.zjvis.org/zjvis/continuous-integration-demo
+  IMAGE: $CI_REGISTRY_IMAGE
+  # Set up environment variables for climbing over the wall
+  HTTP_PROXY: http://192.168.24.47:8118
+  HTTPS_PROXY: http://192.168.24.47:8118
+  NO_PROXY: azk8s.cn,zjvis.org,localhost,127.0.0.1,192.168.24.47
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+
+default:
+  image: node:12
+  cache:
+    paths:
+      - node_modules/
+  before_script:
+    - yarn
+
+stages:
+  - test
+  # - build
+
+test:lint:
+  stage: test
+  allow_failure: false
+  script:
+    - yarn lint
+  except:
+    - /^.*-no-test$/i
+
+# build:
+#   stage: build
+#   allow_failure: false
+#   script:
+#     - yarn build
+#   only:
+#     - development
