@@ -1,11 +1,11 @@
 {
   "layout": {
-    "width": "1000px",
-    "height": "600px",
+    "width": "900px",
+    "height": "300px",
     "direction": "column",
     "children": [
       {
-        "length": 3,
+        "length": 1,
         "direction": "row",
         "children": [
           {
@@ -15,12 +15,12 @@
           {
             "id": "container-scatterplot2",
             "length": 1
+          },
+          {
+            "id": "container-histogram",
+            "length": "200px"
           }
         ]
-      },
-      {
-        "length": "300px",
-        "id": "container-histogram"
       }
     ]
   },
