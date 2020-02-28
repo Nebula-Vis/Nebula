@@ -55,11 +55,12 @@ const resolveLayout = (layoutConfig, container) => {
   // a simple map of id -> HTMLDivElement
   const layoutMap = {}
 
-  const root = (container
-    ? d3.select(container)
-    : d3.select('body').append('div')
-  ) // if container is undefined, append div to body
-    .append('div')
+  let root
+  if (container && !d3.select(container).empty()) {
+    root = d3.select(container).append('div')
+  } else {
+    root = d3.select('body').append('div')
+  }
 
   const { id, width, height, direction, children } = layoutConfig
   root
