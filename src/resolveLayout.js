@@ -7,6 +7,9 @@ import * as d3 from 'd3'
  * @param {Object} layoutMap map from id to div element
  */
 const renderLayoutNode = (layoutConfig, parent, layoutMap) => {
+  if (!layoutConfig) {
+    return
+  }
   const { id, length, direction, children } = layoutConfig
   const node = parent
     .append('div')

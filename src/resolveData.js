@@ -11,36 +11,36 @@ const resolveData = async dataConfig => {
     if (!dataObject) {
       continue
     }
-    if (!dataObject.name) {
+
+    const { name, url, format } = dataObject
+    let { value } = dataObject
+
+    // skip invalid cases
+    if (!name) {
       console.warn('Data: data object name not specified')
       continue
     }
-    if (
-      !dataObject.value &&
-      (!dataObject.url ||
-        (dataObject.format !== 'json' && dataObject.format !== 'csv'))
-    ) {
-      console.warn(`Data: wrong spec of ${dataObject.name}, ignoring.`)
+    if (dataLib[name]) {
+      console.warn(`Data: duplicate name ${name}, ignoring.`)
+      continue
+    }
+    if (!value && (!url || (format !== 'json' && format !== 'csv'))) {
+      console.warn(`Data: wrong spec of ${name}, ignoring.`)
       continue
     }
 
     // fetch remote data
-    if (dataObject.url) {
-      const dataValue = await d3[dataObject.format](dataObject.url)
-        .then(data => data)
-        .catch(() => {
-          return null
-        })
+    if (!value && url) {
+      const dataValue = await d3[format](url).catch(() => {
+        return null
+      })
       if (dataValue === null) {
-        console.warn(`Data: error fetching ${dataObject.name}, ignoring.`)
+        console.warn(`Data: error fetching ${name}, ignoring.`)
         continue
       }
-      dataObject.value = dataValue
+      value = dataValue
     }
-    if (dataLib[dataObject.name]) {
-      console.warn(`Data: duplicate name ${dataObject.name}, overwriting.`)
-    }
-    dataLib[dataObject.name] = dataObject.value
+    dataLib[name] = value
   }
   return dataLib
 }
