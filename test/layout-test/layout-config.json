@@ -1,0 +1,32 @@
+{
+  "width": "1000px",
+  "height": "800px",
+  "direction": "row",
+  "children": [
+    {
+      "id": "container-scatterplot1",
+      "length": 1
+    },
+    {
+      "id": "container-scatterplot2",
+      "length": "500px"
+    },
+    {
+      "length": "300px",
+      "direction": "column",
+      "children": [
+        {
+          "id": "container-histogram",
+          "length": 1
+        },
+        {
+          "id": "container-histogram",
+          "length": 1
+        },
+        {
+          "length": 1
+        }
+      ]
+    }
+  ]
+}
