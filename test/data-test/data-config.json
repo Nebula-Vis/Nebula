@@ -1,0 +1,41 @@
+[
+  "",
+  {"noname": "A"},
+  {"name": "name-only"},
+  {
+    "name": "url-no-format",
+    "url": "https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/639388c2cbc2120a14dcf466e85730eb8be498bb/iris.csv"
+  },
+  {
+    "name": "url-format-wrong",
+    "url": "https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/639388c2cbc2120a14dcf466e85730eb8be498bb/iris.csv",
+    "format": "any"
+  },
+  {
+    "name": "url-format-not-match",
+    "url": "https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/639388c2cbc2120a14dcf466e85730eb8be498bb/iris.csv",
+    "format": "json"
+  },
+  {
+    "name": "url",
+    "url": "https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/639388c2cbc2120a14dcf466e85730eb8be498bb/iris.csv",
+    "format": "csv"
+  },
+  {
+    "name": "url-wrong",
+    "url": "https://data.example.com/some.csv",
+    "format": "csv"
+  },
+  {
+    "name": "duplicate-name",
+    "value": [1, 2, 3]
+  },
+  {
+    "name": "duplicate-name",
+    "value": [1, 2, 3]
+  },
+  {
+    "name": "value",
+    "value": [1, 2, 3]
+  }
+]
