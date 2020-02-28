@@ -1,5 +1,6 @@
 // import resolveDataTest from './data-test/resolveData.test'
-import resolveConfigTest from './layout-test/resolveLayout.test'
+// import resolveConfigTest from './layout-test/resolveLayout.test'
+import resolveVisLibTest from './vislib-test/resolveVisLib.test'
 
 // import logger from './simpleLogger'
 
@@ -7,4 +8,5 @@ import resolveConfigTest from './layout-test/resolveLayout.test'
 // console = logger
 
 // resolveDataTest()
-resolveConfigTest()
+// resolveConfigTest()
+resolveVisLibTest()

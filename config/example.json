@@ -1,26 +1,26 @@
 {
   "layout": {
     "width": "1000px",
-    "height": "800px",
-    "direction": "row",
+    "height": "600px",
+    "direction": "column",
     "children": [
       {
-        "id": "container-scatterplot1",
-        "length": 1
-      },
-      {
-        "id": "container-scatterplot2",
-        "length": 1
-      },
-      {
-        "length": "300px",
-        "direction": "column",
+        "length": 3,
+        "direction": "row",
         "children": [
           {
-            "id": "container-histogram",
+            "id": "container-scatterplot1",
+            "length": 1
+          },
+          {
+            "id": "container-scatterplot2",
             "length": 1
           }
         ]
+      },
+      {
+        "length": "300px",
+        "id": "container-histogram"
       }
     ]
   },
@@ -83,7 +83,7 @@
   "data": [
     {
       "name": "iris",
-      "url": "https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/639388c2cbc2120a14dcf466e85730eb8be498bb/iris.csv",
+      "url": "http://localhost:8080/data/iris.csv",
       "format": "csv"
     }
   ]

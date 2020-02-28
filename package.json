@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "serve": "webpack-dev-server",
+    "dev": "concurrently --kill-others \"node ./devBackend/server.js\" \"webpack-dev-server\"",
     "build": "webpack",
     "lint": "eslint --fix \"src/**/*.js\" \"./*.js\"",
     "test": "webpack-dev-server --entry ./test/index.js"
@@ -24,11 +25,13 @@
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
     "babel-loader": "^8.0.6",
+    "concurrently": "^5.1.0",
     "css-loader": "^3.4.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-loader": "^3.0.3",
     "eslint-plugin-prettier": "^3.1.2",
+    "express": "^4.17.1",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^4.2.3",
     "lint-staged": "^10.0.8",

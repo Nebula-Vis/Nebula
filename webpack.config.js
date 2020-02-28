@@ -11,6 +11,14 @@ module.exports = {
     chunkFilename: '[name].bundle.js',
   },
   devServer: {
+    proxy: {
+      // proxy URLs to backend development server
+      '/data/*': {
+        target: 'http://localhost:8081',
+        secure: false,
+        changeOrigin: true,
+      },
+    },
     contentBase: path.join(__dirname, 'dist'),
     port: 8080,
     host: '0.0.0.0',

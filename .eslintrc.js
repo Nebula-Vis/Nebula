@@ -15,4 +15,17 @@ module.exports = {
     'sourceType': 'module',
   },
   'ignorePatterns': ['node_modules/', 'dist/'],
+  'rules': {
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+  },
+  'overrides': [
+    {
+      'files': ['test/**/*.js'],
+      'rules': {
+        'no-console': 'off',
+        'no-debugger': 'off',
+      }
+    }
+  ]
 }
