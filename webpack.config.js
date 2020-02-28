@@ -1,5 +1,6 @@
 const path = require('path')
 const OpenBrowserPlugin = require('open-browser-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   mode: 'development',
@@ -38,12 +39,14 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env'],
             cacheDirectory: true,
           },
         },
       },
     ],
   },
-  plugins: [new OpenBrowserPlugin({ url: 'http://localhost:8080' })],
+  plugins: [
+    new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
+    new HtmlWebpackPlugin({ title: 'Coordination Demo' }),
+  ],
 }

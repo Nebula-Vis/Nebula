@@ -1,0 +1,90 @@
+{
+  "layout": {
+    "width": "1000px",
+    "height": "800px",
+    "direction": "row",
+    "children": [
+      {
+        "id": "container-scatterplot1",
+        "length": 1
+      },
+      {
+        "id": "container-scatterplot2",
+        "length": 1
+      },
+      {
+        "length": "300px",
+        "direction": "column",
+        "children": [
+          {
+            "id": "container-histogram",
+            "length": 1
+          }
+        ]
+      }
+    ]
+  },
+  "visualizations": [
+    {
+      "id": "scatterplot1",
+      "container": "container-scatterplot1",
+      "visualization": "Scatterplot",
+      "data": "iris",
+      "selection": [],
+      "encoding": {
+        "x": "petal_width",
+        "y": "petal_length",
+        "color": "#eee",
+        "selectionColor": "#32d864"
+      }
+    },
+    {
+      "id": "scatterplot2",
+      "container": "container-scatterplot2",
+      "visualization": "Scatterplot",
+      "data": "iris",
+      "selection": [],
+      "encoding": {
+        "x": "sepal_width",
+        "y": "sepal_length",
+        "color": "#eee",
+        "selectionColor": "#32d864"
+      }
+    },
+    {
+      "id": "histogram",
+      "container": "container-histogram",
+      "visualization": "HistogramChart",
+      "data": "iris",
+      "encoding": {
+        "x": "species",
+        "xType": "nominal",
+        "color": "#eeeeee",
+        "selectionColor": "#32d864"
+      }
+    }
+  ],
+  "coordinations": [
+    {
+      "data": [
+        { "name": "d1", "properties": ["scatterplot1.selection"] },
+        { "name": "d2", "properties": ["scatterplot2.selection"] },
+        { "name": "d3", "properties": ["histogram.data"] }
+      ],
+      "transformations": [
+        {
+          "name": "intersect",
+          "input": { "arrays": ["d1", "d2"] },
+          "output": { "intersection": ["d3"] }
+        }
+      ]
+    }
+  ],
+  "data": [
+    {
+      "name": "iris",
+      "url": "https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/639388c2cbc2120a14dcf466e85730eb8be498bb/iris.csv",
+      "format": "csv"
+    }
+  ]
+}
