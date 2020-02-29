@@ -46,47 +46,58 @@ export default class Compiler {
    * @param {{[id: string]: VueConstructor}} visLib loaded vis lib
    */
   renderVisualization(data, layout, visLib) {
-    const vis = this.visualizations
     const layoutVisMap = {}
 
-    for (const v of this.config.visualizations) {
+    for (const visualization of this.config.visualizations) {
+      if (!visualization) {
+        continue
+      }
+
+      const {
+        id,
+        container,
+        visualization: visSpec,
+        data: dataSpec,
+        encoding,
+      } = visualization
+
       // skip error cases
-      if (!v.id) {
+      if (!id) {
         console.warn(`Compiler: a visualization with no id`)
         continue
       }
-      if (vis[v.id]) {
-        console.warn(`Compiler: duplicate visualization id '${v.id}'`)
+      if (this.visualizations[id]) {
+        console.warn(`Compiler: duplicate visualization id '${id}'`)
         continue
       }
-      if (!v.container || !layout[v.container]) {
-        console.warn(`Compiler: no container for visualization '${v.id}'`)
+      if (!container || !layout[container]) {
+        console.warn(`Compiler: no container for visualization '${id}'`)
         continue
       }
-      if (layoutVisMap[v.container]) {
+      if (layoutVisMap[container]) {
         console.warn(
-          `Compiler: can't render visualization '${v.id}', container '${v.container}' already occupied`
+          `Compiler: can't render visualization '${id}', container '${container}' already occupied`
         )
         continue
       }
-      if (!v.visualization || !visLib[v.visualization]) {
+      if (!visSpec || !visLib[visSpec]) {
         console.warn(
-          `Compiler: can't find visualization definition for '${v.id}'`
+          `Compiler: can't find visualization definition for '${id}'`
         )
         continue
       }
 
       // construct vis instance
-      const VisConstructor = visLib[v.visualization]
+      const VisConstructor = visLib[visSpec]
       const el = document.createElement('div')
-      layout[v.container].appendChild(el)
+      layout[container].appendChild(el)
       const propsData = {}
-      if (v.data) {
-        propsData.data = data[v.data]
+      if (dataSpec) {
+        propsData.data = data[dataSpec]
       }
       // selection spec is ignored // TODO
-      if (v.encoding) {
-        propsData.encoding = v.encoding
+      if (encoding) {
+        propsData.encoding = encoding
       }
 
       const instance = new VisConstructor({
@@ -94,8 +105,8 @@ export default class Compiler {
         propsData,
       })
 
-      vis[v.id] = instance
-      layoutVisMap[v.container] = v.id
+      this.visualizations[id] = instance
+      layoutVisMap[container] = id
     }
   }
 
