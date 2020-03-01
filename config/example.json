@@ -17,8 +17,8 @@
             "length": 1
           },
           {
-            "id": "container-histogram",
-            "length": "200px"
+            "id": "container-scatterplot3",
+            "length": 1
           }
         ]
       }
@@ -52,14 +52,14 @@
       }
     },
     {
-      "id": "histogram",
-      "container": "container-histogram",
-      "visualization": "HistogramChart",
+      "id": "scatterplot3",
+      "container": "container-scatterplot3",
+      "visualization": "Scatterplot",
       "data": "iris",
       "encoding": {
-        "x": "species",
-        "xType": "nominal",
-        "color": "#eeeeee",
+        "x": "petal_width",
+        "y": "petal_length",
+        "color": "#eee",
         "selectionColor": "#32d864"
       }
     }
@@ -69,7 +69,7 @@
       "data": [
         { "name": "d1", "properties": ["scatterplot1.selection"] },
         { "name": "d2", "properties": ["scatterplot2.selection"] },
-        { "name": "d3", "properties": ["histogram.data"] }
+        { "name": "d3", "properties": ["scatterplot3.selection"] }
       ],
       "transformations": [
         {
