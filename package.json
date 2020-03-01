@@ -7,7 +7,7 @@
     "dev": "concurrently --kill-others \"node ./devBackend/server.js\" \"webpack-dev-server\"",
     "build": "webpack",
     "lint": "eslint --fix \"src/**/*.js\" \"./*.js\"",
-    "test": "webpack-dev-server --entry ./test/index.js",
+    "test": "concurrently --kill-others \"node ./devBackend/server.js\" \"webpack-dev-server --entry ./test/index.js\"",
     "commit": "commit"
   },
   "author": "",
@@ -17,6 +17,7 @@
     "core-js": "^3.6.4",
     "d3": "^5.15.0",
     "lodash": "^4.17.15",
+    "uuid": "^7.0.1",
     "vue": "^2.6.11",
     "zjlab-vis": "^0.2.14"
   },

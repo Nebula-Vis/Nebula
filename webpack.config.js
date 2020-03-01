@@ -10,10 +10,21 @@ module.exports = {
     filename: 'bundle.js',
     chunkFilename: '[name].bundle.js',
   },
+  resolve: {
+    alias: {
+      '@src': path.resolve(__dirname, 'src/'),
+      '@config': path.resolve(__dirname, 'config/'),
+    },
+  },
   devServer: {
     proxy: {
       // proxy URLs to backend development server
       '/data/*': {
+        target: 'http://localhost:8081',
+        secure: false,
+        changeOrigin: true,
+      },
+      '/comp/*': {
         target: 'http://localhost:8081',
         secure: false,
         changeOrigin: true,

@@ -1,4 +1,5 @@
 import * as d3 from 'd3'
+import { v4 as uuidv4 } from 'uuid'
 
 /**
  * Arrange data into a key-value map, load remote data.
@@ -7,6 +8,11 @@ import * as d3 from 'd3'
  */
 const resolveData = async dataConfig => {
   const dataLib = {}
+
+  if (!Array.isArray(dataConfig)) {
+    return dataLib
+  }
+
   for (const dataObject of dataConfig) {
     if (!dataObject) {
       continue
@@ -32,13 +38,20 @@ const resolveData = async dataConfig => {
     // fetch remote data
     if (!value && url) {
       const dataValue = await d3[format](url).catch(() => {
+        console.warn(`Data: error fetching ${name}, ignoring.`)
         return null
       })
       if (dataValue === null) {
-        console.warn(`Data: error fetching ${name}, ignoring.`)
         continue
       }
       value = dataValue
+    }
+
+    // TODO smarter identification
+    if (Array.isArray(value) && value[0] instanceof Object) {
+      value.forEach(v => {
+        v.__uuid__ = uuidv4()
+      })
     }
     dataLib[name] = value
   }

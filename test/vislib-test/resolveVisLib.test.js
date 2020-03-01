@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import resolveVisLib from '../../src/resolveVisLib'
+import resolveVisLib from '@src/resolveVisLib'
 
 export default function run() {
   const visLib = resolveVisLib()
