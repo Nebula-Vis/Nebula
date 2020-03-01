@@ -51,12 +51,12 @@ const renderLayoutNode = (layoutConfig, parent, layoutMap) => {
  * @returns {Object} a map id -> div
  */
 const resolveLayout = (layoutConfig, container) => {
-  if (typeof layoutConfig !== 'object') {
-    return
-  }
-
   // a simple map of id -> HTMLDivElement
   const layoutMap = {}
+
+  if (typeof layoutConfig !== 'object') {
+    return layoutMap
+  }
 
   let root
   if (container && !d3.select(container).empty()) {

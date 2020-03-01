@@ -75,7 +75,7 @@
         {
           "name": "intersect",
           "input": { "arrays": ["d1", "d2"] },
-          "output": { "intersection": ["d3"] }
+          "output": { "intersection": "d3" }
         }
       ]
     }

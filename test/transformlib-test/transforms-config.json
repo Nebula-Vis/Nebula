@@ -1,0 +1,8 @@
+[
+  {
+    "name": "kmeans",
+    "url": "http://localhost:8080/comp/kmeans",
+    "parameters": ["arrary", "k"],
+    "output": ["array"]
+  }
+]

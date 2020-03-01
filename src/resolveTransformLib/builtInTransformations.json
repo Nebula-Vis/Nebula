@@ -1,0 +1,8 @@
+[
+  {
+    "name": "intersect",
+    "url": "/comp/intersect",
+    "parameters": ["arrays"],
+    "output": ["intersection"]
+  }
+]

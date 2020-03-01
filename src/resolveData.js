@@ -7,6 +7,11 @@ import * as d3 from 'd3'
  */
 const resolveData = async dataConfig => {
   const dataLib = {}
+
+  if (!Array.isArray(dataConfig)) {
+    return dataLib
+  }
+
   for (const dataObject of dataConfig) {
     if (!dataObject) {
       continue

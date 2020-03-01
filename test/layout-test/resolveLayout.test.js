@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-import resolveLayout from '../../src/resolveLayout'
+import resolveLayout from '@src/resolveLayout'
 import layoutConfig from './layout-config.json'
 
 const getConfigMap = (layoutConfig, configMap) => {
