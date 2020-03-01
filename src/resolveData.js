@@ -1,4 +1,5 @@
 import * as d3 from 'd3'
+import { v4 as uuidv4 } from 'uuid'
 
 /**
  * Arrange data into a key-value map, load remote data.
@@ -44,6 +45,13 @@ const resolveData = async dataConfig => {
         continue
       }
       value = dataValue
+    }
+
+    // TODO smarter identification
+    if (Array.isArray(value) && value[0] instanceof Object) {
+      value.forEach(v => {
+        v.__uuid__ = uuidv4()
+      })
     }
     dataLib[name] = value
   }

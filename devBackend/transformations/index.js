@@ -10,7 +10,8 @@ const intersect = ({ arrays }) => {
     }
   }
 
-  return { intersection: _.intersection(...arrays) }
+  const identity = d => (d instanceof Object ? d.__uuid__ : d)
+  return { intersection: _.intersectionBy(...arrays, identity) }
 }
 
 module.exports = { intersect }
