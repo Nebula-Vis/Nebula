@@ -1,9 +1,10 @@
-import * as transformations from './transformations'
+const transformations = require('./transformations')
 const express = require('express')
 const app = express()
 
 app.use('/data', express.static('./devBackend/data'))
 
+app.use(express.json()) // for parsing application/json
 app.post('/comp/:name', function(req, res) {
   let output
   try {

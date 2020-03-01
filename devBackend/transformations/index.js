@@ -1,4 +1,4 @@
-import _ from 'lodash'
+const _ = require('lodash')
 
 const intersect = ({ arrays }) => {
   if (!Array.isArray(arrays)) {
@@ -13,4 +13,4 @@ const intersect = ({ arrays }) => {
   return { intersection: _.intersection(...arrays) }
 }
 
-export { intersect }
+module.exports = { intersect }

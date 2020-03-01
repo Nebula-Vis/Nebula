@@ -37,10 +37,10 @@ const resolveData = async dataConfig => {
     // fetch remote data
     if (!value && url) {
       const dataValue = await d3[format](url).catch(() => {
+        console.warn(`Data: error fetching ${name}, ignoring.`)
         return null
       })
       if (dataValue === null) {
-        console.warn(`Data: error fetching ${name}, ignoring.`)
         continue
       }
       value = dataValue

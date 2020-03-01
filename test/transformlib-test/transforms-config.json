@@ -1,8 +1,62 @@
-[
-  {
-    "name": "kmeans",
-    "url": "http://localhost:8080/comp/kmeans",
-    "parameters": ["arrary", "k"],
-    "output": ["array"]
-  }
-]
+{
+  "customSpec": [
+    {
+      "name": "kmeans",
+      "url": "http://localhost:8080/comp/kmeans",
+      "parameters": ["arrary", "k"],
+      "output": ["array"]
+    }
+  ],
+  "tests": [
+    {
+      "name": "intersect",
+      "cases": [
+        {
+          "input": {
+            "arrays": [[1, 3, 90], [5, 4, 5, 3]]
+          },
+          "output": {
+            "intersection": [3]
+          }
+        },
+        {
+          "input": {
+            "arrays": [
+              [{"a": 1}, {"a": 2}, {"a": 3}],
+              [{"a": 1}, {"a": 3}],
+              []
+            ]
+          },
+          "output": {
+            "intersection": []
+          }
+        },
+        {
+          "input": {
+            "arrays": [
+              [{"a": 1}, {"a": 2}, {"a": 3}],
+              [{"a": 1}, {"a": 3}]
+            ]
+          },
+          "output": {
+            "intersection": [{"a": 1}, {"a": 3}]
+          }
+        }
+      ]
+    },
+    {
+      "name": "kmeans",
+      "cases": [
+        {
+          "input": {
+            "arrary": [],
+            "k": 3
+          },
+          "output": {
+            "array": []
+          }
+        }
+      ]
+    }
+  ]
+}

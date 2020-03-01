@@ -7,7 +7,7 @@
     "dev": "concurrently --kill-others \"node ./devBackend/server.js\" \"webpack-dev-server\"",
     "build": "webpack",
     "lint": "eslint --fix \"src/**/*.js\" \"./*.js\"",
-    "test": "webpack-dev-server --entry ./test/index.js",
+    "test": "concurrently --kill-others \"node ./devBackend/server.js\" \"webpack-dev-server --entry ./test/index.js\"",
     "commit": "commit"
   },
   "author": "",

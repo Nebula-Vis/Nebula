@@ -11,7 +11,7 @@ const resolveTransform = transformConfig => {
 
   // load builtin transformations
   builtInTransformations.forEach(builtIn => {
-    transformLib[name] = new Transformation(builtIn)
+    transformLib[builtIn.name] = new Transformation(builtIn)
   })
 
   if (!Array.isArray(transformConfig)) {

@@ -56,9 +56,8 @@ export default class Transformation {
     const output = await axios
       .post(this._url, bodyData)
       .then(res => res.data)
-      .catch(e => {
+      .catch(() => {
         console.error(`Transform: error executing ${this._name}`)
-        throw e
       })
 
     // // check output type
