@@ -5,9 +5,11 @@
 ## quick run
 
 ```bash
+git clone xxx
+yarn
 yarn dev
 ```
 
 ## custom config
 
-add your config in `/config`, import in `/src/main.js`, then `yarn dev`.
+add your config in `/config`, import in `/src/main.js`, then `yarn` and `yarn dev`.
