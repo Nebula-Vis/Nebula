@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import resolveData from './resolveData'
 import resolveLayout from './resolveLayout'
 import resolveVisLib from './resolveVisLib'
@@ -6,10 +5,9 @@ import resolveTransformLib from './resolveTransformLib'
 import { traverseObject } from '@src/utils'
 
 import {
-  Observable,
   ObservableObserver,
-  VisInstanceObserver,
-  TransformationObserver,
+  VisPropObservableObserver,
+  TransformaObservableObserver,
 } from './observer'
 
 export default class Compiler {
@@ -100,8 +98,7 @@ export default class Compiler {
   }
 
   coordinate(transformLib) {
-    const observableMap = {} // each visId.propId in input
-    const visObserverMap = {} // each visId.propId in output
+    const visObservationMap = {} // each visId.propId in coordination data config
     const dataMap = {}
     for (const [i, coordination] of this.config.coordinations.entries()) {
       if (!this.validateCoordination(coordination)) {
@@ -116,16 +113,13 @@ export default class Compiler {
         const obs = new ObservableObserver(d.name)
         dataMap[d.name] = obs
         d.properties.forEach(p => {
-          if (!observableMap[p]) {
-            observableMap[p] = new Observable()
-          }
-          observableMap[p].addObserver(obs)
-          if (!visObserverMap[p]) {
-            const [visId, prop] = p.split('.')
+          if (!visObservationMap[p]) {
+            const visId = p.split('.')[0]
             const visInstance = this.visualizations[visId]
-            visObserverMap[p] = new VisInstanceObserver(visInstance, prop)
+            visObservationMap[p] = new VisPropObservableObserver(p, visInstance)
           }
-          obs.addObserver(visObserverMap[p])
+          visObservationMap[p].addObserver(obs)
+          obs.addObserver(visObservationMap[p])
         })
       })
 
@@ -133,22 +127,24 @@ export default class Compiler {
         continue
       }
       for (const transformSpec of transformations) {
-        if (
-          !this.validateTransformSpec(transformSpec, transformLib, dataNameMap)
-        ) {
+        const validatedTransformSpec = this.validateTransformSpec(
+          transformSpec,
+          transformLib,
+          dataNameMap
+        )
+        if (!validatedTransformSpec) {
           continue
         }
-        const { name, input, output } = transformSpec
-        const transformation = transformLib[name]
+        const { name, input, output } = validatedTransformSpec
         // create transformation observer // THE observer
-        const outputMap = Array.isArray(output)
-          ? output.map(o => dataMap[o])
-          : _.mapValues(output, o => dataMap[o])
-        const transformationObserver = new TransformationObserver(
+        const transformation = transformLib[name]
+        const transformationObserver = new TransformaObservableObserver(
           transformation,
-          input,
-          outputMap
+          input
         )
+        Object.entries(output).forEach(([out, d]) => {
+          transformationObserver.addObserver(dataMap[d], out)
+        })
         // register transformation observer
         for (const i of Object.values(input)) {
           const endCondition = current => {
@@ -166,7 +162,7 @@ export default class Compiler {
       }
     }
     // add visprop update listeners to call observable.notify
-    for (const [key, observable] of Object.entries(observableMap)) {
+    for (const [key, observable] of Object.entries(visObservationMap)) {
       const [visId, varId] = key.split('.')
       this.visualizations[visId].$on(`${varId}Update`, data => {
         observable.notify(data)
@@ -184,11 +180,10 @@ export default class Compiler {
     const lackingKeys = ['data', 'layout', 'visualizations'].filter(
       key => !configKeys.includes(key)
     )
+    const lackingKeysStr = lackingKeys.join(',')
     if (lackingKeys.length !== 0) {
       console.error(
-        `Config Validation Error: config lacks required fields ${lackingKeys.join(
-          ','
-        )}`
+        `Config Validation Error: lacking required fields ${lackingKeysStr}`
       )
       return false
     }
@@ -331,7 +326,7 @@ export default class Compiler {
     if (!transformSpec) {
       return false
     }
-    const { name, input, output } = transformSpec
+    let { name, input, output } = transformSpec
     if (typeof name !== 'string') {
       return false
     }
@@ -344,20 +339,23 @@ export default class Compiler {
     if (!output || !(output instanceof Object)) {
       return false
     }
-    for (const i of Object.values(input)) {
-      const endCondition = current => {
-        return typeof current === 'string'
-      }
-      const endTask = current => {
-        if (!dataMap[current]) {
-          // TODO pass data between transformations?
-          console.warn(
-            `Compiler: transformation input data ${current} not defined`
-          )
-        }
-      }
-      traverseObject(i, endCondition, endTask)
+
+    const transformation = transformLib[name]
+    input = transformation.getObjectParameter(input)
+    output = transformation.getObjectOuput(output)
+
+    const endCondition = current => {
+      return typeof current === 'string'
     }
+    const endTask = current => {
+      if (!dataMap[current]) {
+        // TODO pass data between transformations?
+        console.warn(
+          `Compiler: transformation input data ${current} not defined`
+        )
+      }
+    }
+    traverseObject(input, endCondition, endTask)
 
     for (const o of Object.values(output)) {
       if (!dataMap[o]) {
@@ -366,6 +364,6 @@ export default class Compiler {
       }
     }
 
-    return true
+    return { ...transformSpec, input, output }
   }
 }
