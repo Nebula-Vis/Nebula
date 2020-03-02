@@ -10,13 +10,18 @@ export default class Transformation {
    *   output: { name: string; type: string }[];
    * }} transformConfig Specification of config
    */
-  constructor(transformConfig) {
-    ;({
-      name: this._name,
-      url: this._url,
-      parameters: this._parameters,
-      output: this._output,
-    } = transformConfig)
+  constructor(spec) {
+    this._isValid = Transformation.validateSpec(spec)
+    if (!this._isValid) {
+      console.warn(`Transformation: invalid spec of ${spec && spec.name}.`)
+    } else {
+      ;({
+        name: this._name,
+        url: this._url,
+        parameters: this._parameters,
+        output: this._output,
+      } = spec)
+    }
   }
 
   get name() {
@@ -38,6 +43,9 @@ export default class Transformation {
    * @returns {Promise<Object>}
    */
   async run(parameters) {
+    if (!this._isValid) {
+      return
+    }
     // handle Array|Object parameters format
     const bodyData = this.getObjectParameter(parameters)
 
@@ -74,6 +82,33 @@ export default class Transformation {
     // })
 
     return output
+  }
+
+  static validateSpec(spec) {
+    if (!spec) {
+      return false
+    }
+    const { name, url, parameters, output } = spec
+    if (typeof name !== 'string' || !name) {
+      return false
+    }
+    if (typeof url !== 'string' || !url) {
+      return false
+    }
+    if (
+      !Array.isArray(parameters) ||
+      !parameters.every(p => typeof p === 'string' && !!p)
+    ) {
+      return false
+    }
+    if (
+      !Array.isArray(output) ||
+      !output.every(o => typeof o === 'string' && !!o)
+    ) {
+      return false
+    }
+
+    return true
   }
 
   /**
