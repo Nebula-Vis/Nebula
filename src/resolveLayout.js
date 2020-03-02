@@ -10,13 +10,16 @@ const renderLayoutNode = (layoutConfig, parent, layoutMap) => {
   if (!layoutConfig) {
     return
   }
-  const { id, length, direction, children } = layoutConfig
+  let { id, length, direction, children } = layoutConfig
+  if (direction !== 'row' && direction !== 'column') {
+    direction = 'row'
+  }
   const node = parent
     .append('div')
     .style('min-width', 0)
     .style('min-height', 0)
     .style('display', 'flex')
-    .style('flex-direction', direction || 'row')
+    .style('flex-direction', direction)
 
   if (typeof length == 'number') {
     node.style('flex', `${length} ${length} 0`)
@@ -27,7 +30,7 @@ const renderLayoutNode = (layoutConfig, parent, layoutMap) => {
     console.warn(`Layout: wrong length for ${id}, defaulting to 1.`)
   }
 
-  if (id) {
+  if (id && typeof id === 'string') {
     if (layoutMap[id]) {
       console.warn(`Layout: duplicate id ${id}`)
     }
@@ -58,6 +61,19 @@ const resolveLayout = (layoutConfig, container) => {
     return layoutMap
   }
 
+  let { id, width, height, direction, children } = layoutConfig
+  if (typeof width !== 'string' && typeof width !== 'number') {
+    console.error('Layout: root node with no width')
+    return layoutMap
+  }
+  if (typeof height !== 'string' && typeof height !== 'number') {
+    console.error('Layout: root node with no height')
+    return layoutMap
+  }
+  if (direction !== 'row' && direction !== 'column') {
+    direction = 'row'
+  }
+
   let root
   if (container && !d3.select(container).empty()) {
     root = d3.select(container).append('div')
@@ -65,15 +81,14 @@ const resolveLayout = (layoutConfig, container) => {
     root = d3.select('body').append('div')
   }
 
-  const { id, width, height, direction, children } = layoutConfig
   root
     // assume absolute width and height for root // TODO
-    .style('width', width)
-    .style('height', height)
+    .style('width', typeof width === 'number' ? `${width}px` : width)
+    .style('height', typeof height === 'number' ? `${height}px` : height)
     .style('display', 'flex')
-    .style('flex-direction', direction || 'row')
+    .style('flex-direction', direction)
 
-  if (id) {
+  if (id && typeof id === 'string') {
     if (layoutMap[id]) {
       console.warn(`Layout: duplicate id ${id}`)
     }
@@ -81,9 +96,9 @@ const resolveLayout = (layoutConfig, container) => {
     root.attr('id', id)
   }
 
-  if (!id && !Array.isArray(children)) {
-    console.warn(`Layout: a leaf node with no id`)
-  }
+  // if (!id && !Array.isArray(children)) {
+  //   console.warn(`Layout: a leaf node with no id`)
+  // }
 
   if (Array.isArray(children)) {
     children.forEach(child => renderLayoutNode(child, root, layoutMap))

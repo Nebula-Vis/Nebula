@@ -65,7 +65,10 @@ export default class Transformation {
       .post(this._url, bodyData)
       .then(res => res.data)
       .catch(() => {
-        console.error(`Transform: error executing ${this._name}`)
+        console.error(
+          `Transform: error executing ${this._name}, parameters:`,
+          bodyData
+        )
       })
 
     // // check output type
