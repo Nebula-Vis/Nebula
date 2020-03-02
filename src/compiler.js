@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import resolveData from './resolveData'
 import resolveLayout from './resolveLayout'
 import resolveVisLib from './resolveVisLib'
@@ -6,6 +7,7 @@ import { traverseObject } from '@src/utils'
 
 import {
   Observable,
+  ObservableObserver,
   VisInstanceObserver,
   TransformationObserver,
 } from './observer'
@@ -87,6 +89,7 @@ export default class Compiler {
       const instance = new VisConstructor({
         el,
         propsData,
+        data: { id },
       })
       this.visualizations[id] = instance
       layoutVisMap[container] = id
@@ -99,48 +102,54 @@ export default class Compiler {
     }
 
     const observableMap = {} // each visId.propId in input
-    const observerMap = {} // each visId.propId in output
+    const visObserverMap = {} // each visId.propId in output
+    const dataMap = {}
     for (const { data, transformations } of this.config.coordinations) {
       // 'd1' -> ['visId1.propId1', 'visId2.propId2']
-      const dataMap = {}
+      const dataNameMap = {}
       data.forEach(d => {
-        dataMap[d.name] = d.properties
+        dataNameMap[d.name] = d.properties
       })
 
+      //// two way data binding ////
+      data.forEach(d => {
+        const obs = new ObservableObserver(d.name)
+        dataMap[d.name] = obs
+        d.properties.forEach(p => {
+          if (!observableMap[p]) {
+            observableMap[p] = new Observable()
+          }
+          observableMap[p].addObserver(obs)
+          if (!visObserverMap[p]) {
+            const [visId, prop] = p.split('.')
+            const visInstance = this.visualizations[visId]
+            if (!visInstance) {
+              console.warn(`Compiler: vis instance ${visId} not defined`)
+              return
+            }
+            visObserverMap[p] = new VisInstanceObserver(visInstance, prop)
+          }
+          obs.addObserver(visObserverMap[p])
+        })
+      })
+
+      if (!Array.isArray(transformations)) {
+        continue
+      }
       for (const { name, input, output } of transformations) {
         if (!transformLib[name]) {
           console.warn(`Compiler: transformation ${name} not defined`)
           continue
         }
         const transformation = transformLib[name]
-        // populate observerMap with each visId.propId in output
-        for (const o of Object.values(output)) {
-          if (!Array.isArray(dataMap[o])) {
-            console.warn(
-              `Compiler: transformation output data ${o} not defined`
-            )
-            continue
-          }
-          for (const property of dataMap[o]) {
-            if (!observerMap[property]) {
-              const [visId, prop] = property.split('.')
-              const visInstance = this.visualizations[visId]
-              if (!visInstance) {
-                console.warn(`Compiler: vis instance ${visId} not defined`)
-                continue
-              }
-              observerMap[property] = new VisInstanceObserver(visInstance, prop)
-            }
-          }
-        }
-
         // create transformation observer // THE observer
+        const outputMap = Array.isArray(output)
+          ? output.map(o => dataMap[o])
+          : _.mapValues(output, o => dataMap[o])
         const transformationObserver = new TransformationObserver(
           transformation,
           input,
-          dataMap,
-          output,
-          observerMap
+          outputMap
         )
         // populate observableMap with each visId.propId in input
         // register transformation observer
@@ -149,25 +158,23 @@ export default class Compiler {
             return typeof current === 'string'
           }
           const endTask = current => {
-            if (!Array.isArray(dataMap[current])) {
+            if (!dataMap[current]) {
               console.warn(
                 `Compiler: transformation input data ${current} not defined`
               )
               return
             }
-            for (const key of dataMap[current]) {
-              const visId = key.split('.')[0]
-              if (!this.visualizations[visId]) {
-                console.warn(`Compiler: vis instance ${visId} not defined`)
-                continue
-              }
-              if (!observableMap[key]) {
-                observableMap[key] = new Observable()
-              }
-              observableMap[key].addObserver(transformationObserver)
-            }
+            dataMap[current].addObserver(transformationObserver)
           }
           traverseObject(i, endCondition, endTask)
+        }
+        for (const o of Object.values(output)) {
+          if (!dataMap[o]) {
+            console.warn(
+              `Compiler: transformation output data ${o} not defined`
+            )
+            continue
+          }
         }
       }
     }
@@ -175,7 +182,7 @@ export default class Compiler {
     for (const [key, observable] of Object.entries(observableMap)) {
       const [visId, varId] = key.split('.')
       this.visualizations[visId].$on(`${varId}Update`, data => {
-        observable.notify({ origin: key, data })
+        observable.notify(data)
       })
     }
   }

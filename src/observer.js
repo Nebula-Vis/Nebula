@@ -23,15 +23,33 @@ export class Observable {
   }
 }
 
+export class ObservableObserver extends Observable {
+  constructor(id) {
+    super()
+    this._id = id
+  }
+  update(data) {
+    this.notify({ origin: this._id, data })
+  }
+}
+
 export class VisInstanceObserver extends Observer {
   constructor(instance, prop) {
     super()
     this._instance = instance
     this._prop = prop
+    this._data = null
   }
 
   update({ data }) {
-    this._instance.$props[this._prop] = data // 这太暴力了。应该说这样也行？
+    // TODO test equality
+    if (data !== this._data) {
+      console.log(
+        `Updating property '${this._prop}' of visualization '${this._instance.id}`
+      )
+      this._instance.$props[this._prop] = data // 这太暴力了。应该说这样也行？
+    }
+    this._data = data
   }
 }
 
@@ -42,47 +60,49 @@ export class TransformationObserver extends Observer {
    * @param {{[key: string]: string[]}} input transformation parameter name -> visId.data
    * @param {{[key: string]: Observer[]}} output transformation output info
    */
-  constructor(transformation, input, dataMap, output, observerMap) {
+  constructor(transformation, input, output) {
     super()
     this._transformation = transformation
-    this._input = this._getInputStructure(transformation, input, dataMap)
-    this._output = this._getOutputMap(
-      transformation,
-      output,
-      dataMap,
-      observerMap
-    )
+    // paramName -> dataObserver
+    this._input = transformation.getObjectParameter(input)
+    this._output = transformation.getObjectOuput(output)
     this._data = {}
   }
 
   async update({ origin, data }) {
-    this._updateData(origin, data)
+    if (!this._updateData(origin, data)) {
+      return
+    }
     if (!this._isDataComplete()) {
       return
     }
     const result = await this._transformation.run(this._data)
-    for (const [key, observers] of Object.entries(this._output)) {
-      observers.forEach(observer => {
-        observer.update({ data: result[key] })
-      })
+    for (const [key, dest] of Object.entries(this._output)) {
+      dest.update(result[key])
     }
   }
 
   _updateData(origin, data) {
     const endCondition = current => {
-      return Array.isArray(current) && typeof current[0] === 'string'
+      return typeof current === 'string'
     }
     const endTask = (current, path) => {
-      if (current.includes(origin)) {
-        _.set(this._data, path, data)
+      if (current === origin) {
+        if (_.get(this._data, path) !== data) {
+          _.set(this._data, path, data)
+          return true
+        }
       }
     }
-    traverseObject(this._input, endCondition, endTask)
+    const collectResult = results => {
+      return Object.values(results).some(res => !!res)
+    }
+    return traverseObject(this._input, endCondition, endTask, collectResult)
   }
 
   _isDataComplete() {
     const endCondition = current => {
-      return Array.isArray(current) && typeof current[0] === 'string'
+      return typeof current === 'string'
     }
     const endTask = (current, path) => {
       return _.get(this._data, path) !== undefined
@@ -96,38 +116,5 @@ export class TransformationObserver extends Observer {
       }
     }
     return traverseObject(this._input, endCondition, endTask, collectResult)
-  }
-
-  /**
-   * resolve input structure for a transformation
-   * @param {Transformation} transformation
-   * @param {Array|Object} input input config in transformation config
-   * @param {{[dataName: string]: string[]}} dataMap a map of data config in coordination config
-   * @returns {{[paramName: string]: any}}
-   */
-  _getInputStructure(transformation, input, dataMap) {
-    const inputObj = transformation.getObjectParameter(input)
-    const endCondition = current => {
-      return typeof current === 'string'
-    }
-    const endTask = current => {
-      return dataMap[current]
-    }
-    return traverseObject(inputObj, endCondition, endTask)
-  }
-
-  /**
-   * Get a map of outputFieldName -> observers for a transformation
-   * @param {Transformation} transformation
-   * @param {Array|Object} output output config in transformation config
-   * @param {{[dataName: string]: string[]}} dataMap a map of data config in coordination config
-   * @param {{[id: string]: Observer}} observerMap
-   * @returns {{[paramName: string]: Observer[]}}
-   */
-  _getOutputMap(transformation, output, dataMap, observerMap) {
-    const outputObj = transformation.getObjectOuput(output)
-    return _.mapValues(outputObj, dataName => {
-      return dataMap[dataName].map(dest => observerMap[dest])
-    })
   }
 }
