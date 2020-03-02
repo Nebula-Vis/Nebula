@@ -22,7 +22,7 @@ const resolveData = async dataConfig => {
     let { value } = dataObject
 
     // skip invalid cases
-    if (!name) {
+    if (typeof name !== 'string' || !name) {
       console.warn('Data: data object name not specified')
       continue
     }
@@ -30,7 +30,10 @@ const resolveData = async dataConfig => {
       console.warn(`Data: duplicate name ${name}, ignoring.`)
       continue
     }
-    if (!value && (!url || (format !== 'json' && format !== 'csv'))) {
+    if (
+      !value &&
+      (typeof url !== 'string' || (format !== 'json' && format !== 'csv'))
+    ) {
       console.warn(`Data: wrong spec of ${name}, ignoring.`)
       continue
     }

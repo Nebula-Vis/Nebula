@@ -6,7 +6,8 @@ export class Observer {
 }
 
 export class Observable {
-  constructor() {
+  constructor(id) {
+    this._id = id
     this._observers = []
   }
 
@@ -18,55 +19,71 @@ export class Observable {
 
   notify(data) {
     this._observers.forEach(observer => {
-      observer.update(data)
+      observer.update({ origin: this._id, data })
     })
   }
 }
 
 export class ObservableObserver extends Observable {
   constructor(id) {
-    super()
-    this._id = id
-  }
-  update(data) {
-    this.notify({ origin: this._id, data })
-  }
-}
-
-export class VisInstanceObserver extends Observer {
-  constructor(instance, prop) {
-    super()
-    this._instance = instance
-    this._prop = prop
+    super(id)
     this._data = null
   }
-
   update({ data }) {
-    // TODO test equality
-    if (data !== this._data) {
-      console.log(
-        `Updating property '${this._prop}' of visualization '${this._instance.id}`
-      )
-      this._instance.$props[this._prop] = data // 这太暴力了。应该说这样也行？
+    if (this._data !== data) {
+      this._data = data
+      this.notify(data)
     }
-    this._data = data
   }
 }
 
-export class TransformationObserver extends Observer {
-  /**
-   * Constructs new TransformationObserver
-   * @param {Transformation} transformation the transformation to be executed
-   * @param {{[key: string]: string[]}} input transformation parameter name -> visId.data
-   * @param {{[key: string]: Observer[]}} output transformation output info
-   */
-  constructor(transformation, input, output) {
+export class VisPropObservableObserver extends ObservableObserver {
+  constructor(id, instance) {
+    super(id)
+    this._instance = instance
+    this._prop = id.split('.')[1]
+  }
+
+  update({ origin, data }) {
+    // TODO test equality
+    if (this._instance.$props[this._prop] !== data) {
+      console.log(
+        `Updating '${this._instance.id}.${this._prop}', origin: ${origin}`
+      )
+      this._instance.$props[this._prop] = data // 这太暴力了。应该说这样也行？
+      this.notify(data)
+    }
+  }
+}
+
+export class TransformaObservableObserver extends ObservableObserver {
+  constructor(transformation, input) {
     super()
     this._transformation = transformation
-    // paramName -> dataObserver
+    // paramName -> "d1"
     this._input = transformation.getObjectParameter(input)
-    this._output = transformation.getObjectOuput(output)
     this._data = {}
+    this._observers = {}
+  }
+
+  addObserver(observer, key) {
+    if (!this._observers[key]) {
+      this._observers[key] = []
+    }
+    if (this._observers[key].findIndex(obs => obs === observer) === -1) {
+      this._observers[key].push(observer)
+    }
+  }
+
+  notify(data) {
+    Object.entries(data).forEach(([key, value]) => {
+      if (!this._observers[key]) {
+        return
+      }
+      this._observers[key].forEach(observer => {
+        observer.update({ data: value })
+      })
+    })
   }
 
   async update({ origin, data }) {
@@ -77,9 +94,7 @@ export class TransformationObserver extends Observer {
       return
     }
     const result = await this._transformation.run(this._data)
-    for (const [key, dest] of Object.entries(this._output)) {
-      dest.update(result[key])
-    }
+    this.notify(result)
   }
 
   _updateData(origin, data) {

@@ -11,7 +11,9 @@ const resolveTransform = transformConfig => {
 
   // load builtin transformations
   builtInTransformations.forEach(builtIn => {
-    transformLib[builtIn.name] = new Transformation(builtIn)
+    if (Transformation.validateSpec(builtIn)) {
+      transformLib[builtIn.name] = new Transformation(builtIn)
+    }
   })
 
   if (!Array.isArray(transformConfig)) {
@@ -20,27 +22,14 @@ const resolveTransform = transformConfig => {
 
   // register custom transformations
   for (const transformObject of transformConfig) {
-    if (!transformObject) {
-      continue
+    if (Transformation.validateSpec(transformObject)) {
+      const { name } = transformObject
+      if (transformLib[name]) {
+        console.warn(`Transformations: duplicate name ${name}, ignoring.`)
+        continue
+      }
+      transformLib[name] = new Transformation(transformObject)
     }
-
-    const { name, url, parameters, output } = transformObject
-
-    // skip invalid cases
-    if (!name) {
-      console.warn('Transformations: custom transformation name not specified')
-      continue
-    }
-    if (transformLib[name]) {
-      console.warn(`Transformations: duplicate name ${name}, ignoring.`)
-      continue
-    }
-    if (!url || !Array.isArray(parameters) || !Array.isArray(output)) {
-      console.warn(`Transformations: wrong spec of ${name}, ignoring.`)
-      continue
-    }
-
-    transformLib[name] = new Transformation(transformObject)
   }
 
   return transformLib
