@@ -1,5 +1,4 @@
 const path = require('path')
-const OpenBrowserPlugin = require('open-browser-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
@@ -64,8 +63,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new OpenBrowserPlugin({ url: 'http://localhost:8080' }),
-    new HtmlWebpackPlugin({ title: 'Coordination Demo' }),
-  ],
+  plugins: [new HtmlWebpackPlugin({ title: 'Coordination Demo' })],
 }
