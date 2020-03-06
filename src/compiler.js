@@ -5,7 +5,7 @@ import resolveTransformLib from './resolveTransformLib'
 import { traverseObject } from '@src/utils'
 
 import {
-  ObservableObserver,
+  DataObservableObserver,
   VisPropObservableObserver,
   TransformaObservableObserver,
 } from './observer'
@@ -90,7 +90,7 @@ export default class Compiler {
       const instance = new VisConstructor({
         el,
         propsData,
-        data: { id },
+        data: { id, visualization: visSpec },
       })
       this.visualizations[id] = instance
       layoutVisMap[container] = id
@@ -98,19 +98,19 @@ export default class Compiler {
   }
 
   coordinate(transformLib) {
-    const visObservationMap = {} // each visId.propId in coordination data config
-    const dataMap = {}
+    const visObservationMap = {} // each visId.propId in coordination.data
     for (const [i, coordination] of this.config.coordinations.entries()) {
       if (!this.validateCoordination(coordination)) {
         continue
       }
-      const { data, transformations } = coordination
+      const { data, transformations, triggers } = coordination
       // 'd1' -> ['visId1.propId1', 'visId2.propId2']
       const dataNameMap = this.getCoordinationDataMap(data, i)
+      const dataMap = {} // each data in coordination.data
 
       //// two way data binding ////
       data.forEach(d => {
-        const obs = new ObservableObserver(d.name)
+        const obs = new DataObservableObserver(d.name)
         dataMap[d.name] = obs
         d.properties.forEach(p => {
           if (!visObservationMap[p]) {
@@ -123,45 +123,58 @@ export default class Compiler {
         })
       })
 
-      if (!Array.isArray(transformations)) {
-        continue
-      }
-      for (const transformSpec of transformations) {
-        const validatedTransformSpec = this.validateTransformSpec(
-          transformSpec,
-          transformLib,
-          dataNameMap
-        )
-        if (!validatedTransformSpec) {
-          continue
-        }
-        const { name, input, output } = validatedTransformSpec
-        // create transformation observer // THE observer
-        const transformation = transformLib[name]
-        const transformationObserver = new TransformaObservableObserver(
-          transformation,
-          input
-        )
-        Object.entries(output).forEach(([out, d]) => {
-          transformationObserver.addObserver(dataMap[d], out)
-        })
-        // register transformation observer
-        for (const i of Object.values(input)) {
-          const endCondition = current => {
-            return typeof current === 'string'
+      if (Array.isArray(transformations)) {
+        for (const transformSpec of transformations) {
+          const validatedTransformSpec = this.validateTransformSpec(
+            transformSpec,
+            transformLib,
+            dataNameMap
+          )
+          if (!validatedTransformSpec) {
+            continue
           }
-          const endTask = current => {
-            if (!dataMap[current]) {
-              // TODO pass data between transformations
-              return
+          const { name, input, output } = validatedTransformSpec
+          // create transformation observer // THE observer
+          const transformation = transformLib[name]
+          const transformationObserver = new TransformaObservableObserver(
+            transformation,
+            input,
+            triggers
+          )
+          Object.entries(output).forEach(([out, d]) => {
+            transformationObserver.addObserver(dataMap[d], out)
+          })
+          // register transformation observer
+          for (const i of Object.values(input)) {
+            const endCondition = current => {
+              return typeof current === 'string'
             }
-            dataMap[current].addObserver(transformationObserver)
+            const endTask = current => {
+              if (!dataMap[current]) {
+                // TODO pass data between transformations
+                return
+              }
+              dataMap[current].addObserver(transformationObserver)
+            }
+            traverseObject(i, endCondition, endTask)
           }
-          traverseObject(i, endCondition, endTask)
         }
       }
+
+      triggers.forEach(t => {
+        if (t.startsWith('button:')) {
+          const buttonId = t.split(':')[1]
+          this.visualizations[buttonId].$on('selectionUpdate', () => {
+            Object.values(dataMap).forEach(d => d.trigger())
+          })
+        } else if (dataMap[t]) {
+          dataMap[t].onUpdate(() => {
+            Object.values(dataMap).forEach(d => d.trigger())
+          })
+        }
+      })
     }
-    // add visprop update listeners to call observable.notify
+    // add visprop update listeners to call observable.notify()
     for (const [key, observable] of Object.entries(visObservationMap)) {
       const [visId, varId] = key.split('.')
       this.visualizations[visId].$on(`${varId}Update`, data => {
@@ -267,7 +280,7 @@ export default class Compiler {
     if (!coordination) {
       return false
     }
-    const { data, transformations } = coordination
+    const { data, transformations, triggers } = coordination
     if (!data) {
       console.warn(`Compiler: a coordination with no data field, ignore`)
       return false
@@ -280,6 +293,24 @@ export default class Compiler {
       console.warn(`Compiler: coordination.coordinations is not array, ignore.`)
       coordination.transformations = null
     }
+    if (!triggers || !Array.isArray(triggers)) {
+      console.warn(
+        `Compiler: coordination.triggers is not specified or is not array, using default.`
+      )
+      coordination.triggers = data.map(d => d.name)
+    } else {
+      const dataNames = data.map(d => d.name)
+      // TODO get all button names
+      const buttonNames = Object.entries(this.visualizations)
+        .filter(([, vis]) => vis.visualization === 'ButtonComponent')
+        .map(([id]) => id)
+      const dataTriggers = triggers.filter(t => dataNames.includes(t))
+      const buttonTriggers = triggers.filter(
+        t => typeof t === 'string' && buttonNames.includes(t.split(':')[1])
+      )
+      coordination.triggers = dataTriggers.concat(buttonTriggers)
+    }
+
     return true
   }
 

@@ -37,6 +37,10 @@
           {
             "id": "container-scatterplot6",
             "length": 1
+          },
+          {
+            "id": "container-button",
+            "length": 0.5
           }
         ]
       }
@@ -116,6 +120,14 @@
         "color": "#0096fa",
         "selectionColor": "#0096fa"
       }
+    },
+    {
+      "id": "btnUpdate",
+      "container": "container-button",
+      "visualization": "ButtonComponent",
+      "encoding": {
+        "text": "Trigger Update"
+      }
     }
   ],
   "coordinations": [
@@ -131,12 +143,21 @@
           "input": { "arrays": ["d1", "d2"] },
           "output": { "intersection": "d3" }
         }
-      ]
+      ],
+      "triggers": ["d1"]
     },
     {
       "data": [
-        { "name": "d1", "properties": ["scatterplot4.selection", "scatterplot5.selection", "scatterplot6.data"] }
-      ]
+        {
+          "name": "d1",
+          "properties": [
+            "scatterplot4.selection",
+            "scatterplot5.selection",
+            "scatterplot6.data"
+          ]
+        }
+      ],
+      "triggers": ["button:btnUpdate"]
     }
   ],
   "data": [
