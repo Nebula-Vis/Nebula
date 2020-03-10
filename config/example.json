@@ -1,0 +1,170 @@
+{
+  "layout": {
+    "width": "900px",
+    "height": "600px",
+    "direction": "column",
+    "children": [
+      {
+        "length": 1,
+        "direction": "row",
+        "children": [
+          {
+            "id": "container-scatterplot1",
+            "length": 1
+          },
+          {
+            "id": "container-scatterplot2",
+            "length": 1
+          },
+          {
+            "id": "container-scatterplot3",
+            "length": 1
+          }
+        ]
+      },
+      {
+        "length": 1,
+        "direction": "row",
+        "children": [
+          {
+            "id": "container-scatterplot4",
+            "length": 1
+          },
+          {
+            "id": "container-scatterplot5",
+            "length": 1
+          },
+          {
+            "id": "container-scatterplot6",
+            "length": 1
+          },
+          {
+            "id": "container-button",
+            "length": 0.5
+          }
+        ]
+      }
+    ]
+  },
+  "visualizations": [
+    {
+      "id": "scatterplot1",
+      "container": "container-scatterplot1",
+      "visualization": "Scatterplot",
+      "data": "iris",
+      "selection": [],
+      "encoding": {
+        "x": "petal_width",
+        "y": "petal_length",
+        "color": "#eee",
+        "selectionColor": "#32d864"
+      }
+    },
+    {
+      "id": "scatterplot2",
+      "container": "container-scatterplot2",
+      "visualization": "Scatterplot",
+      "data": "iris",
+      "selection": [],
+      "encoding": {
+        "x": "sepal_width",
+        "y": "sepal_length",
+        "color": "#eee",
+        "selectionColor": "#32d864"
+      }
+    },
+    {
+      "id": "scatterplot3",
+      "container": "container-scatterplot3",
+      "visualization": "Scatterplot",
+      "data": "iris",
+      "encoding": {
+        "x": "petal_width",
+        "y": "petal_length",
+        "color": "#eee",
+        "selectionColor": "#32d864"
+      }
+    },
+    {
+      "id": "scatterplot4",
+      "container": "container-scatterplot4",
+      "visualization": "Scatterplot",
+      "data": "iris",
+      "encoding": {
+        "x": "petal_width",
+        "y": "petal_length",
+        "color": "#eee",
+        "selectionColor": "#0096fa"
+      }
+    },
+    {
+      "id": "scatterplot5",
+      "container": "container-scatterplot5",
+      "visualization": "Scatterplot",
+      "data": "iris",
+      "encoding": {
+        "x": "sepal_width",
+        "y": "sepal_length",
+        "color": "#eee",
+        "selectionColor": "#0096fa"
+      }
+    },
+    {
+      "id": "scatterplot6",
+      "container": "container-scatterplot6",
+      "visualization": "Scatterplot",
+      "data": "iris",
+      "encoding": {
+        "x": "petal_width",
+        "y": "petal_length",
+        "color": "#0096fa",
+        "selectionColor": "#0096fa"
+      }
+    },
+    {
+      "id": "btnUpdate",
+      "container": "container-button",
+      "visualization": "ButtonComponent",
+      "encoding": {
+        "text": "Trigger Update"
+      }
+    }
+  ],
+  "coordinations": [
+    {
+      "data": [
+        { "name": "d1", "properties": ["scatterplot1.selection"] },
+        { "name": "d2", "properties": ["scatterplot2.selection"] },
+        { "name": "d3", "properties": ["scatterplot3.selection"] }
+      ],
+      "transformations": [
+        {
+          "name": "intersect",
+          "input": { "arrays": ["d1", "d2"] },
+          "output": { "intersection": "d3" }
+        }
+      ],
+      "triggers": ["d1"]
+    },
+    {
+      "data": [
+        {
+          "name": "d1",
+          "properties": [
+            "scatterplot4.selection",
+            "scatterplot5.selection",
+            "scatterplot6.data"
+          ]
+        }
+      ],
+      "triggers": ["button:btnUpdate"]
+    }
+  ],
+  "data": [
+    {
+      "name": "iris",
+      "url": "http://localhost:8080/data/iris.csv",
+      "format": "csv"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "name": "intersect",
+    "url": "/comp/intersect",
+    "parameters": ["arrays"],
+    "output": ["intersection"]
+  },
+  {
+    "name": "union",
+    "url": "/comp/union",
+    "parameters": ["arrays"],
+    "output": ["union"]
+  },
+  {
+    "name": "bin",
+    "url": "/comp/bin",
+    "parameters": ["data", "field", "binCount"],
+    "output": ["bins"]
+  }
+]
