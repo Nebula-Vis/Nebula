@@ -1,0 +1,19 @@
+{
+  "name": "nebula",
+  "version": "1.0.0",
+  "description": "a visualization grammar for coordination between visualizations",
+  "main": "index.js",
+  "scripts": {
+    "start": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nebula-Vis/Nebula.git"
+  },
+  "author": "Ran Chen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nebula-Vis/Nebula/issues"
+  },
+  "homepage": "https://github.com/Nebula-Vis/Nebula#readme"
+}
