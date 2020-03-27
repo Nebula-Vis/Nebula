@@ -4,7 +4,8 @@
   "description": "a visualization grammar for coordination between visualizations",
   "main": "index.js",
   "scripts": {
-    "start": ""
+    "start": "",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/Nebula-Vis/Nebula/issues"
   },
-  "homepage": "https://github.com/Nebula-Vis/Nebula#readme"
+  "homepage": "https://github.com/Nebula-Vis/Nebula#readme",
+  "devDependencies": {
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
 }
