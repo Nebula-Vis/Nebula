@@ -1,3 +1,4 @@
+import * as d3 from 'd3'
 
 export default class DataSources {
   constructor(spec) {
@@ -23,7 +24,7 @@ export default class DataSources {
       } else {
         if (element.path && typeof element.path == 'string') {
           // TODO
-          dataObj.values = await this.loadData()
+          dataObj.values = await this.loadData(element.path, element.format)
         } else {
           throw "No inline value and load path."
         }
@@ -33,7 +34,35 @@ export default class DataSources {
     return data
   }
 
-  async loadData (path, type) {
+  async loadData (path, format) {
+    if (typeof path !== 'string') {
+      console.error('Data path error.')
+      return
+    }
+    if (format && format !== 'json' && format !== 'csv') {
+      console.error('Data format error.')
+      return
+    }
+    format = format || 'json'
+    const dataValue = await d3[format](path).catch(() => {
+      return
+    })
+    if (dataValue === undefined) {
+      console.error('Data loading error.')
+      return
+    }
 
+    // naive parser: string -> number
+    if (Array.isArray(dataValue) && dataValue[0] instanceof Object) {
+      dataValue.forEach(v => {
+        Object.keys(v).forEach(key => {
+          v[key] = v[key].trim()
+          if (v[key].length > 0 && !isNaN(+v[key])) {
+            v[key] = +v[key]
+          }
+        })
+      })
+    }
+    return dataValue
   }
 }
