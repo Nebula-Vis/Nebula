@@ -9,6 +9,12 @@ export default class DataSources {
     this.data = await this.parseDataSpec(this.spec)
   }
 
+  getDataByName(name) {
+    if (!Array.isArray(this.data)) return
+    const data = this.data.find(dataObj => dataObj.name === name)
+    return data && data.values
+  }
+
   async parseDataSpec (spec) {
     const data = []
     for (const element of spec) {
@@ -23,7 +29,6 @@ export default class DataSources {
         data.push(dataObj)
       } else {
         if (element.path && typeof element.path == 'string') {
-          // TODO
           dataObj.values = await this.loadData(element.path, element.format)
         } else {
           throw "No inline value and load path."
@@ -43,29 +48,35 @@ export default class DataSources {
     }
     format = format || 'json'
 
-    let dataValue
+    let data
     try {
-      dataValue = await d3[format](path)
+      data = await d3[format](path)
     } catch (e) {
       throw 'Data loading error.'
     }
 
     if (format === 'csv') {
-      this.parseStringNumber(dataValue)
+      this.parseNumberFromStringInCSV(data)
     }
-    return dataValue
+    console.log(data)
+    return data
   }
 
-  parseStringNumber(dataValue) {
-    // parse number in string format to real number
-    // e.g. "0.1" => 0.1
-    dataValue.forEach(v => {
-      Object.keys(v).forEach(key => {
-        v[key] = v[key].trim()
-        if (v[key].length > 0 && !isNaN(+v[key])) {
-          v[key] = +v[key]
-        }
+  // parse numeric attribute values from string to number
+  // e.g. "0.1" => 0.1
+  parseNumberFromStringInCSV(data) {
+    if (!data || !data[0]) return
+    const numericAttributes = Object.keys(data[0]).filter(
+      key => this.isNumberInStringFormat(data[0][key])
+    )
+    data.forEach(d => {
+      numericAttributes.forEach(key => {
+        d[key] = +d[key]
       })
     })
+  }
+
+  isNumberInStringFormat(value) {
+    return typeof value === 'string' && value.length > 0 && !isNaN(+value)
   }
 }
