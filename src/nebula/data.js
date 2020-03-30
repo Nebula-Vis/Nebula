@@ -42,25 +42,30 @@ export default class DataSources {
       throw 'Data format error.'
     }
     format = format || 'json'
-    const dataValue = await d3[format](path).catch(() => {
-      return
-    })
-    if (dataValue === undefined) {
+
+    let dataValue
+    try {
+      dataValue = await d3[format](path)
+    } catch (e) {
       throw 'Data loading error.'
     }
 
-    // naive parser: string -> number
-    if (Array.isArray(dataValue)) {
-      dataValue.forEach(v => {
-        if (!(v instanceof Object)) return
-        Object.keys(v).forEach(key => {
-          v[key] = v[key].trim()
-          if (v[key].length > 0 && !isNaN(+v[key])) {
-            v[key] = +v[key]
-          }
-        })
-      })
+    if (format === 'csv') {
+      this.parseStringNumber(dataValue)
     }
     return dataValue
+  }
+
+  parseStringNumber(dataValue) {
+    // parse number in string format to real number
+    // e.g. "0.1" => 0.1
+    dataValue.forEach(v => {
+      Object.keys(v).forEach(key => {
+        v[key] = v[key].trim()
+        if (v[key].length > 0 && !isNaN(+v[key])) {
+          v[key] = +v[key]
+        }
+      })
+    })
   }
 }
