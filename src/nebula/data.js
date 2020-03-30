@@ -50,8 +50,9 @@ export default class DataSources {
     }
 
     // naive parser: string -> number
-    if (Array.isArray(dataValue) && dataValue[0] instanceof Object) {
+    if (Array.isArray(dataValue)) {
       dataValue.forEach(v => {
+        if (!(v instanceof Object)) return
         Object.keys(v).forEach(key => {
           v[key] = v[key].trim()
           if (v[key].length > 0 && !isNaN(+v[key])) {
