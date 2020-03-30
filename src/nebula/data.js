@@ -58,7 +58,6 @@ export default class DataSources {
     if (format === 'csv') {
       this.parseNumberFromStringInCSV(data)
     }
-    console.log(data)
     return data
   }
 
