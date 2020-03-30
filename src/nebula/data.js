@@ -36,20 +36,17 @@ export default class DataSources {
 
   async loadData (path, format) {
     if (typeof path !== 'string') {
-      console.error('Data path error.')
-      return
+      throw 'Data path error.'
     }
     if (format && format !== 'json' && format !== 'csv') {
-      console.error('Data format error.')
-      return
+      throw 'Data format error.'
     }
     format = format || 'json'
     const dataValue = await d3[format](path).catch(() => {
       return
     })
     if (dataValue === undefined) {
-      console.error('Data loading error.')
-      return
+      throw 'Data loading error.'
     }
 
     // naive parser: string -> number
