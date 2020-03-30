@@ -4,7 +4,7 @@
   "description": "a visualization grammar for coordination between visualizations",
   "main": "index.js",
   "scripts": {
-    "start": "",
+    "dev": "webpack-dev-server",
     "build": "webpack"
   },
   "repository": {
@@ -19,6 +19,14 @@
   "homepage": "https://github.com/Nebula-Vis/Nebula#readme",
   "devDependencies": {
     "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {
+    "d3": "^5.15.0",
+    "lodash": "^4.17.15",
+    "vega": "^5.10.0",
+    "vega-embed": "^6.5.2",
+    "vega-lite": "^4.8.1"
   }
 }
