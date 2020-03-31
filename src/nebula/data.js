@@ -1,5 +1,5 @@
 
-export default class DataSources {
+export default class DataSource {
   constructor(spec) {
     this.spec = spec
   }
