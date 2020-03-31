@@ -4,18 +4,18 @@ import * as d3 from 'd3'
 export default class Layout {
   constructor(spec) {
     this.spec = spec
-    this.layout = this.getLayoutBySpec(this.spec)
+    this.layout = this._getLayoutBySpec(this.spec)
   }
 
-  getLayoutBySpec(spec) {
+  _getLayoutBySpec(spec) {
     if (!spec.width || !spec.height || !spec.direction)
       throw "Layour root error."
-    const root = this.getRootBySpec(spec.width, spec.height, spec.direction)
-    this.insertChildrenInRoot(root, spec.children)
+    const root = this._getRootBySpec(spec.width, spec.height, spec.direction)
+    this._insertChildrenInRoot(root, spec.children)
     return root
   }
 
-  getRootBySpec(width, height, dir) {
+  _getRootBySpec(width, height, dir) {
     return d3.create('div')
       .style('display', 'flex')
       .style('flex-direction', dir)
@@ -23,7 +23,7 @@ export default class Layout {
       .style('height', height)
   }
 
-  insertChildrenInRoot(root, childrenSpec) {
+  _insertChildrenInRoot(root, childrenSpec) {
     for (const childSpec of childrenSpec) {
       const element = root.append('div')
  
@@ -37,7 +37,7 @@ export default class Layout {
       if (childSpec.id) element.attr('id', childSpec.id)
       if (childSpec.direction) element.style('display', 'flex').style('flex-direction', childSpec.direction)
 
-      if (childSpec.children) this.insertChildrenInRoot(element, childSpec.children)
+      if (childSpec.children) this._insertChildrenInRoot(element, childSpec.children)
       // mount point：是否需要，后面研究下
       else element.append('div').attr('id', `${childSpec.id}-mount`)
     }

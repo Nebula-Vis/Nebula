@@ -32,6 +32,7 @@ export default class DataSource {
       if (element.values) {
         dataObj.values = element.values
       } else if (element.path && typeof element.path == 'string') {
+        // TODO: 读取本地文件尚不太行，考虑一下这个之后做不做
         dataObj.values = await this._getDataValueByPath(element.path, element.format)
       } else {
         throw "No inline value and load path."
@@ -71,7 +72,7 @@ export default class DataSource {
     })
   }
 
-  isNumberInStringFormat(value) {
+  _isNumberInStringFormat(value) {
     return typeof value === 'string' && value.length > 0 && !isNaN(+value)
   }
 }

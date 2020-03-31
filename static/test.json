@@ -17,11 +17,7 @@
     },
     {
       "name": "test",
-      "path": "http://localhost:8080/test.json"
-    },
-    {
-      "name": "test2",
-      "path": "./test2.json"
+      "path": "http://localhost:8080/data.json"
     }
   ],
   "layout": {
