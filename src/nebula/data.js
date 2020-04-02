@@ -7,6 +7,7 @@ export default class DataSource {
 
   async init() {
     this.data = await this._getDataSourcesBySpec(this.spec)
+    this._addUniqueIdToData(this.data)
   }
 
   getDataSourceByName(name) {
@@ -17,6 +18,15 @@ export default class DataSource {
   print() {
     this.data.forEach(d => {
       console.log(d)
+    })
+  }
+
+  // 为每个data items赋予一个nebula的内部id，用于之后的比较
+  _addUniqueIdToData(sources) {
+    sources.forEach(source => {
+      source.values.forEach((v, i) => {
+        v._nbid_ = `${source.name}_${i}`
+      })
     })
   }
 
@@ -32,47 +42,12 @@ export default class DataSource {
       if (element.values) {
         dataObj.values = element.values
       } else if (element.path && typeof element.path == 'string') {
-        // TODO: 读取本地文件尚不太行，考虑一下这个之后做不做
-        dataObj.values = await this._getDataValueByPath(element.path, element.format)
+        // TODO: load data
       } else {
         throw "No inline value and load path."
       }
       data.push(dataObj)
     }
     return data
-  }
-
-  async _getDataValueByPath (path, format) {
-    if (format && format !== 'json' && format !== 'csv') 
-      throw 'Data format error.'
-    
-    format = format || 'json'
-
-    const data = await d3[format](path)
-    if (!data) 
-      throw 'Data loading error.'
-    
-    if (format === 'csv') {
-      this._parseNumberFromStringInCSV(data)
-    }
-    return data
-  }
-
-  // parse numeric attribute values from string to number in csv file
-  // e.g. "0.1" => 0.1
-  _parseNumberFromStringInCSV(data) {
-    if (!data[0]) return
-    const numericAttributes = Object.keys(data[0]).filter(
-      key => this.isNumberInStringFormat(data[0][key])
-    )
-    data.forEach(d => {
-      numericAttributes.forEach(key => {
-        d[key] = +d[key]
-      })
-    })
-  }
-
-  _isNumberInStringFormat(value) {
-    return typeof value === 'string' && value.length > 0 && !isNaN(+value)
   }
 }
