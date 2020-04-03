@@ -11,7 +11,7 @@ export default Vue.extend({
 >
   <svg width="100%" height="100%">
     <defs>
-      <clipPath id="clip">
+      <clipPath :id="\`\${id}-clip\`">
         <rect
           :x="margin - radius"
           :y="margin - radius"
@@ -31,7 +31,8 @@ export default Vue.extend({
       />
     </g>
     <g class="brush-g" />
-    <g clip-path="url(#clip)">
+    <g :clip-path="\`url(#\${id}-clip)\`">
+      <!-- <rect fill="black" x="-10" y="-10" width="500" height="500"></rect> -->
       <circle v-for="(mark, i) in marks" :key="i" v-bind="mark" :r="radius" />
     </g>
     <g class="zoom-g" />
@@ -40,6 +41,7 @@ export default Vue.extend({
   `,
   data() {
     return {
+      id: '',
       data: [],
       selection: null,
       x: '',

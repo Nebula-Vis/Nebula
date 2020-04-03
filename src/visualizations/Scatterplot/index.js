@@ -26,6 +26,7 @@ export default class Scatterplot {
     this.vm = new VueScatterplot({
       el,
       data: {
+        id: this.id,
         data: this.data,
         selection: this.selection,
         x: this.x,
