@@ -20,18 +20,35 @@ export default Vue.extend({
         ></rect>
       </clipPath>
     </defs>
-    <g>
+    <g class="axes-g" user-select="none" v-if="showAxis">
+      <g fill="currentColor" font-size="14">
+        <text
+          text-anchor="end"
+          :x="ranges.x[1]"
+          :y="height - margin"
+          dy="2.1em"
+        >
+          {{ x }}
+        </text>
+        <text
+          :x="blankMargin"
+          :y="margin - blankMargin"
+          dy="0.32em"
+        >
+          {{ y }}
+        </text>
+      </g>
       <g
-        class="axis x-axis"
+        class="x-axis"
         :transform="\`translate(0, \${height - margin})\`"
       />
       <g
-        class="axis y-axis"
+        class="y-axis"
         :transform="\`translate(\${margin}, 0)\`"
       />
     </g>
     <g class="brush-g" />
-    <g :clip-path="\`url(#\${id}-clip)\`">
+    <g class="points-g" :clip-path="\`url(#\${id}-clip)\`">
       <!-- <rect fill="black" x="-10" y="-10" width="500" height="500"></rect> -->
       <circle v-for="(mark, i) in marks" :key="i" v-bind="mark" :r="radius" />
     </g>
@@ -51,7 +68,7 @@ export default Vue.extend({
       // other options
       color: '#eee',
       selectionColor: '#3fca2f',
-      axis: true,
+      showAxis: true,
       showBrush: false,
 
       // temp state
@@ -68,17 +85,19 @@ export default Vue.extend({
     }
   },
   computed: {
+    ranges() {
+      const { margin, width, height } = this
+      return {
+        x: [margin, width - margin],
+        y: [height - margin, margin],
+      }
+    },
     scales() {
       const domains = {
         x: this.scale[0],
         y: this.scale[1],
       }
-
-      const { margin, width, height } = this
-      const ranges = {
-        x: [margin, width - margin],
-        y: [height - margin, margin],
-      }
+      const ranges = this.ranges
 
       const scales = {}
       ;['x', 'y'].forEach(attrName => {
@@ -107,11 +126,7 @@ export default Vue.extend({
           cy: d.y,
           fill: isSelected ? this.selectionColor : this.color,
         }
-        if (isSelected) {
-          front.push(mark)
-        } else {
-          back.push(mark)
-        }
+        ;(isSelected ? front : back).push(mark)
       })
       return back.concat(front)
     },
@@ -122,23 +137,23 @@ export default Vue.extend({
       this.selection = this.getIdsFromData(val)
       this.scale = this.getAxisDomainsFromData(val)
       // this.checkXY()
-      if (this.axis) {
-        this.redrawAxis()
+      if (this.showAxis) {
+        this.drawAxis()
       }
     },
     x() {
-      if (this.axis) {
-        this.redrawAxis()
+      if (this.showAxis) {
+        this.drawAxis()
       }
     },
     y() {
-      if (this.axis) {
-        this.redrawAxis()
+      if (this.showAxis) {
+        this.drawAxis()
       }
     },
     scale() {
-      if (this.axis) {
-        this.redrawAxis()
+      if (this.showAxis) {
+        this.drawAxis()
       }
     },
   },
@@ -162,19 +177,19 @@ export default Vue.extend({
       this.selection = this.getIdsFromData(this.data)
     }
 
-    this.margin = this.axis ? this.axisMargin : this.blankMargin
+    this.margin = this.showAxis ? this.axisMargin : this.blankMargin
   },
   mounted() {
     this.svg = d3.select(this.$el).select('svg')
 
     this.getWidthHeight()
-    if (this.axis) {
+    if (this.showAxis) {
       this.drawAxis()
     }
     window.addEventListener('resize', () => {
       this.getWidthHeight()
-      if (this.axis) {
-        this.redrawAxis()
+      if (this.showAxis) {
+        this.drawAxis()
       }
     })
 
@@ -205,7 +220,6 @@ export default Vue.extend({
       return [getDataExtent(data, x), getDataExtent(data, y)]
     },
     addBrush() {
-      const brushG = this.svg.select('.brush-g')
       const onBrushEnd = () => {
         if (!d3.event.selection) return
 
@@ -220,12 +234,11 @@ export default Vue.extend({
         this.$emit('selection', selection)
 
         if (!this.showBrush) {
-          brushG.call(brush.clear)
+          this.svg.select('.brush-g').call(brush.clear)
         }
       }
 
-      const xRange = this.scales.x.range()
-      const yRange = this.scales.y.range()
+      const { x: xRange, y: yRange } = this.ranges
       const brush = d3
         .brush()
         .extent([
@@ -234,8 +247,7 @@ export default Vue.extend({
         ])
         .on('end', onBrushEnd)
 
-      brushG.selectAll('*').remove()
-      brushG
+      this.svg.select('.brush-g')
         .call(brush)
         .select('.selection')
         .attr('stroke', null)
@@ -252,9 +264,7 @@ export default Vue.extend({
         this.$emit('scale', scale)
       }
 
-      const zoom = d3.zoom().on('zoom', onZoom)
-      const xRange = this.scales.x.range()
-      const yRange = this.scales.y.range()
+      const { x: xRange, y: yRange } = this.ranges
       this.svg.select('.zoom-g')
         .append('rect')
         .attr('x', xRange[0])
@@ -263,7 +273,7 @@ export default Vue.extend({
         .attr('height', yRange[0] - yRange[1])
         .attr('fill', 'none')
         .attr('pointer-events', 'all')
-        .call(zoom)
+        .call(d3.zoom().on('zoom', onZoom))
     },
     removeZoom() {
       this.svg.select('.zoom-g')
@@ -271,48 +281,16 @@ export default Vue.extend({
         .remove()
     },
     drawAxis() {
-      this.removeAxis()
       // 绘制坐标轴
       this.margin = this.axisMargin
-      const xRange = this.scales.x.range()
       const xAxis = d3.axisBottom().scale(this.scales.x)
       const yAxis = d3.axisLeft().scale(this.scales.y)
       this.svg
         .select('.x-axis')
         .call(xAxis)
-        .append('text')
-        .attr('class', 'axis-label')
-        .attr('text-anchor', 'end')
-        .attr('x', xRange[1])
-        .attr('dy', '2.1em')
-        .text(this.x)
       this.svg
         .select('.y-axis')
         .call(yAxis)
-        .append('text')
-        .attr('class', 'axis-label')
-        .attr('text-anchor', 'start')
-        .attr('x', -(this.margin - this.blankMargin))
-        .attr('y', this.margin - this.blankMargin)
-        .attr('dy', '0.32em')
-        .text(this.y)
-      this.svg
-        .selectAll('.axis-label')
-        .attr('fill', 'currentColor')
-        .attr('font-size', 14)
-      this.svg.selectAll('.axis text').style('user-select', 'none')
-    },
-    removeAxis() {
-      // 去除坐标轴
-      this.svg
-        .selectAll('.axis *')
-        .remove()
-      this.margin = this.blankMargin
-    },
-    redrawAxis() {
-      this.$nextTick(() => {
-        this.drawAxis()
-      })
     },
   },
 })
