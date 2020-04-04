@@ -20,7 +20,7 @@ export default Vue.extend({
         ></rect>
       </clipPath>
     </defs>
-    <g class="axes-g" user-select="none" v-if="showAxis">
+    <g class="axes-g" style="user-select:none" v-if="showAxis">
       <g fill="currentColor" font-size="14">
         <text
           text-anchor="end"
@@ -54,16 +54,23 @@ export default Vue.extend({
     </g>
     <g class="zoom-g" />
   </svg>
+  <button
+    v-show="isMouseIn"
+    style="position:absolute; top:10; right:10"
+    @click="isFiltering = true"
+  >
+    Filter
+  </button>
 </div>
   `,
   data() {
     return {
       id: '',
       data: [],
-      selection: null,
       x: '',
       y: '',
       scale: null,
+      selection: null,
 
       // other options
       color: '#eee',
@@ -71,20 +78,23 @@ export default Vue.extend({
       showAxis: true,
       showBrush: false,
 
-      // temp state
+      // local state
       isMouseIn: false,
+      isFiltering: false,
       svg: null,
 
       // 杂七杂八param
       width: 200,
       height: 200,
-      margin: 40,
       axisMargin: 40,
       blankMargin: 10,
       radius: 4,
     }
   },
   computed: {
+    margin() {
+      return this.showAxis ? this.axisMargin : this.blankMargin
+    },
     ranges() {
       const { margin, width, height } = this
       return {
@@ -118,9 +128,8 @@ export default Vue.extend({
       const selectionSet = new Set(this.selection)
       const front = []
       const back = []
-      const data = this.data
       this.scaledData.forEach((d, i) => {
-        const isSelected = selectionSet.has(data[i]._nbid_)
+        const isSelected = selectionSet.has(this.data[i]._nbid_)
         const mark = {
           cx: d.x,
           cy: d.y,
@@ -134,9 +143,9 @@ export default Vue.extend({
   watch: {
     data(val) {
       // TODO
-      this.selection = this.getIdsFromData(val)
-      this.scale = this.getAxisDomainsFromData(val)
       // this.checkXY()
+      this.scale = this.getAxisDomainsFromData(val, this.x, this.y)
+      this.selection = this.getIdsFromData(val)
       if (this.showAxis) {
         this.drawAxis()
       }
@@ -158,26 +167,19 @@ export default Vue.extend({
     },
   },
   created() {
-    if (!this.x) {
-      this.x = getIthFieldOfType(this.data, 0, 'number')
-    } else if (!this.boolDataHasAttribute(this.data, this.x)) {
-      throw `Attribute ${this.x} does not exist`
-    }
-    if (!this.y) {
-      this.y = getIthFieldOfType(this.data, 1, 'number')
-    } else if (!this.boolDataHasAttribute(this.data, this.y)) {
-      throw `Attribute ${this.y} does not exist`
+    this.x = this.x || getIthFieldOfType(this.data, 0, 'number')
+    this.y = this.y || getIthFieldOfType(this.data, 1, 'number')
+    if (!this.boolDataHasAttribute(this.data, this.x, this.y)) {
+      throw `Scatterplot ${this.id}: wrong attributes`
     }
 
     if (!isArrayOfType(this.scale, 'number', 2, 2)) {
       this.scale = this.getAxisDomainsFromData(this.data, this.x, this.y)
     }
 
-    if (!this.selection || !this.selection.length) {
+    if (!this.selection) {
       this.selection = this.getIdsFromData(this.data)
     }
-
-    this.margin = this.showAxis ? this.axisMargin : this.blankMargin
   },
   mounted() {
     this.svg = d3.select(this.$el).select('svg')
@@ -210,8 +212,9 @@ export default Vue.extend({
       this.width = rect.width
       this.height = rect.height
     },
-    boolDataHasAttribute(data, attrName) {
-      return !data[0] || data[0][attrName]
+    boolDataHasAttribute(data, ...attrNames) {
+      const datum = data[0]
+      return datum && attrNames.every(attrName => datum[attrName] !== undefined)
     },
     getIdsFromData(data) {
       return data.map(d => d._nbid_)
@@ -230,8 +233,15 @@ export default Vue.extend({
             selection.push(this.data[i]._nbid_)
           }
         })
-        this.selection = selection
-        this.$emit('selection', selection)
+        if (this.isFiltering) {
+          const selectionSet = new Set(selection)
+          this.data = this.data.filter(d => selectionSet.has(d._nbid_))
+          this.$emit('data', this.data)
+        } else {
+          this.selection = selection
+          this.$emit('selection', selection)
+        }
+        this.isFiltering = false
 
         if (!this.showBrush) {
           this.svg.select('.brush-g').call(brush.clear)
@@ -273,6 +283,7 @@ export default Vue.extend({
         .attr('height', yRange[0] - yRange[1])
         .attr('fill', 'none')
         .attr('pointer-events', 'all')
+        .style('cursor', 'grab')
         .call(d3.zoom().on('zoom', onZoom))
     },
     removeZoom() {
@@ -282,7 +293,6 @@ export default Vue.extend({
     },
     drawAxis() {
       // 绘制坐标轴
-      this.margin = this.axisMargin
       const xAxis = d3.axisBottom().scale(this.scales.x)
       const yAxis = d3.axisLeft().scale(this.scales.y)
       this.svg
