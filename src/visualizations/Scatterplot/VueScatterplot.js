@@ -24,16 +24,16 @@ export default Vue.extend({
       <g fill="currentColor" font-size="14">
         <text
           text-anchor="end"
-          :x="ranges.x[1]"
+          :x="width - margin"
           :y="height - margin"
           dy="2.1em"
         >
           {{ x }}
         </text>
         <text
-          :x="blankMargin"
-          :y="margin - blankMargin"
-          dy="0.32em"
+          :x="margin"
+          :y="margin"
+          dy="-0.5em"
         >
           {{ y }}
         </text>
@@ -49,7 +49,6 @@ export default Vue.extend({
     </g>
     <g class="brush-g" />
     <g class="points-g" :clip-path="\`url(#\${id}-clip)\`">
-      <!-- <rect fill="black" x="-10" y="-10" width="500" height="500"></rect> -->
       <circle v-for="(mark, i) in marks" :key="i" v-bind="mark" :r="radius" />
     </g>
     <g class="zoom-g" />
@@ -73,8 +72,7 @@ export default Vue.extend({
       selection: null,
 
       // other options
-      color: '#eee',
-      selectionColor: '#3fca2f',
+      color: '#3fca2f',
       showAxis: true,
       showBrush: false,
 
@@ -133,7 +131,8 @@ export default Vue.extend({
         const mark = {
           cx: d.x,
           cy: d.y,
-          fill: isSelected ? this.selectionColor : this.color,
+          fill: this.color,
+          opacity: isSelected ? 1 : 0.2
         }
         ;(isSelected ? front : back).push(mark)
       })
