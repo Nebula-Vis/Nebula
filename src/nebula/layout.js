@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 
-// TODO：健壮性有待增强
+// TODO: 健壮性
 export default class Layout {
   constructor(spec) {
     this.spec = spec

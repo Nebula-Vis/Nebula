@@ -5,7 +5,6 @@ import VisManager from './vis'
 const parseSpec = async (spec) => {
   const dataSource = new DataSource(spec.data)
   await dataSource.init()
-  dataSource.print()
 
   const layout = new Layout(spec.layout)
   layout.mount('#app')
