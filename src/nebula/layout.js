@@ -4,42 +4,33 @@ import * as d3 from 'd3'
 export default class Layout {
   constructor(spec) {
     this.spec = spec
-    this.layout = this._getLayoutBySpec(this.spec)
+    this.layout = this._generateLayoutBySpec(this.spec)
   }
 
-  _getLayoutBySpec(spec) {
-    if (!spec.width || !spec.height || !spec.direction)
-      throw "Layour root error."
-    const root = this._getRootBySpec(spec.width, spec.height, spec.direction)
-    this._insertChildrenInRoot(root, spec.children)
-    return root
+  _generateLayoutBySpec(spec) {
+    const grids = this._generateGrids(spec.width, spec.height, spec.rows, spec.columns)
+    this._addContainersToGrids(grids, spec.containers)
+    return grids
   }
 
-  _getRootBySpec(width, height, dir) {
+  _generateGrids(width, height, rows, columns) {
     return d3.create('div')
-      .style('display', 'flex')
-      .style('flex-direction', dir)
+      .style('display', 'grid')
       .style('width', width)
       .style('height', height)
+      .style('grid-template-rows', rows.reduce((total, current) => `${total} ${current}`, ""))
+      .style('grid-template-columns', columns.reduce((total, current) => `${total} ${current}`, ""))
   }
 
-  _insertChildrenInRoot(root, childrenSpec) {
-    for (const childSpec of childrenSpec) {
-      const element = root.append('div')
- 
-      if (!childSpec.length)
-        throw "Layout children error."
-
-      const length = childSpec.length
-      if (typeof length == 'number') element.style('flex', `${length} ${length}`)
-      else if (typeof length == 'string') element.style('flex', `0 0 ${length}`)
-
-      if (childSpec.id) element.attr('id', childSpec.id)
-      if (childSpec.direction) element.style('display', 'flex').style('flex-direction', childSpec.direction)
-
-      if (childSpec.children) this._insertChildrenInRoot(element, childSpec.children)
-      // mount point：是否需要，后面研究下
-      else element.append('div').attr('id', `${childSpec.id}-mount`)
+  _addContainersToGrids(grids, containers) {
+    for (const container of containers) {
+      const gridlines = container.grids.split(' ').map(str => Number(str))
+      grids.append('div')
+        .attr('id', container.name)
+        .style('grid-row-start', gridlines[0])
+        .style('grid-row-end', gridlines[1] + 1)
+        .style('grid-column-start', gridlines[2])
+        .style('grid-column-end', gridlines[3] + 1)
     }
   }
 

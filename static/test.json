@@ -19,26 +19,11 @@
   "layout": {
     "width": "1000px",
     "height": "1000px",
-    "direction": "row",
-    "children": [
-      {
-        "id": "chart1",
-        "length": "550px"
-      },
-      {
-        "length": 1,
-        "direction": "column",
-        "children": [
-          {
-            "id": "chart2",
-            "length": 1
-          },
-          {
-            "id": "chart3",
-            "length": 1
-          }
-        ]
-      }
-    ]
+    "rows": ["300px", "1fr"],
+    "columns": ["300px", "1fr"],
+    "containers": [
+      { "name": "container1", "grids": "1 1 1 1" },
+      { "name": "container2", "grids": "2 2 1 2" }
+		]
   }
 }

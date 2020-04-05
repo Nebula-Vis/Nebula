@@ -8,8 +8,8 @@ export default class DataSource {
   }
 
   async init() {
-    this.data = await this._getDataSourcesBySpec(this.spec)
-    this._addUniqueIdToData(this.data)
+    this.data = await this._generateDataSourcesBySpec(this.spec)
+    // this._addUniqueIdToData(this.data)
   }
 
   getDataSourceByName(name) {
@@ -34,7 +34,7 @@ export default class DataSource {
     })
   }
 
-  async _getDataSourcesBySpec (spec) {
+  async _generateDataSourcesBySpec (spec) {
     const data = []
     for (const element of spec) {
       const dataObj = {}

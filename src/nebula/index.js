@@ -9,8 +9,8 @@ const parseSpec = async (spec) => {
   const layout = new Layout(spec.layout)
   layout.mount('#app')
 
-  const vis = new VisManager(dataSource, spec.visualizations)
-  vis.init()
+  // const vis = new VisManager(dataSource, spec.visualizations)
+  // vis.init()
 }
 
 export default { parseSpec }
