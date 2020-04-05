@@ -9,7 +9,7 @@ export default class DataSource {
 
   async init() {
     this.data = await this._generateDataSourcesBySpec(this.spec)
-    // this._addUniqueIdToData(this.data)
+    this._addUniqueIdToData(this.data)
   }
 
   getDataSourceByName(name) {
