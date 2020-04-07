@@ -2,7 +2,7 @@ import * as d3 from 'd3'
 import * as LineUpJS from 'lineupjs'
 import 'lineupjs/build/LineUpJS.css'
 import _ from 'lodash'
-import ReactiveProperty from '../nebula/reactiveprop'
+import ReactiveProperty from '../nebula/reactive_prop'
 
 export default class LineUp {
   constructor(props) {

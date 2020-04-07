@@ -1,5 +1,5 @@
 import embed from 'vega-embed'
-import ReactiveProperty from '../nebula/reactiveprop'
+import ReactiveProperty from '../nebula/reactive_prop'
 
 export default class VLScatterplot {
   constructor(props) {
@@ -25,7 +25,7 @@ export default class VLScatterplot {
     this.view = (await embed(selector, this.vlSpec)).view
 
     this.selection = new ReactiveProperty(
-      this, 'selection', 
+      this, 'selection',
       this.vlSpec.data.values.map((v, i) => (i + 1)),
       '_renderSelection'
     )
