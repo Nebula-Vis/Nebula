@@ -16,6 +16,7 @@ export default class LineUp {
     this.lineup = null
     this._selection = null
     this._order = null
+    this.colors = d3.scaleOrdinal(d3.schemeSet2)
 
     this._init()
   }
@@ -36,10 +37,11 @@ export default class LineUp {
       '_onOrderChange'
     )
 
-    this.lineup.on('selectionChanged', (val) => {
-      const nbids = val
-        .filter((index) => !!this.data.value[index])
-        .map((index) => this.data.value[index]._nbid_)
+    this.lineup.on('selectionChanged', (selectedIndices) => {
+      const data = this.data.value
+      const nbids = selectedIndices
+        .filter((index) => !!data[index])
+        .map((index) => data[index]._nbid_)
       this._selection = nbids
       this.selection.set(nbids)
     })
@@ -67,32 +69,34 @@ export default class LineUp {
     this.lineup = builder.build(d3.select(this.el).node())
   }
 
-  _onDataChange(val) {
-    const datum = val[0]
-    const order = this.order.value.filter(attr => datum[attr] !== undefined)
-    const builder = this._getDataBuilder(val, order)
+  _onDataChange(data) {
+    const datum = data[0]
+    const order = this.order.value.filter((attr) => datum.hasOwnProperty(attr))
+    const builder = this._getDataBuilder(data, order)
     this.lineup.setDataProvider(builder.buildData())
     this.lineup.setSelection(
       this.selection.value.map((nbid) =>
-        val.findIndex((v) => v._nbid_ === nbid)
+        data.findIndex((v) => v._nbid_ === nbid)
       )
     )
   }
 
-  _onSelectionChange(val) {
-    if (_.isEqual(val, this._selection)) return
+  _onSelectionChange(selection) {
+    if (_.isEqual(selection, this._selection)) return
     const data = this.data.value
-    const selection = val
-      .map((nbid) => data.findIndex((v) => v._nbid_ === nbid))
-      // .filter((i) => i !== -1)
-    this.lineup.setSelection(selection)
+    const selectedIndices = selection.map((nbid) =>
+      data.findIndex((v) => v._nbid_ === nbid)
+    )
+    // .filter((i) => i !== -1)
+    this.lineup.setSelection(selectedIndices)
   }
 
-  _onOrderChange(val) {
-    if (_.isEqual(val, this._order)) return
+  _onOrderChange(order) {
+    if (_.isEqual(order, this._order)) return
     const ranking = this.lineup.data.getFirstRanking()
-    val
-      .map((attr) => ranking.children.find((c) => c.desc.column === attr))
+    const columns = ranking.children
+    order
+      .map((attr) => columns.find((c) => c.desc.column === attr))
       // .filter((column) => column)
       .forEach((column, i) => {
         ranking.move(column, i + 4)
@@ -102,12 +106,9 @@ export default class LineUp {
   _getDataBuilder(data, order) {
     const builder = LineUpJS.builder(data)
 
-    const colors = d3.scaleOrdinal(d3.schemeSet2)
-    builder.column(
-      LineUpJS.buildStringColumn('_nbid_').label('id').width(150).frozen()
-    )
-    order.forEach((attr, i) => {
-      builder.column(LineUpJS.buildNumberColumn(attr).color(colors(i)))
+    builder.column(LineUpJS.buildStringColumn('_nbid_').width(150))
+    order.forEach((attr) => {
+      builder.column(LineUpJS.buildNumberColumn(attr).color(this.colors(attr)))
     })
 
     return builder
