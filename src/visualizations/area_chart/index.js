@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 import ReactiveProperty from '../../nebula/reactive_prop'
-import VueAreaChart from './VueAreaChart'
+import VueAreaChart from './vue_area_chart'
 
 export default class AreaChart {
   constructor(props) {

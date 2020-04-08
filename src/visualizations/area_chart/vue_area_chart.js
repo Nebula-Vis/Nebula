@@ -104,14 +104,14 @@ export default Vue.extend({
     },
     scales() {
       const stackedData = this.stackedData
-      let maxY = d3.max(stackedData[stackedData.length - 1], d => d[1])
+      let maxY = d3.max(stackedData[stackedData.length - 1], (d) => d[1])
       const domains = {
         x: this.scale,
-        y: [0, maxY]
+        y: [0, maxY],
       }
 
       const scales = {}
-      ;['x', 'y'].forEach(attrName => {
+      ;['x', 'y'].forEach((attrName) => {
         scales[attrName] = d3
           .scaleLinear()
           .domain(domains[attrName])
@@ -123,25 +123,26 @@ export default Vue.extend({
     },
     marks() {
       const { scales, data, x } = this
-      const area = d3.area()
+      const area = d3
+        .area()
         .x((d, i) => scales.x(data[i][x]))
-        .y0(d => scales.y(d[0]))
-        .y1(d => scales.y(d[1]))
+        .y0((d) => scales.y(d[0]))
+        .y1((d) => scales.y(d[1]))
       const paths = this.stackedData.map((d, i) => ({
         d: area(d),
         fill: scales.color(i),
-        opacity: 0.2
+        opacity: 0.2,
       }))
 
       area.x((d, i) => scales.x(selectionData[i][x]))
 
       const selectionSet = new Set(this.selection)
-      const selectionData = this.data.filter(d => selectionSet.has(d._nbid_))
+      const selectionData = this.data.filter((d) => selectionSet.has(d._nbid_))
       const stackedSelectionData = this.getStackedData(selectionData)
       const selectedPaths = stackedSelectionData.map((d, i) => ({
         d: area(d),
         fill: scales.color(i),
-        opacity: 1
+        opacity: 1,
       }))
 
       return paths.concat(selectedPaths)
@@ -177,7 +178,7 @@ export default Vue.extend({
     this.x = this.x || getIthFieldOfType(this.data, 0, 'number')
     this.y = this.y || getFieldsOfType(this.data, 'number', 1)
     if (!this.boolDataHasAttribute(this.data, this.x, this.y)) {
-      throw `Scatterplot ${this.id}: wrong attributes`
+      throw `AreaChart ${this.id}: wrong attributes`
     }
 
     if (!isArrayOfType(this.scale, 'number', 2)) {
@@ -204,7 +205,7 @@ export default Vue.extend({
 
     this.addBrush()
 
-    window.addEventListener('keydown', evt => {
+    window.addEventListener('keydown', (evt) => {
       if (this.isMouseIn && evt.key === 'Shift') {
         this.addZoom()
       }
@@ -221,15 +222,18 @@ export default Vue.extend({
     },
     boolDataHasAttribute(data, x, y) {
       const datum = data[0]
-      return datum &&
+      return (
+        datum &&
         datum[x] !== undefined &&
-        y.every(yI => datum[yI] !== undefined)
+        Array.isArray(y) &&
+        y.every((yI) => datum[yI] !== undefined)
+      )
     },
     getStackedData(data) {
       return d3.stack().keys(this.y)(data)
     },
     getIdsFromData(data) {
-      return data.map(d => d._nbid_)
+      return data.map((d) => d._nbid_)
     },
     getAxisDomainsFromData(data, x) {
       return getDataExtent(data, x)
@@ -249,7 +253,7 @@ export default Vue.extend({
         })
         if (this.isFiltering) {
           const selectionSet = new Set(selection)
-          this.data = this.data.filter(d => selectionSet.has(d._nbid_))
+          this.data = this.data.filter((d) => selectionSet.has(d._nbid_))
           this.$emit('data', this.data)
         } else {
           this.selection = selection
@@ -271,7 +275,8 @@ export default Vue.extend({
         ])
         .on('end', onBrushEnd)
 
-      this.svg.select('.brush-g')
+      this.svg
+        .select('.brush-g')
         .call(brush)
         .select('.selection')
         .attr('stroke', null)
@@ -285,7 +290,8 @@ export default Vue.extend({
       }
 
       const { x: xRange, y: yRange } = this.ranges
-      this.svg.select('.zoom-g')
+      this.svg
+        .select('.zoom-g')
         .append('rect')
         .attr('x', xRange[0])
         .attr('y', yRange[1])
@@ -297,26 +303,20 @@ export default Vue.extend({
         .call(d3.zoom().on('zoom', onZoom))
     },
     removeZoom() {
-      this.svg.select('.zoom-g')
-        .selectAll('*')
-        .remove()
+      this.svg.select('.zoom-g').selectAll('*').remove()
     },
     drawAxis() {
       // 绘制坐标轴
       const xAxis = d3.axisBottom().scale(this.scales.x)
       const yAxis = d3.axisLeft().scale(this.scales.y)
-      this.svg
-        .select('.x-axis')
-        .call(xAxis)
-      this.svg
-        .select('.y-axis')
-        .call(yAxis)
+      this.svg.select('.x-axis').call(xAxis)
+      this.svg.select('.y-axis').call(yAxis)
     },
   },
 })
 
 function getDataExtent(data, key) {
-  return d3.extent(data, d => d[key])
+  return d3.extent(data, (d) => d[key])
 }
 
 function getIthFieldOfType(data, n, type) {
@@ -338,9 +338,8 @@ function getIthFieldOfType(data, n, type) {
 function getFieldsOfType(data, type, start) {
   const datum = data[0]
   if (datum) {
-    return Object
-      .keys(datum)
-      .filter(key => typeof datum[key] === type)
+    return Object.keys(datum)
+      .filter((key) => typeof datum[key] === type)
       .slice(start)
   }
   return []
@@ -352,7 +351,15 @@ function isArrayOfType(array, type, col, row) {
   if (row === 1 && array.length > 1) {
     array = [array]
   }
-  return Array.isArray(array) && array.length === row && array.every(r => {
-    return Array.isArray(r) && r.length === col && r.every(c => typeof c === type)
-  })
+  return (
+    Array.isArray(array) &&
+    array.length === row &&
+    array.every((r) => {
+      return (
+        Array.isArray(r) &&
+        r.length === col &&
+        r.every((c) => typeof c === type)
+      )
+    })
+  )
 }
