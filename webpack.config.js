@@ -12,5 +12,17 @@ module.exports = {
     contentBase: './public',
     port: 8080,
     open: true
-  }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+        loader: 'file-loader',
+      },
+    ],
+  },
 }

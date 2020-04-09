@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 import ReactiveProperty from '../../nebula/reactive_prop'
-import VueScatterplot from './VueScatterplot'
+import VueScatterplot from './vue_scatterplot'
 
 export default class Scatterplot {
   constructor(props) {
