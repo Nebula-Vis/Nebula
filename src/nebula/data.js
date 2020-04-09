@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 
 // TODO: 健壮性
-export default class DataSource {
+export default class DataSources {
   constructor(spec) {
     this.spec = spec
     this.data = []

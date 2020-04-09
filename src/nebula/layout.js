@@ -4,34 +4,34 @@ import * as d3 from 'd3'
 export default class Layout {
   constructor(spec) {
     this.spec = spec
-    this.layout = this._generateLayoutBySpec(this.spec)
+    this.containerNames = spec.containers.map(container => container.name)
+    this.layout = this._generateGridsBySpec(this.spec)
+    this._addContainersToGridsBySpec(spec.containers)
   }
 
-  _generateLayoutBySpec(spec) {
-    const grids = this._generateGrids(spec.width, spec.height, spec.rows, spec.columns)
-    this._addContainersToGrids(grids, spec.containers)
-    return grids
-  }
-
-  _generateGrids(width, height, rows, columns) {
+  _generateGridsBySpec(spec) {
     return d3.create('div')
       .style('display', 'grid')
-      .style('width', width)
-      .style('height', height)
-      .style('grid-template-rows', rows.reduce((total, current) => `${total} ${current}`, ""))
-      .style('grid-template-columns', columns.reduce((total, current) => `${total} ${current}`, ""))
+      .style('width', spec.width)
+      .style('height', spec.height)
+      .style('grid-template-rows', spec.rows.reduce((total, current) => `${total} ${current}`, ""))
+      .style('grid-template-columns', spec.columns.reduce((total, current) => `${total} ${current}`, ""))
   }
 
-  _addContainersToGrids(grids, containers) {
-    for (const container of containers) {
-      const gridlines = container.grids.split(' ').map(str => Number(str))
-      grids.append('div')
-        .attr('id', container.name)
-        .style('grid-row-start', gridlines[0])
-        .style('grid-row-end', gridlines[1] + 1)
-        .style('grid-column-start', gridlines[2])
-        .style('grid-column-end', gridlines[3] + 1)
-    }
+  _addContainersToGridsBySpec(containers) {
+    containers.forEach(container => {
+      this.addOneContainerToGrids(container.name, container.grids)
+    })
+  }
+
+  addOneContainerToGrids(containerId, gridsInterval) {
+    const gridlines = gridsInterval.split(' ').map(str => Number(str))
+    this.layout.append('div')
+      .attr('id', containerId)
+      .style('grid-row-start', gridlines[0])
+      .style('grid-row-end', gridlines[1] + 1)
+      .style('grid-column-start', gridlines[2])
+      .style('grid-column-end', gridlines[3] + 1)
   }
 
   mount(selector) {

@@ -22,8 +22,25 @@
     "rows": ["300px", "1fr"],
     "columns": ["300px", "1fr"],
     "containers": [
-      { "name": "container1", "grids": "1 1 1 1" },
-      { "name": "container2", "grids": "2 2 1 2" }
+      { "name": "container1", "grids": "1 1 1 1" }
 		]
-  }
+  },
+  "visualizations": [
+    {
+      "id": "chart1",
+      "container": "container1",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "points"
+      }
+    },
+    {
+      "id": "chart1",
+      "container": "2 2 1 2",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "points"
+      }
+    }
+  ]
 }

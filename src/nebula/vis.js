@@ -1,44 +1,55 @@
-import test1 from '../visualizations/test1'
-import test2 from '../visualizations/test2'
+import Scatterplot from '../visualizations/scatterplot'
+import Areachart from '../visualizations/area_chart'
 
 export default class VisManger {
-  constructor (datasources, spec) {
-    this.vis3 = new test1({
-      id: 'vis3',
-      el: '#chart3-mount',
-      data: datasources.data[0],
-      x: "A",
-      y: "B"
-    })
+  constructor(dataSources, layout, visSpec) {
+    this.dataSources = dataSources
+    this.layout = layout
+    this.spec = visSpec
+    const charts = this.spec.map((chartSpec, i) => {
+      const chart = {
+        spec: chartSpec,
+        id: chartSpec.id,
+        container: null,
+        type: chartSpec.visualization,
+        instance: null,
+      }
 
-    this.vis2 = new test2({
-      id: 'vis2',
-      data: datasources.data[0],
-      x: "A",
-      y: "B"
-    })
+      // 处理挂载点
+      const chartContainerIndex = this.layout.containerNames.indexOf(chartSpec.container)
+      if (chartContainerIndex != -1) {
+        chart.container = this.layout.containerNames[chartContainerIndex]
+      } else {
+        const tmpContainerName = `_container${i}`
+        chart.container = tmpContainerName
+        this.layout.addOneContainerToGrids(tmpContainerName, chartSpec.container)
+      }
 
-    this.vis1 = new test1({
-      id: 'vis1',
-      el: '#chart1-mount',
-      data: datasources.data[0],
-      x: "A",
-      y: "B"
+      // 生成可视化实例
+      switch(chart.type.toLowerCase()) {
+        case 'scatterplot':
+          chart.instance = this._generateScatterplot(chartSpec.props)
+          // mount
+          break
+        case 'areachart':
+          break
+        case 'lineup':
+          break
+        case 'graph':
+          break
+      }
+      
+        
     })
+    this.charts = charts
   }
 
-  async init() {
-    await this.vis2.init('#chart2-mount')
-
-    this.vis1.selection.addSub(this.vis3.selection)
-    this.vis1.selection.addSub(this.vis2.selection)
-    this.vis2.selection.addSub(this.vis1.selection)
-    this.vis3.selection.addSub(this.vis1.selection)
-    
-    // this.vis1.selection.set([1, 2, 3])
-    // this.vis2.selection.set([1, 2, 3, 4])
+  _generateScatterplot(propsSpec) {
+    const props = { ...propsSpec }
+    props.data = this.dataSources.getDataSourceByName(propsSpec.data).values
+    console.log(props)
+    return new Scatterplot(props)
   }
 }
-
 
 
