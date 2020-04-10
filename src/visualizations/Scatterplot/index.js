@@ -22,10 +22,10 @@ export default class Scatterplot {
     const selection = props.selection || getNbidsFromData(this.data)
 
     if (!boolDataHasAttributes(this.data, x, y)) {
-      throw 'Scatterplot: wrong attributes'
+      throw new Error('Scatterplot: wrong attributes')
     }
     if (!isArrayOfType(scale, 'number', 2, 2)) {
-      throw 'Scatterplot: wrong scale'
+      throw new Error('Scatterplot: wrong scale')
     }
 
     this.x = x
@@ -42,7 +42,7 @@ export default class Scatterplot {
 
   mount(el) {
     if (typeof el === 'string' && !el.startsWith('#')) {
-      el = '#' + el
+      el = `#${el}`
     }
     this.el = d3.select(el).append('div').node()
     this.vm.$mount(this.el)

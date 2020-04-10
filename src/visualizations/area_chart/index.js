@@ -22,10 +22,10 @@ export default class AreaChart {
     const selection = props.selection || getNbidsFromData(this.data)
 
     if (!boolDataHasAttributes(this.data, x, ...y)) {
-      throw 'AreaChart: wrong attributes'
+      throw new Error('AreaChart: wrong attributes')
     }
     if (!isArrayOfType(scale, 'number', 2)) {
-      throw 'AreaChart: wrong scale'
+      throw new Error('AreaChart: wrong scale')
     }
 
     this.x = x
@@ -42,7 +42,7 @@ export default class AreaChart {
 
   mount(el) {
     if (typeof el === 'string' && !el.startsWith('#')) {
-      el = '#' + el
+      el = `#${el}`
     }
     this.el = d3.select(el).append('div').node()
     this.vm.$mount(this.el)

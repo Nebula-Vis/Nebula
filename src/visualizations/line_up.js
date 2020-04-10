@@ -24,7 +24,7 @@ export default class LineUp {
 
   mount(el) {
     if (typeof el === 'string' && !el.startsWith('#')) {
-      el = '#' + el
+      el = `#${el}`
     }
     this.el = d3.select(el).node()
 
@@ -70,7 +70,7 @@ export default class LineUp {
   _onDataSet(data) {
     if (_.isEqual(data, this._data)) return
     const datum = data[0]
-    const order = this.order.value.filter((attr) => datum.hasOwnProperty(attr))
+    const order = this.order.value.filter((attr) => datum[attr] !== undefined)
     const builder = this._getDataBuilder(data, order)
     this.lineup.setDataProvider(builder.buildData())
     this.lineup.setSelection(

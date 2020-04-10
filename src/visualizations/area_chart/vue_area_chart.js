@@ -104,7 +104,7 @@ export default Vue.extend({
     },
     scales() {
       const stackedData = this.stackedData
-      let maxY = d3.max(stackedData[stackedData.length - 1], (d) => d[1])
+      const maxY = d3.max(stackedData[stackedData.length - 1], (d) => d[1])
       const domains = {
         x: this.scale,
         y: [0, maxY],
@@ -215,7 +215,7 @@ export default Vue.extend({
         const [x0, x1] = d3.event.selection
         const selection = []
         const { scales, x } = this
-        this.data.forEach((d, i) => {
+        this.data.forEach((d) => {
           const xVal = scales.x(d[x])
           if (xVal >= x0 && xVal <= x1) {
             selection.push(d._nbid_)

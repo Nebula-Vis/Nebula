@@ -2,7 +2,7 @@ import _ from 'lodash'
 
 export default class ReactiveProperty {
   constructor(vis, name, value, cb) {
-    this.vis = vis  // 所属的可视化
+    this.vis = vis // 所属的可视化
     this.name = name
     this.value = value
     this.cb = cb // value改变时的回调函数名
@@ -13,10 +13,11 @@ export default class ReactiveProperty {
     this.subs.push(sub)
   }
 
-  get() { return this.value }
+  get() {
+    return this.value
+  }
 
-  // TODO: set的多种方式，options、variants，后期调整
-  // TODO：结合了data transformation, triggers
+  // TODO: options, data transformation, triggers
 
   // 外到内、内到外，都用这个
   set(value) {
@@ -26,12 +27,14 @@ export default class ReactiveProperty {
     }
 
     this.value = value
-    this.vis[this.cb](value)
+    // 内部自我更新
+    if (this.vis && this.cb && this.vis[this.cb]) this.vis[this.cb](value)
+
     this._notifySubs(value)
   }
 
   _notifySubs(value) {
-    this.subs.forEach(sub => {
+    this.subs.forEach((sub) => {
       sub.set(value)
     })
   }

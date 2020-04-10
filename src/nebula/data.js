@@ -13,18 +13,18 @@ export default class DataSources {
   }
 
   getDataSourceByName(name) {
-    return this.data.find(dataObj => dataObj.name === name)
+    return this.data.find((dataObj) => dataObj.name === name)
   }
 
   print() {
-    this.data.forEach(d => {
+    this.data.forEach((d) => {
       console.log(d)
     })
   }
 
   // 为每个data items赋予一个nebula的内部id，用于之后的比较
   _addUniqueIdToData(sources) {
-    sources.forEach(source => {
+    sources.forEach((source) => {
       // Multidimensional data
       if (source.values) {
         source.values.forEach((v, i) => {
@@ -43,7 +43,7 @@ export default class DataSources {
     })
   }
 
-  async _generateDataSourcesBySpec (spec) {
+  async _generateDataSourcesBySpec(spec) {
     const data = []
     for (const element of spec) {
       const dataObj = {}
@@ -59,11 +59,11 @@ export default class DataSources {
         dataObj.links = element.links
       }
       // CSV data
-      else if (element.path && element.format === "csv") {
+      else if (element.path && element.format === 'csv') {
         dataObj.values = await this._fetchCsvDataByPath(element.path)
       }
       // JSON data
-      else if (element.path && (element.format === "json" || !element.format)) {
+      else if (element.path && (element.format === 'json' || !element.format)) {
         const jsonData = await this._fetchJsonDataByPath(element.path)
         // json data - table
         if (jsonData.values) {
@@ -94,8 +94,8 @@ export default class DataSources {
   _parseNumericStringToNumberInCsvData(data) {
     if (!data.length) return
     const numericAttributes = this._getNumericAttributesInCsvData(data)
-    data.forEach(d => {
-      numericAttributes.forEach(attr => {
+    data.forEach((d) => {
+      numericAttributes.forEach((attr) => {
         d[attr] = +d[attr]
       })
     })
@@ -104,8 +104,8 @@ export default class DataSources {
   _getNumericAttributesInCsvData(data) {
     if (!data.length) return []
     const datum = data[0]
-    return Object.keys(datum).filter(
-      attr => this._isNumericString(datum[attr])
+    return Object.keys(datum).filter((attr) =>
+      this._isNumericString(datum[attr])
     )
   }
 

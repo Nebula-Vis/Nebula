@@ -25,7 +25,7 @@ export default class NodeLinkGraph {
 
   mount(el) {
     if (typeof el === 'string' && !el.startsWith('#')) {
-      el = '#' + el
+      el = `#${el}`
     }
     this.el = d3.select(el).node()
 
@@ -42,15 +42,15 @@ export default class NodeLinkGraph {
     )
   }
 
-  _onDataSet() {
+  _onDataSet(val) {
     this._renderGraph()
-    this.selection.set(getNbidsFromData(this.data.value.nodes))
+    this.selection.set(getNbidsFromData(val.nodes))
   }
 
   _onSelectionSet(val) {
     const color = this.color
     const selectionColor = this.selectionColor
-    const selection = this.selection.value
+    const selection = val
     d3.select(this.el)
       .selectAll('circle')
       .attr('fill', (d) =>

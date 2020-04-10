@@ -8,47 +8,77 @@ export default class VisManger {
     this.dataSources = dataSources
     this.layout = layout
     this.spec = visSpec
-    const charts = this.spec.map((chartSpec, i) => {
-      const chart = {
+    this.charts = {}
+
+    for (const chartSpec of this.spec) {
+      if (chartSpec.id in this.charts)
+        throw new Error('Vis ids cannot be repeated.')
+      this.charts[chartSpec.id] = {
         spec: chartSpec,
-        id: chartSpec.id,
-        container: null,
         type: chartSpec.visualization,
+        container: null,
         instance: null,
       }
 
       // 处理挂载点
-      const chartContainerIndex = this.layout.containerNames.indexOf(chartSpec.container)
-      if (chartContainerIndex != -1) {
-        chart.container = this.layout.containerNames[chartContainerIndex]
+      const chartContainerIndex = this.layout.containerNames.indexOf(
+        chartSpec.container
+      )
+      if (chartContainerIndex !== -1) {
+        this.charts[chartSpec.id].container = this.layout.containerNames[
+          chartContainerIndex
+        ]
       } else {
-        const tmpContainerName = `_container${i}`
-        chart.container = tmpContainerName
-        this.layout.addOneContainerToGrids(tmpContainerName, chartSpec.container)
+        const tmpContainerName = `_container_${chartSpec.id}`
+        this.charts[chartSpec.id].container = tmpContainerName
+        this.layout.addOneContainerToGrids(
+          tmpContainerName,
+          chartSpec.container
+        )
       }
 
       // 生成可视化实例
-      switch(chart.type.toLowerCase()) {
+      switch (this.charts[chartSpec.id].type.toLowerCase()) {
         case 'scatterplot':
-          chart.instance = this._generateScatterplot(chartSpec.props)
-          chart.instance.mount(chart.container)
+          this.charts[chartSpec.id].instance = this._generateScatterplot(
+            chartSpec.props
+          )
+          this.charts[chartSpec.id].instance.mount(
+            this.charts[chartSpec.id].container
+          )
           break
         case 'areachart':
-          chart.instance = this._generateAreaChart(chartSpec.props)
-          chart.instance.mount(chart.container)
+          this.charts[chartSpec.id].instance = this._generateAreaChart(
+            chartSpec.props
+          )
+          this.charts[chartSpec.id].instance.mount(
+            this.charts[chartSpec.id].container
+          )
           break
         case 'lineup':
-          chart.instance = this._generateLineUp(chartSpec.props)
-          chart.instance.mount(chart.container)
+          this.charts[chartSpec.id].instance = this._generateLineUp(
+            chartSpec.props
+          )
+          this.charts[chartSpec.id].instance.mount(
+            this.charts[chartSpec.id].container
+          )
           break
         case 'graph':
-          chart.instance = this._generateNodeLinkGraph(chartSpec.props)
-          chart.instance.mount(chart.container)
+          this.charts[chartSpec.id].instance = this._generateNodeLinkGraph(
+            chartSpec.props
+          )
+          this.charts[chartSpec.id].instance.mount(
+            this.charts[chartSpec.id].container
+          )
+          break
+        default:
           break
       }
+    }
+  }
 
-    })
-    this.charts = charts
+  getVisInstanceById(id) {
+    return this.charts[id].instance
   }
 
   _generateScatterplot(propsSpec) {

@@ -1,6 +1,7 @@
 import DataSources from './data'
 import Layout from './layout'
 import VisManager from './vis'
+import CoordinationManager from './coordination'
 
 const parseSpec = async (spec) => {
   const dataSources = new DataSources(spec.data)
@@ -9,8 +10,11 @@ const parseSpec = async (spec) => {
   const layout = new Layout(spec.layout)
   layout.mount('#app')
 
-  new VisManager(dataSources, layout, spec.visualizations)
-  // vis.init()
+  const visManager = new VisManager(dataSources, layout, spec.visualizations)
+
+  spec.coordination
+    ? new CoordinationManager(dataSources, visManager, spec.coordination)
+    : null
 }
 
 export default { parseSpec }
