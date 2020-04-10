@@ -1,25 +1,28 @@
 import * as d3 from 'd3'
 
-// TODO: 健壮性
-export default class DataSources {
+/**
+ * Init
+ * const dataParser = new DataSpecParser(spec)
+ * await dataParser.loadData()
+ * const dataSources = dataParser.getDataSources()
+ *
+ * Get data
+ * const data = dataSources.getDataSourceByName(name)
+ */
+export default class DataSpecParser {
   constructor(spec) {
-    this.spec = spec
-    this.data = []
+    if (!spec) throw new TypeError('No data specification')
+    this._spec = spec
+    this._dataSources = null
   }
 
-  async init() {
-    this.data = await this._generateDataSourcesBySpec(this.spec)
-    this._addUniqueIdToData(this.data)
+  async loadData() {
+    this._dataSources = await this._generateDataSourcesBySpec(this._spec)
+    this._addUniqueIdToData(this._dataSources)
   }
 
-  getDataSourceByName(name) {
-    return this.data.find((dataObj) => dataObj.name === name)
-  }
-
-  print() {
-    this.data.forEach((d) => {
-      console.log(d)
-    })
+  getDataSources() {
+    return new DataSources(this._dataSources)
   }
 
   // 为每个data items赋予一个nebula的内部id，用于之后的比较
@@ -44,7 +47,7 @@ export default class DataSources {
   }
 
   async _generateDataSourcesBySpec(spec) {
-    const data = []
+    const dataSources = []
     for (const element of spec) {
       const dataObj = {}
       dataObj.name = element.name
@@ -53,7 +56,7 @@ export default class DataSources {
       if (element.values) {
         dataObj.values = element.values
       }
-      // inline data - graph
+      // Inline data - graph
       else if (element.nodes && element.links) {
         dataObj.nodes = element.nodes
         dataObj.links = element.links
@@ -65,19 +68,19 @@ export default class DataSources {
       // JSON data
       else if (element.path && (element.format === 'json' || !element.format)) {
         const jsonData = await this._fetchJsonDataByPath(element.path)
-        // json data - table
+        // table
         if (jsonData.values) {
           dataObj.values = jsonData.values
         }
-        // json data - graph
+        // graph
         else if (jsonData.nodes && jsonData.links) {
           dataObj.nodes = jsonData.nodes
           dataObj.links = jsonData.links
         }
       }
-      data.push(dataObj)
+      dataSources.push(dataObj)
     }
-    return data
+    return dataSources
   }
 
   async _fetchCsvDataByPath(path) {
@@ -111,5 +114,18 @@ export default class DataSources {
 
   _isNumericString(value) {
     return typeof value === 'string' && value.length > 0 && !isNaN(+value)
+  }
+}
+
+/**
+ * One data source: { name, values/nodes/links }
+ */
+class DataSources {
+  constructor(dataSources) {
+    this._dataSources = dataSources
+  }
+
+  getDataSourceByName(name) {
+    return this._dataSources.find((d) => d.name === name)
   }
 }

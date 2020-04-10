@@ -1,5 +1,5 @@
 import embed from 'vega-embed'
-import ReactiveProperty from '../nebula/reactive_prop'
+import ReactiveProperty from '../nebula/reactive-prop'
 
 export default class VLScatterplot {
   constructor(props) {

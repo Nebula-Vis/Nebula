@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-import ReactiveProperty from '../../nebula/reactive_prop'
+import ReactiveProperty from '../../nebula/reactive-prop'
 import VueScatterplot from './vue_scatterplot'
 import {
   getFieldsOfType,

@@ -1,4 +1,4 @@
-import ReactiveProperty from './reactive_prop'
+import ReactiveProperty from './reactive-prop'
 
 export default class CoordinationManager {
   constructor(dataSources, visManager, spec) {

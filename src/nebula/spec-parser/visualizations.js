@@ -3,7 +3,7 @@ import Areachart from '../visualizations/area_chart'
 import LineUp from '../visualizations/line_up'
 import NodeLinkGraph from '../visualizations/node_link_graph'
 
-export default class VisManger {
+class VisManger {
   constructor(dataSources, layout, visSpec) {
     this.dataSources = dataSources
     this.layout = layout
@@ -104,5 +104,19 @@ export default class VisManger {
     const data = this.dataSources.getDataSourceByName(propsSpec.data)
     props.data = { nodes: data.nodes, links: data.links }
     return new NodeLinkGraph(props)
+  }
+}
+
+export default class VisualizationsSpecParser {
+  constructor(dataSources, layout, spec) {
+    this._dataSources = dataSources
+    this._layout = layout
+    this._spec = spec
+  }
+}
+
+class Visualizations {
+  constructor() {
+    
   }
 }
