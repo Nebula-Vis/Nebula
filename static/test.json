@@ -28,25 +28,22 @@
   "layout": {
     "width": "1000px",
     "height": "1000px",
-    "rows": ["300px", "1fr"],
-    "columns": ["300px", "1fr"],
-    "containers": [
-      { "name": "container1", "grids": "1 1 1 1" }
-		]
+    "rows": ["500px", "1fr"],
+    "columns": ["500px", "1fr"]
   },
   "visualizations": [
     {
       "id": "chart1",
-      "container": "container1",
+      "container": "1 1 1 1",
       "visualization": "scatterplot",
       "props": {
         "data": "points"
       }
     },
     {
-      "id": "chart1",
+      "id": "chart2",
       "container": "2 2 1 1",
-      "visualization": "areachart",
+      "visualization": "scatterplot",
       "props": {
         "data": "points"
       }
@@ -66,6 +63,13 @@
       "props": {
         "data": "miserables"
       }
+    }
+  ],
+  "coordination": [
+    {
+      "data": [
+        { "name": "$d1", "properties": ["chart1.selection", "chart2.selection"] }
+      ]
     }
   ]
 }
