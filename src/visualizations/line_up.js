@@ -2,12 +2,13 @@ import * as d3 from 'd3'
 import * as LineUpJS from 'lineupjs'
 import 'lineupjs/build/LineUpJS.css'
 import _ from 'lodash'
+import { getFieldsOfType, getNbidsFromData } from '../utils'
 import ReactiveProperty from '../nebula/reactive_prop'
 
 export default class LineUp {
   constructor(props) {
     this.data = props.data || []
-    this.selection = props.selection || getIdsFromData(this.data)
+    this.selection = props.selection || getNbidsFromData(this.data)
     this.order = props.order || getFieldsOfType(this.data, 'number')
 
     this.el = null
@@ -27,6 +28,7 @@ export default class LineUp {
     }
     this.el = d3.select(el).node()
 
+    this._addLineUpColumnStyle()
     this._buildLineUp()
     this._addDataListener()
     this._addSelectionListener()
@@ -49,7 +51,7 @@ export default class LineUp {
 
     builder.defaultRanking()
     builder.sidePanel(false)
-    builder.rowHeight(20, 2)
+    builder.rowHeight(21, 1)
 
     this.lineup = builder.build(this.el)
   }
@@ -143,18 +145,14 @@ export default class LineUp {
       }, 50)
     )
   }
-}
 
-function getIdsFromData(data) {
-  return data.map((d) => d._nbid_)
-}
-
-function getFieldsOfType(data, type) {
-  const datum = data[0]
-  if (datum) {
-    return Object.keys(datum).filter(
-      (key) => typeof datum[key] === type
-    )
+  _addLineUpColumnStyle() {
+    const lineUpColumnStyle = document.createElement('style')
+    lineUpColumnStyle.innerHTML = `
+      .lu-row [data-id^=col] {
+        overflow-y: hidden;
+      }
+    `
+    document.body.appendChild(lineUpColumnStyle)
   }
-  return []
 }

@@ -1,19 +1,27 @@
 import * as d3 from 'd3'
 import ReactiveProperty from '../../nebula/reactive_prop'
 import VueScatterplot from './vue_scatterplot'
+import {
+  getFieldsOfType,
+  isArrayOfType,
+  getDataExtent,
+  getNbidsFromData,
+  boolDataHasAttributes,
+} from '../../utils'
 
 export default class Scatterplot {
   constructor(props) {
     this.data = props.data
 
-    const x = props.x || getIthFieldOfType(this.data, 0, 'number')
-    const y = props.y || getIthFieldOfType(this.data, 1, 'number')
+    const numericFields = getFieldsOfType(this.data, 'number')
+    const x = props.x || numericFields[0]
+    const y = props.y || numericFields[1]
     const scale = isArrayOfType(props.scale, 'number', 2, 2)
       ? props.scale
-      : getAxisDomainsFromData(this.data, x, y)
-    const selection = props.selection || getIdsFromData(this.data)
+      : [getDataExtent(this.data, x), getDataExtent(this.data, y)]
+    const selection = props.selection || getNbidsFromData(this.data)
 
-    if (!boolDataHasAttribute(this.data, x, y)) {
+    if (!boolDataHasAttributes(this.data, x, y)) {
       throw 'Scatterplot: wrong attributes'
     }
     if (!isArrayOfType(scale, 'number', 2, 2)) {
@@ -105,55 +113,4 @@ export default class Scatterplot {
   _onSelectionChange(val) {
     this.vm.selection = val
   }
-}
-
-function getIthFieldOfType(data, n, type) {
-  if (data.length === 0) {
-    return undefined
-  }
-  const datum = data[0]
-  if (typeof datum !== 'object') {
-    return undefined
-  }
-  let count = 0
-  for (const key of Object.keys(datum).sort()) {
-    if (typeof datum[key] === type && count++ === n) {
-      return key
-    }
-  }
-}
-
-function isArrayOfType(array, type, col, row) {
-  if (!array) return false
-  if (row === 1 && array.length > 1) {
-    array = [array]
-  }
-  return (
-    Array.isArray(array) &&
-    array.length === row &&
-    array.every((r) => {
-      return (
-        Array.isArray(r) &&
-        r.length === col &&
-        r.every((c) => typeof c === type)
-      )
-    })
-  )
-}
-
-function boolDataHasAttribute(data, ...attrNames) {
-  const datum = data[0]
-  return datum && attrNames.every((attrName) => datum[attrName] !== undefined)
-}
-
-function getIdsFromData(data) {
-  return data.map((d) => d._nbid_)
-}
-
-function getDataExtent(data, key) {
-  return d3.extent(data, (d) => d[key])
-}
-
-function getAxisDomainsFromData(data, x, y) {
-  return [getDataExtent(data, x), getDataExtent(data, y)]
 }

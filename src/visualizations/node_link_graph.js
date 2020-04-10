@@ -3,6 +3,7 @@
 import * as d3 from 'd3'
 import { clamp } from 'lodash'
 import ReactiveProperty from '../nebula/reactive_prop'
+import { getNbidsFromData } from '../utils'
 
 export default class NodeLinkGraph {
   constructor(props) {
@@ -13,11 +14,11 @@ export default class NodeLinkGraph {
       }
     }
     this.nodeId = props.nodeId || 'id'
-    this.selection =
-      props.selection || this._getNodeSelectionFromData(this.data)
+    this.selection = props.selection || getNbidsFromData(this.data.nodes)
 
     this.color = '#ddd'
     this.selectionColor = '#3fca2f'
+    this.circleRadius = 4
 
     this._init()
   }
@@ -43,7 +44,7 @@ export default class NodeLinkGraph {
 
   _onDataSet() {
     this._renderGraph()
-    this.selection.set(this._getNodeSelectionFromData(this.data.value))
+    this.selection.set(getNbidsFromData(this.data.value.nodes))
   }
 
   _onSelectionSet(val) {
@@ -62,6 +63,7 @@ export default class NodeLinkGraph {
     const selection = this.selection.value
     const color = this.color
     const selectionColor = this.selectionColor
+    const radius = this.circleRadius
     const el = d3.select(this.el).node()
     const rect = el.getBoundingClientRect()
     const width = rect.width
@@ -99,7 +101,7 @@ export default class NodeLinkGraph {
       .selectAll('circle')
       .data(nodes)
       .join('circle')
-      .attr('r', 5)
+      .attr('r', radius)
       .attr('fill', (d) =>
         selection.includes(d._nbid_) ? selectionColor : color
       )
@@ -108,15 +110,15 @@ export default class NodeLinkGraph {
     node.append('title').text((d) => d[this.nodeId])
 
     simulation.on('tick', () => {
+      node
+        .attr('cx', (d) => (d.x = clamp(d.x, radius, width - radius)))
+        .attr('cy', (d) => (d.y = clamp(d.y, radius, height - radius)))
+
       link
         .attr('x1', (d) => d.source.x)
         .attr('y1', (d) => d.source.y)
         .attr('x2', (d) => d.target.x)
         .attr('y2', (d) => d.target.y)
-
-      node
-        .attr('cx', (d) => clamp(d.x, 0, width))
-        .attr('cy', (d) => clamp(d.y, 0, height))
     })
 
     if (el.firstChild) {
@@ -126,18 +128,18 @@ export default class NodeLinkGraph {
   }
 
   _drag(simulation) {
-    function dragstarted(d) {
+    const dragstarted = (d) => {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart()
       d.fx = d.x
       d.fy = d.y
     }
 
-    function dragged(d) {
+    const dragged = (d) => {
       d.fx = d3.event.x
       d.fy = d3.event.y
     }
 
-    function dragended(d) {
+    const dragended = (d) => {
       if (!d3.event.active) simulation.alphaTarget(0)
       d.fx = null
       d.fy = null
@@ -148,9 +150,5 @@ export default class NodeLinkGraph {
       .on('start', dragstarted)
       .on('drag', dragged)
       .on('end', dragended)
-  }
-
-  _getNodeSelectionFromData(data) {
-    return data.nodes.map((n) => n._nbid_)
   }
 }
