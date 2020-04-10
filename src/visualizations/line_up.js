@@ -26,9 +26,16 @@ export default class LineUp {
     if (typeof el === 'string' && !el.startsWith('#')) {
       el = `#${el}`
     }
-    this.el = d3.select(el).node()
+    el = d3.select(el).node()
+    const rect = el.getBoundingClientRect()
+    this.el = d3
+      .select(el)
+      .append('div')
+      .style('width', `${rect.width}px`)
+      .style('height', `${rect.height}px`)
+      .node()
 
-    this._addLineUpColumnStyle()
+    this._addLineUpStyle()
     this._buildLineUp()
     this._addDataListener()
     this._addSelectionListener()
@@ -52,6 +59,8 @@ export default class LineUp {
     builder.defaultRanking()
     builder.sidePanel(false)
     builder.rowHeight(21, 1)
+    builder.disableAdvancedRankingFeatures()
+    builder.disableAdvancedUIFeatures()
 
     this.lineup = builder.build(this.el)
   }
@@ -59,7 +68,7 @@ export default class LineUp {
   _getDataBuilder(data, order) {
     const builder = LineUpJS.builder(data)
 
-    builder.column(LineUpJS.buildStringColumn('_nbid_').width(150))
+    // builder.column(LineUpJS.buildStringColumn('_nbid_').width(150))
     order.forEach((attr) => {
       builder.column(LineUpJS.buildNumberColumn(attr).color(this.colors(attr)))
     })
@@ -146,13 +155,24 @@ export default class LineUp {
     )
   }
 
-  _addLineUpColumnStyle() {
-    const lineUpColumnStyle = document.createElement('style')
-    lineUpColumnStyle.innerHTML = `
+  _addLineUpStyle() {
+    const styleId = 'custom-lineup-style'
+    if (d3.select(`#${styleId}`).size()) return
+
+    const style = document.createElement('style')
+    style.innerHTML = `
       .lu-row [data-id^=col] {
         overflow-y: hidden;
       }
+      .lineup-engine>main {
+        overflow: -moz-scrollbars-none;
+        -ms-overflow-style: none;
+      }
+      .lineup-engine>main::-webkit-scrollbar {
+        width: 0 !important
+      }
     `
-    document.body.appendChild(lineUpColumnStyle)
+    style.id = styleId
+    document.body.appendChild(style)
   }
 }
