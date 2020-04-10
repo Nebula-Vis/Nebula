@@ -14,6 +14,7 @@
     "prefer-spread": "error",
     "one-var": ["error", "never"],
     "no-var": "error",
+    "no-unused-vars": "off",
     "no-array-constructor": "error",
     "no-new-object": "error",
     "no-new-wrappers": "error",

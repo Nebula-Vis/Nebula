@@ -46,7 +46,7 @@ class Layout {
   }
 
   addContainer(containerName, gridsInterval) {
-    if (this._isContainerNameExist(containerName))
+    if (this.isContainerNameExist(containerName))
       throw new SyntaxError('Repeated container name.')
     const gridAttrs = gridsInterval.split(' ').map((str) => Number(str))
     this._layoutElement
@@ -59,7 +59,7 @@ class Layout {
     this._containerNames.push(containerName)
   }
 
-  _isContainerNameExist(name) {
+  isContainerNameExist(name) {
     return this._containerNames.indexOf(name) === -1 ? false : true
   }
 
