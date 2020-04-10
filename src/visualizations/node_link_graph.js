@@ -18,7 +18,7 @@ export default class NodeLinkGraph {
 
     this.color = '#ddd'
     this.selectionColor = '#3fca2f'
-    this.circleRadius = 4
+    this.circleRadius = 5
 
     this._init()
   }
@@ -103,7 +103,7 @@ export default class NodeLinkGraph {
     const node = svg
       .append('g')
       .attr('stroke', '#fff')
-      .attr('stroke-width', 1.5)
+      .attr('stroke-width', 1)
       .selectAll('circle')
       .data(nodes)
       .join('circle')

@@ -59,8 +59,6 @@ export default class LineUp {
     builder.defaultRanking()
     builder.sidePanel(false)
     builder.rowHeight(21, 1)
-    builder.disableAdvancedRankingFeatures()
-    builder.disableAdvancedUIFeatures()
 
     this.lineup = builder.build(this.el)
   }
