@@ -27,7 +27,13 @@ export default class NodeLinkGraph {
     if (typeof el === 'string' && !el.startsWith('#')) {
       el = '#' + el
     }
-    this.el = d3.select(el).node()
+    this.el = d3
+      .select(el)
+      .append('div')
+      .style('position', 'relative')
+      .style('width', '100%')
+      .style('height', '100%')
+      .node()
 
     this._renderGraph()
   }
