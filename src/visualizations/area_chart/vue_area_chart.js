@@ -174,21 +174,6 @@ export default Vue.extend({
       }
     },
   },
-  created() {
-    this.x = this.x || getIthFieldOfType(this.data, 0, 'number')
-    this.y = this.y || getFieldsOfType(this.data, 'number', 1)
-    if (!this.boolDataHasAttribute(this.data, this.x, this.y)) {
-      throw `AreaChart ${this.id}: wrong attributes`
-    }
-
-    if (!isArrayOfType(this.scale, 'number', 2)) {
-      this.scale = this.getAxisDomainsFromData(this.data, this.x)
-    }
-
-    if (!this.selection) {
-      this.selection = this.getIdsFromData(this.data)
-    }
-  },
   mounted() {
     this.svg = d3.select(this.$el).select('svg')
 
@@ -220,23 +205,8 @@ export default Vue.extend({
       this.width = rect.width
       this.height = rect.height
     },
-    boolDataHasAttribute(data, x, y) {
-      const datum = data[0]
-      return (
-        datum &&
-        datum[x] !== undefined &&
-        Array.isArray(y) &&
-        y.every((yI) => datum[yI] !== undefined)
-      )
-    },
     getStackedData(data) {
       return d3.stack().keys(this.y)(data)
-    },
-    getIdsFromData(data) {
-      return data.map((d) => d._nbid_)
-    },
-    getAxisDomainsFromData(data, x) {
-      return getDataExtent(data, x)
     },
     addBrush() {
       const onBrushEnd = () => {
@@ -314,52 +284,3 @@ export default Vue.extend({
     },
   },
 })
-
-function getDataExtent(data, key) {
-  return d3.extent(data, (d) => d[key])
-}
-
-function getIthFieldOfType(data, n, type) {
-  if (data.length === 0) {
-    return undefined
-  }
-  const datum = data[0]
-  if (typeof datum !== 'object') {
-    return undefined
-  }
-  let count = 0
-  for (const key of Object.keys(datum).sort()) {
-    if (typeof datum[key] === type && count++ === n) {
-      return key
-    }
-  }
-}
-
-function getFieldsOfType(data, type, start) {
-  const datum = data[0]
-  if (datum) {
-    return Object.keys(datum)
-      .filter((key) => typeof datum[key] === type)
-      .slice(start)
-  }
-  return []
-}
-
-function isArrayOfType(array, type, col, row) {
-  if (!array) return false
-  if (row === undefined) row = 1
-  if (row === 1 && array.length > 1) {
-    array = [array]
-  }
-  return (
-    Array.isArray(array) &&
-    array.length === row &&
-    array.every((r) => {
-      return (
-        Array.isArray(r) &&
-        r.length === col &&
-        r.every((c) => typeof c === type)
-      )
-    })
-  )
-}

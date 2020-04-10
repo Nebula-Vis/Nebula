@@ -6,13 +6,11 @@ import ReactiveProperty from '../nebula/reactive_prop'
 
 export default class LineUp {
   constructor(props) {
-    this.id = props.id
-    this.el = props.el
+    this.data = props.data || []
+    this.selection = props.selection || getIdsFromData(this.data)
+    this.order = props.order || getFieldsOfType(this.data, 'number')
 
-    this.data = props.data.values || []
-    this.selection = props.selection || []
-    this.order = props.order || []
-
+    this.el = null
     this.lineup = null
     this._selection = null
     this._order = null
@@ -23,8 +21,19 @@ export default class LineUp {
     this._init()
   }
 
-  _init() {
+  mount(el) {
+    if (typeof el === 'string' && !el.startsWith('#')) {
+      el = '#' + el
+    }
+    this.el = d3.select(el).node()
+
     this._buildLineUp()
+    this._addDataListener()
+    this._addSelectionListener()
+    this._addOrderListener()
+  }
+
+  _init() {
     this.data = new ReactiveProperty(this, 'data', this.data, '_onDataSet')
     this.selection = new ReactiveProperty(
       this,
@@ -32,26 +41,17 @@ export default class LineUp {
       this.selection,
       '_onSelectionSet'
     )
-    this.order = new ReactiveProperty(
-      this,
-      'order',
-      this.order,
-      '_onOrderSet'
-    )
-
-    this._addDataListener()
-    this._addSelectionListener()
-    this._addOrderListener()
+    this.order = new ReactiveProperty(this, 'order', this.order, '_onOrderSet')
   }
 
   _buildLineUp() {
-    const builder = this._getDataBuilder(this.data, this.order)
+    const builder = this._getDataBuilder(this.data.value, this.order.value)
 
     builder.defaultRanking()
     builder.sidePanel(false)
     builder.rowHeight(20, 2)
 
-    this.lineup = builder.build(d3.select(this.el).node())
+    this.lineup = builder.build(this.el)
   }
 
   _getDataBuilder(data, order) {
@@ -143,4 +143,18 @@ export default class LineUp {
       }, 50)
     )
   }
+}
+
+function getIdsFromData(data) {
+  return data.map((d) => d._nbid_)
+}
+
+function getFieldsOfType(data, type) {
+  const datum = data[0]
+  if (datum) {
+    return Object.keys(datum).filter(
+      (key) => typeof datum[key] === type
+    )
+  }
+  return []
 }

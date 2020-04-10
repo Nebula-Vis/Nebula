@@ -1,5 +1,7 @@
 import Scatterplot from '../visualizations/scatterplot'
 import Areachart from '../visualizations/area_chart'
+import LineUp from '../visualizations/line_up'
+import NodeLinkGraph from '../visualizations/node_link_graph'
 
 export default class VisManger {
   constructor(dataSources, layout, visSpec) {
@@ -30,16 +32,23 @@ export default class VisManger {
         case 'scatterplot':
           chart.instance = this._generateScatterplot(chartSpec.props)
           // mount
+          chart.instance.mount(chart.container)
           break
         case 'areachart':
+          chart.instance = this._generateAreaChart(chartSpec.props)
+          chart.instance.mount(chart.container)
           break
         case 'lineup':
+          chart.instance = this._generateLineUp(chartSpec.props)
+          chart.instance.mount(chart.container)
           break
         case 'graph':
+          chart.instance = this._generateNodeLinkGraph(chartSpec.props)
+          chart.instance.mount(chart.container)
           break
       }
-      
-        
+
+
     })
     this.charts = charts
   }
@@ -47,9 +56,25 @@ export default class VisManger {
   _generateScatterplot(propsSpec) {
     const props = { ...propsSpec }
     props.data = this.dataSources.getDataSourceByName(propsSpec.data).values
-    console.log(props)
     return new Scatterplot(props)
   }
+
+  _generateAreaChart(propsSpec) {
+    const props = { ...propsSpec }
+    props.data = this.dataSources.getDataSourceByName(propsSpec.data).values
+    return new Areachart(props)
+  }
+
+  _generateLineUp(propsSpec) {
+    const props = { ...propsSpec }
+    props.data = this.dataSources.getDataSourceByName(propsSpec.data).values
+    return new LineUp(props)
+  }
+
+  _generateNodeLinkGraph(propsSpec) {
+    const props = { ...propsSpec }
+    const data = this.dataSources.getDataSourceByName(propsSpec.data)
+    props.data = { nodes: data.nodes, links: data.links }
+    return new NodeLinkGraph(props)
+  }
 }
-
-

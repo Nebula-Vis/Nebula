@@ -1,13 +1,11 @@
 // code for render the force-directed graph is from
 // https://observablehq.com/@d3/force-directed-graph
 import * as d3 from 'd3'
+import { clamp } from 'lodash'
 import ReactiveProperty from '../nebula/reactive_prop'
 
 export default class NodeLinkGraph {
   constructor(props) {
-    this.id = props.id
-    this.el = props.el
-
     if (props.data.nodes && props.data.links) {
       this.data = {
         nodes: props.data.nodes,
@@ -24,6 +22,15 @@ export default class NodeLinkGraph {
     this._init()
   }
 
+  mount(el) {
+    if (typeof el === 'string' && !el.startsWith('#')) {
+      el = '#' + el
+    }
+    this.el = d3.select(el).node()
+
+    this._renderGraph()
+  }
+
   _init() {
     this.data = new ReactiveProperty(this, 'data', this.data, '_onDataSet')
     this.selection = new ReactiveProperty(
@@ -32,8 +39,6 @@ export default class NodeLinkGraph {
       this.selection,
       '_onSelectionSet'
     )
-
-    this._renderGraph()
   }
 
   _onDataSet() {
@@ -69,7 +74,10 @@ export default class NodeLinkGraph {
       .forceSimulation(nodes)
       .force(
         'link',
-        d3.forceLink(links).id((d) => d[this.nodeId])
+        d3
+          .forceLink(links)
+          .id((d) => d[this.nodeId])
+          .distance(Math.min(width, height) / 20)
       )
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2))
@@ -106,7 +114,9 @@ export default class NodeLinkGraph {
         .attr('x2', (d) => d.target.x)
         .attr('y2', (d) => d.target.y)
 
-      node.attr('cx', (d) => d.x).attr('cy', (d) => d.y)
+      node
+        .attr('cx', (d) => clamp(d.x, 0, width))
+        .attr('cy', (d) => clamp(d.y, 0, height))
     })
 
     if (el.firstChild) {
