@@ -31,7 +31,6 @@ export default class VisManger {
       switch(chart.type.toLowerCase()) {
         case 'scatterplot':
           chart.instance = this._generateScatterplot(chartSpec.props)
-          // mount
           chart.instance.mount(chart.container)
           break
         case 'areachart':
@@ -47,7 +46,6 @@ export default class VisManger {
           chart.instance.mount(chart.container)
           break
       }
-
 
     })
     this.charts = charts
