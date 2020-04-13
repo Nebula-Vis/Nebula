@@ -2,7 +2,7 @@ import * as d3 from 'd3'
 import * as LineUpJS from 'lineupjs'
 import 'lineupjs/build/LineUpJS.css'
 import _ from 'lodash'
-import { getFieldsOfType, getNbidsFromData } from '../utils'
+import { getFieldsOfType, getNbidsFromData, padExtent } from '../utils'
 import ReactiveProperty from '../nebula/reactive-prop'
 
 export default class LineUp {
@@ -70,7 +70,14 @@ export default class LineUp {
 
     // builder.column(LineUpJS.buildStringColumn('_nbid_').width(150))
     order.forEach((attr) => {
-      builder.column(LineUpJS.buildNumberColumn(attr).color(this.colors(attr)))
+      console.log(data, attr)
+      const extent = d3.extent(data, (d) => d[attr])
+      console.log(extent)
+      builder.column(
+        LineUpJS.buildNumberColumn(attr, padExtent(extent, 0.2)).color(
+          this.colors(attr)
+        )
+      )
     })
 
     return builder
