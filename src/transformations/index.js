@@ -1,58 +1,82 @@
-import _ from 'lodash'
+import ReactiveProperty from '../nebula/reactive-prop'
 
-// 获得多个数组的交集
-const getIntersection = (arrays, key) => {
-  // 对象数组的交集
-  if (key) return _.intersectionBy(arrays, key)
-  // 值数组的交集
-  else return _.intersection(arrays)
-}
+import Intersect from './intersect'
+import Intersect2 from './intersect2'
 
-// 获取数组的聚合值
-const getAggregationValue = (array, type, key) => {
-  // 对象的聚合
-  if (key) {
-    if (type === 'sum') return _.sumBy(array, key)
-    else if (type === 'max') return _.maxBy(array, key)[key]
-    else if (type === 'min') return _.minBy(array, key)[key]
-    else if (type === 'mean' || type === 'average') return _.meanBy(array, key)
-    else throw new Error(`No such aggregation type: ${type}`)
+export default class TransformationsManager {
+  constructor() {
+    this._getBuiltInTransformations()
   }
-  // 值的聚合
-  else {
-    if (type === 'sum') return _.sum(array)
-    else if (type === 'max') return _.max(array)
-    else if (type === 'min') return _.min(array)
-    else if (type === 'mean' || type === 'average') return _.mean(array)
-    else if (type === 'count') return array.length
-    // count不允许有key
-    else throw new Error(`No such aggregation type: ${type}`)
+
+  _getBuiltInTransformations() {
+    this.Intersect = Intersect
+    this.Intersect2 = Intersect2
+  }
+
+  addExternalTransformations(transformation) {
+    // 并没有实际的生成transformation class
+    // 而是将信息存储下来，generate时直接构造实例
+    this[transformation.name] = transformation
+  }
+
+  generateTransformationInstance(name) {
+    if (!this[name]) throw new SyntaxError('No such transformation')
+    // class：该数据转化是内置的，可以直接生成实例
+    if (typeof this[name] === 'function') return new this[name]()
+    // object：该数据转化是用户定义的，需要手动构造生成实例
+    else if (typeof this[name] === 'object')
+      return new ExternalTransformation(
+        this[name].name,
+        this[name].url,
+        this[name].parameters,
+        this[name].output
+      )
   }
 }
 
-// TODO
-// 获取过滤后的数组
-// criteria, criterion combination
-// Reserved words: datum, and, or, not
-// const getFilteredArray = (array, criteria) => {}
+class ExternalTransformation {
+  constructor(name, url, parameterNames, outputNames) {
+    this._name = name
+    this._url = url
+    this._parameterNames = parameterNames
+    this._outputNames = outputNames
+    // trigger
+    // this.trigger = false
 
-// test
-const getDomainOfArray = (array, x, y) => {
-  return [
-    [
-      getAggregationValue(array, 'min', x),
-      getAggregationValue(array, 'max', x),
-    ],
-    [
-      getAggregationValue(array, 'min', y),
-      getAggregationValue(array, 'max', y),
-    ],
-  ]
-}
+    for (const parameterName of this._parameterNames) {
+      this[parameterName] = new ReactiveProperty(
+        this,
+        parameterName,
+        null,
+        'run'
+      )
+    }
 
-export default {
-  intersect: getIntersection,
-  aggregate: getAggregationValue,
-  // filter: getFilteredArray,
-  test: getDomainOfArray,
+    for (const outputName of this._outputNames) {
+      this[outputName] = new ReactiveProperty(this, outputName, null, '')
+    }
+  }
+
+  async run() {
+    // if (!this.trigger) return
+
+    const paramObj = {}
+
+    for (const parameterName of this._parameterNames) {
+      paramObj[parameterName] = this[parameterName].get()
+    }
+
+    const resp = await fetch(this._url, {
+      method: 'POST',
+      body: paramObj,
+    })
+    const result = resp.json()
+    for (const outputName of this._outputNames) {
+      this[outputName].set(result[outputName])
+    }
+  }
+
+  getName() {
+    return this._name
+  }
 }

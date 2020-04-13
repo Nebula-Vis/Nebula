@@ -72,7 +72,7 @@ class VisualizationsManager {
   getVisualizationById(id) {
     return this._visualizations.filter((visualization) => {
       return id === visualization.getId()
-    })
+    })[0]
   }
 }
 

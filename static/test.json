@@ -36,10 +36,10 @@
     }
   ],
   "layout": {
-    "width": "1000px",
+    "width": "1600px",
     "height": "1000px",
     "rows": ["500px", "1fr"],
-    "columns": ["500px", "1fr"]
+    "columns": ["500px", "1fr", "500px"]
   },
   "visualizations": [
     {
@@ -60,15 +60,23 @@
     },
     {
       "id": "chart3",
-      "container": "2 2 2 2",
-      "visualization": "lineup",
+      "container": "1 2 2 2",
+      "visualization": "scatterplot",
       "props": {
         "data": "points"
       }
     },
     {
       "id": "chart4",
-      "container": "1 1 2 2",
+      "container": "1 1 3 3",
+      "visualization": "lineup",
+      "props": {
+        "data": "points"
+      }
+    },
+    {
+      "id": "chart5",
+      "container": "2 2 3 3",
       "visualization": "graph",
       "props": {
         "data": "miserables"
@@ -80,6 +88,14 @@
       "data": [
         { "name": "$d1", "properties": ["chart1.selection", "chart2.selection"] }
       ]
+    }
+  ],
+  "transformations": [
+    {
+      "name": "kmeans",
+      "url": "http://localhost:8080/comp/kmeans",
+      "parameters": ["array", "k"],
+      "output": ["clusters"]
     }
   ]
 }

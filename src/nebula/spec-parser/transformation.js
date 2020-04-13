@@ -1,33 +1,21 @@
-// TODO：健壮处理
-export default class ExternalTransformation {
-  constructor(name, url, parameters, output) {
-    this.name = name
-    this.url = url
-    this.paramNames = parameters
-    this.outputNames = output
+import TransformationsManager from '../../transformations/'
+export default class TransformationsSpecParser {
+  constructor(spec) {
+    if (spec) {
+      this._spec = spec
+      this._transformations = this._spec.map((transformation) => transformation)
+    }
   }
 
-  // TODO: v转化为coordination中的data
-  async run(input) {
-    let param = {}
-    if (input instanceof Array)
-      // ordered list input
-      input.forEach((v, i) => {
-        param[this.paramNames[i]] = v
-      })
-    // key-value input
-    else param = input
+  getTransformationsManager() {
+    const transformationsManager = new TransformationsManager()
 
-    const resp = await fetch(this.url, {
-      method: 'POST',
-      body: param,
-    })
-    const result = resp.json()
-
-    // 返回两个数组，匹配的话外面可以做
-    return {
-      keys: this.outputNames,
-      values: this.outputNames.map((v) => result[v]),
+    if (this._transformations) {
+      for (const transformation of this._transformations) {
+        transformationsManager.addExternalTransformations(transformation)
+      }
     }
+
+    return transformationsManager
   }
 }
