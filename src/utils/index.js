@@ -39,10 +39,17 @@ function isArrayOfType(array, type, col, row) {
   )
 }
 
+function padExtent(extent, padding) {
+  const [min, max] = extent
+  const dist = max - min
+  return [min - dist * padding, max + dist * padding]
+}
+
 export {
   getNbidsFromData,
   getFieldsOfType,
   getDataExtent,
   boolDataHasAttributes,
   isArrayOfType,
+  padExtent,
 }

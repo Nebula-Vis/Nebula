@@ -150,10 +150,6 @@ export default Vue.extend({
   },
   watch: {
     data(val) {
-      // TODO
-      // this.checkXY()
-      this.scale = this.getAxisDomainsFromData(val, this.x)
-      this.selection = this.getIdsFromData(val)
       if (this.showAxis) {
         this.drawAxis()
       }

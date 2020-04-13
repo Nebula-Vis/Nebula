@@ -140,11 +140,7 @@ export default Vue.extend({
     },
   },
   watch: {
-    data(val) {
-      // TODO
-      // this.checkXY()
-      this.scale = this.getAxisDomainsFromData(val, this.x, this.y)
-      this.selection = this.getIdsFromData(val)
+    data() {
       if (this.showAxis && this.svg) {
         this.drawAxis()
       }
@@ -272,5 +268,11 @@ export default Vue.extend({
       this.svg.select('.x-axis').call(xAxis)
       this.svg.select('.y-axis').call(yAxis)
     },
+    // getAxisDomainsFromData(data, x, y){
+
+    // },
+    // getIdsFromData(data){
+
+    // },
   },
 })

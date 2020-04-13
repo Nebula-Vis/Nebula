@@ -7,6 +7,7 @@ import {
   getDataExtent,
   getNbidsFromData,
   boolDataHasAttributes,
+  padExtent,
 } from '../../utils'
 
 export default class Scatterplot {
@@ -18,7 +19,7 @@ export default class Scatterplot {
     const y = props.y || numericFields[1]
     const scale = isArrayOfType(props.scale, 'number', 2, 2)
       ? props.scale
-      : [getDataExtent(this.data, x), getDataExtent(this.data, y)]
+      : this._getScale(this.data, x, y)
     const selection = props.selection || getNbidsFromData(this.data)
 
     if (!boolDataHasAttributes(this.data, x, y)) {
@@ -49,6 +50,7 @@ export default class Scatterplot {
   }
 
   _init() {
+    const that = this
     this.vm = new VueScatterplot({
       data: {
         id: this.id,
@@ -57,6 +59,14 @@ export default class Scatterplot {
         y: this.y,
         selection: this.selection,
         scale: this.scale,
+      },
+      watch: {
+        data(val) {
+          // TODO
+          // this.checkXY()
+          this.scale = that._getScale(val, this.x, this.y)
+          this.selection = getNbidsFromData(val)
+        },
       },
     })
 
@@ -112,5 +122,11 @@ export default class Scatterplot {
 
   _onSelectionChange(val) {
     this.vm.selection = val
+  }
+
+  _getScale(data, x, y) {
+    return [getDataExtent(data, x), getDataExtent(data, y)].map((extent) =>
+      padExtent(extent, 0.2)
+    )
   }
 }
