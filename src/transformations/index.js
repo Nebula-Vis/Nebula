@@ -1,4 +1,4 @@
-import ReactiveProperty from '../nebula/reactive-prop'
+import ReactiveProperty from '../reactive-prop'
 
 import Intersect from './intersect'
 

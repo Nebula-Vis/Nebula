@@ -2,7 +2,7 @@
 // https://observablehq.com/@d3/force-directed-graph
 import * as d3 from 'd3'
 import { clamp } from 'lodash'
-import ReactiveProperty from '../nebula/reactive-prop'
+import ReactiveProperty from '../reactive-prop'
 import { getNbidsFromData } from '../utils'
 
 export default class NodeLinkGraph {

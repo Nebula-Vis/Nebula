@@ -1,4 +1,4 @@
-import TransformationsManager from '../../transformations/'
+import TransformationsManager from '../transformations/'
 export default class TransformationsSpecParser {
   constructor(spec) {
     if (spec) {

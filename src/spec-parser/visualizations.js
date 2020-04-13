@@ -1,7 +1,7 @@
-import Scatterplot from '../../visualizations/scatterplot'
-import Areachart from '../../visualizations/area_chart'
-import LineUp from '../../visualizations/line_up'
-import NodeLinkGraph from '../../visualizations/node_link_graph'
+import Scatterplot from '../visualizations/scatterplot'
+import Areachart from '../visualizations/area_chart'
+import LineUp from '../visualizations/line_up'
+import NodeLinkGraph from '../visualizations/node_link_graph'
 
 export default class VisualizationsSpecParser {
   constructor(dataSources, layout, spec) {

@@ -1,11 +1,16 @@
 import _ from 'lodash'
 
 export default class ReactiveProperty {
-  constructor(instance, name, value, cb) {
+  constructor(instance, name, value, cb, type) {
     this.instance = instance // 所属实例
     this.name = name // 属性名
     this.value = value // 属性值
     this.cb = cb // string: value，改变时的回调函数名
+
+    this.type = type || 'replace'
+    if (this.type !== 'replace' && this.type !== 'append')
+      throw new SyntaxError('No such type')
+
     this.subs = [] // 订阅者，同样是ReactiveProperty类型
   }
 
@@ -21,6 +26,11 @@ export default class ReactiveProperty {
   }
 
   set(value) {
+    if (this.type === 'replace') this._replace(value)
+    else if (this.type === 'append') this._append(value)
+  }
+
+  _replace(value) {
     if (_.isEqual(value, this.value)) {
       // 相同的值不反复调用
       return
@@ -35,7 +45,7 @@ export default class ReactiveProperty {
     this._notifySubs(value)
   }
 
-  append(value) {
+  _append(value) {
     if (!(this.value instanceof Array))
       throw new TypeError('Only arrays accept appending values')
 

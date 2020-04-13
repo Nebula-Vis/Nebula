@@ -3,7 +3,7 @@ import * as LineUpJS from 'lineupjs'
 import 'lineupjs/build/LineUpJS.css'
 import _ from 'lodash'
 import { getFieldsOfType, getNbidsFromData, padExtent } from '../utils'
-import ReactiveProperty from '../nebula/reactive-prop'
+import ReactiveProperty from '../reactive-prop'
 
 export default class LineUp {
   constructor(props) {

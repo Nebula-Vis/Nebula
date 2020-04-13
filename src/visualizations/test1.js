@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-import ReactiveProperty from '../nebula/reactive-prop'
+import ReactiveProperty from '../reactive-prop'
 
 export default class D3Scatterplot {
   constructor(props) {
