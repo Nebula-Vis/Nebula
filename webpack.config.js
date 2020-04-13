@@ -14,12 +14,12 @@ module.exports = {
       {
         test: /\.(js)$/,
         loader: 'eslint-loader',
+        exclude: /node_modules/,
         enforce: 'pre',
         options: {
           fix: true,
         },
       },
-
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],

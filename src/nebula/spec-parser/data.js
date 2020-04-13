@@ -8,6 +8,7 @@ import * as d3 from 'd3'
  *
  * Get data
  * const data = dataSources.getDataSourceByName(name)
+ * data.values
  */
 export default class DataSpecParser {
   constructor(spec) {

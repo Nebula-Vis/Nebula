@@ -1,7 +1,6 @@
 import ReactiveProperty from '../nebula/reactive-prop'
 
 import Intersect from './intersect'
-import Intersect2 from './intersect2'
 
 export default class TransformationsManager {
   constructor() {
@@ -9,8 +8,7 @@ export default class TransformationsManager {
   }
 
   _getBuiltInTransformations() {
-    this.Intersect = Intersect
-    this.Intersect2 = Intersect2
+    this.intersect = Intersect
   }
 
   addExternalTransformations(transformation) {
@@ -19,7 +17,7 @@ export default class TransformationsManager {
     this[transformation.name] = transformation
   }
 
-  generateTransformationInstance(name) {
+  generateTransformationInstanceByName(name) {
     if (!this[name]) throw new SyntaxError('No such transformation')
     // class：该数据转化是内置的，可以直接生成实例
     if (typeof this[name] === 'function') return new this[name]()

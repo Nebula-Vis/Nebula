@@ -12,6 +12,7 @@ export default class ReactiveProperty {
   // sub: other reactive properties
   addSub(sub) {
     this.subs.push(sub)
+    // 设置依赖的时候就赋值一遍
     sub.set(this.value)
   }
 
@@ -19,7 +20,6 @@ export default class ReactiveProperty {
     return this.value
   }
 
-  // TODO: options, data transformation, triggers
   set(value) {
     if (_.isEqual(value, this.value)) {
       // 相同的值不反复调用
