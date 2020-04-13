@@ -58,6 +58,14 @@ export default class Scatterplot {
         selection: this.selection,
         scale: this.scale,
       },
+      watch: {
+        data(val) {
+          // TODO
+          // this.checkXY()
+          this.scale = [getDataExtent(val, this.x), getDataExtent(val, this.y)]
+          this.selection = getNbidsFromData(val)
+        },
+      },
     })
 
     // set被调用时，**这个**可视化该做什么
