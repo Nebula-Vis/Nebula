@@ -6,6 +6,7 @@ import Select from '../visualizations/select'
 import Button from '../visualizations/button'
 import Input from '../visualizations/input'
 import Slider from '../visualizations/slider'
+import ReactiveProperty from '../reactive-prop'
 
 export default class VisualizationsSpecParser {
   constructor(dataSources, layout, spec) {
@@ -142,5 +143,15 @@ class Visualization {
 
   mount() {
     this._instance.mount(this._container)
+  }
+
+  getVisPropByActionOption(action, option) {
+    if (!this._instance) {
+      throw new Error(`Visualization: init ${this._id} before accessing prop`)
+    }
+    const value = Object.values(this._instance)
+      .filter((value) => value instanceof ReactiveProperty)
+      .find((value) => value.action === action && value.option === option)
+    return `${this._id}.${value.name}`
   }
 }

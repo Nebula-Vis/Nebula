@@ -18,14 +18,12 @@ export default class ReactiveProperty {
     this.cb = cb // string: value，改变时的回调函数名
 
     if (action) {
-      option = option || 'items'
-      if (!ACTIONS.includes(action) || !OPTIONS.includes(option))
-        throw new SyntaxError('No such action or option')
-
-      this.how = { action }
-      if (actionsNeedOption.includes(action)) {
-        this.how.option = option
-      }
+      this.action = action
+      this.option = option || 'items'
+      if (!ACTIONS.includes(this.action) || !OPTIONS.includes(this.option))
+        throw new SyntaxError(
+          `No such action or option ${this.action}, ${this.option}`
+        )
     }
 
     this.subs = [] // 订阅者，同样是ReactiveProperty类型
@@ -43,7 +41,7 @@ export default class ReactiveProperty {
   }
 
   set(value) {
-    if (this.how.action.startsWith('append')) {
+    if (this.action && this.action.startsWith('append')) {
       this._append(value)
     } else {
       this._replace(value)
