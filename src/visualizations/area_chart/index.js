@@ -21,10 +21,10 @@ export default class AreaChart {
     const selection = props.selection || this.data
 
     if (!boolDataHasAttributes(this.data, x, ...y)) {
-      throw new Error('AreaChart: wrong attributes')
+      throw new Error(`AreaChart: wrong attributes x:${x}, y:${y.join(',')}`)
     }
     if (!isArrayOfType(scale, 'number', 2)) {
-      throw new Error('AreaChart: wrong scale')
+      throw new Error('AreaChart: wrong scale format')
     }
 
     this.x = x
@@ -68,20 +68,29 @@ export default class AreaChart {
     })
 
     // set被调用时，**这个**可视化该做什么
-    this.data = new ReactiveProperty(this, 'data', this.data, '_onDataChange')
-    this.x = new ReactiveProperty(this, 'x', this.x, '_onXChange')
-    this.y = new ReactiveProperty(this, 'y', this.y, '_onYChange')
+    this.data = new ReactiveProperty(
+      this,
+      'data',
+      this.data,
+      '_onDataChange',
+      'replace data'
+    )
+    this.x = new ReactiveProperty(this, 'x', this.x, '_onXChange', 'encode')
+    this.y = new ReactiveProperty(this, 'y', this.y, '_onYChange', 'encode')
     this.scale = new ReactiveProperty(
       this,
       'scale',
       this.scale,
-      '_onScaleChange'
+      '_onScaleChange',
+      'navigate',
+      'ranges'
     )
     this.selection = new ReactiveProperty(
       this,
       'selection',
       this.selection,
-      '_onSelectionChange'
+      '_onSelectionChange',
+      'select'
     )
 
     // 只在直接用户交互时触发

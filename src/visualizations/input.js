@@ -12,7 +12,13 @@ export default class Input {
   }
 
   _init() {
-    this.value = new ReactiveProperty(this, 'value', this.value, '_onValueSet')
+    this.value = new ReactiveProperty(
+      this,
+      'value',
+      this.value,
+      '_onValueSet',
+      'replace data'
+    )
   }
 
   mount(el) {

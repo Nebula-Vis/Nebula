@@ -16,7 +16,13 @@ export default class Slider {
   _init() {
     this.min = new ReactiveProperty(this, 'min', this.min, '_onMinSet')
     this.max = new ReactiveProperty(this, 'max', this.max, '_onMaxSet')
-    this.value = new ReactiveProperty(this, 'value', this.value, '_onValueSet')
+    this.value = new ReactiveProperty(
+      this,
+      'value',
+      this.value,
+      '_onValueSet',
+      'set data'
+    )
   }
 
   mount(el) {

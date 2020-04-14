@@ -6,6 +6,7 @@ import Select from '../visualizations/select'
 import Button from '../visualizations/button'
 import Input from '../visualizations/input'
 import Slider from '../visualizations/slider'
+import ReactiveProperty from '../reactive-prop'
 
 export default class VisualizationsSpecParser {
   constructor(dataSources, layout, spec) {
@@ -21,7 +22,9 @@ export default class VisualizationsSpecParser {
     const visualizationIds = []
     for (const visualizationSpec of this._spec) {
       if (visualizationIds.indexOf(visualizationSpec.id) >= 0)
-        throw new SyntaxError('Repeated visualization id.')
+        throw new SyntaxError(
+          `Repeated visualization id ${visualizationSpec.id}.`
+        )
       visualizationIds.push(visualizationSpec.id)
       // handle container spec
       const gridsIntervalPattern = /\d+ \d+ \d+ \d+/
@@ -40,7 +43,9 @@ export default class VisualizationsSpecParser {
       } else {
         // container 是 id
         if (!this._layout.isContainerNameExist(visualizationSpec.container))
-          throw new SyntaxError('No such container')
+          throw new SyntaxError(
+            `No such container ${visualizationSpec.container}`
+          )
         visualizations.push(
           new Visualization(
             visualizationSpec.id,
@@ -107,7 +112,7 @@ class Visualization {
     const props = { ...this._propsSpec }
     if (props.data) {
       const data = dataSources.getDataSourceByName(props.data)
-      if (!data) throw new SyntaxError('No such data')
+      if (!data) throw new SyntaxError(`No such data ${props.data}.`)
       props.data = data.values ? data.values : data
     }
     this._instance = this._generateInstance(this._type, props)
@@ -132,11 +137,21 @@ class Visualization {
       case 'slider':
         return new Slider(props)
       default:
-        throw new SyntaxError('No such visualization')
+        throw new SyntaxError(`No such visualization ${type.toLowerCase()}.`)
     }
   }
 
   mount() {
     this._instance.mount(this._container)
+  }
+
+  getVisPropByActionOption(action, option) {
+    if (!this._instance) {
+      throw new Error(`Visualization: init ${this._id} before accessing prop`)
+    }
+    const value = Object.values(this._instance)
+      .filter((value) => value instanceof ReactiveProperty)
+      .find((value) => value.action === action && value.option === option)
+    return `${this._id}.${value.name}`
   }
 }
