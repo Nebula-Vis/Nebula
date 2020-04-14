@@ -25,25 +25,29 @@ export default class Aggregate {
   // get aggregated value of array
   run() {
     // if (!this.trigger) return
-    
+
     // 对象的聚合
-  if (this.key) {
-    if (this.type === 'sum') return _.sumBy(this.array, this.key)
-    else if (this.type === 'max') return _.maxBy(this.array, this.key)[this.key]
-    else if (this.type === 'min') return _.minBy(this.array, this.key)[this.key]
-    else if (this.type === 'mean' || this.type === 'average') return _.meanBy(this.array, this.key)
-    else throw new Error(`No such aggregation type: ${this.type}`)
-  }
-  // 值的聚合
-  else {
-    if (this.type === 'sum') return _.sum(this.array)
-    else if (this.type === 'max') return _.max(this.array)
-    else if (this.type === 'min') return _.min(this.array)
-    else if (this.type === 'mean' || this.type === 'average') return _.mean(this.array)
-    else if (this.type === 'count') return this.array.length
-    // count不允许有key
-    else throw new Error(`No such aggregation type: ${this.type}`)
-  }
+    if (this.key) {
+      if (this.type === 'sum') return _.sumBy(this.array, this.key)
+      else if (this.type === 'max')
+        return _.maxBy(this.array, this.key)[this.key]
+      else if (this.type === 'min')
+        return _.minBy(this.array, this.key)[this.key]
+      else if (this.type === 'mean' || this.type === 'average')
+        return _.meanBy(this.array, this.key)
+      else throw new Error(`No such aggregation type: ${this.type}`)
+    }
+    // 值的聚合
+    else {
+      if (this.type === 'sum') return _.sum(this.array)
+      else if (this.type === 'max') return _.max(this.array)
+      else if (this.type === 'min') return _.min(this.array)
+      else if (this.type === 'mean' || this.type === 'average')
+        return _.mean(this.array)
+      else if (this.type === 'count') return this.array.length
+      // count不允许有key
+      else throw new Error(`No such aggregation type: ${this.type}`)
+    }
 
     // this.trigger
   }

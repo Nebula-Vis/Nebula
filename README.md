@@ -4,7 +4,7 @@ A visualization grammar for coordination between visualizations.
 ## TODOLIST (Jiahui)
 - [ ] 集成 vega-lite
 - [x] button, slider, input, select (needs refinement)
-- [ ] selection存什么值？
+- [x] selection存什么值 - 存和data一样的值
 ---
 
 - [ ] Filter 在组件里怎么设计

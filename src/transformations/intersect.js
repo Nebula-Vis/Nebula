@@ -23,7 +23,11 @@ export default class Intersect {
 
   run() {
     // if (!this.trigger) return
-    const intersection = _.intersection(this.array1.get(), this.array2.get())
+    const intersection = _.intersectionBy(
+      this.array1.get(),
+      this.array2.get(),
+      '_nbid_'
+    )
     this.intersection.set(intersection)
     // this.trigger
   }

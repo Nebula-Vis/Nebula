@@ -3,7 +3,6 @@
 import * as d3 from 'd3'
 import { clamp } from 'lodash'
 import ReactiveProperty from '../reactive-prop'
-import { getNbidsFromData } from '../utils'
 
 export default class NodeLinkGraph {
   constructor(props) {
@@ -14,7 +13,7 @@ export default class NodeLinkGraph {
       }
     }
     this.nodeId = props.nodeId || 'id'
-    this.selection = props.selection || getNbidsFromData(this.data.nodes)
+    this.selection = props.selection || this.data.nodes
 
     this.color = '#ddd'
     this.selectionColor = '#3fca2f'
@@ -50,23 +49,23 @@ export default class NodeLinkGraph {
 
   _onDataSet(val) {
     this._renderGraph()
-    this.selection.set(getNbidsFromData(val.nodes))
+    this.selection.set(val.nodes)
   }
 
   _onSelectionSet(val) {
     const color = this.color
     const selectionColor = this.selectionColor
-    const selection = val
+    const selectionNbIds = new Set(val.map((d) => d._nbid_))
     d3.select(this.el)
       .selectAll('circle')
       .attr('fill', (d) =>
-        selection.includes(d._nbid_) ? selectionColor : color
+        selectionNbIds.has(d._nbid_) ? selectionColor : color
       )
   }
 
   _renderGraph() {
     const data = this.data.value
-    const selection = this.selection.value
+    const selection = new Set(this.selection.value.map((d) => d._nbid_))
     const color = this.color
     const selectionColor = this.selectionColor
     const radius = this.circleRadius
@@ -108,9 +107,7 @@ export default class NodeLinkGraph {
       .data(nodes)
       .join('circle')
       .attr('r', radius)
-      .attr('fill', (d) =>
-        selection.includes(d._nbid_) ? selectionColor : color
-      )
+      .attr('fill', (d) => (selection.has(d._nbid_) ? selectionColor : color))
       .call(this._drag(simulation))
 
     node.append('title').text((d) => d[this.nodeId])

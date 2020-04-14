@@ -2,13 +2,13 @@ import * as d3 from 'd3'
 import * as LineUpJS from 'lineupjs'
 import 'lineupjs/build/LineUpJS.css'
 import _ from 'lodash'
-import { getFieldsOfType, getNbidsFromData, padExtent } from '../utils'
+import { getFieldsOfType, padExtent } from '../utils'
 import ReactiveProperty from '../reactive-prop'
 
 export default class LineUp {
   constructor(props) {
     this.data = props.data || []
-    this.selection = props.selection || getNbidsFromData(this.data)
+    this.selection = props.selection || this.data
     this.order = props.order || getFieldsOfType(this.data, 'number')
 
     this.el = null
@@ -84,23 +84,32 @@ export default class LineUp {
     const order = this.order.value.filter((attr) => datum[attr] !== undefined)
     const builder = this._getDataBuilder(data, order)
     this.lineup.setDataProvider(builder.buildData())
+
+    const dataMap = new Map()
+    data.forEach((d, i) => {
+      dataMap.set(d._nbid_, i)
+    })
+
     this.lineup.setSelection(
-      this.selection.value.map((nbid) =>
-        data.findIndex((v) => v._nbid_ === nbid)
-      )
+      this.selection.value.map((datum) => dataMap.get(datum._nbid_))
     )
     this._addDataListener()
     this._addOrderListener()
   }
 
   _onSelectionSet(selection) {
-    if (_.isEqual(selection, this._selection)) return
+    // if (_.isEqual(selection, this._selection)) return
+    if (selection === this._selection) return
     const data = this.data.value
-    const selectedIndices = selection.map((nbid) =>
-      data.findIndex((v) => v._nbid_ === nbid)
+
+    const dataMap = new Map()
+    data.forEach((d, i) => {
+      dataMap.set(d._nbid_, i)
+    })
+
+    this.lineup.setSelection(
+      selection.map((datum) => dataMap.get(datum._nbid_))
     )
-    // .filter((i) => i !== -1)
-    this.lineup.setSelection(selectedIndices)
   }
 
   _onOrderSet(order) {
@@ -135,11 +144,11 @@ export default class LineUp {
   _addSelectionListener() {
     this.lineup.on('selectionChanged', (selectedIndices) => {
       const data = this.data.value
-      const nbids = selectedIndices
+      const selection = selectedIndices
         .filter((index) => !!data[index])
-        .map((index) => data[index]._nbid_)
-      this._selection = nbids
-      this.selection.set(nbids)
+        .map((index) => data[index])
+      this._selection = selection
+      this.selection.set(selection)
     })
   }
 
