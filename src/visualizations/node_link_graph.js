@@ -38,12 +38,19 @@ export default class NodeLinkGraph {
   }
 
   _init() {
-    this.data = new ReactiveProperty(this, 'data', this.data, '_onDataSet')
+    this.data = new ReactiveProperty(
+      this,
+      'data',
+      this.data,
+      '_onDataSet',
+      'replace data'
+    )
     this.selection = new ReactiveProperty(
       this,
       'selection',
       this.selection,
-      '_onSelectionSet'
+      '_onSelectionSet',
+      'select'
     )
   }
 

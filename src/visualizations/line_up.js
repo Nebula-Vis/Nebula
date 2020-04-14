@@ -43,14 +43,27 @@ export default class LineUp {
   }
 
   _init() {
-    this.data = new ReactiveProperty(this, 'data', this.data, '_onDataSet')
+    this.data = new ReactiveProperty(
+      this,
+      'data',
+      this.data,
+      '_onDataSet',
+      'replace data'
+    )
     this.selection = new ReactiveProperty(
       this,
       'selection',
       this.selection,
-      '_onSelectionSet'
+      '_onSelectionSet',
+      'select'
     )
-    this.order = new ReactiveProperty(this, 'order', this.order, '_onOrderSet')
+    this.order = new ReactiveProperty(
+      this,
+      'order',
+      this.order,
+      '_onOrderSet',
+      'encode'
+    )
   }
 
   _buildLineUp() {

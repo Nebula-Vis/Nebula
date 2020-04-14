@@ -1,15 +1,32 @@
 import _ from 'lodash'
+import { ACTIONS, OPTIONS } from './CONSTANT'
+
+const actionsNeedOption = [
+  'select',
+  'filter',
+  'navigate',
+  'set data',
+  'replace data',
+  'append data',
+]
 
 export default class ReactiveProperty {
-  constructor(instance, name, value, cb, type) {
+  constructor(instance, name, value, cb, action, option) {
     this.instance = instance // 所属实例
     this.name = name // 属性名
     this.value = value // 属性值
     this.cb = cb // string: value，改变时的回调函数名
 
-    this.type = type || 'replace'
-    if (this.type !== 'replace' && this.type !== 'append')
-      throw new SyntaxError('No such type')
+    if (action) {
+      option = option || 'items'
+      if (!ACTIONS.includes(action) || !OPTIONS.includes(option))
+        throw new SyntaxError('No such action or option')
+
+      this.how = { action }
+      if (actionsNeedOption.includes(action)) {
+        this.how.option = option
+      }
+    }
 
     this.subs = [] // 订阅者，同样是ReactiveProperty类型
   }
@@ -26,8 +43,11 @@ export default class ReactiveProperty {
   }
 
   set(value) {
-    if (this.type === 'replace') this._replace(value)
-    else if (this.type === 'append') this._append(value)
+    if (this.how.action.startsWith('append')) {
+      this._append(value)
+    } else {
+      this._replace(value)
+    }
   }
 
   _replace(value) {

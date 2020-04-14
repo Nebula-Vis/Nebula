@@ -16,13 +16,15 @@ export default class Select {
       this,
       'options',
       this.options,
-      '_onOptionsSet'
+      '_onOptionsSet',
+      'replace data'
     )
     this.selected = new ReactiveProperty(
       this,
       'selected',
       this.selected,
-      '_onSelectedSet'
+      '_onSelectedSet',
+      'select'
     )
   }
 
