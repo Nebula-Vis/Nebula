@@ -68,9 +68,7 @@ export default class LineUp {
 
     // builder.column(LineUpJS.buildStringColumn('_nbid_').width(150))
     order.forEach((attr) => {
-      console.log(data, attr)
       const extent = d3.extent(data, (d) => d[attr])
-      console.log(extent)
       builder.column(
         LineUpJS.buildNumberColumn(attr, padExtent(extent, 0.2)).color(
           this.colors(attr)

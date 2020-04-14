@@ -51,7 +51,7 @@ export default class ReactiveProperty {
 
     this.value.push(value)
     if (this.instance && this.cb && this.instance[this.cb])
-      this.instance[this.cb](value)
+      this.instance[this.cb](this.value)
 
     // 更新依赖
     this._notifySubs(this.value)

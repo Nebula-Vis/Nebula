@@ -129,4 +129,13 @@ class DataSources {
   getDataSourceByName(name) {
     return this._dataSources.find((d) => d.name === name)
   }
+
+  // getDataBySelection(selection) {
+  //   const nbidStrArray = selection[0]._nbid_.split('_')
+  //   const dataSourceName = nbidStrArray[0]
+  //   const valueName = nbidStrArray[1]
+
+  //   const dataSource = this.getDataSourceByName(dataSourceName)
+  //   return dataSource[valueName].filter((d) => selection.includes(d._nbid_))
+  // }
 }

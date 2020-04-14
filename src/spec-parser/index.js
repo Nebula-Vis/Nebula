@@ -40,7 +40,6 @@ class SpecParser {
       this._spec.transformations
     ).getTransformationsManager()
 
-    // coordination中，从data、transformation这两个字段收集依赖，然后构建依赖
     new CoordinationSpecParser(
       this._dataSources,
       this._visualizationsManager,

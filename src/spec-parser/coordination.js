@@ -187,10 +187,10 @@ export default class CoordinationSpecParser {
     }
   }
 
-  _addBidirectionalLinkInTwoProps(prop1, prop2) {
-    prop1.addSub(prop2)
-    prop2.addSub(prop1)
-  }
+  // _addBidirectionalLinkInTwoProps(prop1, prop2) {
+  //   prop1.addSub(prop2)
+  //   prop2.addSub(prop1)
+  // }
 
   _addUnidirectionalLinkInTwoProps(origin, destination) {
     origin.addSub(destination)
