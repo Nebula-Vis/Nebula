@@ -26,6 +26,7 @@ export default class Input {
       .style('align-items', 'center')
       .style('justify-content', 'center')
       .append('input')
+      .style('width', '70%')
       .attr('value', this.value.value)
       .node()
       .addEventListener(

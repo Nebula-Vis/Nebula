@@ -66,7 +66,6 @@ export default class LineUp {
   _getDataBuilder(data, order) {
     const builder = LineUpJS.builder(data)
 
-    // builder.column(LineUpJS.buildStringColumn('_nbid_').width(150))
     order.forEach((attr) => {
       const extent = d3.extent(data, (d) => d[attr])
       builder.column(

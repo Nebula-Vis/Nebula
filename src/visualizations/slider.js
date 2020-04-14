@@ -6,7 +6,6 @@ export default class Slider {
   constructor(props) {
     this.min = props.min
     this.max = props.max
-
     this.value = props.value || this.min
 
     this.el = null
@@ -15,6 +14,8 @@ export default class Slider {
   }
 
   _init() {
+    this.min = new ReactiveProperty(this, 'min', this.min, '_onMinSet')
+    this.max = new ReactiveProperty(this, 'max', this.max, '_onMaxSet')
     this.value = new ReactiveProperty(this, 'value', this.value, '_onValueSet')
   }
 
@@ -33,6 +34,8 @@ export default class Slider {
     d3.select(this.el)
       .append('div')
       .style('width', '70%')
+      .append('div')
+      .style('position', 'relative')
       .attr('class', 'value')
       .html(this.value.value)
 
@@ -42,17 +45,16 @@ export default class Slider {
       .append('input')
       .attr('class', 'nb-slider')
       .attr('type', 'range')
-      .attr('min', this.min)
-      .attr('max', this.max)
+      .attr('min', this.min.value)
+      .attr('max', this.max.value)
       .attr('step', 0.01)
       .attr('value', this.value.value)
       .node()
       .addEventListener(
-        'change',
+        'input',
         debounce((event) => {
           this.value.set(event.target.value)
-          console.log(this.value.value)
-        }, 200)
+        }, 50)
       )
     const div = d3
       .select(this.el)
@@ -60,14 +62,30 @@ export default class Slider {
       .style('width', '70%')
       .style('display', 'flex')
       .style('justify-content', 'space-between')
-    div.append('span').html(this.min)
-    div.append('span').html(this.max)
+    div.append('span').attr('class', 'min-value').html(this.min.value)
+    div.append('span').attr('class', 'max-value').html(this.max.value)
     this._styleSlider()
   }
 
   _onValueSet(val) {
     d3.select(this.el).select('input').attr('value', val)
-    d3.select(this.el).select('.value').html(val)
+    d3.select(this.el)
+      .select('.value')
+      .html(val)
+      .style(
+        'left',
+        `${((val - this.min.value) / (this.max.value - this.min.value)) * 100}%`
+      )
+  }
+
+  _onMinSet(val) {
+    d3.select(this.el).select('input').attr('min', val)
+    d3.select(this.el).select('.min-value').html(val)
+  }
+
+  _onMaxSet(val) {
+    d3.select(this.el).select('input').attr('max', val)
+    d3.select(this.el).select('.max-value').html(val)
   }
 
   _styleSlider() {

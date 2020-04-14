@@ -4,7 +4,7 @@ import ReactiveProperty from '../reactive-prop'
 export default class Select {
   constructor(props) {
     this.options = props.options || []
-    this.selected = props.selected || ''
+    this.selected = props.selected || null
 
     this.el = null
 
@@ -37,6 +37,7 @@ export default class Select {
       .style('align-items', 'center')
       .style('justify-content', 'center')
       .append('select')
+      .style('width', '70%')
       .node()
       .addEventListener('change', (event) => {
         this.selected.set(event.target.value)
@@ -62,10 +63,14 @@ export default class Select {
   }
 
   _onSelectedSet(val) {
-    d3.select(this.el)
-      .selectAll('option')
-      .attr('selected', null)
-      .filter((d) => d === val)
-      .attr('selected', true)
+    const selected = d3.select(this.el).selectAll(`option[value=${val}]`).node()
+
+    if (!selected) {
+      throw new Error(`Select: no such option ${val}`)
+    }
+
+    d3.select(this.el).selectAll('option').attr('selected', null)
+
+    d3.select(selected).attr('selected', true)
   }
 }

@@ -4,7 +4,8 @@ import ReactiveProperty from '../reactive-prop'
 export default class Button {
   constructor(props) {
     this.text = props.text || ''
-    this.clicked = props.clicked || false
+    // this.clicked = props.clicked || false
+    this.clicked = false
 
     this.el = null
 
@@ -32,6 +33,7 @@ export default class Button {
       .style('align-items', 'center')
       .style('justify-content', 'center')
       .append('button')
+      .style('width', '70%')
       .text(this.text.value)
       .node()
       .addEventListener('click', () => {
