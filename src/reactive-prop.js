@@ -67,7 +67,9 @@ export default class ReactiveProperty {
 
   _append(value) {
     if (!(this.value instanceof Array))
-      throw new TypeError('Only arrays accept appending values')
+      throw new TypeError(
+        `ReactiveProperty: expected append to be called on array value, got ${this.value}`
+      )
 
     this.value.push(value)
     if (this.instance && this.cb && this.instance[this.cb])

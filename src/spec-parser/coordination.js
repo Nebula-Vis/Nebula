@@ -45,7 +45,9 @@ export default class CoordinationSpecParser {
         transformationStr = ''
         destinationStr = spec.how[1]
       } else {
-        throw new SyntaxError('No such NL command.')
+        throw new SyntaxError(
+          `CoordinationSpecParser: No such NL command ${spec.how}.`
+        )
       }
       howObjs = this._parseNlStr(
         originStr,
@@ -126,8 +128,12 @@ export default class CoordinationSpecParser {
         else if (word === 'in') return { value: word, type: 'PREPOSITION' }
         else if (visualizationsIds.includes(word))
           return { value: word, type: 'VIS' }
-        else throw new SyntaxError('NL command error')
+        else
+          throw new SyntaxError(
+            `CoordinationSpecParser: unknown NL token ${word}`
+          )
       })
+
       .filter((wordObj) => {
         return wordObj.type !== 'CONJUNCTION'
       })
@@ -144,7 +150,9 @@ export default class CoordinationSpecParser {
     for (let i = 0; i < originKeyWords.length; i++) {
       if (i === originKeyWords.length - 1) {
         if (originKeyWords[i].type !== 'VIS')
-          throw new SyntaxError('No such NL command')
+          throw new SyntaxError(
+            `CoordinationSpecParser: No such NL command type ${originKeyWords[i].type}`
+          )
         else
           originKeyWordsGroup[groupIndex].visIds.push(originKeyWords[i].value)
         continue
@@ -208,7 +216,7 @@ export default class CoordinationSpecParser {
     const dataObj = {}
     for (const data of spec) {
       if (dataObj[data.name] !== undefined)
-        throw new Error('Coordination data name can not be repeated.')
+        throw new Error(`Coordination data name repeated ${data.name}.`)
       dataObj[data.name] = data.properties.map((propStr) => {
         const strSplit = propStr.split('.')
         const visId = strSplit[0]
@@ -340,7 +348,9 @@ export default class CoordinationSpecParser {
         }
         // 不存在 declared data：报错
         else {
-          throw new SyntaxError('No such data')
+          throw new SyntaxError(
+            `CoordinationSpecParser: No such data ${paramValue}`
+          )
         }
       }
     })
@@ -352,7 +362,10 @@ export default class CoordinationSpecParser {
         if (prop1.propStr !== prop2.propStr) {
           if (prop1.prop && prop2.prop)
             this._addUnidirectionalLinkInTwoProps(prop1.prop, prop2.prop)
-          else throw new SyntaxError('No such properties')
+          else
+            throw new SyntaxError(
+              `CoordinationSpecParser: No such properties ${prop1.prop}, ${prop2.prop}`
+            )
         }
       }
     }

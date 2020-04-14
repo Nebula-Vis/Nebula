@@ -21,10 +21,10 @@ export default class AreaChart {
     const selection = props.selection || this.data
 
     if (!boolDataHasAttributes(this.data, x, ...y)) {
-      throw new Error('AreaChart: wrong attributes')
+      throw new Error(`AreaChart: wrong attributes x:${x}, y:${y.join(',')}`)
     }
     if (!isArrayOfType(scale, 'number', 2)) {
-      throw new Error('AreaChart: wrong scale')
+      throw new Error('AreaChart: wrong scale format')
     }
 
     this.x = x

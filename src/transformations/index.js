@@ -18,7 +18,7 @@ export default class TransformationsManager {
   }
 
   generateTransformationInstanceByName(name) {
-    if (!this[name]) throw new SyntaxError('No such transformation')
+    if (!this[name]) throw new SyntaxError(`No such transformation ${name}`)
     // class：该数据转化是内置的，可以直接生成实例
     if (typeof this[name] === 'function') return new this[name]()
     // object：该数据转化是用户定义的，需要手动构造生成实例

@@ -22,10 +22,10 @@ export default class Scatterplot {
     const selection = props.selection || this.data
 
     if (!boolDataHasAttributes(this.data, x, y)) {
-      throw new Error('Scatterplot: wrong attributes')
+      throw new Error(`Scatterplot: wrong attributes x:${x}, y:${y}`)
     }
     if (!isArrayOfType(scale, 'number', 2, 2)) {
-      throw new Error('Scatterplot: wrong scale')
+      throw new Error('Scatterplot: wrong scale format')
     }
 
     this.x = x
