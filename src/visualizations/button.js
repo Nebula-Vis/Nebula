@@ -14,12 +14,7 @@ export default class Button {
 
   _init() {
     this.text = new ReactiveProperty(this, 'text', this.text, '_onTextSet')
-    this.clicked = new ReactiveProperty(
-      this,
-      'clicked',
-      this.clicked,
-      '_onClickedSet'
-    )
+    this.clicked = new ReactiveProperty(this, 'clicked', this.clicked, '')
   }
 
   mount(el) {
@@ -47,6 +42,4 @@ export default class Button {
   _onTextSet(val) {
     d3.select(this.el).select('button').text(val)
   }
-
-  _onClickedSet() {}
 }

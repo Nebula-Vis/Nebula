@@ -48,25 +48,43 @@ export default class AreaChart {
   }
 
   _init() {
+    this._initReactiveProperty()
     this.vm = new VueAreaChart({
       data: {
         id: this.id,
-        data: this.data,
-        x: this.x,
-        y: this.y,
-        selection: this.selection,
-        scale: this.scale,
+        data: this.data.value,
+        x: this.x.value,
+        y: this.y.value,
+        scale: this.scale.value,
+        selection: this.selection.value,
       },
       watch: {
         data(val) {
-          // TODO
-          // this.checkXY()
+          // TODO this.checkXY()
           this.scale = getDataExtent(val, this.x)
           this.selection = val
         },
       },
     })
 
+    // 只在直接用户交互时触发
+    // 会propagate到subscribers
+    this.vm.$on('data', (val) => {
+      this.data.set(val)
+    })
+    this.vm.$on('scale', (val) => {
+      this.scale.set(val)
+    })
+    this.vm.$on('selection', (val) => {
+      this.selection.set(val)
+    })
+
+    if (this.el) {
+      this.mount(this.el)
+    }
+  }
+
+  _initReactiveProperty() {
     // set被调用时，**这个**可视化该做什么
     this.data = new ReactiveProperty(
       this,
@@ -92,41 +110,41 @@ export default class AreaChart {
       '_onSelectionChange',
       'select'
     )
-
-    // 只在直接用户交互时触发
-    // 会propagate到subscribers
-    this.vm.$on('data', (val) => {
-      this.data.set(val)
-    })
-    this.vm.$on('scale', (val) => {
-      this.scale.set(val)
-    })
-    this.vm.$on('selection', (val) => {
-      this.selection.set(val)
-    })
-
-    if (this.el) {
-      this.mount(this.el)
-    }
   }
 
   _onDataChange(val) {
+    if (!Array.isArray(val)) {
+      throw new TypeError(`AreaChart: expect data to be Array, got ${val}`)
+    }
     this.vm.data = val
   }
 
   _onXChange(val) {
+    if (typeof val !== 'string') {
+      throw new TypeError(`AreaChart: expect x to be string, got ${val}`)
+    }
     this.vm.x = val
   }
 
   _onYChange(val) {
+    if (typeof val !== 'string') {
+      throw new TypeError(`AreaChart: expect y to be string, got ${val}`)
+    }
     this.vm.y = val
   }
 
   _onScaleChange(val) {
+    if (isArrayOfType(val, 'number', 2)) {
+      throw new TypeError(`AreaChart: expect scale to be number[2]`)
+    }
     this.vm.scale = val
   }
 
   _onSelectionChange(val) {
+    if (!Array.isArray(val)) {
+      throw new TypeError(`AreaChart: expect selection to be Array, got ${val}`)
+    }
+
     this.vm.selection = val
   }
 }
