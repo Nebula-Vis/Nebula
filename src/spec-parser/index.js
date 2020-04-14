@@ -6,6 +6,7 @@ import CoordinationSpecParser from './coordination'
 
 class SpecParser {
   // el这玩意后期还得抽出来，逻辑不对
+  // 感觉解析和构建，错误在哪里发现，值得考虑一下
   constructor(el, spec) {
     this._el = el
     this._spec = spec

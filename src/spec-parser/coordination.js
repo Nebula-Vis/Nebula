@@ -14,26 +14,32 @@ export default class CoordinationSpecParser {
     this._transformationsManager = transformationsManager
     this._spec = spec
 
-    const coordinationObjs = this._spec.map((coordinationSpec) => {
+    const coordinationObjs = []
+    this._spec.forEach((coordinationSpec) => {
       // low level
       if (coordinationSpec.how === undefined) {
-        return this._getCoordinationObjBySpec(coordinationSpec)
+        coordinationObjs.push(this._getCoordinationObjBySpec(coordinationSpec))
       }
-      // high level
-      const lowLevelSpec = this._parseHighLevelSpecToLowLevel(coordinationSpec)
-      // return this._getCoordinationObjBySpec(lowLevelSpec)
-      return null
+      // high level: 可能是一个，也可能是多个（存在any、others）
+      else {
+        const lowLevelSpecObj = this._parseHighLevelSpecToLowLevel(
+          coordinationSpec
+        )
+        // this._getCoordinationObjBySpec(lowLevelSpec)
+      }
     })
     this._constructCoordination(coordinationObjs)
   }
 
+  // todo
   _parseHighLevelSpecToLowLevel(spec) {
     // Get visualizations
     const visualizations = spec.visualizations
       ? this._visualizationsManager.getVisualizationsByIds(spec.visualizations)
       : this._visualizationsManager.getAllVisualizations()
     // Parse NL string to how object
-    let howObjs = []
+    // 填补默认值，转化
+    const howObjs = []
     if (spec.how instanceof Array) {
       const originStr = spec.how[0]
       let transformationStr = ''
@@ -47,28 +53,26 @@ export default class CoordinationSpecParser {
       } else {
         throw new SyntaxError('No such NL command.')
       }
-      howObjs = this._parseNlStr(
+      const result = this._parseNlStr(
         originStr,
         transformationStr,
         destinationStr,
         visualizations
       )
 
-      // todo
+      if (result instanceof Array) howObjs.push(...result)
+      else howObjs.push(result)
     }
     // Parse how object to what object
+    // 填补隐式transformaition，转化
+    // TODO：好像默认值应该在这一步填补来着？
   }
 
   // NL command -> how object
   _parseNlStr(originStr, transformationStr, destinationStr, visualizations) {
     // 特殊情况：any、other
     if (originStr.includes('any') || destinationStr.includes('others')) {
-      return this._parseSpecialNlStr(
-        originStr,
-        transformationStr,
-        destinationStr,
-        visualizations
-      )
+      return this._parseSpecialNlStr(originStr, destinationStr, visualizations)
     } else {
       return this._parseOrdinaryNlStr(
         originStr,
@@ -87,111 +91,239 @@ export default class CoordinationSpecParser {
     visualizations
   ) {
     const visualizationsIds = visualizations.map((vis) => vis.getId())
-    const howObjs = []
+    const howObj = {}
     // origin
     const originWords = this._getWordsInSentence(originStr)
-    const originKeyWords = this._getKeyWordObjsInOrigin(
+    const originKeyWords = this._getKeyWordObjsInOriginOrDestination(
       originWords,
       visualizationsIds
     )
-    const originKeyWordsGroup = this._getKeyWordGroupInOrigin(originKeyWords)
-    console.log(originKeyWordsGroup)
-
-    // todo
+    const originKeyWordsGroup = this._getKeyWordGroupInOriginOrDestination(
+      originKeyWords,
+      'origin'
+    )
+    howObj.origin = this._getOriginOrDestinationObjByKeyWordsGroup(
+      originKeyWordsGroup
+    )
 
     // transformation
-    const transformationWords = this._getWordsInSentence(transformationStr)
-    const transformationKeyWordObjs = []
+    if (transformationStr) {
+      const transformationWords = this._getWordsInSentence(transformationStr)
+      howObj.transformation = this._getTransformationInHowObjByWords(
+        transformationWords,
+        howObj.origin.length
+      )
+    }
 
     // destination
+    const destinationWords = this._getWordsInSentence(destinationStr)
+    const destinationKeyWords = this._getKeyWordObjsInOriginOrDestination(
+      destinationWords,
+      visualizationsIds
+    )
+    const destinationKeyWordsGroup = this._getKeyWordGroupInOriginOrDestination(
+      destinationKeyWords,
+      'destination'
+    )
+    howObj.destination = this._getOriginOrDestinationObjByKeyWordsGroup(
+      destinationKeyWordsGroup
+    )
+    return howObj
   }
 
   // NL command (with any, others) -> how object
-  _parseSpecialNlStr(
-    originStr,
-    transformationStr,
-    destinationStr,
-    visualizations
-  ) {
-    // todo
-  }
+  _parseSpecialNlStr(originStr, destinationStr, visualizations) {
+    const howObjs = []
+    const visualizationsIds = visualizations.map((vis) => vis.getId())
 
-  _getKeyWordObjsInOrigin(originWords, visualizationsIds) {
-    return originWords
-      .map((word) => {
-        if (ACTIONS.includes(word)) return { value: word, type: 'ACTION' }
-        else if (OPTIONS.includes(word)) return { value: word, type: 'OPTION' }
-        else if (word === 'and' || word === 'or')
-          return { value: word, type: 'CONJUNCTION' }
-        else if (word === 'in') return { value: word, type: 'PREPOSITION' }
-        else if (visualizationsIds.includes(word))
-          return { value: word, type: 'VIS' }
-        else throw new SyntaxError('NL command error')
-      })
-      .filter((wordObj) => {
-        return wordObj.type !== 'CONJUNCTION'
-      })
-  }
+    const originWords = this._getWordsInSentence(originStr)
+    const destinationWords = this._getWordsInSentence(destinationStr)
+    const origin = this._parseSpecialNlWords(originWords)
+    const destination = this._parseSpecialNlWords(destinationWords)
 
-  _getKeyWordGroupInOrigin(originKeyWords) {
-    const originKeyWordsGroup = [
-      {
-        actions: [],
-        visIds: [],
-      },
-    ]
-    let groupIndex = 0
-    for (let i = 0; i < originKeyWords.length; i++) {
-      if (i === originKeyWords.length - 1) {
-        if (originKeyWords[i].type !== 'VIS')
-          throw new SyntaxError('No such NL command')
-        else
-          originKeyWordsGroup[groupIndex].visIds.push(originKeyWords[i].value)
-        continue
-      }
-      if (
-        originKeyWords[i].type === 'ACTION' &&
-        originKeyWords[i + 1].type === 'OPTION'
-      ) {
-        originKeyWordsGroup[groupIndex].actions.push({
-          action: originKeyWords[i].value,
-          option: originKeyWords[i + 1].value,
-        })
-        i++
-      } else if (
-        originKeyWords[i].type === 'ACTION' &&
-        originKeyWords[i + 1].type !== 'OPTION'
-      ) {
-        originKeyWordsGroup[groupIndex].actions.push({
-          action: originKeyWords[i].value,
-          option: 'items',
-        })
-      } else if (
-        originKeyWords[i].type === 'VIS' &&
-        originKeyWords[i + 1].type !== 'ACTION'
-      ) {
-        originKeyWordsGroup[groupIndex].visIds.push(originKeyWords[i].value)
-      } else if (
-        originKeyWords[i].type === 'VIS' &&
-        originKeyWords[i + 1].type === 'ACTION'
-      ) {
-        originKeyWordsGroup[groupIndex].visIds.push(originKeyWords[i].value)
-        groupIndex++
-        originKeyWordsGroup.push({ actions: [], visIds: [] })
+    if (origin.vis[0] === 'any') origin.vis = visualizationsIds
+
+    for (const originId of origin.vis) {
+      for (const destinationId of visualizationsIds) {
+        if (originId !== destinationId) {
+          howObjs.push({
+            origin: [
+              { vis: originId, method: origin.action, option: origin.option },
+            ],
+            destination: [
+              {
+                vis: destinationId,
+                method: destination.action,
+                option: destination.option,
+                value: '$1',
+              },
+            ],
+          })
+        }
       }
     }
 
-    return originKeyWordsGroup
+    return howObjs
+  }
+
+  _parseSpecialNlWords(words) {
+    const obj = { action: words[0], option: '', vis: [] }
+    if (words.length === 4) {
+      obj.option = words[1]
+      obj.vis = [words[3]]
+    } else if (words.length === 3) {
+      obj.option = 'items'
+      obj.vis = [words[2]]
+    } else {
+      throw new Error('No such any/other usage.')
+    }
+    return obj
+  }
+
+  _getKeyWordObjsInOriginOrDestination(words, visualizationsIds) {
+    return words
+      .map((word) => {
+        if (ACTIONS.includes(word)) return { value: word, type: 'ACTION' }
+        else if (OPTIONS.includes(word)) return { value: word, type: 'OPTION' }
+        else if (['and', 'or'].includes(word))
+          return { value: word, type: 'CONJUNCTION' }
+        else if (['with', 'in'].includes(word))
+          return { value: word, type: 'PREPOSITION' }
+        else if (visualizationsIds.includes(word))
+          return { value: word, type: 'VIS' }
+        else if (word[0] === '$') return { value: word, type: 'DATA' }
+        else throw new SyntaxError('NL command error')
+      })
+      .filter(
+        (wordObj) => !['CONJUNCTION', 'PREPOSITION'].includes(wordObj.type)
+      )
+  }
+
+  _getKeyWordGroupInOriginOrDestination(keyWords, type) {
+    const keyWordsGroup = [{ actions: [], visIds: [] }]
+    if (type === 'destination') keyWordsGroup[0].params = []
+    let groupIndex = 0
+    for (let i = 0; i < keyWords.length; i++) {
+      if (i === keyWords.length - 1) {
+        if (keyWords[i].type === 'VIS') {
+          keyWordsGroup[groupIndex].visIds.push(keyWords[i].value)
+          if (type === 'destination')
+            keyWordsGroup[groupIndex].params.push('$1')
+        } else if (keyWords[i].type === 'DATA')
+          keyWordsGroup[groupIndex].params.push(keyWords[i].value)
+        else throw new SyntaxError('No such NL command')
+        break
+      }
+      if (keyWords[i].type === 'ACTION' && keyWords[i + 1].type === 'OPTION') {
+        keyWordsGroup[groupIndex].actions.push({
+          action: keyWords[i].value,
+          option: keyWords[i + 1].value,
+        })
+        i++
+      } else if (
+        keyWords[i].type === 'ACTION' &&
+        keyWords[i + 1].type === 'VIS'
+      ) {
+        keyWordsGroup[groupIndex].actions.push({
+          action: keyWords[i].value,
+          option: 'items',
+        })
+      } else if (
+        keyWords[i].type === 'VIS' &&
+        (keyWords[i + 1].type === 'VIS' || keyWords[i + 1].type === 'DATA')
+      ) {
+        keyWordsGroup[groupIndex].visIds.push(keyWords[i].value)
+      } else if (
+        keyWords[i].type === 'VIS' &&
+        keyWords[i + 1].type === 'ACTION'
+      ) {
+        keyWordsGroup[groupIndex].visIds.push(keyWords[i].value)
+        keyWordsGroup.push({ actions: [], visIds: [] })
+        if (type === 'destination') {
+          keyWordsGroup[groupIndex].params.push('$1')
+          keyWordsGroup[groupIndex + 1].params = []
+        }
+        groupIndex++
+      } else if (keyWords[i].type === 'DATA') {
+        keyWordsGroup[groupIndex].params.push(keyWords[i].value)
+        groupIndex++
+        keyWordsGroup.push({ actions: [], visIds: [], params: [] })
+      } else {
+        throw new Error('No such NL command')
+      }
+    }
+
+    return keyWordsGroup
+  }
+
+  _getOriginOrDestinationObjByKeyWordsGroup(keyWordsGroup) {
+    const obj = []
+    for (const group of keyWordsGroup) {
+      for (const action of group.actions) {
+        for (const visId of group.visIds) {
+          obj.push({
+            vis: visId,
+            method: action.action,
+            option: action.option,
+          })
+          if (group.params) obj[obj.length - 1].value = group.params[0]
+        }
+      }
+    }
+    return obj
+  }
+
+  _getTransformationInHowObjByWords(transformationWords, originParameterNum) {
+    const transformationObj = { method: '', parameters: [], triggers: 'any' }
+    let transformationWordsWithoutTrigger = []
+    if (transformationWords[0] === 'when' && transformationWords[1] === 'any')
+      transformationWordsWithoutTrigger = transformationWords.slice(2)
+    else if (
+      transformationWords[0] === 'when' &&
+      transformationWords[1] !== 'any'
+    ) {
+      // 暂时不管此处button存不存在，解析就完事了
+      transformationObj.triggers = transformationWords[1]
+      transformationWordsWithoutTrigger = transformationWords.slice(3)
+    } else transformationWordsWithoutTrigger = transformationWords
+
+    const keyTransformationWords = transformationWordsWithoutTrigger.filter(
+      (word) => word !== 'with' && word !== 'and'
+    )
+    let parameters = []
+    if (keyTransformationWords.length > 1) {
+      // 有参数，不需要默认值
+      parameters = keyTransformationWords.slice(1)
+    } else {
+      // 自动补全
+      parameters = new Array(originParameterNum)
+        .fill(0)
+        .map((v, i) => `$${i + 1}`)
+    }
+    transformationObj.method = transformationWordsWithoutTrigger[0]
+    transformationObj.parameters = parameters
+    return transformationObj
   }
 
   _getWordsInSentence(sentence) {
-    return sentence.split(' ').map(this._getWordWithoutTraillingComma)
-  }
-
-  _getWordWithoutTraillingComma(word) {
-    const commaPosition = word.indexOf(',')
-    if (commaPosition > 0) return word.substring(0, commaPosition)
-    else return word
+    // 分词
+    const words = sentence.split(' ').map((word) => {
+      const commaPosition = word.indexOf(',')
+      if (commaPosition > 0) return word.substring(0, commaPosition)
+      else return word
+    })
+    // 将set data、append data等词合起来
+    const removeIndex = []
+    for (let i = 0; i < words.length - 1; i++) {
+      if (['set', 'append', 'replace'].includes(words[i])) {
+        words[i] += ' data'
+        removeIndex.push(i + 1)
+        i++
+      }
+    }
+    return words.filter((word, index) => {
+      return !removeIndex.includes(index)
+    })
   }
 
   _getCoordinationObjBySpec(spec) {

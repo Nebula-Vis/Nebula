@@ -105,17 +105,17 @@
     }, 
     {
       "how": [
-        "select items in chart3 and chart4, navigate in chart1",
-        "intersect with $1 and $2",
-        "set data in chart5 with $1"
+        "select items in chart3 and chart4",
+        "intersect",
+        "select in chart5 with $1"
       ]
     },
     {
       "how": [
-        "select in any",
-        "select in others"
+        "select in chart1",
+        "set data in others"
       ],
-      "visualizations": ["chart1", "chart3", "chart4"]
+      "visualizations": ["chart1", "chart2", "chart3", "chart4"]
     },
     {
       "how": [
