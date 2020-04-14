@@ -25,9 +25,7 @@ export default class Domain {
   // get aggregated value of array
   run() {
     // if (!this.trigger) return
-    
     // todo
-
     // this.trigger
   }
 }

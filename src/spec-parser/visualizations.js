@@ -74,6 +74,16 @@ class VisualizationsManager {
       return id === visualization.getId()
     })[0]
   }
+
+  getVisualizationsByIds(ids) {
+    return this._visualizations.filter((visualization) => {
+      return ids.includes(visualization.getId())
+    })
+  }
+
+  getAllVisualizations() {
+    return this._visualizations.map((visualization) => visualization)
+  }
 }
 
 class Visualization {

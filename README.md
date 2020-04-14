@@ -13,7 +13,5 @@ A visualization grammar for coordination between visualizations.
 ## TODOLIST (Ran)
 - [ ] trigger: wait
 - [ ] append: to test
-- [ ] selection -> data等特例
 - [ ] high level
 
-- 再思考一下到底要做到什么程度

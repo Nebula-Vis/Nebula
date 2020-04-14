@@ -102,6 +102,26 @@
           "output": { "intersection": "$d3" }
         }
       ]
+    }, 
+    {
+      "how": [
+        "select items in chart3 and chart4, navigate in chart1",
+        "intersect with $1 and $2",
+        "set data in chart5 with $1"
+      ]
+    },
+    {
+      "how": [
+        "select in any",
+        "select in others"
+      ],
+      "visualizations": ["chart1", "chart3", "chart4"]
+    },
+    {
+      "how": [
+        "select in chart1",
+        "navigate in chart2"
+      ]
     }
   ],
   "transformations": [
