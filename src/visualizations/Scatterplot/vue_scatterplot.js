@@ -123,7 +123,7 @@ export default Vue.extend({
       }))
     },
     marks() {
-      const selectionSet = new Set(this.selection)
+      const selectionSet = new Set(this.selection.map((d) => d._nbid_))
       const front = []
       const back = []
       this.scaledData.forEach((d, i) => {
@@ -200,11 +200,11 @@ export default Vue.extend({
         const selection = []
         this.scaledData.forEach((d, i) => {
           if (d.x >= x0 && d.x <= x1 && d.y >= y0 && d.y <= y1) {
-            selection.push(this.data[i]._nbid_)
+            selection.push(this.data[i])
           }
         })
         if (this.isFiltering) {
-          const selectionSet = new Set(selection)
+          const selectionSet = new Set(selection.map((d) => d._nbid_))
           this.data = this.data.filter((d) => selectionSet.has(d._nbid_))
           this.$emit('data', this.data)
         } else {

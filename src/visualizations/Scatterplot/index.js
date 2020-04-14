@@ -5,7 +5,6 @@ import {
   getFieldsOfType,
   isArrayOfType,
   getDataExtent,
-  getNbidsFromData,
   boolDataHasAttributes,
   padExtent,
 } from '../../utils'
@@ -20,7 +19,7 @@ export default class Scatterplot {
     const scale = isArrayOfType(props.scale, 'number', 2, 2)
       ? props.scale
       : this._getScale(this.data, x, y)
-    const selection = props.selection || getNbidsFromData(this.data)
+    const selection = props.selection || this.data
 
     if (!boolDataHasAttributes(this.data, x, y)) {
       throw new Error('Scatterplot: wrong attributes')
@@ -65,7 +64,7 @@ export default class Scatterplot {
           // TODO
           // this.checkXY()
           this.scale = that._getScale(val, this.x, this.y)
-          this.selection = getNbidsFromData(val)
+          this.selection = val
         },
       },
     })

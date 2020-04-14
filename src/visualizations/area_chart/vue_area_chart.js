@@ -136,7 +136,7 @@ export default Vue.extend({
 
       area.x((d, i) => scales.x(selectionData[i][x]))
 
-      const selectionSet = new Set(this.selection)
+      const selectionSet = new Set(this.selection.map((d) => d._nbid_))
       const selectionData = this.data.filter((d) => selectionSet.has(d._nbid_))
       const stackedSelectionData = this.getStackedData(selectionData)
       const selectedPaths = stackedSelectionData.map((d, i) => ({
@@ -214,11 +214,11 @@ export default Vue.extend({
         this.data.forEach((d) => {
           const xVal = scales.x(d[x])
           if (xVal >= x0 && xVal <= x1) {
-            selection.push(d._nbid_)
+            selection.push(d)
           }
         })
         if (this.isFiltering) {
-          const selectionSet = new Set(selection)
+          const selectionSet = new Set(selection.map((d) => d._nbid_))
           this.data = this.data.filter((d) => selectionSet.has(d._nbid_))
           this.$emit('data', this.data)
         } else {

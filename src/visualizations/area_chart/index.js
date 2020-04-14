@@ -5,7 +5,6 @@ import {
   getFieldsOfType,
   isArrayOfType,
   getDataExtent,
-  getNbidsFromData,
   boolDataHasAttributes,
 } from '../../utils'
 
@@ -19,7 +18,7 @@ export default class AreaChart {
     const scale = isArrayOfType(props.scale, 'number', 2)
       ? props.scale
       : getDataExtent(this.data, x)
-    const selection = props.selection || getNbidsFromData(this.data)
+    const selection = props.selection || this.data
 
     if (!boolDataHasAttributes(this.data, x, ...y)) {
       throw new Error('AreaChart: wrong attributes')
@@ -63,7 +62,7 @@ export default class AreaChart {
           // TODO
           // this.checkXY()
           this.scale = getDataExtent(val, this.x)
-          this.selection = getNbidsFromData(val)
+          this.selection = val
         },
       },
     })
