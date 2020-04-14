@@ -2,11 +2,10 @@
 A visualization grammar for coordination between visualizations.
 
 ## TODOLIST (Jiahui)
-- [ ] 集成 vega-lite
 - [x] button, slider, input, select (needs refinement)
-- [x] selection存什么值 - 存和data一样的值
-- [x] 给reactive props加属性：how, type
-- [ ] 测试trigger
+- [x] 给 reactive props 加属性：how, type
+- [ ] 测试 trigger
+- [ ] 集成 vega-lite
 
 ---
 
@@ -14,6 +13,6 @@ A visualization grammar for coordination between visualizations.
 - [ ] Brush in graph.
 
 ## TODOLIST (Ran)
-- [ ] trigger: wait
-- [ ] append: to test
-- [ ] high level
+- high level parser
+  - [ ] nl -> high level obj: 默认值不应该放在这里处理，应该放到后一步
+  - [ ] high level obj -> low level obj
