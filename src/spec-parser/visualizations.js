@@ -2,6 +2,10 @@ import Scatterplot from '../visualizations/scatterplot'
 import Areachart from '../visualizations/area_chart'
 import LineUp from '../visualizations/line_up'
 import NodeLinkGraph from '../visualizations/node_link_graph'
+import Select from '../visualizations/select'
+import Button from '../visualizations/button'
+import Input from '../visualizations/input'
+import Slider from '../visualizations/slider'
 
 export default class VisualizationsSpecParser {
   constructor(dataSources, layout, spec) {
@@ -91,9 +95,11 @@ class Visualization {
 
   init(dataSources) {
     const props = { ...this._propsSpec }
-    const data = dataSources.getDataSourceByName(props.data)
-    if (!data) throw new SyntaxError('No such data')
-    props.data = data.values ? data.values : data
+    if (props.data) {
+      const data = dataSources.getDataSourceByName(props.data)
+      if (!data) throw new SyntaxError('No such data')
+      props.data = data.values ? data.values : data
+    }
     this._instance = this._generateInstance(this._type, props)
   }
 
@@ -107,6 +113,14 @@ class Visualization {
         return new LineUp(props)
       case 'graph':
         return new NodeLinkGraph(props)
+      case 'select':
+        return new Select(props)
+      case 'button':
+        return new Button(props)
+      case 'input':
+        return new Input(props)
+      case 'slider':
+        return new Slider(props)
       default:
         throw new SyntaxError('No such visualization')
     }

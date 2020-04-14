@@ -3,7 +3,7 @@ A visualization grammar for coordination between visualizations.
 
 ## TODOLIST (Jiahui)
 - [ ] 集成 vega-lite
-- [ ] button, slider, input, select
+- [x] button, slider, input, select (needs refinement)
 - [ ] selection存什么值？
 ---
 
