@@ -333,7 +333,7 @@ export default class HighLevelCoordinationSpecParser {
 
   // todo
   _addImplicitTransformationInHowObj(howObj) {
-    // console.log('to add implicit transformation', howObj)
+    // select in xx, navigate in yy -> select in xx, xxx transformation, navigate in yy
   }
 
   _parseHowObjToWhatObj(howObj) {

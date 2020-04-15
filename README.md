@@ -1,19 +1,15 @@
 # Nebula
 A visualization grammar for coordination between visualizations.
 
-## TODOLIST (Jiahui)
-- [x] button, slider, input, select (needs refinement)
-- [x] 给 reactive props 加属性：how, type
-- [x] 测试 trigger
+## TODOLIST
+- [x] 测试 trigger：已实现，未测试
+- [ ] Implicit transformation：接口已留
 - [ ] 集成 vega-lite
+- [ ] transformation扩展：match、domain、filter……
 
 ---
 
 - [ ] Filter 在组件里怎么设计
 - [ ] Brush in graph.
 
-## TODOLIST (Ran)
-- high level parser
-  - [x] nl -> high level obj: 默认值不应该放在这里处理，应该放到后一步
-  - [ ] high level obj -> low level obj
-- [x] bug：初始intersection为灰
+
