@@ -26,10 +26,10 @@
     }
   ],
   "layout": {
-    "width": "1600px",
-    "height": "1000px",
-    "rows": ["500px", "1fr"],
-    "columns": ["500px", "1fr", "500px"]
+    "width": "1200px",
+    "height": "1200px",
+    "rows": ["1fr", "1fr", "1fr"],
+    "columns": ["1fr", "1fr", "1fr"]
   },
   "visualizations": [
     {
@@ -52,7 +52,7 @@
     },
     {
       "id": "chart3",
-      "container": "1 1 2 2",
+      "container": "3 3 1 1",
       "visualization": "scatterplot",
       "props": {
         "data": "points"
@@ -60,7 +60,7 @@
     },
     {
       "id": "chart4",
-      "container": "2 2 2 2",
+      "container": "1 1 2 2",
       "visualization": "scatterplot",
       "props": {
         "data": "points"
@@ -68,7 +68,7 @@
     },
     {
       "id": "chart5",
-      "container": "1 1 3 3",
+      "container": "2 2 2 2",
       "visualization": "scatterplot",
       "props": {
         "data": "points"
@@ -76,51 +76,84 @@
     },
     {
       "id": "chart6",
+      "container": "3 3 2 2",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "points"
+      }
+    },
+    {
+      "id": "chart7",
+      "container": "1 1 3 3",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "points"
+      }
+    },
+    {
+      "id": "chart8",
       "container": "2 2 3 3",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "points"
+      }
+    },
+    {
+      "id": "chart9",
+      "container": "3 3 3 3",
       "visualization": "graph",
       "props": {
         "data": "miserables"
       }
     }
   ],
+  "coordination(what)": [
+    {
+			"data": [
+				{ 
+					"name": "$d1", 
+					"sources": ["chart1.selection"], 
+					"dependencies": ["chart2.selection", "chart3.selection"] 
+				} 
+			]
+		},
+		{
+			"data": [
+				{ "name": "$d1", "sources": ["chart7.selection", "chart8.selection"] } 
+			]
+		},
+		{
+			"data": [
+				{ "name": "$d1", "sources": ["chart4.selection"] },
+				{ "name": "$d2", "sources": ["chart5.selection"] } 
+			],
+			"transformation": {
+				"name": "intersect",
+				"input": ["$d1", "$d2"],
+				"output": [["chart4.selection", "chart5.selection", "chart6.selection"]],
+				"triggers": "any"
+			}
+		}
+  ],
   "coordination": [
     {
-      "data": [
-        { "name": "$d1", "properties": ["chart1.selection", "chart2.selection"] }
+      "how": [
+        "select in chart1",
+        "select in chart2, chart3"
       ]
     },
     {
-      "data": [
-        { "name": "$d1", "properties": ["chart3.selection"] },
-        { "name": "$d2", "properties": ["chart4.selection"] },
-        { "name": "$d3", "properties": ["chart5.selection"] }
+      "how": [
+        "select in any",
+        "select in others"
       ],
-      "transformations": [
-        {
-          "name": "intersect",
-          "input": ["$d1", "$d2"],
-          "output": { "intersection": "$d3" }
-        }
-      ]
-    }, 
+      "visualizations": ["chart7", "chart8"]
+    },
     {
       "how": [
-        "select items in chart3 and chart4",
+        "select in chart4 and chart5",
         "intersect",
-        "select in chart5 with $1"
-      ]
-    },
-    {
-      "how": [
-        "select in chart1",
-        "set data in others"
-      ],
-      "visualizations": ["chart1", "chart2", "chart3", "chart4"]
-    },
-    {
-      "how": [
-        "select in chart1",
-        "navigate in chart2"
+        "select in chart4, chart5 and chart6"
       ]
     }
   ],

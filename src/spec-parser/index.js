@@ -13,7 +13,7 @@ class SpecParser {
     this._dataParser = new DataSpecParser(this._spec.data)
     this._layoutParser = new LayoutSpecParser(this._spec.layout)
     // this._visualizationsParser = null
-    // this._coordinationParser = null
+    this._coordinationParser = null
     // this._transformationParser = null
 
     this._dataSources = []
@@ -41,12 +41,15 @@ class SpecParser {
       this._spec.transformations
     ).getTransformationsManager()
 
-    new CoordinationSpecParser(
+    this._coordinationParser = new CoordinationSpecParser(
       this._dataSources,
       this._visualizationsManager,
-      this._transformationsManager,
+      this._transformationsManager
+    )
+    const coordinationObjs = this._coordinationParser.parse(
       this._spec.coordination
     )
+    this._coordinationParser.construct(coordinationObjs)
   }
 }
 

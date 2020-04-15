@@ -93,6 +93,10 @@ class VisualizationsManager {
   getAllVisualizations() {
     return this._visualizations.map((visualization) => visualization)
   }
+
+  getAllVisualizationIds() {
+    return this._visualizations.map((visualization) => visualization.getId())
+  }
 }
 
 class Visualization {
