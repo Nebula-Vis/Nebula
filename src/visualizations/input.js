@@ -33,7 +33,7 @@ export default class Input {
       .style('justify-content', 'center')
       .append('input')
       .style('width', '70%')
-      .attr('value', this.value.value)
+      .attr('value', this.value.get())
       .node()
       .addEventListener(
         'input',
