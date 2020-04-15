@@ -45,7 +45,7 @@ export default class Select {
         this.selected.set(event.target.value)
       })
 
-    this._renderOptions(this.options.value)
+    this._renderOptions(this.options.get())
   }
 
   _renderOptions(options) {

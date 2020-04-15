@@ -67,7 +67,7 @@ export default class LineUp {
   }
 
   _buildLineUp() {
-    const builder = this._getDataBuilder(this.data.value, this.order.value)
+    const builder = this._getDataBuilder(this.data.get(), this.order.get())
 
     builder.defaultRanking()
     builder.sidePanel(false)
@@ -94,7 +94,7 @@ export default class LineUp {
   _onDataSet(data) {
     if (_.isEqual(data, this._data)) return
     const datum = data[0]
-    const order = this.order.value.filter((attr) => datum[attr] !== undefined)
+    const order = this.order.get().filter((attr) => datum[attr] !== undefined)
     const builder = this._getDataBuilder(data, order)
     this.lineup.setDataProvider(builder.buildData())
 
@@ -104,7 +104,7 @@ export default class LineUp {
     })
 
     this.lineup.setSelection(
-      this.selection.value.map((datum) => dataMap.get(datum._nbid_))
+      this.selection.get().map((datum) => dataMap.get(datum._nbid_))
     )
     this._addDataListener()
     this._addOrderListener()
@@ -113,7 +113,7 @@ export default class LineUp {
   _onSelectionSet(selection) {
     // if (_.isEqual(selection, this._selection)) return
     if (selection === this._selection) return
-    const data = this.data.value
+    const data = this.data.get()
 
     const dataMap = new Map()
     data.forEach((d, i) => {
@@ -148,7 +148,7 @@ export default class LineUp {
     lineupData.on('orderChanged', (prev, cur) => {
       if (!isNewlyFiltered) return
       isNewlyFiltered = false
-      const data = this.data.value.filter((d, i) => cur.includes(i))
+      const data = this.data.get().filter((d, i) => cur.includes(i))
       this._data = data
       this.data.set(data)
     })
@@ -156,7 +156,7 @@ export default class LineUp {
 
   _addSelectionListener() {
     this.lineup.on('selectionChanged', (selectedIndices) => {
-      const data = this.data.value
+      const data = this.data.get()
       const selection = selectedIndices
         .filter((index) => !!data[index])
         .map((index) => data[index])

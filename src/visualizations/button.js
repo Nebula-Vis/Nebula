@@ -29,7 +29,7 @@ export default class Button {
       .style('justify-content', 'center')
       .append('button')
       .style('width', '70%')
-      .text(this.text.value)
+      .text(this.text.get())
       .node()
       .addEventListener('click', () => {
         this.clicked.set(true)

@@ -7,7 +7,7 @@ export default class Intersect {
     this._parameterNames = ['array1', 'array2']
     this._outputNames = ['intersection']
 
-    this.trigger = new ReactiveProperty(this, 'trigger', false, 'run')
+    this.trigger = null
     this.array1 = new ReactiveProperty(this, 'array1', [], 'run')
     this.array2 = new ReactiveProperty(this, 'array2', [], 'run')
     this.intersection = new ReactiveProperty(this, 'intersection', '', '')
@@ -22,13 +22,13 @@ export default class Intersect {
   }
 
   run() {
-    if (!this.trigger.value) return
+    if (this.trigger && !this.trigger.get()) return
+    if (this.trigger) this.trigger.set(false)
     const intersection = _.intersectionBy(
       this.array1.get(),
       this.array2.get(),
       '_nbid_'
     )
     this.intersection.set(intersection)
-    this.trigger.set(false)
   }
 }

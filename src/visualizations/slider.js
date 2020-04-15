@@ -43,7 +43,7 @@ export default class Slider {
       .append('div')
       .style('position', 'relative')
       .attr('class', 'value')
-      .html(this.value.value)
+      .html(this.value.get())
 
     d3.select(this.el)
       .append('div')
@@ -51,10 +51,10 @@ export default class Slider {
       .append('input')
       .attr('class', 'nb-slider')
       .attr('type', 'range')
-      .attr('min', this.min.value)
-      .attr('max', this.max.value)
+      .attr('min', this.min.get())
+      .attr('max', this.max.get())
       .attr('step', 0.01)
-      .attr('value', this.value.value)
+      .attr('value', this.value.get())
       .node()
       .addEventListener(
         'input',
@@ -68,8 +68,8 @@ export default class Slider {
       .style('width', '70%')
       .style('display', 'flex')
       .style('justify-content', 'space-between')
-    div.append('span').attr('class', 'min-value').html(this.min.value)
-    div.append('span').attr('class', 'max-value').html(this.max.value)
+    div.append('span').attr('class', 'min-value').html(this.min.get())
+    div.append('span').attr('class', 'max-value').html(this.max.get())
     this._styleSlider()
   }
 
@@ -80,7 +80,7 @@ export default class Slider {
       .html(val)
       .style(
         'left',
-        `${((val - this.min.value) / (this.max.value - this.min.value)) * 100}%`
+        `${((val - this.min.get()) / (this.max.get() - this.min.get())) * 100}%`
       )
   }
 

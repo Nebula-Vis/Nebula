@@ -54,11 +54,11 @@ export default class Scatterplot {
     this.vm = new VueScatterplot({
       data: {
         id: this.id,
-        data: this.data.value,
-        x: this.x.value,
-        y: this.y.value,
-        scale: this.scale.value,
-        selection: this.selection.value,
+        data: this.data.get(),
+        x: this.x.get(),
+        y: this.y.get(),
+        scale: this.scale.get(),
+        selection: this.selection.get(),
       },
       watch: {
         data(val) {

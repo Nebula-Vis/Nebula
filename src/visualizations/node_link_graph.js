@@ -71,8 +71,8 @@ export default class NodeLinkGraph {
   }
 
   _renderGraph() {
-    const data = this.data.value
-    const selection = new Set(this.selection.value.map((d) => d._nbid_))
+    const data = this.data.get()
+    const selection = new Set(this.selection.get().map((d) => d._nbid_))
     const color = this.color
     const selectionColor = this.selectionColor
     const radius = this.circleRadius
