@@ -10,7 +10,7 @@ export default class Match {
       'destinationKey',
       'destinationData',
     ]
-    this._outputNames = ['itemsDestination']
+    this._outputNames = ['destinationItems']
 
     this.trigger = null
     this.originItems = new ReactiveProperty(this, 'originItems', [], 'run')
@@ -27,9 +27,9 @@ export default class Match {
       [],
       'run'
     )
-    this.itemsDestination = new ReactiveProperty(
+    this.destinationItems = new ReactiveProperty(
       this,
-      'itemsDestination',
+      'destinationItems',
       [],
       ''
     )
@@ -53,9 +53,9 @@ export default class Match {
     const destinationData = this.destinationData.get()
 
     const valueOriginSet = new Set(originItems.map((d) => d[originKey]))
-    const itemsDestination = destinationData.filter((d) =>
+    const destinationItems = destinationData.filter((d) =>
       valueOriginSet.has(d[destinationKey])
     )
-    this.itemsDestination.set(itemsDestination)
+    this.destinationItems.set(destinationItems)
   }
 }

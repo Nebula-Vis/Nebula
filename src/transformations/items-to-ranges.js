@@ -27,6 +27,8 @@ export default class ItemsToRanges {
 
     const items = this.items.get()
     const ranges = this.keys.get().map((key) => d3.extent(items, (d) => d[key]))
+
+    // TODO 为了适配，判断keys是否只有一个元素，若是，则this.ranges.set(ranges[0])？
     this.ranges.set(ranges)
   }
 }
