@@ -10,7 +10,7 @@ export default class Intersect {
     this.trigger = null
     this.array1 = new ReactiveProperty(this, 'array1', [], 'run')
     this.array2 = new ReactiveProperty(this, 'array2', [], 'run')
-    this.intersection = new ReactiveProperty(this, 'intersection', '', '')
+    this.intersection = new ReactiveProperty(this, 'intersection', [], '')
   }
 
   getParameterNameByIndex(index) {
