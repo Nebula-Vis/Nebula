@@ -22,19 +22,15 @@ export default class LayoutSpecParser {
   }
 
   _generateGridLayoutElementBySpec(spec) {
+    const definiteSpecRows = spec.rows.map((r) => `minmax(0, ${r})`)
+    const definiteSpecColumns = spec.columns.map((c) => `minmax(0, ${c})`)
     return d3
       .create('div')
       .style('display', 'grid')
       .style('width', spec.width)
       .style('height', spec.height)
-      .style(
-        'grid-template-rows',
-        spec.rows.reduce((total, current) => `${total} ${current}`, '')
-      )
-      .style(
-        'grid-template-columns',
-        spec.columns.reduce((total, current) => `${total} ${current}`, '')
-      )
+      .style('grid-template-rows', definiteSpecRows.join(' '))
+      .style('grid-template-columns', definiteSpecColumns.join(' '))
   }
 }
 
