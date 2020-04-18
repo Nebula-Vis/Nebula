@@ -6,6 +6,7 @@ import Select from '../visualizations/select'
 import Button from '../visualizations/button'
 import Input from '../visualizations/input'
 import Slider from '../visualizations/slider'
+import VegaLite from '../visualizations/vega-lite'
 import ReactiveProperty from '../reactive-prop'
 
 export default class VisualizationsSpecParser {
@@ -113,11 +114,17 @@ class Visualization {
   }
 
   init(dataSources) {
-    const props = { ...this._propsSpec }
+    const props = { ...this._propsSpec, id: this._id }
     if (props.data) {
-      const data = dataSources.getDataSourceByName(props.data)
-      if (!data) throw new SyntaxError(`No such data ${props.data}.`)
-      props.data = data.values ? data.values : data
+      if (this._type.toLowerCase() === 'vegalite') {
+        const data = dataSources.getDataSourceByName(props.data.name)
+        if (!data) throw new SyntaxError(`No such data ${props.data.name}.`)
+        props.data.values = data.values ? data.values : data
+      } else {
+        const data = dataSources.getDataSourceByName(props.data)
+        if (!data) throw new SyntaxError(`No such data ${props.data}.`)
+        props.data = data.values ? data.values : data
+      }
     }
     this._instance = this._generateInstance(this._type, props)
   }
@@ -140,6 +147,8 @@ class Visualization {
         return new Input(props)
       case 'slider':
         return new Slider(props)
+      case 'vegalite':
+        return new VegaLite(props)
       default:
         throw new SyntaxError(`No such visualization ${type.toLowerCase()}.`)
     }

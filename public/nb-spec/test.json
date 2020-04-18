@@ -26,8 +26,8 @@
     }
   ],
   "layout": {
-    "width": "1200px",
-    "height": "1200px",
+    "width": "1000px",
+    "height": "1000px",
     "rows": ["1fr", "1fr", "1fr"],
     "columns": ["1fr", "1fr", "1fr"]
   },
@@ -35,11 +35,30 @@
     {
       "id": "chart1",
       "container": "1 1 1 1",
-      "visualization": "scatterplot",
+      "visualization": "vegalite",
       "props": {
-        "data": "points",
-        "x": "A",
-        "y": "C"
+        "data": { "name": "points" },
+        "mark": "point",
+        "encoding": {
+          "x": { "field": "A", "type": "quantitative" },
+          "y": {
+            "field": "B",
+            "type": "quantitative",
+            "scale": { "zero": false }
+          },
+          "color": {
+            "condition": {
+              "selection": {
+                "or": ["interval"]
+              },
+              "value": "green"
+            },
+            "value": "grey"
+          }
+        },
+        "selection": {
+          "interval": { "type": "interval" }
+        }
       }
     },
     {
@@ -61,9 +80,24 @@
     {
       "id": "chart4",
       "container": "1 1 2 2",
-      "visualization": "scatterplot",
+      "visualization": "vegalite",
       "props": {
-        "data": "points"
+        "data": { "name": "points" },
+        "mark": "bar",
+        "encoding": {
+          "x": { "field": "A", "type": "quantitative" },
+          "y": { "field": "B", "type": "quantitative" },
+          "color": {
+            "condition": {
+              "selection": "multi",
+              "value": "green"
+            },
+            "value": "grey"
+          }
+        },
+        "selection": {
+          "multi": { "type": "multi" }
+        }
       }
     },
     {
@@ -101,59 +135,47 @@
     {
       "id": "chart9",
       "container": "3 3 3 3",
-      "visualization": "graph",
+      "visualization": "button",
       "props": {
-        "data": "miserables"
+        "text": "trigger"
       }
     }
   ],
-  "coordination(what)": [
-    {
-			"data": [
-				{ 
-					"name": "$d1", 
-					"sources": ["chart1.selection"], 
-					"dependencies": ["chart2.selection", "chart3.selection"] 
-				} 
-			]
-		},
-		{
-			"data": [
-				{ "name": "$d1", "sources": ["chart7.selection", "chart8.selection"] } 
-			]
-		},
-		{
-			"data": [
-				{ "name": "$d1", "sources": ["chart4.selection"] },
-				{ "name": "$d2", "sources": ["chart5.selection"] } 
-			],
-			"transformation": {
-				"name": "intersect",
-				"input": ["$d1", "$d2"],
-				"output": [["chart4.selection", "chart5.selection", "chart6.selection"]],
-				"triggers": "any"
-			}
-		}
-  ],
   "coordination": [
     {
-      "how": [
-        "select in chart1",
-        "select in chart2, chart3"
+      "data": [
+        {
+          "name": "$d1",
+          "sources": ["chart1.selectioninterval"],
+          "dependencies": ["chart3.scale"]
+        }
       ]
     },
     {
-      "how": [
-        "select in any",
-        "select in others"
-      ],
-      "visualizations": ["chart7", "chart8"]
+      "data": [
+        {
+          "name": "$d1",
+          "sources": ["chart3.scale"],
+          "dependencies": ["chart1.selectioninterval"]
+        }
+      ]
     },
     {
-      "how": [
-        "select in chart4 and chart5",
-        "intersect",
-        "select in chart4, chart5 and chart6"
+      "data": [
+        {
+          "name": "$d1",
+          "sources": ["chart4.selectionmulti"],
+          "dependencies": ["chart2.selection"]
+        }
+      ]
+    },
+    {
+      "data": [
+        {
+          "name": "$d1",
+          "sources": ["chart2.selection"],
+          "dependencies": ["chart4.selectionmulti"]
+        }
       ]
     }
   ],
