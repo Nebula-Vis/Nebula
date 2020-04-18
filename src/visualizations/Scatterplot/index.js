@@ -11,10 +11,11 @@ import {
 
 export default class Scatterplot {
   constructor(props) {
+    this.id = props.id
     const numericFields = getFieldsOfType(props.data, 'number')
     const x = props.x || numericFields[0]
     const y = props.y || numericFields[1]
-    const scale = isArrayOfType(props.scale, 'number', 2, 2)
+    const scale = this._isValidScale(props.scale, x, y)
       ? props.scale
       : this._getScale(props.data, x, y)
     const selection = props.selection || props.data
@@ -22,7 +23,7 @@ export default class Scatterplot {
     if (!boolDataHasAttributes(props.data, x, y)) {
       throw new Error(`Scatterplot: wrong attributes x:${x}, y:${y}`)
     }
-    if (!isArrayOfType(scale, 'number', 2, 2)) {
+    if (!this._isValidScale(scale, x, y)) {
       throw new Error('Scatterplot: wrong scale format')
     }
 
@@ -32,7 +33,7 @@ export default class Scatterplot {
     this.scale = scale
     this.selection = selection
 
-    this.id = new Date().toLocaleString()
+    // this.id = new Date().toLocaleString()
     this.el = null
     this.vm = null
 
@@ -132,8 +133,8 @@ export default class Scatterplot {
   }
 
   _onScaleChange(val) {
-    if (isArrayOfType(val, 'number', 2, 2)) {
-      throw new TypeError(`Scatterplot: expect scale to be number[2][2]`)
+    if (!this._isValidScale(val, this.x.get(), this.y.get())) {
+      throw new TypeError(`Scatterplot: _onScaleChange, wrong scale format`)
     }
     this.vm.scale = val
   }
@@ -149,8 +150,17 @@ export default class Scatterplot {
   }
 
   _getScale(data, x, y) {
-    return [getDataExtent(data, x), getDataExtent(data, y)].map((extent) =>
-      padExtent(extent, 0.2)
+    return {
+      [x]: padExtent(getDataExtent(data, x), 0.2),
+      [y]: padExtent(getDataExtent(data, y), 0.2),
+    }
+  }
+
+  _isValidScale(scale, x, y) {
+    return (
+      scale &&
+      isArrayOfType(scale[x], 'number', 2) &&
+      isArrayOfType(scale[y], 'number', 2)
     )
   }
 }

@@ -106,7 +106,7 @@ export default Vue.extend({
       const stackedData = this.stackedData
       const maxY = d3.max(stackedData[stackedData.length - 1], (d) => d[1])
       const domains = {
-        x: this.scale,
+        x: this.scale[this.x],
         y: [0, maxY],
       }
 
@@ -251,8 +251,8 @@ export default Vue.extend({
       const xScale = this.scales.x.copy()
       const onZoom = () => {
         const scale = d3.event.transform.rescaleX(xScale).domain()
-        this.scale = scale
-        this.$emit('scale', scale)
+        this.scale = { [this.x]: scale }
+        this.$emit('scale', { [this.x]: scale })
       }
 
       const { x: xRange, y: yRange } = this.ranges

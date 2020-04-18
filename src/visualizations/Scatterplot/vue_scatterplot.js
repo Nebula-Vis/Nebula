@@ -102,8 +102,8 @@ export default Vue.extend({
     },
     scales() {
       const domains = {
-        x: this.scale[0],
-        y: this.scale[1],
+        x: this.scale[this.x],
+        y: this.scale[this.y],
       }
       const ranges = this.ranges
 
@@ -237,10 +237,10 @@ export default Vue.extend({
       const xScale = this.scales.x.copy()
       const yScale = this.scales.y.copy()
       const onZoom = () => {
-        const scale = [
-          d3.event.transform.rescaleX(xScale).domain(),
-          d3.event.transform.rescaleY(yScale).domain(),
-        ]
+        const scale = {
+          [this.x]: d3.event.transform.rescaleX(xScale).domain(),
+          [this.y]: d3.event.transform.rescaleY(yScale).domain(),
+        }
         this.scale = scale
         this.$emit('scale', scale)
       }

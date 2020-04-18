@@ -10,20 +10,21 @@ import {
 
 export default class AreaChart {
   constructor(props) {
+    this.id = props.id
     this.data = props.data
 
     const numericFields = getFieldsOfType(this.data, 'number')
     const x = props.x || numericFields[0]
     const y = props.y || numericFields.filter((field) => field !== x)
-    const scale = isArrayOfType(props.scale, 'number', 2)
+    const scale = this._isValidScale(props.scale, x)
       ? props.scale
-      : getDataExtent(this.data, x)
+      : this._getScale(this.data, x)
     const selection = props.selection || this.data
 
     if (!boolDataHasAttributes(this.data, x, ...y)) {
       throw new Error(`AreaChart: wrong attributes x:${x}, y:${y.join(',')}`)
     }
-    if (!isArrayOfType(scale, 'number', 2)) {
+    if (!this._isValidScale(scale, x)) {
       throw new Error('AreaChart: wrong scale format')
     }
 
@@ -32,7 +33,7 @@ export default class AreaChart {
     this.scale = scale
     this.selection = selection
 
-    this.id = new Date().toLocaleString()
+    // this.id = new Date().toLocaleString()
     this.el = null
     this.vm = null
 
@@ -49,6 +50,7 @@ export default class AreaChart {
 
   _init() {
     this._initReactiveProperty()
+    const that = this
     this.vm = new VueAreaChart({
       data: {
         id: this.id,
@@ -61,7 +63,7 @@ export default class AreaChart {
       watch: {
         data(val) {
           // TODO this.checkXY()
-          this.scale = getDataExtent(val, this.x)
+          this.scale = that._getScale(val, this.x)
           this.selection = val
         },
       },
@@ -134,8 +136,8 @@ export default class AreaChart {
   }
 
   _onScaleChange(val) {
-    if (isArrayOfType(val, 'number', 2)) {
-      throw new TypeError(`AreaChart: expect scale to be number[2]`)
+    if (this._isValidScale(val, this.x.get())) {
+      throw new TypeError(`AreaChart: wrong scale format`)
     }
     this.vm.scale = val
   }
@@ -146,5 +148,13 @@ export default class AreaChart {
     }
 
     this.vm.selection = val
+  }
+
+  _isValidScale(scale, x) {
+    return scale && isArrayOfType(scale[x], 'number', 2)
+  }
+
+  _getScale(data, x) {
+    return { [x]: getDataExtent(data, x) }
   }
 }
