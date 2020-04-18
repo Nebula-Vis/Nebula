@@ -4,7 +4,7 @@ import ReactiveProperty from '../reactive-prop'
 // Aggregate 1 array
 export default class Aggregate {
   constructor() {
-    // this.trigger = true
+    this.trigger = null
     this._parameterNames = ['array', 'type', 'key']
     this._outputNames = ['aggregation']
 
@@ -24,7 +24,8 @@ export default class Aggregate {
 
   // get aggregated value of array
   run() {
-    // if (!this.trigger) return
+    if (this.trigger && !this.trigger.get()) return
+    if (this.trigger) this.trigger.set(false)
 
     // 对象的聚合
     if (this.key) {
@@ -48,7 +49,5 @@ export default class Aggregate {
       // count不允许有key
       else throw new Error(`No such aggregation type: ${this.type}`)
     }
-
-    // this.trigger
   }
 }
