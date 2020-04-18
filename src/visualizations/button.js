@@ -3,6 +3,7 @@ import ReactiveProperty from '../reactive-prop'
 
 export default class Button {
   constructor(props) {
+    this.id = props.id
     this.text = props.text || ''
     // this.clicked = props.clicked || false
     this.clicked = false

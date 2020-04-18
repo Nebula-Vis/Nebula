@@ -6,6 +6,7 @@ import ReactiveProperty from '../reactive-prop'
 
 export default class NodeLinkGraph {
   constructor(props) {
+    this.id = props.id
     if (props.data.nodes && props.data.links) {
       this.data = {
         nodes: props.data.nodes,

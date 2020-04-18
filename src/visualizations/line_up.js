@@ -7,6 +7,7 @@ import ReactiveProperty from '../reactive-prop'
 
 export default class LineUp {
   constructor(props) {
+    this.id = props.id
     this.data = props.data || []
     this.selection = props.selection || this.data
     this.order = props.order || getFieldsOfType(this.data, 'number')
