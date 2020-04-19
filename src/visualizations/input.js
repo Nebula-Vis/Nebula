@@ -4,6 +4,7 @@ import ReactiveProperty from '../reactive-prop'
 
 export default class Input {
   constructor(props) {
+    this.id = props.id
     this.value = props.value || ''
 
     this.el = null

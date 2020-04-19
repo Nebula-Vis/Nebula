@@ -4,6 +4,7 @@ import ReactiveProperty from '../reactive-prop'
 
 export default class Slider {
   constructor(props) {
+    this.id = props.id
     this.min = props.min
     this.max = props.max
     this.value = props.value || this.min

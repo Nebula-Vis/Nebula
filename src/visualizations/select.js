@@ -3,6 +3,7 @@ import ReactiveProperty from '../reactive-prop'
 
 export default class Select {
   constructor(props) {
+    this.id = props.id
     this.options = props.options || []
     this.selected = props.selected || null
 
