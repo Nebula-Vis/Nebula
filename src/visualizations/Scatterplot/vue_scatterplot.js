@@ -238,6 +238,7 @@ export default Vue.extend({
       const yScale = this.scales.y.copy()
       const onZoom = () => {
         const scale = {
+          ...this.scale,
           [this.x]: d3.event.transform.rescaleX(xScale).domain(),
           [this.y]: d3.event.transform.rescaleY(yScale).domain(),
         }

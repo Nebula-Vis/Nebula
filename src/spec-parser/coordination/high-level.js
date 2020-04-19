@@ -6,7 +6,6 @@ export default class HighLevelCoordinationSpecParser {
     this._visualizationsManager = visualizationsManager
   }
 
-  // todo
   parse(spec) {
     // Get visualization ids
     const visualizationIds =

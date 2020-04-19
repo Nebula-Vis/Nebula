@@ -36,10 +36,16 @@ export default class Input {
       .attr('value', this.value.get())
       .node()
       .addEventListener(
-        'input',
-        debounce((event) => {
-          this.value.set(event.target.value)
-        }, 500)
+        // 'input',
+        // debounce((event) => {
+        //   this.value.set(event.target.value)
+        // }, 500)
+        'keyup',
+        (event) => {
+          if (event.key === 'Enter') {
+            this.value.set(event.target.value)
+          }
+        }
       )
   }
 

@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { ACTIONS, OPTIONS } from './CONSTANT'
+import { ACTIONS, ACTION_TO_OPTIONS } from './CONSTANT'
 
 const actionsNeedOption = [
   'select',
@@ -19,8 +19,15 @@ export default class ReactiveProperty {
 
     if (action) {
       this.action = action
-      this.option = option || 'items'
-      if (!ACTIONS.includes(this.action) || !OPTIONS.includes(this.option))
+      if (ACTION_TO_OPTIONS[action] && !option) {
+        option = ACTION_TO_OPTIONS[action][0]
+      }
+      this.option = option
+      if (
+        !ACTIONS.includes(this.action) ||
+        (ACTION_TO_OPTIONS[this.action] &&
+          !ACTION_TO_OPTIONS[this.action].includes(this.option))
+      )
         throw new SyntaxError(
           `No such action or option ${this.action}, ${this.option}`
         )

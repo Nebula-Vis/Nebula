@@ -119,17 +119,18 @@
     {
       "id": "chart7",
       "container": "1 1 3 3",
-      "visualization": "scatterplot",
+      "visualization": "input",
       "props": {
-        "data": "points"
+
       }
     },
     {
       "id": "chart8",
       "container": "2 2 3 3",
-      "visualization": "scatterplot",
+      "visualization": "select",
       "props": {
-        "data": "points"
+        "options": ["A", "B", "C"],
+        "selected": "A"
       }
     },
     {
@@ -176,6 +177,18 @@
           "sources": ["chart2.selection"],
           "dependencies": ["chart4.selectionmulti"]
         }
+      ]
+    },
+    {
+      "how": [
+        "select in chart8",
+        "encode x in chart6"
+      ]
+    },
+    {
+      "how": [
+        "set data in chart7",
+        "reconfigure order in chart2"
       ]
     }
   ],

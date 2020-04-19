@@ -15,9 +15,10 @@ export default class Scatterplot {
     const numericFields = getFieldsOfType(props.data, 'number')
     const x = props.x || numericFields[0]
     const y = props.y || numericFields[1]
-    const scale = this._isValidScale(props.scale, x, y)
-      ? props.scale
-      : this._getScale(props.data, x, y)
+    let scale = this._getScale(props.data)
+    if (this._isValidScale(props.scale, x, y)) {
+      scale = { ...scale, ...props.scale }
+    }
     const selection = props.selection || props.data
 
     if (!boolDataHasAttributes(props.data, x, y)) {
@@ -64,7 +65,7 @@ export default class Scatterplot {
       watch: {
         data(val) {
           // TODO this.checkXY()
-          this.scale = that._getScale(val, this.x, this.y)
+          this.scale = that._getScale(val)
           this.selection = val
         },
       },
@@ -92,15 +93,28 @@ export default class Scatterplot {
       '_onDataChange',
       'replace data'
     )
-    this.x = new ReactiveProperty(this, 'x', this.x, '_onXChange', 'encode')
-    this.y = new ReactiveProperty(this, 'y', this.y, '_onYChange', 'encode')
+    this.x = new ReactiveProperty(
+      this,
+      'x',
+      this.x,
+      '_onXChange',
+      'encode',
+      'x'
+    )
+    this.y = new ReactiveProperty(
+      this,
+      'y',
+      this.y,
+      '_onYChange',
+      'encode',
+      'y'
+    )
     this.scale = new ReactiveProperty(
       this,
       'scale',
       this.scale,
       '_onScaleChange',
-      'navigate',
-      'ranges'
+      'navigate'
     )
     this.selection = new ReactiveProperty(
       this,
@@ -119,8 +133,10 @@ export default class Scatterplot {
   }
 
   _onXChange(val) {
-    if (typeof val !== 'string') {
-      throw new TypeError(`Scatterplot: expect x to be string, got ${val}`)
+    if (typeof val !== 'string' || !this._isValidNumericField(val)) {
+      throw new TypeError(
+        `Scatterplot: expect x to be a numeric field of data, got ${val}`
+      )
     }
     this.vm.x = val
   }
@@ -149,11 +165,13 @@ export default class Scatterplot {
     this.vm.selection = val
   }
 
-  _getScale(data, x, y) {
-    return {
-      [x]: padExtent(getDataExtent(data, x), 0.2),
-      [y]: padExtent(getDataExtent(data, y), 0.2),
-    }
+  _getScale(data) {
+    const numericFields = getFieldsOfType(data, 'number')
+    const scale = {}
+    numericFields.forEach((field) => {
+      scale[field] = padExtent(getDataExtent(data, field), 0.2)
+    })
+    return scale
   }
 
   _isValidScale(scale, x, y) {
@@ -162,5 +180,9 @@ export default class Scatterplot {
       isArrayOfType(scale[x], 'number', 2) &&
       isArrayOfType(scale[y], 'number', 2)
     )
+  }
+
+  _isValidNumericField(field) {
+    return getFieldsOfType(this.data.get(), 'number').includes(field)
   }
 }
