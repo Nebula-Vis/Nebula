@@ -6,8 +6,10 @@ export default class LowLevelCoordinationSpecParser {
   }
 
   parse(spec) {
-    const coordination = { data: {}, transformation: [] }
-    coordination.data = this._parseDataSpec(spec.data)
+    const coordination = { dataVisualization: {}, transformation: [] }
+    coordination.dataVisualization = this._parseDataSpec(
+      spec['data-visualization']
+    )
     coordination.transformation = this._parseTransformationSpec(
       spec.transformation
     )
@@ -20,21 +22,19 @@ export default class LowLevelCoordinationSpecParser {
       if (dataObj[data.name] !== undefined)
         throw new Error(`Coordination data name repeated ${data.name}.`)
       dataObj[data.name] = {}
-      dataObj[data.name].sources = data.sources.map((propStr) =>
-        this._parsePropStrInDataSpec(propStr)
-      )
-      if (data.dependencies)
-        dataObj[data.name].dependencies = data.dependencies.map((propStr) =>
-          this._parsePropStrInDataSpec(propStr)
-        )
+
+      dataObj[data.name].bidirectionalBind = data.bind
+        .filter((propStr) => !this._isUnidirectionalPropStr(propStr))
+        .map((propStr) => this._parsePropStrInDataSpec(propStr))
+      dataObj[data.name].unidirectionalBind = data.bind
+        .filter((propStr) => this._isUnidirectionalPropStr(propStr))
+        .map((propStr) => this._parsePropStrInDataSpec(propStr))
     }
     return dataObj
   }
 
   _parsePropStrInDataSpec(propStr) {
-    const strSplit = propStr.split('.')
-    const visId = strSplit[0]
-    const propName = strSplit[1]
+    const [visId, propName] = propStr.split('.')
     return {
       visId,
       propName,
@@ -115,5 +115,9 @@ export default class LowLevelCoordinationSpecParser {
       }
     }
     return paramObj
+  }
+
+  _isUnidirectionalPropStr(propStr) {
+    return 'unidirectional' === propStr.substring(propStr.lastIndexOf('.') + 1)
   }
 }

@@ -144,45 +144,25 @@
   ],
   "coordination": [
     {
-      "data": [
+      "data-visualization": [
         {
           "name": "$d1",
-          "sources": ["chart1.selectioninterval"],
-          "dependencies": ["chart3.scale"]
+          "bind": ["chart1.selectioninterval", "chart3.scale"]
         }
       ]
     },
     {
-      "data": [
+      "data-visualization": [
         {
           "name": "$d1",
-          "sources": ["chart3.scale"],
-          "dependencies": ["chart1.selectioninterval"]
-        }
-      ]
-    },
-    {
-      "data": [
-        {
-          "name": "$d1",
-          "sources": ["chart4.selectionmulti"],
-          "dependencies": ["chart2.selection"]
-        }
-      ]
-    },
-    {
-      "data": [
-        {
-          "name": "$d1",
-          "sources": ["chart2.selection"],
-          "dependencies": ["chart4.selectionmulti"]
+          "bind": ["chart4.selectionmulti", "chart2.selection.unidirectional"]
         }
       ]
     },
     {
       "how": [
         "select in chart8",
-        "encode x in chart6"
+        "encode y in chart6"
       ]
     },
     {

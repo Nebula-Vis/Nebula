@@ -336,28 +336,27 @@ export default class HighLevelCoordinationSpecParser {
   }
 
   _parseHowObjToWhatObj(howObj) {
-    const whatObj = { data: [] } // 填data和transformation字段
+    const whatObj = { 'data-visualization': [] } // 填data和transformation字段
     if (!howObj.transformation) {
       // 没有transformation
       // origin，destination都只有一个（分解过）
       // 填data
-      whatObj.data.push({
+      whatObj['data-visualization'].push({
         name: `$${1}`,
-        sources: [
+        bind: [
           this._visualizationsManager
             .getVisualizationById(howObj.origin[0].vis)
             .getVisPropByActionOption(
               howObj.origin[0].method,
               howObj.origin[0].option
             ),
-        ],
-        dependencies: [
-          this._visualizationsManager
+          `${this._visualizationsManager
             .getVisualizationById(howObj.destination[0].vis)
             .getVisPropByActionOption(
+              // 日常推销ts：比如用js的话这里就没法查看函数定义，整个就是any
               howObj.destination[0].method,
               howObj.destination[0].option
-            ),
+            )}.unidirectional`,
         ],
       })
     } else {
@@ -365,9 +364,9 @@ export default class HighLevelCoordinationSpecParser {
       // origin，destination不定，但没有dependencies
       // 填data
       howObj.origin.forEach((o, i) => {
-        whatObj.data.push({
+        whatObj['data-visualization'].push({
           name: `$${i + 1}`,
-          sources: [
+          bind: [
             this._visualizationsManager
               .getVisualizationById(o.vis)
               .getVisPropByActionOption(o.method, o.option),

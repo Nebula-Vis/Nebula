@@ -3,8 +3,8 @@ export default class CoordinationConstructor {
 
   // 基于low level coordinatioin objects，构建coordination
   constructCoordination(coordination) {
-    for (const dataName in coordination.data)
-      this._addLinksInData(coordination.data[dataName])
+    for (const dataName in coordination.dataVisualization)
+      this._addLinksInData(coordination.dataVisualization[dataName])
 
     if (coordination.transformation) {
       this._addLinksInTransformation(
@@ -14,10 +14,10 @@ export default class CoordinationConstructor {
     }
   }
 
-  _addLinksInData({ sources, dependencies }) {
+  _addLinksInData({ bidirectionalBind, unidirectionalBind }) {
     // handle sources
-    for (const source1 of sources) {
-      for (const source2 of sources) {
+    for (const source1 of bidirectionalBind) {
+      for (const source2 of bidirectionalBind) {
         if (source1.rawStr !== source2.rawStr) {
           if (source1.prop && source2.prop)
             this._addUnidirectionalLinkInTwoProps(source1.prop, source2.prop)
@@ -30,9 +30,9 @@ export default class CoordinationConstructor {
     }
 
     // handle dependencies
-    if (dependencies) {
-      for (const source of sources) {
-        for (const dep of dependencies) {
+    if (unidirectionalBind) {
+      for (const source of bidirectionalBind) {
+        for (const dep of unidirectionalBind) {
           if (source.prop && dep.prop)
             this._addUnidirectionalLinkInTwoProps(source.prop, dep.prop)
           else
