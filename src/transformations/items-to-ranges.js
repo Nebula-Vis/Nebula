@@ -1,15 +1,15 @@
 import * as d3 from 'd3'
 import ReactiveProperty from '../reactive-prop'
+import { getDataExtent, getFieldsOfType } from '../utils'
 
 // 2 array
 export default class ItemsToRanges {
   constructor() {
-    this._parameterNames = ['items', 'keys']
+    this._parameterNames = ['items']
     this._outputNames = ['ranges']
 
     this.trigger = null
     this.items = new ReactiveProperty(this, 'items', [], 'run')
-    this.keys = new ReactiveProperty(this, 'keys', [], 'run')
     this.ranges = new ReactiveProperty(this, 'ranges', [], '')
   }
 
@@ -26,13 +26,12 @@ export default class ItemsToRanges {
     if (this.trigger) this.trigger.set(false)
 
     const items = this.items.get()
-    const keys = this.keys.get()
-    const ranges = keys.map((key) => d3.extent(items, (d) => d[key]))
+    const keys = getFieldsOfType(items, 'number')
+    const ranges = {}
+    keys.forEach((key) => {
+      ranges[key] = getDataExtent(items, key)
+    })
 
-    if (keys.length === 1) {
-      this.ranges.set(ranges[0])
-    } else {
-      this.ranges.set(ranges)
-    }
+    this.ranges.set(ranges)
   }
 }

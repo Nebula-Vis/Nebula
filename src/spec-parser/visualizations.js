@@ -165,6 +165,11 @@ class Visualization {
     const value = Object.values(this._instance)
       .filter((value) => value instanceof ReactiveProperty)
       .find((value) => value.action === action && value.option === option)
+    if (!value) {
+      throw new Error(
+        `Visualization: no vis.prop matches action ${action} option ${option}`
+      )
+    }
     return `${this._id}.${value.name}`
   }
 }

@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { ACTIONS, OPTIONS } from '../../CONSTANT'
+import { ACTIONS, OPTIONS, ACTION_TO_OPTIONS } from '../../CONSTANT'
 
 export default class HighLevelCoordinationSpecParser {
   constructor(visualizationsManager) {
@@ -215,7 +215,8 @@ export default class HighLevelCoordinationSpecParser {
   _addDefaultValueInHowObj(howObj) {
     // origin: add option, set data -> replace data
     howObj.origin.forEach((o) => {
-      if (!o.option) o.option = 'items'
+      if (!o.option && ACTION_TO_OPTIONS[o.method])
+        o.option = ACTION_TO_OPTIONS[o.method][0]
       if (o.method === 'set data') o.method = 'replace data'
     })
 
@@ -231,7 +232,8 @@ export default class HighLevelCoordinationSpecParser {
 
     // destination: add option and value, set data -> replace data
     howObj.destination.forEach((d) => {
-      if (!d.option) d.option = 'items'
+      if (!d.option && ACTION_TO_OPTIONS[d.method])
+        d.option = ACTION_TO_OPTIONS[d.method][0]
       if (!d.value) d.value = '$1'
       if (d.method === 'set data') d.method = 'replace data'
     })
@@ -333,6 +335,17 @@ export default class HighLevelCoordinationSpecParser {
   // todo
   _addImplicitTransformationInHowObj(howObj) {
     // select in xx, navigate in yy -> select in xx, xxx transformation, navigate in yy
+    if (
+      howObj.origin[0].method === 'select' &&
+      howObj.origin[0].option === 'items' &&
+      howObj.destination[0].method === 'navigate'
+    ) {
+      howObj.transformation = {
+        triggers: 'any',
+        method: 'items-to-ranges',
+        parameters: ['$1'],
+      }
+    }
   }
 
   _parseHowObjToWhatObj(howObj) {

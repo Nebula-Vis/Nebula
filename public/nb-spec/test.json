@@ -144,38 +144,16 @@
   ],
   "coordination": [
     {
-      "data-visualization": [
-        {
-          "name": "$d1",
-          "bind": ["chart1.selectioninterval", "chart3.scale"]
-        }
-      ]
-    },
-    {
-      "data-visualization": [
-        {
-          "name": "$d1",
-          "bind": ["chart4.selectionmulti", "chart2.selection.unidirectional"]
-        }
-      ]
-    },
-    {
-      "how": [
-        "select in chart8",
-        "encode y in chart6"
-      ]
-    },
-    {
-      "how": [
-        "set data in chart7",
-        "reconfigure order in chart2"
-      ]
-    },
-    {
       "how": [
         "select in chart5 and chart6",
         "when chart9 clicked, intersect with $1 and $2",
         "select in chart3"
+      ]
+    },
+    {
+      "how": [
+        "select in chart3",
+        "navigate in chart6 and chart5"
       ]
     }
   ],
