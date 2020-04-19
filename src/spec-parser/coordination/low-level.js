@@ -64,7 +64,7 @@ export default class LowLevelCoordinationSpecParser {
           spec.output,
           'output'
         ),
-        triggers: spec.triggers || 'any',
+        triggers: this._parseTriggersSepc(spec.triggers),
       }
     } else {
       return null
@@ -119,5 +119,13 @@ export default class LowLevelCoordinationSpecParser {
 
   _isUnidirectionalPropStr(propStr) {
     return 'unidirectional' === propStr.substring(propStr.lastIndexOf('.') + 1)
+  }
+
+  _parseTriggersSepc(triggersSpec) {
+    if (triggersSpec && triggersSpec !== 'any') {
+      return this._visualizationsManager.getVisualizationById(triggersSpec)
+        ._instance.clicked
+    }
+    return 'any'
   }
 }

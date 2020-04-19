@@ -5,8 +5,7 @@ export default class Button {
   constructor(props) {
     this.id = props.id
     this.text = props.text || ''
-    // this.clicked = props.clicked || false
-    this.clicked = false
+    this.clicked = props.clicked || false
 
     this.el = null
 

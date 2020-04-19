@@ -1,3 +1,5 @@
+import ReactiveProperty from '../../reactive-prop'
+
 export default class CoordinationConstructor {
   constructor() {}
 
@@ -8,7 +10,7 @@ export default class CoordinationConstructor {
 
     if (coordination.transformation) {
       this._addLinksInTransformation(
-        coordination.data,
+        coordination.dataVisualization,
         coordination.transformation
       )
     }
@@ -53,7 +55,7 @@ export default class CoordinationConstructor {
 
       if (typeof paramValue == 'string' && paramValue in data) {
         // Declared data: 构建依赖
-        data[paramValue].sources.forEach((d) => {
+        data[paramValue].bidirectionalBind.forEach((d) => {
           this._addUnidirectionalLinkInTwoProps(
             d.prop,
             reactivePropInTransformation
@@ -76,6 +78,17 @@ export default class CoordinationConstructor {
           param.prop
         )
       })
+    }
+
+    // handle triggers
+    if (transformation.triggers !== 'any') {
+      transformation.instance.trigger = new ReactiveProperty(
+        transformation.instance,
+        'trigger',
+        false,
+        'run'
+      )
+      transformation.triggers.addSub(transformation.instance.trigger)
     }
   }
 
