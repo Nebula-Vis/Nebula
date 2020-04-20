@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 import ReactiveProperty from '../../reactive-prop'
-import VueScatterplot from './vue_scatterplot'
+import VueScatterplot from './vue-scatterplot'
 import {
   getFieldsOfType,
   isArrayOfType,

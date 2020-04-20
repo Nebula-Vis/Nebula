@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 import ReactiveProperty from '../../reactive-prop'
-import VueAreaChart from './vue_area_chart'
+import VueAreaChart from './vue-area-chart'
 import {
   getFieldsOfType,
   isArrayOfType,
