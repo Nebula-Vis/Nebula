@@ -69,14 +69,13 @@ export default class DataSpecParser {
       // JSON data
       else if (element.path && (element.format === 'json' || !element.format)) {
         const jsonData = await this._fetchJsonDataByPath(element.path)
-        // table
-        if (jsonData.values) {
-          dataObj.values = jsonData.values
-        }
         // graph
-        else if (jsonData.nodes && jsonData.links) {
+        if (jsonData.nodes && jsonData.links) {
           dataObj.nodes = jsonData.nodes
           dataObj.links = jsonData.links
+        } // table
+        else {
+          dataObj.values = jsonData
         }
       }
       dataSources.push(dataObj)
