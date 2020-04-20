@@ -47,7 +47,7 @@ class SpecParser {
       this._transformationsManager
     )
     const coordinationObjs = this._coordinationParser.parse(
-      this._spec.coordination
+      this._spec.coordinations
     )
     this._coordinationParser.construct(coordinationObjs)
   }

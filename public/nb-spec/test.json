@@ -142,7 +142,13 @@
       }
     }
   ],
-  "coordination": [
+  "coordinations": [
+    {
+      "how": [
+        "set data in chart7",
+        "reconfigure order in chart2"
+      ]
+    },
     {
       "how": [
         "select in chart5 and chart6",
