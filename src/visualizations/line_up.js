@@ -130,7 +130,7 @@ export default class LineUp {
   _onOrderSet(order) {
     if (_.isEqual(order, this._order)) return
     if (!Array.isArray(order)) {
-      order = JSON.parse(order)
+      throw new Error(`LineUp: expect order to be array, got ${order}`)
     }
     const ranking = this.lineup.data.getFirstRanking()
     const columns = ranking.children

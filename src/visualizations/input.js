@@ -16,7 +16,7 @@ export default class Input {
     this.value = new ReactiveProperty(
       this,
       'value',
-      this.value,
+      this._parseString(this.value),
       '_onValueSet',
       'replace data'
     )
@@ -34,7 +34,6 @@ export default class Input {
       .style('justify-content', 'center')
       .append('input')
       .style('width', '70%')
-      .attr('value', this.value.get())
       .node()
       .addEventListener(
         // 'input',
@@ -44,13 +43,30 @@ export default class Input {
         'keyup',
         (event) => {
           if (event.key === 'Enter') {
-            this.value.set(event.target.value)
+            this.value.set(this._parseString(event.target.value))
           }
         }
       )
+    this._onValueSet(this.value.get())
   }
 
   _onValueSet(val) {
-    d3.select(this.el).select('input').attr('value', val)
+    d3.select(this.el).select('input').attr('value', this._stringify(val))
+  }
+
+  _stringify(val) {
+    try {
+      return JSON.stringify(val)
+    } catch (error) {
+      return val
+    }
+  }
+
+  _parseString(str) {
+    try {
+      return JSON.parse(str)
+    } catch (error) {
+      return str
+    }
   }
 }
