@@ -161,13 +161,20 @@ export default class VegaLite {
   }
 
   _convertVegaLiteIntervalSelectionToRangesSelection(vegaLiteSelectionValue) {
-    if (!vegaLiteSelectionValue.length) return []
+    if (!vegaLiteSelectionValue.length) return {}
     const { fields, values } = vegaLiteSelectionValue[0]
     const ranges = {}
     fields.forEach((field, i) => {
-      let [min, max] = values[i]
-      if (field.channel === 'y') [min, max] = [max, min]
-      ranges[field.field] = [min, max]
+      const spec = this.spec.encoding[field.channel]
+      const fieldName = spec.timeUnit
+        ? field.field.substring(field.field.indexOf('_') + 1)
+        : field.field
+
+      let processedRange = values[i]
+      if (processedRange[0] > processedRange[1]) {
+        processedRange = [...processedRange].reverse()
+      }
+      ranges[fieldName] = processedRange
     })
     return ranges
   }
@@ -177,17 +184,13 @@ export default class VegaLite {
       this._getChannelFromField(field)
     )
 
-    const fields = validRanges.map(([field]) => ({
-      field: field,
-      channel: this._getChannelFromField(field),
-      type: 'R',
-    }))
-    const values = validRanges.map(([field, range]) => {
-      if (this._getChannelFromField(field) === 'y') {
-        return [range[1], range[0]]
-      }
-      return range
-    })
+    const fields = validRanges.map(([field]) =>
+      this._convertExternalFieldToVegaLiteField(field)
+    )
+
+    const values = validRanges.map(([field, range], i) =>
+      this._convertExternalRangeToVageLiteIntervalValue(field, range, fields[i])
+    )
     return [
       {
         unit: '',
@@ -212,5 +215,54 @@ export default class VegaLite {
       return matchingChannel[0]
     }
     return undefined
+  }
+
+  _isInRangeInclusive(value, min, max) {
+    if (!isNaN(+value) && !isNaN(+min) && !isNaN(+max)) {
+      return +value >= +min && +value <= +max
+    }
+    // TODO
+    return value >= min && value <= max
+  }
+
+  _convertExternalFieldToVegaLiteField(field) {
+    const channel = this._getChannelFromField(field)
+    const spec = this.spec.encoding[channel]
+
+    return {
+      field: spec.timeUnit ? `${spec.timeUnit}_${field}` : field,
+      channel,
+      type: spec.type === 'quantitative' ? 'R' : 'E',
+    }
+  }
+
+  _convertExternalRangeToVageLiteIntervalValue(field, range, fieldName) {
+    const channel = this._getChannelFromField(field)
+    const spec = this.spec.encoding[channel]
+    const marks = this.view.data('marks')
+    let processedRange = range
+
+    // TODO
+    if (
+      (spec.channel === 'y' && range[0] < range[1]) ||
+      (spec.channel !== 'y' && range[0] > range[1])
+    ) {
+      processedRange = [...range].reverse()
+    }
+    if (spec.type === 'quantitative') {
+      return processedRange
+    } else if (spec.type === 'ordinal') {
+      // TODO
+      const min = processedRange[0]
+      const max = processedRange[processedRange.length - 1]
+      const filtered = marks.filter((mark) =>
+        this._isInRangeInclusive(mark.datum[fieldName], min, max)
+      )
+      const mapped = filtered.map((mark) => mark.datum[fieldName])
+      return mapped
+    } else {
+      // TODO
+      return []
+    }
   }
 }
