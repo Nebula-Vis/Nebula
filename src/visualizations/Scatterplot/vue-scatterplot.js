@@ -53,13 +53,13 @@ export default Vue.extend({
     />
   </g>
   </svg>
-  <button
+  <!-- <button
     v-show="isMouseIn"
     style="position:absolute; top:10; right:10"
     @click="isFiltering = true"
   >
     Filter
-  </button>
+  </button> -->
 </div>
   `,
   data() {
@@ -73,6 +73,7 @@ export default Vue.extend({
 
       // other options
       color: '#3fca2f',
+      alternateColor: 'lightgrey',
       showAxis: true,
       showBrush: false,
 
@@ -131,7 +132,7 @@ export default Vue.extend({
         const mark = {
           cx: d.x,
           cy: d.y,
-          fill: isSelected ? this.color : 'lightgrey',
+          fill: isSelected ? this.color : this.alternateColor,
           // opacity: isSelected ? 1 : 0.2,
         }
         ;(isSelected ? front : back).push(mark)

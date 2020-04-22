@@ -19,8 +19,6 @@ export default class Scatterplot {
     if (this._isValidScale(props.scale, x, y)) {
       scale = { ...scale, ...props.scale }
     }
-    const selection = props.selection || props.data
-
     if (!boolDataHasAttributes(props.data, x, y)) {
       throw new Error(`Scatterplot: wrong attributes x:${x}, y:${y}`)
     }
@@ -32,9 +30,11 @@ export default class Scatterplot {
     this.x = x
     this.y = y
     this.scale = scale
-    this.selection = selection
+    this.selection = props.selection || props.data
     this.size = props.size === undefined ? 4 : +props.size
     this.color = props.color || '#3fca2f'
+    this.alternateColor = props.alternateColor || 'lightgray'
+    this.filteredData = props.filteredData || []
 
     // this.id = new Date().toLocaleString()
     this.el = null
@@ -65,6 +65,7 @@ export default class Scatterplot {
         selection: this.selection.get(),
         size: this.size.get(),
         color: this.color.get(),
+        alternateColor: this.alternateColor,
       },
       watch: {
         data(val) {
@@ -143,6 +144,13 @@ export default class Scatterplot {
       'encode',
       'color'
     )
+    this.filteredData = new ReactiveProperty(
+      this,
+      'filteredData',
+      this.filteredData,
+      '_onFilteredDataSet',
+      'filter'
+    )
   }
 
   _onDataChange(val) {
@@ -184,6 +192,8 @@ export default class Scatterplot {
       )
     }
 
+    this.vm.color = this.color.get()
+    this.vm.alternateColor = this.alternateColor
     this.vm.selection = val
   }
 
@@ -193,6 +203,17 @@ export default class Scatterplot {
 
   _onColorChange(val) {
     this.vm.color = val
+  }
+
+  _onFilteredDataSet(val) {
+    if (!Array.isArray(val)) {
+      throw new TypeError(
+        `Scatterplot: expect filteredData to be Array, got ${val}`
+      )
+    }
+    this.vm.alternateColor = this.color.get()
+    this.vm.color = this.alternateColor
+    this.vm.selection = val
   }
 
   _getScale(data) {
