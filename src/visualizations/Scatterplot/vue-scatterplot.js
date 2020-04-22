@@ -13,45 +13,45 @@ export default Vue.extend({
     <defs>
       <clipPath :id="\`\${id}-clip\`">
         <rect
-          :x="margin - radius"
-          :y="margin - radius"
-          :width="width - margin * 2 + radius * 2"
-          :height="height - margin * 2 + radius * 2"
+          :x="margin"
+          :y="margin"
+          :width="width - margin * 2"
+          :height="height - margin * 2"
         ></rect>
       </clipPath>
     </defs>
-    <g class="axes-g" style="user-select:none" v-if="showAxis">
-      <g fill="currentColor" font-size="14">
-        <text
-          text-anchor="end"
-          :x="width - margin"
-          :y="height - margin"
-          dy="2.1em"
-        >
-          {{ x }}
-        </text>
-        <text
-          :x="margin"
-          :y="margin"
-          dy="-0.5em"
-        >
-          {{ y }}
-        </text>
-      </g>
-      <g
-        class="x-axis"
-        :transform="\`translate(0, \${height - margin})\`"
-      />
-      <g
-        class="y-axis"
-        :transform="\`translate(\${margin}, 0)\`"
-      />
-    </g>
     <g class="brush-g" />
     <g class="points-g" :clip-path="\`url(#\${id}-clip)\`">
-      <circle v-for="(mark, i) in marks" :key="i" v-bind="mark" :r="radius" />
+      <circle v-for="(mark, i) in marks" :key="i" v-bind="mark" :r="size" />
     </g>
     <g class="zoom-g" />
+    <g class="axes-g" style="user-select:none" v-if="showAxis">
+    <g fill="currentColor" font-size="14">
+      <text
+        text-anchor="end"
+        :x="width - margin"
+        :y="height - margin"
+        dy="2.1em"
+      >
+        {{ x }}
+      </text>
+      <text
+        :x="margin"
+        :y="margin"
+        dy="-0.5em"
+      >
+        {{ y }}
+      </text>
+    </g>
+    <g
+      class="x-axis"
+      :transform="\`translate(0, \${height - margin})\`"
+    />
+    <g
+      class="y-axis"
+      :transform="\`translate(\${margin}, 0)\`"
+    />
+  </g>
   </svg>
   <button
     v-show="isMouseIn"
@@ -86,7 +86,7 @@ export default Vue.extend({
       height: 200,
       axisMargin: 40,
       blankMargin: 10,
-      radius: 4,
+      size: 4,
     }
   },
   computed: {
@@ -213,9 +213,9 @@ export default Vue.extend({
         }
         this.isFiltering = false
 
-        if (!this.showBrush) {
-          this.svg.select('.brush-g').call(brush.clear)
-        }
+        // if (!this.showBrush) {
+        //   this.svg.select('.brush-g').call(brush.clear)
+        // }
       }
 
       const { x: xRange, y: yRange } = this.ranges

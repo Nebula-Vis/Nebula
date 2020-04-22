@@ -11,7 +11,7 @@ import {
 
 export default class Scatterplot {
   constructor(props) {
-    this.id = props.id
+    this.id = props.id || new Date() - 0
     const numericFields = getFieldsOfType(props.data, 'number')
     const x = props.x || numericFields[0]
     const y = props.y || numericFields[1]
@@ -33,6 +33,8 @@ export default class Scatterplot {
     this.y = y
     this.scale = scale
     this.selection = selection
+    this.size = props.size === undefined ? 4 : +props.size
+    this.color = props.color || '#3fca2f'
 
     // this.id = new Date().toLocaleString()
     this.el = null
@@ -61,6 +63,8 @@ export default class Scatterplot {
         y: this.y.get(),
         scale: this.scale.get(),
         selection: this.selection.get(),
+        size: this.size.get(),
+        color: this.color.get(),
       },
       watch: {
         data(val) {
@@ -123,6 +127,22 @@ export default class Scatterplot {
       '_onSelectionChange',
       'select'
     )
+    this.size = new ReactiveProperty(
+      this,
+      'size',
+      this.size,
+      '_onSizeChange',
+      'encode',
+      'size'
+    )
+    this.color = new ReactiveProperty(
+      this,
+      'color',
+      this.color,
+      '_onColorChange',
+      'encode',
+      'color'
+    )
   }
 
   _onDataChange(val) {
@@ -150,7 +170,9 @@ export default class Scatterplot {
 
   _onScaleChange(val) {
     if (!this._isValidScale(val, this.x.get(), this.y.get())) {
-      throw new TypeError(`Scatterplot: _onScaleChange, wrong scale format`)
+      // throw new TypeError(`Scatterplot: _onScaleChange, wrong scale format`)
+      console.error(`Scatterplot: _onScaleChange, wrong scale format`)
+      return
     }
     this.vm.scale = val
   }
@@ -163,6 +185,14 @@ export default class Scatterplot {
     }
 
     this.vm.selection = val
+  }
+
+  _onSizeChange(val) {
+    this.vm.size = val
+  }
+
+  _onColorChange(val) {
+    this.vm.color = val
   }
 
   _getScale(data) {

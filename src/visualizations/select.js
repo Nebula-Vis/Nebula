@@ -66,7 +66,13 @@ export default class Select {
   }
 
   _onSelectedSet(val) {
-    const selected = d3.select(this.el).selectAll(`option[value=${val}]`).node()
+    const selected = d3
+      .select(this.el)
+      .selectAll('option')
+      .filter(function () {
+        return d3.select(this).attr('value') === val
+      })
+      .node()
 
     if (!selected) {
       throw new Error(`Select: no such option ${val}`)

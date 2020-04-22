@@ -22,7 +22,7 @@ export default class Slider {
       'value',
       this.value,
       '_onValueSet',
-      'set data'
+      'select'
     )
   }
 
@@ -44,6 +44,14 @@ export default class Slider {
       .append('div')
       .style('position', 'relative')
       .attr('class', 'value')
+      .style(
+        'left',
+        `${
+          ((this.value.get() - this.min.get()) /
+            (this.max.get() - this.min.get())) *
+          100
+        }%`
+      )
       .html(this.value.get())
 
     d3.select(this.el)
@@ -57,12 +65,9 @@ export default class Slider {
       .attr('step', 0.01)
       .attr('value', this.value.get())
       .node()
-      .addEventListener(
-        'input',
-        debounce((event) => {
-          this.value.set(event.target.value)
-        }, 50)
-      )
+      .addEventListener('input', (event) => {
+        this.value.set(event.target.value)
+      })
     const div = d3
       .select(this.el)
       .append('div')
