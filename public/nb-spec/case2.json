@@ -105,18 +105,10 @@
   ],
   "coordinations": [
     {
-      "how": ["select in any", "navigate in others"],
-      "visualizations": [
-        "chart1",
-        "chart2",
-        "chart3",
-        "chart4",
-        "chart5",
-        "chart6",
-        "chart7",
-        "chart8",
-        "chart9"
-      ]
+      "how": ["navigate in any", "navigate in others"]
+    },
+    {
+      "how": ["select in any", "select in others"]
     }
   ],
   "transformations": []

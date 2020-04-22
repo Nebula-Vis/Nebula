@@ -167,7 +167,7 @@ class Visualization {
       .find((value) => value.action === action && value.option === option)
     if (!value) {
       throw new Error(
-        `Visualization: no vis.prop matches action ${action} option ${option}`
+        `Visualization: no vis.prop in ${this._instance.constructor.name} matches ${action} ${option}`
       )
     }
     return `${this._id}.${value.name}`

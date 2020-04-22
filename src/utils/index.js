@@ -45,6 +45,8 @@ function padExtent(extent, padding) {
   return [min - dist * padding, max + dist * padding]
 }
 
+const nbLogger = { ...console }
+
 export {
   getNbidsFromData,
   getFieldsOfType,
@@ -52,4 +54,5 @@ export {
   boolDataHasAttributes,
   isArrayOfType,
   padExtent,
+  nbLogger,
 }
