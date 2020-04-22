@@ -131,8 +131,8 @@ export default Vue.extend({
         const mark = {
           cx: d.x,
           cy: d.y,
-          fill: this.color,
-          opacity: isSelected ? 1 : 0.2,
+          fill: isSelected ? this.color : 'lightgrey',
+          // opacity: isSelected ? 1 : 0.2,
         }
         ;(isSelected ? front : back).push(mark)
       })
