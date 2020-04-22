@@ -189,7 +189,11 @@ export default class VegaLite {
     )
 
     const values = validRanges.map(([field, range], i) =>
-      this._convertExternalRangeToVageLiteIntervalValue(field, range, fields[i])
+      this._convertExternalRangeToVageLiteIntervalValue(
+        field,
+        range,
+        fields[i].field
+      )
     )
     return [
       {

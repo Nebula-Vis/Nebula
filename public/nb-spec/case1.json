@@ -36,7 +36,8 @@
           "y": {
             "aggregate": "count",
             "type": "quantitative",
-            "title": "Number of movies"
+            "title": "Number of movies",
+            "scale": {"domain": [0, 25]}
           },
           "opacity": {
             "condition": {
@@ -70,7 +71,8 @@
           "y": {
             "aggregate": "count",
             "type": "quantitative",
-            "title": "Number of movies"
+            "title": "Number of movies",
+            "scale": {"domain": [0, 25]}
           },
           "opacity": {
             "condition": {
@@ -104,7 +106,8 @@
           "y": {
             "aggregate": "count",
             "type": "quantitative",
-            "title": "Number of movies"
+            "title": "Number of movies",
+            "scale": {"domain": [0, 25]}
           },
           "opacity": {
             "condition": {
