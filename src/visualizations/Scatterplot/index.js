@@ -96,7 +96,7 @@ export default class Scatterplot {
       'data',
       this.data,
       '_onDataChange',
-      'replace data'
+      'set'
     )
     this.x = new ReactiveProperty(
       this,

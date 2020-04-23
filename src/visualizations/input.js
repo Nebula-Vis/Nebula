@@ -18,7 +18,7 @@ export default class Input {
       'value',
       this._parseString(this.value),
       '_onValueSet',
-      'replace data'
+      'set'
     )
   }
 

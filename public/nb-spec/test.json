@@ -150,7 +150,8 @@
     {
       "how": "select in any, then select in others",
       "visualizations": ["chart1", "chart2"]
-    }
+    },
+    "change value in chart8, then encode x in chart5"
   ],
   "transformations": [
     {

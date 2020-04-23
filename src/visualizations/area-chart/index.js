@@ -93,7 +93,7 @@ export default class AreaChart {
       'data',
       this.data,
       '_onDataChange',
-      'replace data'
+      'set'
     )
     this.x = new ReactiveProperty(this, 'x', this.x, '_onXChange', 'encode')
     this.y = new ReactiveProperty(this, 'y', this.y, '_onYChange', 'encode')

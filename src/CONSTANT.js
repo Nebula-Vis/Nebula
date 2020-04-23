@@ -2,12 +2,12 @@
 
 export const ACTIONS = [
   'select',
-  'filter',
-  'navigate',
+  'filter', //
+  'navigate', //
   'encode',
   'reconfigure',
-  'set',
-  'append',
+  'set', //
+  'append', //
 ]
 
 export const OPTIONS = [

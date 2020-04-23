@@ -49,7 +49,7 @@ export default class LineUp {
       'data',
       this.data,
       '_onDataSet',
-      'replace data'
+      'set'
     )
     this.selection = new ReactiveProperty(
       this,
