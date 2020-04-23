@@ -1,6 +1,5 @@
 import * as d3 from 'd3'
-import { debounce } from 'lodash'
-import ReactiveProperty from '../reactive-prop'
+import ReactiveProperty from '../../reactive-prop'
 
 export default class Input {
   constructor(props) {
@@ -18,7 +17,8 @@ export default class Input {
       'value',
       this._parseString(this.value),
       '_onValueSet',
-      'set'
+      'set',
+      'value'
     )
   }
 

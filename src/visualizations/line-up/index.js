@@ -2,8 +2,8 @@ import * as d3 from 'd3'
 import * as LineUpJS from 'lineupjs'
 import 'lineupjs/build/LineUpJS.css'
 import _ from 'lodash'
-import { getFieldsOfType, padExtent } from '../utils'
-import ReactiveProperty from '../reactive-prop'
+import { getFieldsOfType, padExtent } from '../../utils'
+import ReactiveProperty from '../../reactive-prop'
 
 export default class LineUp {
   constructor(props) {
@@ -11,12 +11,14 @@ export default class LineUp {
     this.data = props.data || []
     this.selection = props.selection || this.data
     this.order = props.order || getFieldsOfType(this.data, 'number')
+    this.filteredData = this.data
 
     this.el = null
     this.lineup = null
     this._selection = null
     this._order = null
     this._data = null
+    this._filteredData = null
 
     this.colors = d3.scaleOrdinal(d3.schemeSet2)
 
@@ -38,7 +40,7 @@ export default class LineUp {
 
     this._addLineUpStyle()
     this._buildLineUp()
-    this._addDataListener()
+    this._addFilteredDataListener()
     this._addSelectionListener()
     this._addOrderListener()
   }
@@ -49,14 +51,16 @@ export default class LineUp {
       'data',
       this.data,
       '_onDataSet',
-      'set'
+      'set',
+      'data'
     )
     this.selection = new ReactiveProperty(
       this,
       'selection',
       this.selection,
       '_onSelectionSet',
-      'select'
+      'select',
+      'items'
     )
     this.order = new ReactiveProperty(
       this,
@@ -65,6 +69,14 @@ export default class LineUp {
       '_onOrderSet',
       'reconfigure',
       'order'
+    )
+    this.filteredData = new ReactiveProperty(
+      this,
+      'filteredData',
+      this.filteredData,
+      '_onFilteredDataSet',
+      'filter',
+      'items'
     )
   }
 
@@ -108,12 +120,11 @@ export default class LineUp {
     this.lineup.setSelection(
       this.selection.get().map((datum) => dataMap.get(datum._nbid_))
     )
-    this._addDataListener()
+    this._addFilteredDataListener()
     this._addOrderListener()
   }
 
   _onSelectionSet(selection) {
-    // if (_.isEqual(selection, this._selection)) return
     if (selection === this._selection) return
     const data = this.data.get()
 
@@ -142,7 +153,7 @@ export default class LineUp {
       })
   }
 
-  _addDataListener() {
+  _addFilteredDataListener() {
     const lineupData = this.lineup.data
     const ranking = lineupData.getFirstRanking()
     let isNewlyFiltered = false
@@ -153,9 +164,9 @@ export default class LineUp {
     lineupData.on('orderChanged', (prev, cur) => {
       if (!isNewlyFiltered) return
       isNewlyFiltered = false
-      const data = this.data.get().filter((d, i) => cur.includes(i))
-      this._data = data
-      this.data.set(data)
+      const filteredData = this.data.get().filter((d, i) => cur.includes(i))
+      this._filteredData = filteredData
+      this.filteredData.set(filteredData)
     })
   }
 

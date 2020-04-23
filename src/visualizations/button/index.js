@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-import ReactiveProperty from '../reactive-prop'
+import ReactiveProperty from '../../reactive-prop'
 
 export default class Button {
   constructor(props) {
@@ -18,7 +18,8 @@ export default class Button {
       'text',
       this.text,
       '_onTextSet',
-      'set'
+      'set',
+      'value'
     )
     this.clicked = new ReactiveProperty(this, 'clicked', this.clicked, '')
   }

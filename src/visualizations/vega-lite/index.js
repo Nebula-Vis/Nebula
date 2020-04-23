@@ -2,7 +2,7 @@ import * as d3 from 'd3'
 import embed, { vega } from 'vega-embed'
 import _ from 'lodash'
 import ReactiveProperty from '../reactive-prop'
-import { getFieldsOfType, padExtent, getDataExtent } from '../utils'
+import { padExtent, getDataExtent } from '../utils'
 
 export default class VegaLite {
   constructor(spec) {
@@ -86,6 +86,7 @@ export default class VegaLite {
   _addReactivePropInternalUpdateListeners() {
     Object.entries(this.spec.selection).forEach(([name, spec]) => {
       this.view.addDataListener(`${name}_store`, (n, rawValue) => {
+        // log all data
         // console.log(
         //   this.view.getState({
         //     data: vega.truthy,
@@ -105,7 +106,6 @@ export default class VegaLite {
           )
         }
         spec._value = value
-        spec._rawValue = rawValue.map((v) => ({ ...v }))
         this[`selection${name}`].set(value)
       })
     })

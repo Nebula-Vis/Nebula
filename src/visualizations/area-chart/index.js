@@ -93,24 +93,39 @@ export default class AreaChart {
       'data',
       this.data,
       '_onDataChange',
-      'set'
+      'set',
+      'data'
     )
-    this.x = new ReactiveProperty(this, 'x', this.x, '_onXChange', 'encode')
-    this.y = new ReactiveProperty(this, 'y', this.y, '_onYChange', 'encode')
+    this.x = new ReactiveProperty(
+      this,
+      'x',
+      this.x,
+      '_onXChange',
+      'encode',
+      'x'
+    )
+    this.y = new ReactiveProperty(
+      this,
+      'y',
+      this.y,
+      '_onYChange',
+      'encode',
+      'y'
+    )
     this.scale = new ReactiveProperty(
       this,
       'scale',
       this.scale,
       '_onScaleChange',
-      'navigate',
-      'ranges'
+      'navigate'
     )
     this.selection = new ReactiveProperty(
       this,
       'selection',
       this.selection,
       '_onSelectionChange',
-      'select'
+      'select',
+      'items'
     )
   }
 

@@ -96,7 +96,8 @@ export default class Scatterplot {
       'data',
       this.data,
       '_onDataChange',
-      'set'
+      'set',
+      'data'
     )
     this.x = new ReactiveProperty(
       this,
@@ -126,7 +127,8 @@ export default class Scatterplot {
       'selection',
       this.selection,
       '_onSelectionChange',
-      'select'
+      'select',
+      'items'
     )
     this.size = new ReactiveProperty(
       this,
@@ -148,8 +150,9 @@ export default class Scatterplot {
       this,
       'filteredData',
       this.filteredData,
-      '_onFilteredDataSet',
-      'filter'
+      '_onFilteredDataChange',
+      'filter',
+      'items'
     )
   }
 
@@ -205,7 +208,7 @@ export default class Scatterplot {
     this.vm.color = val
   }
 
-  _onFilteredDataSet(val) {
+  _onFilteredDataChange(val) {
     if (!Array.isArray(val)) {
       throw new TypeError(
         `Scatterplot: expect filteredData to be Array, got ${val}`

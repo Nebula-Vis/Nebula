@@ -2,7 +2,7 @@
 // https://observablehq.com/@d3/force-directed-graph
 import * as d3 from 'd3'
 import { clamp } from 'lodash'
-import ReactiveProperty from '../reactive-prop'
+import ReactiveProperty from '../../reactive-prop'
 
 export default class NodeLinkGraph {
   constructor(props) {
@@ -51,7 +51,8 @@ export default class NodeLinkGraph {
       'selection',
       this.selection,
       '_onSelectionSet',
-      'select'
+      'select',
+      'items'
     )
   }
 
