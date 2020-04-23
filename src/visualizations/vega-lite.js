@@ -38,7 +38,7 @@ export default class VegaLite {
       'data',
       this.spec.data.values,
       '_onDataSet',
-      'replace data'
+      'set'
     )
     if (this.spec.selection) {
       const data = this.data.get()

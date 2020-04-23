@@ -1,15 +1,6 @@
 import _ from 'lodash'
 import { ACTIONS, ACTION_TO_OPTIONS } from './CONSTANT'
 
-const actionsNeedOption = [
-  'select',
-  'filter',
-  'navigate',
-  'set data',
-  'replace data',
-  'append data',
-]
-
 export default class ReactiveProperty {
   constructor(instance, name, value, cb, action, option) {
     this.instance = instance // 所属实例

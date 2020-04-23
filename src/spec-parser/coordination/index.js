@@ -17,17 +17,19 @@ export default class CoordinationSpecParser {
     this._constructor = new Constructor()
   }
 
-  // todo
   parse(spec) {
     const coordinationObjs = []
 
-    const highLevelSpec = spec.filter((s) => s.how)
-    const lowLevelSpec = spec.filter((s) => !s.how)
+    const highLevelSpec = spec.filter((s) => {
+      return typeof s === 'string' || s.how
+    })
+    const lowLevelSpec = spec.filter((s) => {
+      return typeof s === 'object' && !s.how
+    })
 
     highLevelSpec.forEach((s) => {
       lowLevelSpec.push(...this._highLevelParser.parse(s))
     })
-    console.log(lowLevelSpec)
 
     coordinationObjs.push(
       ...lowLevelSpec.map((s) => this._lowLevelParser.parse(s))

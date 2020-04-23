@@ -13,7 +13,10 @@ export default class HighLevelCoordinationSpecParser {
       this._visualizationsManager.getAllVisualizationIds()
 
     // Parse NL string to how object directly
-    const rawHowObj = this._parseNlStrArray(spec.how)
+    const rawNl = this._parseSynonyms(spec.how || spec)
+    const nlArray = this._parseRawNlToNlArray(rawNl)
+    const rawHowObj = this._parseNlStrArray(nlArray, visualizationIds)
+    // console.log(rawHowObj)
 
     // Handle how object
     // default value: option, value, trigger, set data -> replace data
@@ -25,18 +28,57 @@ export default class HighLevelCoordinationSpecParser {
       visualizationIds
     )
     const howObjs = this._checkAndFixHowObjs(rawHowObjs)
+    // console.log(howObjs)
 
     // Parse how object to what object
     return howObjs.map((howObj) => this._parseHowObjToWhatObj(howObj))
   }
 
-  _parseNlStrArray(nlArray) {
+  _parseSynonyms(nl) {
+    return nl
+      .replace(/select|highlight/g, 'select')
+      .replace(/filter/g, 'filter')
+      .replace(/navigate|pan|zoom|scroll/g, 'navigate')
+      .replace(
+        /reconfigure|rearrange|arrange|organize|sort|align/g,
+        'reconfigure'
+      )
+      .replace(/encode/g, 'encode')
+      .replace(/set|modify|change|replace/g, 'set')
+      .replace(/append|add/g, 'append')
+  }
+
+  _parseRawNlToNlArray(nl) {
+    // 根据then，将一句话分为2-3句话
+    const nlArray = []
+    const thenIndex0 = nl.indexOf('then')
+    if (thenIndex0 > 0) {
+      nlArray.push(nl.slice(0, thenIndex0))
+    } else {
+      throw new SyntaxError('No connect word: then')
+    }
+    const thenIndex1 = nl.indexOf('then', thenIndex0 + 1)
+    if (thenIndex1 > 0) {
+      nlArray.push(nl.slice(thenIndex0 + 4, thenIndex1))
+      nlArray.push(nl.slice(thenIndex1 + 4))
+    } else {
+      nlArray.push(nl.slice(thenIndex0 + 4))
+    }
+    return nlArray
+  }
+
+  _parseNlStrArray(nlArray, visualizationIds) {
     const {
       originStr,
       transformationStr,
       destinationStr,
     } = this._getNlRawStrFromArray(nlArray)
-    return this._parseNlStr(originStr, transformationStr, destinationStr)
+    return this._parseNlStr(
+      originStr,
+      transformationStr,
+      destinationStr,
+      visualizationIds
+    )
   }
 
   _getNlRawStrFromArray(nlArray) {
@@ -57,12 +99,13 @@ export default class HighLevelCoordinationSpecParser {
     return { originStr, transformationStr, destinationStr }
   }
 
-  _parseNlStr(originStr, transformationStr, destinationStr) {
+  _parseNlStr(originStr, transformationStr, destinationStr, visualizationIds) {
     const howObj = {}
     // origin
     const originWords = this._getWordsInSentence(originStr)
     const originKeyWords = this._getKeyWordObjsInOriginOrDestination(
-      originWords
+      originWords,
+      visualizationIds
     )
     const originKeyWordsGroup = this._getKeyWordGroupInOriginOrDestination(
       originKeyWords
@@ -83,7 +126,8 @@ export default class HighLevelCoordinationSpecParser {
     // destination
     const destinationWords = this._getWordsInSentence(destinationStr)
     const destinationKeyWords = this._getKeyWordObjsInOriginOrDestination(
-      destinationWords
+      destinationWords,
+      visualizationIds
     )
     const destinationKeyWordsGroup = this._getKeyWordGroupInOriginOrDestination(
       destinationKeyWords
@@ -94,21 +138,21 @@ export default class HighLevelCoordinationSpecParser {
     return howObj
   }
 
-  _getKeyWordObjsInOriginOrDestination(words) {
-    return words
-      .map((word) => {
-        if (ACTIONS.includes(word)) return { value: word, type: 'ACTION' }
-        else if (OPTIONS.includes(word)) return { value: word, type: 'OPTION' }
-        else if (['and', 'or'].includes(word))
-          return { value: word, type: 'CONJUNCTION' }
-        else if (['with', 'in'].includes(word))
-          return { value: word, type: 'PREPOSITION' }
-        else if (word[0] === '$') return { value: word, type: 'DATA' }
-        else return { value: word, type: 'VIS' }
-      })
-      .filter(
-        (wordObj) => !['CONJUNCTION', 'PREPOSITION'].includes(wordObj.type)
-      )
+  _getKeyWordObjsInOriginOrDestination(words, visualizationIds) {
+    return (
+      words
+        .map((word) => {
+          if (ACTIONS.includes(word)) return { value: word, type: 'ACTION' }
+          else if (OPTIONS.includes(word))
+            return { value: word, type: 'OPTION' }
+          else if (word[0] === '$') return { value: word, type: 'DATA' }
+          else if ([...visualizationIds, 'any', 'others'].includes(word))
+            return { value: word, type: 'VIS' }
+          else return { value: word, type: 'not important' }
+        })
+        // 只留action, option, data, vis
+        .filter((wordObj) => wordObj.type !== 'not important')
+    )
   }
 
   _getKeyWordGroupInOriginOrDestination(keyWords) {
@@ -193,31 +237,16 @@ export default class HighLevelCoordinationSpecParser {
 
   _getWordsInSentence(sentence) {
     // 分词
-    const words = sentence.split(' ').map((word) => {
-      const commaPosition = word.indexOf(',')
-      if (commaPosition > 0) return word.substring(0, commaPosition)
-      else return word
-    })
-    // 将set data、append data等词合起来
-    const removeIndex = []
-    for (let i = 0; i < words.length - 1; i++) {
-      if (['set', 'append', 'replace'].includes(words[i])) {
-        words[i] += ' data'
-        removeIndex.push(i + 1)
-        i++
-      }
-    }
-    return words.filter((word, index) => {
-      return !removeIndex.includes(index)
-    })
+    return sentence
+      .trim()
+      .split(' ')
+      .map((word) => word.replace(',', ''))
   }
 
   _addDefaultValueInHowObj(howObj) {
     // origin: add option, set data -> replace data
     howObj.origin.forEach((o) => {
-      if (!o.option && ACTION_TO_OPTIONS[o.method])
-        o.option = ACTION_TO_OPTIONS[o.method][0]
-      if (o.method === 'set data') o.method = 'replace data'
+      if (!o.option) o.option = ACTION_TO_OPTIONS[o.method][0]
     })
 
     // transformation: add trigger and parameters
@@ -232,10 +261,8 @@ export default class HighLevelCoordinationSpecParser {
 
     // destination: add option and value, set data -> replace data
     howObj.destination.forEach((d) => {
-      if (!d.option && ACTION_TO_OPTIONS[d.method])
-        d.option = ACTION_TO_OPTIONS[d.method][0]
+      if (!d.option) d.option = ACTION_TO_OPTIONS[d.method][0]
       if (!d.value) d.value = '$1'
-      if (d.method === 'set data') d.method = 'replace data'
     })
   }
 
@@ -332,7 +359,6 @@ export default class HighLevelCoordinationSpecParser {
     return howObjs
   }
 
-  // todo
   _addImplicitTransformationInHowObj(howObj) {
     // select in xx, navigate in yy -> select in xx, xxx transformation, navigate in yy
     if (

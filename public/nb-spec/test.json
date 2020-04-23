@@ -49,14 +49,16 @@
           "color": {
             "condition": {
               "selection": {
-                "or": ["interval"]
+                "or": ["interval", "multi"]
               },
               "value": "green"
             },
             "value": "grey"
-          }
+          },
+          "size": { "value": 100 }
         },
         "selection": {
+          "multi": {"type": "multi"},
           "interval": { "type": "interval" }
         }
       }
@@ -143,25 +145,13 @@
     }
   ],
   "coordinations": [
+    "set data in chart7, then rearrange order in chart2",
+    "select in chart5 and chart6, then when chart9 clicked, intersect with $1 and $2, then highlight in chart3",
     {
-      "how": [
-        "set data in chart7",
-        "reconfigure order in chart2"
-      ]
+      "how": "select in any, then select in others",
+      "visualizations": ["chart1", "chart2"]
     },
-    {
-      "how": [
-        "select in chart5 and chart6",
-        "when chart9 clicked, intersect with $1 and $2",
-        "select in chart3"
-      ]
-    },
-    {
-      "how": [
-        "select in chart3",
-        "navigate in chart6 and chart5"
-      ]
-    }
+    "change value in chart8, then encode x in chart5"
   ],
   "transformations": [
     {

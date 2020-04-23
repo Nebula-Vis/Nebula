@@ -13,7 +13,13 @@ export default class Button {
   }
 
   _init() {
-    this.text = new ReactiveProperty(this, 'text', this.text, '_onTextSet')
+    this.text = new ReactiveProperty(
+      this,
+      'text',
+      this.text,
+      '_onTextSet',
+      'set'
+    )
     this.clicked = new ReactiveProperty(this, 'clicked', this.clicked, '')
   }
 
