@@ -104,12 +104,8 @@
     }
   ],
   "coordinations": [
-    {
-      "how": ["navigate in any", "navigate in others"]
-    },
-    {
-      "how": ["select in any", "select in others"]
-    }
+    "navigate in any, then navigate in others",
+    "select in any, then select in others"
   ],
   "transformations": []
 }

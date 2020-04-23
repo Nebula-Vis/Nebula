@@ -127,14 +127,6 @@
     }
   ],
   "coordinations": [
-    {
-      "how": [
-        "select ranges in any",
-        "select ranges in others"
-      ],
-      "visualizations": [
-        "chart1", "chart2", "chart3"
-      ]
-    }
+    "select ranges in any, then select ranges in others"
   ]
 }

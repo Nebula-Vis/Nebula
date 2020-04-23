@@ -34,9 +34,7 @@
     }
   ],
   "coordinations": [
-    { "how": ["select in chart1", "filter in chart2"] },
-    {
-      "how": ["select in chart2", "filter in chart1"]
-    }
+    "select in chart1, then filter in chart2",
+    "select in chart2, then filter in chart1"
   ]
 }

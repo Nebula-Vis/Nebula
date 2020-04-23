@@ -22,7 +22,8 @@ export default class Slider {
       'value',
       this.value,
       '_onValueSet',
-      'select'
+      'set',
+      'value'
     )
   }
 

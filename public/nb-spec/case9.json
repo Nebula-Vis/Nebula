@@ -43,9 +43,7 @@
     }
   ],
   "coordinations": [
-    { "how": ["select in chart1", "encode size in chart3"] },
-    {
-      "how": ["select in chart2", "encode color in chart3"]
-    }
+    "set value in chart1, then encode size in chart3",
+    "set value in chart2, then encode color in chart3"
   ]
 }
