@@ -1,30 +1,35 @@
 const fs = require('fs')
 const path = require('path')
 const https = require('https')
+const _ = require('lodash')
 
 const dataPath = '../../public/data/cars-nonull.json'
 const host = 'algorithms.projects.zjvis.org'
 
 const cars = readJsonFile(path.resolve(__dirname, dataPath))
 
-const algorithmInput = cars.map((car) =>
-  Object.values(car)
-    .map((v) => +v)
-    .filter((v) => !isNaN(v))
-)
+const vectorArray = cars.map((car) => [+car.Horsepower, +car.Acceleration])
+
+// normalize by minmax
+_.range(0, vectorArray[0].length).forEach((col) => {
+  const min = _.minBy(vectorArray, (car) => car[col])[col]
+  const max = _.maxBy(vectorArray, (car) => car[col])[col]
+  console.log(col, min, max)
+  vectorArray.forEach((car) => (car[col] = (car[col] - min) / (max - min)))
+})
 
 const kmeansData = {
-  input: algorithmInput,
+  input: vectorArray,
   parameters: {
-    n_clusters: 5,
+    n_clusters: 4,
   },
 }
 
 const dbscanData = {
-  input: algorithmInput,
+  input: vectorArray,
   parameters: {
-    eps: 50,
-    min_samples: 5,
+    eps: 0.05,
+    min_samples: 10,
   },
 }
 

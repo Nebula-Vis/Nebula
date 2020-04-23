@@ -64,8 +64,6 @@
     }
   ],
   "coordinations": [
-    {
-      "how": ["select ranges in any", "select ranges in others"]
-    }
+    "select ranges in any, then select ranges in others"
   ]
 }

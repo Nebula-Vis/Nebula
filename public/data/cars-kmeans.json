@@ -9,7 +9,7 @@
     "Acceleration": 12,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 3
   },
   {
     "Name": "buick skylark 320",
@@ -33,7 +33,7 @@
     "Acceleration": 11,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 3
   },
   {
     "Name": "amc rebel sst",
@@ -45,7 +45,7 @@
     "Acceleration": 12,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 3
   },
   {
     "Name": "ford torino",
@@ -57,7 +57,7 @@
     "Acceleration": 10.5,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 3
   },
   {
     "Name": "ford galaxie 500",
@@ -69,7 +69,7 @@
     "Acceleration": 10,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "chevrolet impala",
@@ -81,7 +81,7 @@
     "Acceleration": 9,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "plymouth fury iii",
@@ -93,7 +93,7 @@
     "Acceleration": 8.5,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "pontiac catalina",
@@ -105,7 +105,7 @@
     "Acceleration": 10,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "amc ambassador dpl",
@@ -129,7 +129,7 @@
     "Acceleration": 10,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 1
   },
   {
     "Name": "plymouth 'cuda 340",
@@ -153,7 +153,7 @@
     "Acceleration": 9.5,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "buick estate wagon (sw)",
@@ -165,7 +165,7 @@
     "Acceleration": 10,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 1
   },
   {
     "Name": "toyota corona mark ii",
@@ -189,7 +189,7 @@
     "Acceleration": 15.5,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "amc hornet",
@@ -201,7 +201,7 @@
     "Acceleration": 15.5,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "ford maverick",
@@ -213,7 +213,7 @@
     "Acceleration": 16,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "datsun pl510",
@@ -237,7 +237,7 @@
     "Acceleration": 20.5,
     "Year": "1970-01-01",
     "Origin": "Europe",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "peugeot 504",
@@ -249,7 +249,7 @@
     "Acceleration": 17.5,
     "Year": "1970-01-01",
     "Origin": "Europe",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "audi 100 ls",
@@ -261,7 +261,7 @@
     "Acceleration": 14.5,
     "Year": "1970-01-01",
     "Origin": "Europe",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "saab 99e",
@@ -285,7 +285,7 @@
     "Acceleration": 12.5,
     "Year": "1970-01-01",
     "Origin": "Europe",
-    "label": 0
+    "label": 3
   },
   {
     "Name": "amc gremlin",
@@ -297,7 +297,7 @@
     "Acceleration": 15,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "ford f250",
@@ -309,7 +309,7 @@
     "Acceleration": 14,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "chevy c20",
@@ -321,7 +321,7 @@
     "Acceleration": 15,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "dodge d200",
@@ -333,7 +333,7 @@
     "Acceleration": 13.5,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "hi 1200d",
@@ -345,7 +345,7 @@
     "Acceleration": 18.5,
     "Year": "1970-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "datsun pl510",
@@ -393,7 +393,7 @@
     "Acceleration": 13,
     "Year": "1971-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "plymouth satellite custom",
@@ -405,7 +405,7 @@
     "Acceleration": 15.5,
     "Year": "1971-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "chevrolet chevelle malibu",
@@ -417,7 +417,7 @@
     "Acceleration": 15.5,
     "Year": "1971-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "ford torino 500",
@@ -429,7 +429,7 @@
     "Acceleration": 15.5,
     "Year": "1971-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "amc matador",
@@ -441,7 +441,7 @@
     "Acceleration": 15.5,
     "Year": "1971-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "chevrolet impala",
@@ -453,7 +453,7 @@
     "Acceleration": 12,
     "Year": "1971-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "pontiac catalina brougham",
@@ -465,7 +465,7 @@
     "Acceleration": 11.5,
     "Year": "1971-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "ford galaxie 500",
@@ -477,7 +477,7 @@
     "Acceleration": 13.5,
     "Year": "1971-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "plymouth fury iii",
@@ -489,7 +489,7 @@
     "Acceleration": 13,
     "Year": "1971-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "dodge monaco (sw)",
@@ -501,7 +501,7 @@
     "Acceleration": 11.5,
     "Year": "1971-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "ford country squire (sw)",
@@ -513,7 +513,7 @@
     "Acceleration": 12,
     "Year": "1971-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "pontiac safari (sw)",
@@ -525,7 +525,7 @@
     "Acceleration": 12,
     "Year": "1971-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "amc hornet sportabout (sw)",
@@ -549,7 +549,7 @@
     "Acceleration": 19,
     "Year": "1971-01-01",
     "Origin": "USA",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "pontiac firebird",
@@ -561,7 +561,7 @@
     "Acceleration": 15,
     "Year": "1971-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "ford mustang",
@@ -573,7 +573,7 @@
     "Acceleration": 14.5,
     "Year": "1971-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "mercury capri 2000",
@@ -609,7 +609,7 @@
     "Acceleration": 19.5,
     "Year": "1971-01-01",
     "Origin": "Europe",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "fiat 124b",
@@ -633,7 +633,7 @@
     "Acceleration": 19,
     "Year": "1971-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "datsun 1200",
@@ -645,7 +645,7 @@
     "Acceleration": 18,
     "Year": "1971-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "volkswagen model 111",
@@ -657,7 +657,7 @@
     "Acceleration": 19,
     "Year": "1971-01-01",
     "Origin": "Europe",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "plymouth cricket",
@@ -669,7 +669,7 @@
     "Acceleration": 20.5,
     "Year": "1971-01-01",
     "Origin": "USA",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "toyota corona hardtop",
@@ -705,7 +705,7 @@
     "Acceleration": 23.5,
     "Year": "1972-01-01",
     "Origin": "Europe",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "chevrolet vega",
@@ -717,7 +717,7 @@
     "Acceleration": 19.5,
     "Year": "1972-01-01",
     "Origin": "USA",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "ford pinto runabout",
@@ -741,7 +741,7 @@
     "Acceleration": 12,
     "Year": "1972-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "pontiac catalina",
@@ -753,7 +753,7 @@
     "Acceleration": 12,
     "Year": "1972-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "plymouth fury iii",
@@ -765,7 +765,7 @@
     "Acceleration": 13.5,
     "Year": "1972-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "ford galaxie 500",
@@ -777,7 +777,7 @@
     "Acceleration": 13,
     "Year": "1972-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "amc ambassador sst",
@@ -789,7 +789,7 @@
     "Acceleration": 11.5,
     "Year": "1972-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "mercury marquis",
@@ -801,7 +801,7 @@
     "Acceleration": 11,
     "Year": "1972-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "buick lesabre custom",
@@ -813,7 +813,7 @@
     "Acceleration": 13.5,
     "Year": "1972-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "oldsmobile delta 88 royale",
@@ -825,7 +825,7 @@
     "Acceleration": 13.5,
     "Year": "1972-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "chrysler newport royal",
@@ -837,7 +837,7 @@
     "Acceleration": 12.5,
     "Year": "1972-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "mazda rx2 coupe",
@@ -861,7 +861,7 @@
     "Acceleration": 12.5,
     "Year": "1972-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "chevrolet chevelle concours (sw)",
@@ -873,7 +873,7 @@
     "Acceleration": 14,
     "Year": "1972-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "ford gran torino (sw)",
@@ -885,7 +885,7 @@
     "Acceleration": 16,
     "Year": "1972-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "plymouth satellite custom (sw)",
@@ -897,7 +897,7 @@
     "Acceleration": 14,
     "Year": "1972-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "volvo 145e (sw)",
@@ -909,7 +909,7 @@
     "Acceleration": 14.5,
     "Year": "1972-01-01",
     "Origin": "Europe",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "volkswagen 411 (sw)",
@@ -921,7 +921,7 @@
     "Acceleration": 18,
     "Year": "1972-01-01",
     "Origin": "Europe",
-    "label": 3
+    "label": 2
   },
   {
     "Name": "peugeot 504 (sw)",
@@ -933,7 +933,7 @@
     "Acceleration": 19.5,
     "Year": "1972-01-01",
     "Origin": "Europe",
-    "label": 3
+    "label": 2
   },
   {
     "Name": "renault 12 (sw)",
@@ -945,7 +945,7 @@
     "Acceleration": 18,
     "Year": "1972-01-01",
     "Origin": "Europe",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "ford pinto (sw)",
@@ -981,7 +981,7 @@
     "Acceleration": 14.5,
     "Year": "1972-01-01",
     "Origin": "Japan",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "dodge colt (sw)",
@@ -1029,7 +1029,7 @@
     "Acceleration": 11.5,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "chevrolet malibu",
@@ -1041,7 +1041,7 @@
     "Acceleration": 13,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "ford gran torino",
@@ -1053,7 +1053,7 @@
     "Acceleration": 14.5,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "dodge coronet custom",
@@ -1065,7 +1065,7 @@
     "Acceleration": 12.5,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "mercury marquis brougham",
@@ -1077,7 +1077,7 @@
     "Acceleration": 11.5,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "chevrolet caprice classic",
@@ -1089,7 +1089,7 @@
     "Acceleration": 12,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "ford ltd",
@@ -1101,7 +1101,7 @@
     "Acceleration": 13,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "plymouth fury gran sedan",
@@ -1113,7 +1113,7 @@
     "Acceleration": 14.5,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "chrysler new yorker brougham",
@@ -1125,7 +1125,7 @@
     "Acceleration": 11,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "buick electra 225 custom",
@@ -1137,7 +1137,7 @@
     "Acceleration": 11,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "amc ambassador brougham",
@@ -1161,7 +1161,7 @@
     "Acceleration": 16.5,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "chevrolet nova custom",
@@ -1185,7 +1185,7 @@
     "Acceleration": 16,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "ford maverick",
@@ -1197,7 +1197,7 @@
     "Acceleration": 16.5,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "plymouth duster",
@@ -1209,7 +1209,7 @@
     "Acceleration": 16,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "volkswagen super beetle",
@@ -1221,7 +1221,7 @@
     "Acceleration": 21,
     "Year": "1973-01-01",
     "Origin": "Europe",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "chevrolet impala",
@@ -1233,7 +1233,7 @@
     "Acceleration": 14,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "ford country",
@@ -1245,7 +1245,7 @@
     "Acceleration": 12.5,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "plymouth custom suburb",
@@ -1257,7 +1257,7 @@
     "Acceleration": 13,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "oldsmobile vista cruiser",
@@ -1269,7 +1269,7 @@
     "Acceleration": 12.5,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "amc gremlin",
@@ -1281,7 +1281,7 @@
     "Acceleration": 15,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "toyota carina",
@@ -1293,7 +1293,7 @@
     "Acceleration": 19,
     "Year": "1973-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "chevrolet vega",
@@ -1305,7 +1305,7 @@
     "Acceleration": 19.5,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "datsun 610",
@@ -1341,7 +1341,7 @@
     "Acceleration": 18.5,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "mercury capri v6",
@@ -1353,7 +1353,7 @@
     "Acceleration": 14,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "fiat 124 sport coupe",
@@ -1377,7 +1377,7 @@
     "Acceleration": 13,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "pontiac grand prix",
@@ -1389,7 +1389,7 @@
     "Acceleration": 9.5,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "fiat 128",
@@ -1401,7 +1401,7 @@
     "Acceleration": 19.5,
     "Year": "1973-01-01",
     "Origin": "Europe",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "opel manta",
@@ -1425,7 +1425,7 @@
     "Acceleration": 14,
     "Year": "1973-01-01",
     "Origin": "Europe",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "volvo 144ea",
@@ -1437,7 +1437,7 @@
     "Acceleration": 15.5,
     "Year": "1973-01-01",
     "Origin": "Europe",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "dodge dart custom",
@@ -1449,7 +1449,7 @@
     "Acceleration": 11,
     "Year": "1973-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 3
   },
   {
     "Name": "saab 99le",
@@ -1461,7 +1461,7 @@
     "Acceleration": 14,
     "Year": "1973-01-01",
     "Origin": "Europe",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "toyota mark ii",
@@ -1497,7 +1497,7 @@
     "Acceleration": 16.5,
     "Year": "1974-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "amc hornet",
@@ -1509,7 +1509,7 @@
     "Acceleration": 16,
     "Year": "1974-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "chevrolet nova",
@@ -1521,7 +1521,7 @@
     "Acceleration": 17,
     "Year": "1974-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "datsun b210",
@@ -1533,7 +1533,7 @@
     "Acceleration": 19,
     "Year": "1974-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "ford pinto",
@@ -1545,7 +1545,7 @@
     "Acceleration": 16.5,
     "Year": "1974-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "toyota corolla 1200",
@@ -1557,7 +1557,7 @@
     "Acceleration": 21,
     "Year": "1974-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "chevrolet vega",
@@ -1569,7 +1569,7 @@
     "Acceleration": 17,
     "Year": "1974-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "chevrolet chevelle malibu classic",
@@ -1581,7 +1581,7 @@
     "Acceleration": 17,
     "Year": "1974-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 0
   },
   {
     "Name": "amc matador",
@@ -1593,7 +1593,7 @@
     "Acceleration": 18,
     "Year": "1974-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 0
   },
   {
     "Name": "plymouth satellite sebring",
@@ -1605,7 +1605,7 @@
     "Acceleration": 16.5,
     "Year": "1974-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 0
   },
   {
     "Name": "ford gran torino",
@@ -1617,7 +1617,7 @@
     "Acceleration": 14,
     "Year": "1974-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "buick century luxus (sw)",
@@ -1629,7 +1629,7 @@
     "Acceleration": 14.5,
     "Year": "1974-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "dodge coronet custom (sw)",
@@ -1641,7 +1641,7 @@
     "Acceleration": 13.5,
     "Year": "1974-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "ford gran torino (sw)",
@@ -1653,7 +1653,7 @@
     "Acceleration": 16,
     "Year": "1974-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "amc matador (sw)",
@@ -1665,7 +1665,7 @@
     "Acceleration": 15.5,
     "Year": "1974-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "audi fox",
@@ -1725,7 +1725,7 @@
     "Acceleration": 19,
     "Year": "1974-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "dodge colt",
@@ -1773,7 +1773,7 @@
     "Acceleration": 15,
     "Year": "1974-01-01",
     "Origin": "Japan",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "subaru",
@@ -1809,7 +1809,7 @@
     "Acceleration": 16,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "chevrolet nova",
@@ -1821,7 +1821,7 @@
     "Acceleration": 16,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "mercury monarch",
@@ -1857,7 +1857,7 @@
     "Acceleration": 11.5,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "chevrolet bel air",
@@ -1869,7 +1869,7 @@
     "Acceleration": 14,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "plymouth grand fury",
@@ -1881,7 +1881,7 @@
     "Acceleration": 14.5,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "ford ltd",
@@ -1893,7 +1893,7 @@
     "Acceleration": 13.5,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "buick century",
@@ -1905,7 +1905,7 @@
     "Acceleration": 21,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 2
   },
   {
     "Name": "chevroelt chevelle malibu",
@@ -1917,7 +1917,7 @@
     "Acceleration": 18.5,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 2
   },
   {
     "Name": "amc matador",
@@ -1929,7 +1929,7 @@
     "Acceleration": 19,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 2
   },
   {
     "Name": "plymouth fury",
@@ -1941,7 +1941,7 @@
     "Acceleration": 19,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 2
   },
   {
     "Name": "buick skyhawk",
@@ -1953,7 +1953,7 @@
     "Acceleration": 15,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "chevrolet monza 2+2",
@@ -1965,7 +1965,7 @@
     "Acceleration": 13.5,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 3
   },
   {
     "Name": "ford mustang ii",
@@ -1977,7 +1977,7 @@
     "Acceleration": 12,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 3
   },
   {
     "Name": "toyota corolla",
@@ -2001,7 +2001,7 @@
     "Acceleration": 17,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "amc gremlin",
@@ -2013,7 +2013,7 @@
     "Acceleration": 16,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "pontiac astro",
@@ -2025,7 +2025,7 @@
     "Acceleration": 18.5,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 2
   },
   {
     "Name": "toyota corona",
@@ -2037,7 +2037,7 @@
     "Acceleration": 13.5,
     "Year": "1975-01-01",
     "Origin": "Japan",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "volkswagen dasher",
@@ -2061,7 +2061,7 @@
     "Acceleration": 17,
     "Year": "1975-01-01",
     "Origin": "Japan",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "ford pinto",
@@ -2073,7 +2073,7 @@
     "Acceleration": 14.5,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "volkswagen rabbit",
@@ -2097,7 +2097,7 @@
     "Acceleration": 17,
     "Year": "1975-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "audi 100ls",
@@ -2109,7 +2109,7 @@
     "Acceleration": 15,
     "Year": "1975-01-01",
     "Origin": "Europe",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "peugeot 504",
@@ -2121,7 +2121,7 @@
     "Acceleration": 17,
     "Year": "1975-01-01",
     "Origin": "Europe",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "volvo 244dl",
@@ -2133,7 +2133,7 @@
     "Acceleration": 14.5,
     "Year": "1975-01-01",
     "Origin": "Europe",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "saab 99le",
@@ -2157,7 +2157,7 @@
     "Acceleration": 17.5,
     "Year": "1975-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "fiat 131",
@@ -2169,7 +2169,7 @@
     "Acceleration": 15.5,
     "Year": "1976-01-01",
     "Origin": "Europe",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "opel 1900",
@@ -2193,7 +2193,7 @@
     "Acceleration": 14.9,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "dodge colt",
@@ -2205,7 +2205,7 @@
     "Acceleration": 17.7,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "renault 12tl",
@@ -2229,7 +2229,7 @@
     "Acceleration": 13,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "dodge coronet brougham",
@@ -2241,7 +2241,7 @@
     "Acceleration": 13,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "amc matador",
@@ -2253,7 +2253,7 @@
     "Acceleration": 13.9,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "ford gran torino",
@@ -2265,7 +2265,7 @@
     "Acceleration": 12.8,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "plymouth valiant",
@@ -2277,7 +2277,7 @@
     "Acceleration": 15.4,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "chevrolet nova",
@@ -2289,7 +2289,7 @@
     "Acceleration": 14.5,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "ford maverick",
@@ -2313,7 +2313,7 @@
     "Acceleration": 17.6,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "chevrolet chevette",
@@ -2325,7 +2325,7 @@
     "Acceleration": 22.2,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "chevrolet woody",
@@ -2337,7 +2337,7 @@
     "Acceleration": 22.1,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "vw rabbit",
@@ -2361,7 +2361,7 @@
     "Acceleration": 17.4,
     "Year": "1976-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "dodge aspen se",
@@ -2373,7 +2373,7 @@
     "Acceleration": 17.7,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 0
   },
   {
     "Name": "ford granada ghia",
@@ -2397,7 +2397,7 @@
     "Acceleration": 16.2,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 0
   },
   {
     "Name": "amc pacer d/l",
@@ -2409,7 +2409,7 @@
     "Acceleration": 17.8,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "volkswagen rabbit",
@@ -2457,7 +2457,7 @@
     "Acceleration": 13.6,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "volvo 245",
@@ -2469,7 +2469,7 @@
     "Acceleration": 15.7,
     "Year": "1976-01-01",
     "Origin": "Europe",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "plymouth volare premier v8",
@@ -2481,7 +2481,7 @@
     "Acceleration": 13.2,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "peugeot 504",
@@ -2505,7 +2505,7 @@
     "Acceleration": 15.5,
     "Year": "1976-01-01",
     "Origin": "Japan",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "mercedes-benz 280s",
@@ -2517,7 +2517,7 @@
     "Acceleration": 16.7,
     "Year": "1976-01-01",
     "Origin": "Europe",
-    "label": 1
+    "label": 0
   },
   {
     "Name": "cadillac seville",
@@ -2529,7 +2529,7 @@
     "Acceleration": 12.1,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "chevy c10",
@@ -2541,7 +2541,7 @@
     "Acceleration": 12,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "ford f108",
@@ -2553,7 +2553,7 @@
     "Acceleration": 15,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "dodge d100",
@@ -2565,7 +2565,7 @@
     "Acceleration": 14,
     "Year": "1976-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "honda Accelerationord cvcc",
@@ -2577,7 +2577,7 @@
     "Acceleration": 18.5,
     "Year": "1977-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "buick opel isuzu deluxe",
@@ -2601,7 +2601,7 @@
     "Acceleration": 18.6,
     "Year": "1977-01-01",
     "Origin": "Europe",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "plymouth arrow gs",
@@ -2637,7 +2637,7 @@
     "Acceleration": 12.5,
     "Year": "1977-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "oldsmobile cutlass supreme",
@@ -2649,7 +2649,7 @@
     "Acceleration": 19,
     "Year": "1977-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 2
   },
   {
     "Name": "dodge monaco brougham",
@@ -2661,7 +2661,7 @@
     "Acceleration": 13.7,
     "Year": "1977-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "mercury cougar brougham",
@@ -2673,7 +2673,7 @@
     "Acceleration": 14.9,
     "Year": "1977-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "chevrolet concours",
@@ -2685,7 +2685,7 @@
     "Acceleration": 16.4,
     "Year": "1977-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "buick skylark",
@@ -2697,7 +2697,7 @@
     "Acceleration": 16.9,
     "Year": "1977-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "plymouth volare custom",
@@ -2709,7 +2709,7 @@
     "Acceleration": 17.7,
     "Year": "1977-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 0
   },
   {
     "Name": "ford granada",
@@ -2733,7 +2733,7 @@
     "Acceleration": 11.1,
     "Year": "1977-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "chevrolet monte carlo landau",
@@ -2757,7 +2757,7 @@
     "Acceleration": 12.2,
     "Year": "1977-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 1
   },
   {
     "Name": "ford thunderbird",
@@ -2769,7 +2769,7 @@
     "Acceleration": 14.5,
     "Year": "1977-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "volkswagen rabbit custom",
@@ -2793,7 +2793,7 @@
     "Acceleration": 16,
     "Year": "1977-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "toyota corolla liftback",
@@ -2805,7 +2805,7 @@
     "Acceleration": 18.2,
     "Year": "1977-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "ford mustang ii 2+2",
@@ -2817,7 +2817,7 @@
     "Acceleration": 15.8,
     "Year": "1977-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "chevrolet chevette",
@@ -2829,7 +2829,7 @@
     "Acceleration": 17,
     "Year": "1977-01-01",
     "Origin": "USA",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "dodge colt m/m",
@@ -2877,7 +2877,7 @@
     "Acceleration": 14.5,
     "Year": "1977-01-01",
     "Origin": "Japan",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "bmw 320i",
@@ -2913,7 +2913,7 @@
     "Acceleration": 21.5,
     "Year": "1978-01-01",
     "Origin": "Europe",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "ford fiesta",
@@ -2937,7 +2937,7 @@
     "Acceleration": 19.4,
     "Year": "1978-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "datsun b210 gx",
@@ -2949,7 +2949,7 @@
     "Acceleration": 18.6,
     "Year": "1978-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "honda civic cvcc",
@@ -2973,7 +2973,7 @@
     "Acceleration": 15.5,
     "Year": "1978-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "dodge diplomat",
@@ -2985,7 +2985,7 @@
     "Acceleration": 13.2,
     "Year": "1978-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "mercury monarch ghia",
@@ -2997,7 +2997,7 @@
     "Acceleration": 12.8,
     "Year": "1978-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 3
   },
   {
     "Name": "pontiac phoenix lj",
@@ -3033,7 +3033,7 @@
     "Acceleration": 15.8,
     "Year": "1978-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "ford fairmont (man)",
@@ -3045,7 +3045,7 @@
     "Acceleration": 15.4,
     "Year": "1978-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "plymouth volare",
@@ -3057,7 +3057,7 @@
     "Acceleration": 17.2,
     "Year": "1978-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "amc concord",
@@ -3069,7 +3069,7 @@
     "Acceleration": 17.2,
     "Year": "1978-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "buick century special",
@@ -3081,7 +3081,7 @@
     "Acceleration": 15.8,
     "Year": "1978-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "mercury zephyr",
@@ -3093,7 +3093,7 @@
     "Acceleration": 16.7,
     "Year": "1978-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "dodge aspen",
@@ -3105,7 +3105,7 @@
     "Acceleration": 18.7,
     "Year": "1978-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 2
   },
   {
     "Name": "amc concord d/l",
@@ -3117,7 +3117,7 @@
     "Acceleration": 15.1,
     "Year": "1978-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 3
   },
   {
     "Name": "chevrolet monte carlo landau",
@@ -3129,7 +3129,7 @@
     "Acceleration": 13.2,
     "Year": "1978-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 3
   },
   {
     "Name": "buick regal sport coupe (turbo)",
@@ -3141,7 +3141,7 @@
     "Acceleration": 13.4,
     "Year": "1978-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 3
   },
   {
     "Name": "ford futura",
@@ -3153,7 +3153,7 @@
     "Acceleration": 11.2,
     "Year": "1978-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 3
   },
   {
     "Name": "dodge magnum xe",
@@ -3165,7 +3165,7 @@
     "Acceleration": 13.7,
     "Year": "1978-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "chevrolet chevette",
@@ -3189,7 +3189,7 @@
     "Acceleration": 14.2,
     "Year": "1978-01-01",
     "Origin": "Japan",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "datsun 510",
@@ -3225,7 +3225,7 @@
     "Acceleration": 14.8,
     "Year": "1978-01-01",
     "Origin": "Japan",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "plymouth sapporo",
@@ -3237,7 +3237,7 @@
     "Acceleration": 16.7,
     "Year": "1978-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "oldsmobile starfire sx",
@@ -3249,7 +3249,7 @@
     "Acceleration": 17.6,
     "Year": "1978-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 2
   },
   {
     "Name": "datsun 200-sx",
@@ -3273,7 +3273,7 @@
     "Acceleration": 15.9,
     "Year": "1978-01-01",
     "Origin": "Europe",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "volvo 264gl",
@@ -3285,7 +3285,7 @@
     "Acceleration": 13.6,
     "Year": "1978-01-01",
     "Origin": "Europe",
-    "label": 2
+    "label": 3
   },
   {
     "Name": "saab 99gle",
@@ -3297,7 +3297,7 @@
     "Acceleration": 15.7,
     "Year": "1978-01-01",
     "Origin": "Europe",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "peugeot 604sl",
@@ -3309,7 +3309,7 @@
     "Acceleration": 15.8,
     "Year": "1978-01-01",
     "Origin": "Europe",
-    "label": 2
+    "label": 3
   },
   {
     "Name": "volkswagen scirocco",
@@ -3345,7 +3345,7 @@
     "Acceleration": 15.4,
     "Year": "1979-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "mercury zephyr 6",
@@ -3357,7 +3357,7 @@
     "Acceleration": 18.2,
     "Year": "1979-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 2
   },
   {
     "Name": "ford fairmont 4",
@@ -3369,7 +3369,7 @@
     "Acceleration": 17.3,
     "Year": "1979-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "amc concord dl 6",
@@ -3393,7 +3393,7 @@
     "Acceleration": 16.6,
     "Year": "1979-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "chevrolet caprice classic",
@@ -3405,7 +3405,7 @@
     "Acceleration": 15.4,
     "Year": "1979-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "ford ltd landau",
@@ -3417,7 +3417,7 @@
     "Acceleration": 13.4,
     "Year": "1979-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "mercury grand marquis",
@@ -3429,7 +3429,7 @@
     "Acceleration": 13.2,
     "Year": "1979-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "dodge st. regis",
@@ -3441,7 +3441,7 @@
     "Acceleration": 15.2,
     "Year": "1979-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "buick estate wagon (sw)",
@@ -3453,7 +3453,7 @@
     "Acceleration": 14.9,
     "Year": "1979-01-01",
     "Origin": "USA",
-    "label": 4
+    "label": 3
   },
   {
     "Name": "ford country squire (sw)",
@@ -3465,7 +3465,7 @@
     "Acceleration": 14.3,
     "Year": "1979-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "chevrolet malibu classic (sw)",
@@ -3477,7 +3477,7 @@
     "Acceleration": 15,
     "Year": "1979-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "chrysler lebaron town @ country (sw)",
@@ -3489,7 +3489,7 @@
     "Acceleration": 13,
     "Year": "1979-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 3
   },
   {
     "Name": "vw rabbit custom",
@@ -3537,7 +3537,7 @@
     "Acceleration": 15,
     "Year": "1979-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "mercedes benz 300d",
@@ -3561,7 +3561,7 @@
     "Acceleration": 17.4,
     "Year": "1979-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 0
   },
   {
     "Name": "peugeot 504",
@@ -3621,7 +3621,7 @@
     "Acceleration": 19.2,
     "Year": "1979-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "fiat strada custom",
@@ -3645,7 +3645,7 @@
     "Acceleration": 16,
     "Year": "1979-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "chevrolet citation",
@@ -3681,7 +3681,7 @@
     "Acceleration": 13.2,
     "Year": "1979-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "vw rabbit",
@@ -3705,7 +3705,7 @@
     "Acceleration": 18.8,
     "Year": "1980-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "chevrolet chevette",
@@ -3741,7 +3741,7 @@
     "Acceleration": 16.5,
     "Year": "1980-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "ford fairmont",
@@ -3753,7 +3753,7 @@
     "Acceleration": 18.1,
     "Year": "1980-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 2
   },
   {
     "Name": "amc concord",
@@ -3765,7 +3765,7 @@
     "Acceleration": 20.1,
     "Year": "1980-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 2
   },
   {
     "Name": "dodge aspen",
@@ -3801,7 +3801,7 @@
     "Acceleration": 15.5,
     "Year": "1980-01-01",
     "Origin": "Japan",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "mazda 626",
@@ -3813,7 +3813,7 @@
     "Acceleration": 17.5,
     "Year": "1980-01-01",
     "Origin": "Japan",
-    "label": 3
+    "label": 2
   },
   {
     "Name": "datsun 510 hatchback",
@@ -3825,7 +3825,7 @@
     "Acceleration": 15,
     "Year": "1980-01-01",
     "Origin": "Japan",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "toyota corolla",
@@ -3849,7 +3849,7 @@
     "Acceleration": 17.9,
     "Year": "1980-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "dodge colt",
@@ -3861,7 +3861,7 @@
     "Acceleration": 14.4,
     "Year": "1980-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "datsun 210",
@@ -3873,7 +3873,7 @@
     "Acceleration": 19.2,
     "Year": "1980-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "vw rabbit c (diesel)",
@@ -3885,7 +3885,7 @@
     "Acceleration": 21.7,
     "Year": "1980-01-01",
     "Origin": "Europe",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "vw dasher (diesel)",
@@ -3897,7 +3897,7 @@
     "Acceleration": 23.7,
     "Year": "1980-01-01",
     "Origin": "Europe",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "audi 5000s (diesel)",
@@ -3909,7 +3909,7 @@
     "Acceleration": 19.9,
     "Year": "1980-01-01",
     "Origin": "Europe",
-    "label": 3
+    "label": 2
   },
   {
     "Name": "mercedes-benz 240d",
@@ -3945,7 +3945,7 @@
     "Acceleration": 18,
     "Year": "1980-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "vokswagen rabbit",
@@ -3981,7 +3981,7 @@
     "Acceleration": 12.5,
     "Year": "1980-01-01",
     "Origin": "Japan",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "triumph tr7 coupe",
@@ -3993,7 +3993,7 @@
     "Acceleration": 15.1,
     "Year": "1980-01-01",
     "Origin": "Europe",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "honda Accelerationord",
@@ -4017,7 +4017,7 @@
     "Acceleration": 15.7,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "buick skylark",
@@ -4029,7 +4029,7 @@
     "Acceleration": 16.4,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "dodge aries wagon (sw)",
@@ -4041,7 +4041,7 @@
     "Acceleration": 14.4,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "chevrolet citation",
@@ -4077,7 +4077,7 @@
     "Acceleration": 16.9,
     "Year": "1982-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "plymouth champ",
@@ -4113,7 +4113,7 @@
     "Acceleration": 17.8,
     "Year": "1982-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "datsun 210",
@@ -4125,7 +4125,7 @@
     "Acceleration": 19.4,
     "Year": "1982-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "toyota tercel",
@@ -4137,7 +4137,7 @@
     "Acceleration": 17.3,
     "Year": "1982-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "mazda glc 4",
@@ -4185,7 +4185,7 @@
     "Acceleration": 20.7,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "volkswagen jetta",
@@ -4233,7 +4233,7 @@
     "Acceleration": 14.8,
     "Year": "1982-01-01",
     "Origin": "Japan",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "mazda 626",
@@ -4245,7 +4245,7 @@
     "Acceleration": 18.3,
     "Year": "1982-01-01",
     "Origin": "Japan",
-    "label": 3
+    "label": 2
   },
   {
     "Name": "peugeot 505s turbo diesel",
@@ -4305,7 +4305,7 @@
     "Acceleration": 15.8,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "oldsmobile cutlass ls",
@@ -4317,7 +4317,7 @@
     "Acceleration": 19,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 1
+    "label": 2
   },
   {
     "Name": "ford granada gl",
@@ -4329,7 +4329,7 @@
     "Acceleration": 17.1,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "chrysler lebaron salon",
@@ -4341,7 +4341,7 @@
     "Acceleration": 16.6,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "chevrolet cavalier",
@@ -4353,7 +4353,7 @@
     "Acceleration": 19.6,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 2
   },
   {
     "Name": "chevrolet cavalier wagon",
@@ -4365,7 +4365,7 @@
     "Acceleration": 18.6,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 2
   },
   {
     "Name": "chevrolet cavalier 2-door",
@@ -4377,7 +4377,7 @@
     "Acceleration": 18,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "pontiac j2000 se hatchback",
@@ -4389,7 +4389,7 @@
     "Acceleration": 16.2,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "dodge aries se",
@@ -4401,7 +4401,7 @@
     "Acceleration": 16,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "pontiac phoenix",
@@ -4413,7 +4413,7 @@
     "Acceleration": 18,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 2
   },
   {
     "Name": "ford fairmont futura",
@@ -4425,7 +4425,7 @@
     "Acceleration": 16.4,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "volkswagen rabbit l",
@@ -4449,7 +4449,7 @@
     "Acceleration": 18.2,
     "Year": "1982-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "mazda glc custom",
@@ -4461,7 +4461,7 @@
     "Acceleration": 17.6,
     "Year": "1982-01-01",
     "Origin": "Japan",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "plymouth horizon miser",
@@ -4485,7 +4485,7 @@
     "Acceleration": 17.3,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "nissan stanza xe",
@@ -4569,7 +4569,7 @@
     "Acceleration": 16.4,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "oldsmobile cutlass ciera (diesel)",
@@ -4581,7 +4581,7 @@
     "Acceleration": 17,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 2
+    "label": 0
   },
   {
     "Name": "chrysler lebaron medallion",
@@ -4593,7 +4593,7 @@
     "Acceleration": 14.5,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "ford granada l",
@@ -4605,7 +4605,7 @@
     "Acceleration": 14.7,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "toyota celica gt",
@@ -4617,7 +4617,7 @@
     "Acceleration": 13.9,
     "Year": "1982-01-01",
     "Origin": "Japan",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "dodge charger 2.2",
@@ -4641,7 +4641,7 @@
     "Acceleration": 17.3,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "ford mustang gl",
@@ -4653,7 +4653,7 @@
     "Acceleration": 15.6,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 0
   },
   {
     "Name": "vw pickup",
@@ -4665,7 +4665,7 @@
     "Acceleration": 24.6,
     "Year": "1982-01-01",
     "Origin": "Europe",
-    "label": 0
+    "label": 2
   },
   {
     "Name": "dodge rampage",
@@ -4689,7 +4689,7 @@
     "Acceleration": 18.6,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 2
   },
   {
     "Name": "chevy s-10",
@@ -4701,6 +4701,6 @@
     "Acceleration": 19.4,
     "Year": "1982-01-01",
     "Origin": "USA",
-    "label": 3
+    "label": 2
   }
 ]
