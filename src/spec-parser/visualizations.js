@@ -1,5 +1,6 @@
 import Scatterplot from '../visualizations/scatterplot'
 import Areachart from '../visualizations/area-chart'
+import Barchart from '../visualizations/bar-chart'
 import LineUp from '../visualizations/line-up'
 import NodeLinkGraph from '../visualizations/node-link-graph'
 import Select from '../visualizations/select'
@@ -135,6 +136,8 @@ class Visualization {
         return new Scatterplot(props)
       case 'areachart':
         return new Areachart(props)
+      case 'barchart':
+        return new Barchart(props)
       case 'lineup':
         return new LineUp(props)
       case 'graph':
@@ -165,6 +168,7 @@ class Visualization {
     const value = Object.values(this._instance)
       .filter((value) => value instanceof ReactiveProperty)
       .find((value) => value.action === action && value.option === option)
+    console.log(this._instance, value)
     if (!value) {
       throw new Error(
         `Visualization: no vis.prop in ${this._instance.constructor.name} matches ${action} ${option}`
