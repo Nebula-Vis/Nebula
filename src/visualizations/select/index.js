@@ -1,9 +1,5 @@
 import * as d3 from 'd3'
-<<<<<<< HEAD
-import ReactiveProperty from '../../reactive-prop'
-=======
 import ReactiveProperty from '@/reactive-prop'
->>>>>>> origin/master
 
 export default class Select {
   constructor(props) {
