@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
-import ReactiveProperty from '../reactive-prop'
-import { getDataExtent, getFieldsOfType } from '../utils'
+import ReactiveProperty from '@/reactive-prop'
+import { getDataExtent, getFieldsOfType } from '@/utils'
 
 // 2 array
 export default class ItemsToRanges {

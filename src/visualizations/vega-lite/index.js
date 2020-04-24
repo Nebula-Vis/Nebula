@@ -1,8 +1,8 @@
 import * as d3 from 'd3'
 import embed, { vega } from 'vega-embed'
 import _ from 'lodash'
-import ReactiveProperty from '../reactive-prop'
-import { padExtent, getDataExtent } from '../utils'
+import ReactiveProperty from '@/reactive-prop'
+import { padExtent, getDataExtent } from '@/utils'
 
 export default class VegaLite {
   constructor(spec) {

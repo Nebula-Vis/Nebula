@@ -34,4 +34,9 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'public')
   },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname,'src'),
+    },
+  },
 }

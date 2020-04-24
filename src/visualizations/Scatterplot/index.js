@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-import ReactiveProperty from '../../reactive-prop'
+import ReactiveProperty from '@/reactive-prop'
 import VueScatterplot from './vue-scatterplot'
 import {
   getFieldsOfType,
@@ -7,7 +7,7 @@ import {
   getDataExtent,
   boolDataHasAttributes,
   padExtent,
-} from '../../utils'
+} from '@/utils'
 
 export default class Scatterplot {
   constructor(props) {

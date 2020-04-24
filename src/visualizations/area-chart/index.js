@@ -1,12 +1,12 @@
 import * as d3 from 'd3'
-import ReactiveProperty from '../../reactive-prop'
+import ReactiveProperty from '@/reactive-prop'
 import VueAreaChart from './vue-area-chart'
 import {
   getFieldsOfType,
   isArrayOfType,
   getDataExtent,
   boolDataHasAttributes,
-} from '../../utils'
+} from '@/utils'
 
 export default class AreaChart {
   constructor(props) {

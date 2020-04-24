@@ -1,4 +1,4 @@
-import ReactiveProperty from '../../reactive-prop'
+import ReactiveProperty from '@/reactive-prop'
 
 export default class CoordinationConstructor {
   constructor() {}
