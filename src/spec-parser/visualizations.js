@@ -1,13 +1,13 @@
-import Scatterplot from '../visualizations/scatterplot'
-import Areachart from '../visualizations/area-chart'
-import LineUp from '../visualizations/line-up'
-import NodeLinkGraph from '../visualizations/node-link-graph'
-import Select from '../visualizations/select'
-import Button from '../visualizations/button'
-import Input from '../visualizations/input'
-import Slider from '../visualizations/slider'
-import VegaLite from '../visualizations/vega-lite'
-import ReactiveProperty from '../reactive-prop'
+import Scatterplot from '@/visualizations/scatterplot'
+import Areachart from '@/visualizations/area-chart'
+import LineUp from '@/visualizations/line-up'
+import NodeLinkGraph from '@/visualizations/node-link-graph'
+import Select from '@/visualizations/select'
+import Button from '@/visualizations/button'
+import Input from '@/visualizations/input'
+import Slider from '@/visualizations/slider'
+import VegaLite from '@/visualizations/vega-lite'
+import ReactiveProperty from '@/reactive-prop'
 
 export default class VisualizationsSpecParser {
   constructor(dataSources, layout, spec) {

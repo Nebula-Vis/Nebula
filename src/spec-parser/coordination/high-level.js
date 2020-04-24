@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { ACTIONS, OPTIONS, ACTION_TO_OPTIONS } from '../../CONSTANT'
+import { ACTIONS, OPTIONS, ACTION_TO_OPTIONS } from '@/CONSTANT'
 
 export default class HighLevelCoordinationSpecParser {
   constructor(visualizationsManager) {

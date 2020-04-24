@@ -2,8 +2,8 @@ import * as d3 from 'd3'
 import * as LineUpJS from 'lineupjs'
 import 'lineupjs/build/LineUpJS.css'
 import _ from 'lodash'
-import { getFieldsOfType, padExtent } from '../../utils'
-import ReactiveProperty from '../../reactive-prop'
+import { getFieldsOfType, padExtent } from '@/utils'
+import ReactiveProperty from '@/reactive-prop'
 
 export default class LineUp {
   constructor(props) {

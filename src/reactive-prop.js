@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { ACTIONS, ACTION_TO_OPTIONS } from './CONSTANT'
+import { ACTIONS, ACTION_TO_OPTIONS } from '@/CONSTANT'
 
 export default class ReactiveProperty {
   constructor(instance, name, value, cb, action, option) {
