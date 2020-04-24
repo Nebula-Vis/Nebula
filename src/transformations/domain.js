@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import ReactiveProperty from '../reactive-prop'
+import ReactiveProperty from '@/reactive-prop'
 
 // get domain of an array
 export default class Domain {

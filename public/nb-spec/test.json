@@ -145,7 +145,7 @@
     }
   ],
   "coordinations": [
-    "set data in chart7, then rearrange order in chart2",
+    "set value in chart7, then rearrange order in chart2",
     "select in chart5 and chart6, then when chart9 clicked, intersect with $1 and $2, then highlight in chart3",
     {
       "how": "select in any, then select in others",

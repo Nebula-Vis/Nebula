@@ -2,8 +2,8 @@ import * as d3 from 'd3'
 import * as LineUpJS from 'lineupjs'
 import 'lineupjs/build/LineUpJS.css'
 import _ from 'lodash'
-import { getFieldsOfType, padExtent } from '../../utils'
-import ReactiveProperty from '../../reactive-prop'
+import { getFieldsOfType, padExtent } from '@/utils'
+import ReactiveProperty from '@/reactive-prop'
 
 export default class LineUp {
   constructor(props) {
@@ -12,6 +12,7 @@ export default class LineUp {
     this.selection = props.selection || this.data
     this.order = props.order || getFieldsOfType(this.data, 'number')
     this.filteredData = this.data
+    this.name = props.name
 
     this.el = null
     this.lineup = null
@@ -92,6 +93,8 @@ export default class LineUp {
 
   _getDataBuilder(data, order) {
     const builder = LineUpJS.builder(data)
+
+    if (this.name) builder.column(LineUpJS.buildStringColumn(this.name))
 
     order.forEach((attr) => {
       const extent = d3.extent(data, (d) => d[attr])

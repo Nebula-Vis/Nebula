@@ -1,6 +1,6 @@
 import { describe, it } from 'mocha'
 import assert from 'assert'
-import Intersect from '../src/transformations/intersect'
+import Intersect from '@/transformations/intersect'
 
 describe('transformation', () => {
   const intersect = new Intersect()

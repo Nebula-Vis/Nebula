@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import ReactiveProperty from '../reactive-prop'
+import ReactiveProperty from '@/reactive-prop'
 
 // 2 array
 export default class Match {

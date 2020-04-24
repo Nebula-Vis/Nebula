@@ -2,7 +2,7 @@
 // https://observablehq.com/@d3/force-directed-graph
 import * as d3 from 'd3'
 import { clamp } from 'lodash'
-import ReactiveProperty from '../../reactive-prop'
+import ReactiveProperty from '@/reactive-prop'
 
 export default class NodeLinkGraph {
   constructor(props) {
@@ -65,10 +65,11 @@ export default class NodeLinkGraph {
     const color = this.color
     const selectionColor = this.selectionColor
     const selectionNbIds = new Set(val.map((d) => d._nbid_))
+    const nodes = this.data.get().nodes
     d3.select(this.el)
       .selectAll('circle')
-      .attr('fill', (d) =>
-        selectionNbIds.has(d._nbid_) ? selectionColor : color
+      .attr('fill', (d, i) =>
+        selectionNbIds.has(nodes[i]._nbid_) ? selectionColor : color
       )
   }
 
@@ -93,9 +94,12 @@ export default class NodeLinkGraph {
         d3
           .forceLink(links)
           .id((d) => d[this.nodeId])
-          .distance(Math.min(width, height) / 20)
+          .distance(Math.sqrt((width * height) / nodes.length))
       )
-      .force('charge', d3.forceManyBody())
+      .force(
+        'charge',
+        d3.forceManyBody().distanceMax(Math.min(width, height) / 2)
+      )
       .force('center', d3.forceCenter(width / 2, height / 2))
 
     const svg = d3.create('svg').attr('viewBox', [0, 0, width, height])
