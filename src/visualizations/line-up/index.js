@@ -12,6 +12,7 @@ export default class LineUp {
     this.selection = props.selection || this.data
     this.order = props.order || getFieldsOfType(this.data, 'number')
     this.filteredData = this.data
+    this.name = props.name
 
     this.el = null
     this.lineup = null
@@ -92,6 +93,8 @@ export default class LineUp {
 
   _getDataBuilder(data, order) {
     const builder = LineUpJS.builder(data)
+
+    if (this.name) builder.column(LineUpJS.buildStringColumn(this.name))
 
     order.forEach((attr) => {
       const extent = d3.extent(data, (d) => d[attr])
