@@ -11,6 +11,7 @@ import VegaLite from '../visualizations/vega-lite'
 import PieChart from '@/visualizations/pie-chart'
 import DonutChart from '@/visualizations/donut-chart'
 import SectorChart from '@/visualizations/sector-chart'
+import SunburstChart from '@/visualizations/sunburst-chart'
 import ReactiveProperty from '../reactive-prop'
 
 export default class VisualizationsSpecParser {
@@ -161,6 +162,8 @@ class Visualization {
         return new DonutChart(props)
       case 'sectorchart':
         return new SectorChart(props)
+      case 'sunburstchart':
+        return new SunburstChart(props)
       default:
         throw new SyntaxError(`No such visualization ${type.toLowerCase()}.`)
     }

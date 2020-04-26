@@ -43,6 +43,20 @@ export default class DataSpecParser {
         source.links.forEach((l, i) => {
           l._nbid_ = `${source.name}_links_${i}`
         })
+      } else if (source.hierarchy) {
+        // 深度优先
+        const dq = [source.hierarchy]
+        const pathDq = [source.hierarchy.name]
+        while (dq.length > 0) {
+          const cur = dq.shift()
+          const curDepth = pathDq.shift()
+          const { children = [] } = cur
+          cur._nbid_ = `${source.name}_hierarchy_${curDepth}`
+          children.forEach((child) => {
+            dq.push(child)
+            pathDq.push(`${curDepth}.${child.name}`)
+          })
+        }
       }
     })
   }
@@ -50,35 +64,30 @@ export default class DataSpecParser {
   async _generateDataSourcesBySpec(spec) {
     const dataSources = []
     for (const element of spec) {
-      const dataObj = {}
-      dataObj.name = element.name
+      let { values, nodes, links, hierarchy } = element
+      const { path, format, name } = element
 
-      // Inline data - table
-      if (element.values) {
-        dataObj.values = element.values
-      }
-      // Inline data - graph
-      else if (element.nodes && element.links) {
-        dataObj.nodes = element.nodes
-        dataObj.links = element.links
-      }
-      // CSV data
-      else if (element.path && element.format === 'csv') {
-        dataObj.values = await this._fetchCsvDataByPath(element.path)
-      }
-      // JSON data
-      else if (element.path && (element.format === 'json' || !element.format)) {
-        const jsonData = await this._fetchJsonDataByPath(element.path)
-        // graph
-        if (jsonData.nodes && jsonData.links) {
-          dataObj.nodes = jsonData.nodes
-          dataObj.links = jsonData.links
-        } // table
-        else {
-          dataObj.values = jsonData
+      // Resolve Remote data First
+      if (path) {
+        if (format === 'csv') values = await this._fetchCsvDataByPath(path)
+        else if (format === 'json' || !format) {
+          const jsonData = await this._fetchJsonDataByPath(path)
+          // remote graph
+          if (jsonData.nodes && jsonData.links) {
+            nodes = jsonData.nodes
+            links = jsonData.links
+          }
+          // remote table
+          else if (Array.isArray(jsonData)) values = jsonData
+          // remote hierarchy
+          else hierarchy = jsonData
         }
       }
-      dataSources.push(dataObj)
+
+      if (values) dataSources.push({ name, values })
+      else if (nodes && links) dataSources.push({ name, nodes, links })
+      else if (hierarchy) dataSources.push({ name, hierarchy })
+      else throw new SyntaxError('Invalid data type')
     }
     return dataSources
   }
