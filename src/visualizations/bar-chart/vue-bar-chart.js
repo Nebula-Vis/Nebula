@@ -43,6 +43,14 @@ export default Vue.extend({
     }
   },
   computed: {
+    encoding() {
+      return {
+        x: this.x,
+        y: this.y,
+        color: this.color,
+        selectionColor: this.selectionColor,
+      }
+    },
     scaleX() {
       // scale of xAxis
       const margin = this.margin
@@ -120,7 +128,7 @@ export default Vue.extend({
       // highlight the selected rect
       this.colorRect()
     },
-    data: function () {
+    data() {
       const brush = this.brushListener
       this.drawRect()
       this.drawAxis()
@@ -128,16 +136,16 @@ export default Vue.extend({
       const brushG = this.$refs.brushG
       d3.select(brushG).transition().call(brush.clear)
     },
-    // encoding: {
-    //   handler: function () {
-    //     this.drawRect()
-    //     this.drawAxis()
-    //     const brush = this.brushListener
-    //     const brushG = this.$refs.brushG
-    //     d3.select(brushG).call(brush.clear)
-    //   },
-    //   deep: true,
-    // },
+    encoding: {
+      handler: function () {
+        this.drawRect()
+        this.drawAxis()
+        const brush = this.brushListener
+        const brushG = this.$refs.brushG
+        d3.select(brushG).call(brush.clear)
+      },
+      deep: true,
+    },
   },
   mounted() {
     this.isMounted = true
@@ -165,13 +173,13 @@ export default Vue.extend({
       const selected = this.selection
 
       // data change and emit event
-      if (selected.length === 0) {
-        this.selection = data.slice(x0, x1)
-        this.$emit('selectionUpdate', this.selection)
-      } else if (selected[0] !== x0 || selected[1] !== x1) {
-        this.selection = data.slice(x0, x1)
-        this.$emit('selectionUpdate', this.selection)
-      }
+      // if (selected.length === 0) {
+      //   this.selection = data.slice(x0, x1)
+      //   this.$emit('selection', this.selection)
+      // } else if (selected[0] !== x0 || selected[1] !== x1) {
+      //   this.selection = data.slice(x0, x1)
+      //   this.$emit('selection', this.selection)
+      // }
     },
     brushended() {
       // brush event handler
@@ -183,7 +191,7 @@ export default Vue.extend({
       if (!selection) {
         this.selection = []
         this.disableClick = false
-        this.$emit('selectionUpdate', null)
+        this.$emit('selection', [])
         return
       }
       this.disableClick = true
@@ -196,7 +204,7 @@ export default Vue.extend({
       const res = [x(x0), x(x0) + (x1 - x0) * band]
       const selected = data.slice(x0, x1)
       this.selection = selected
-      this.$emit('selectionUpdate', this.selection)
+      this.$emit('selection', this.selection)
       const brushG = this.$refs.brushG
       d3.select(brushG).transition().call(brush.move, res)
     },
@@ -216,7 +224,9 @@ export default Vue.extend({
         .attr('height', function (d) {
           return y(0) - y(d[yAttr])
         })
-        .attr('fill', color)
+        .attr('fill', (d) => {
+          return this.selection.includes(d) ? this.selectionColor : this.color
+        })
     },
     drawAxis() {
       const xAxis = this.$refs.xAxis
@@ -249,7 +259,6 @@ export default Vue.extend({
             .text(xDisplay)
         )
 
-      // console.log(yAxis)
       d3.select(yAxis)
         .attr('transform', `translate(${margin.left},0)`)
         .call(d3.axisLeft(y))

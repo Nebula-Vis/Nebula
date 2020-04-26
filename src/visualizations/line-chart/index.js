@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 import ReactiveProperty from '../../reactive-prop'
-import VueBarChart from './vue-bar-chart'
+import VueLineChart from './vue-line-chart'
 import {
   getFieldsOfType,
   isArrayOfType,
@@ -8,32 +8,30 @@ import {
   boolDataHasAttributes,
 } from '../../utils'
 
-export default class BarChart {
+export default class LineChart {
   constructor(props) {
     this.id = props.id || new Date() - 0
     this.data = props.data
-    this.color = props.color || '#4e79a7'
-    this.selectionColor = props.selectionColor || '#3fca2f'
     const numericFields = getFieldsOfType(this.data, 'number')
     const x = props.x || numericFields[0]
-    const y = props.y || numericFields.filter((field) => field !== x)
-    const scale = this._isValidScale(props.scale, x)
-      ? props.scale
-      : this._getScale(this.data, x)
-    const selection = props.selection || this.data
-    if (!boolDataHasAttributes(this.data, x, ...y)) {
-      throw new Error(`BarChart: wrong attributes x:${x}, y:${y.join(',')}`)
+    const y = props.y || numericFields[1]
+    const detail = props.detail || numericFields[2]
+    const scale = props.scale
+    const selection = props.selection || []
+    if (!boolDataHasAttributes(this.data, x, y, detail)) {
+      throw new Error(
+        `LineChart: wrong attributes x:${x}, y:${y}, detail:${detail}`
+      )
     }
-    if (!this._isValidScale(scale, x)) {
-      throw new Error('BarChart: wrong scale format')
-    }
+    // if (!this._isValidScale(scale, x)) {
+    //   throw new Error('LineChart: wrong scale format')
+    // }
 
     this.x = x
     this.y = y
+    this.detail = detail
     this.scale = scale
     this.selection = selection
-
-    // this.id = new Date().toLocaleString()
     this.el = null
     this.vm = null
 
@@ -51,22 +49,23 @@ export default class BarChart {
   _init() {
     this._initReactiveProperty()
     const that = this
-    this.vm = new VueBarChart({
+    this.vm = new VueLineChart({
       data: {
         id: this.id,
         data: this.data.get(),
-        color: this.color.get(),
-        selectionColor: this.selectionColor.get(),
-        x: this.x.get(),
-        y: this.y.get(),
-        scale: this.scale.get(),
+        defaultEncodings: {
+          detail: this.detail.get(),
+          x: this.x.get(),
+          y: this.y.get(),
+          scale: this.scale.get(),
+        },
         selection: this.selection.get(),
       },
       watch: {
         data(val) {
           // TODO this.checkXY()
           this.scale = that._getScale(val, this.x)
-          // this.selection = val
+          this.selection = val
         },
       },
     })
@@ -94,21 +93,13 @@ export default class BarChart {
       'set',
       'data'
     )
-    this.color = new ReactiveProperty(
+    this.detail = new ReactiveProperty(
       this,
-      'color',
-      this.color,
-      '_onColorChange',
+      'detail',
+      this.detail,
+      '_onDetailChange',
       'encode',
-      'color'
-    )
-    this.selectionColor = new ReactiveProperty(
-      this,
-      'selectionColor',
-      this.selectionColor,
-      '_onSelectionColorChange',
-      'encode',
-      'color'
+      'label'
     )
     this.x = new ReactiveProperty(
       this,
@@ -150,18 +141,11 @@ export default class BarChart {
     this.vm.data = val
   }
 
-  _onSelectionColorChange(val) {
+  _onDetailChange(val) {
     if (typeof val !== 'string') {
       throw new TypeError(`AreaChart: expect x to be string, got ${val}`)
     }
-    this.vm.selectionColor = val
-  }
-
-  _onColorChange(val) {
-    if (typeof val !== 'string') {
-      throw new TypeError(`AreaChart: expect x to be string, got ${val}`)
-    }
-    this.vm.color = val
+    this.vm.detail = val
   }
 
   _onXChange(val) {

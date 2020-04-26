@@ -2,12 +2,14 @@ import Scatterplot from '../visualizations/scatterplot'
 import Areachart from '../visualizations/area-chart'
 import Barchart from '../visualizations/bar-chart'
 import LineUp from '../visualizations/line-up'
+import Linechart from '../visualizations/line-chart'
 import NodeLinkGraph from '../visualizations/node-link-graph'
 import Select from '../visualizations/select'
 import Button from '../visualizations/button'
 import Input from '../visualizations/input'
 import Slider from '../visualizations/slider'
 import VegaLite from '../visualizations/vega-lite'
+import Map from '../visualizations/Map'
 import ReactiveProperty from '../reactive-prop'
 
 export default class VisualizationsSpecParser {
@@ -140,6 +142,8 @@ class Visualization {
         return new Barchart(props)
       case 'lineup':
         return new LineUp(props)
+      case 'linechart':
+        return new Linechart(props)
       case 'graph':
         return new NodeLinkGraph(props)
       case 'select':
@@ -152,6 +156,8 @@ class Visualization {
         return new Slider(props)
       case 'vegalite':
         return new VegaLite(props)
+      case 'map':
+        return new Map(props)
       default:
         throw new SyntaxError(`No such visualization ${type.toLowerCase()}.`)
     }
@@ -168,7 +174,6 @@ class Visualization {
     const value = Object.values(this._instance)
       .filter((value) => value instanceof ReactiveProperty)
       .find((value) => value.action === action && value.option === option)
-    console.log(this._instance, value)
     if (!value) {
       throw new Error(
         `Visualization: no vis.prop in ${this._instance.constructor.name} matches ${action} ${option}`

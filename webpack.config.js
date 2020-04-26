@@ -7,7 +7,7 @@ module.exports = {
   devServer: {
     contentBase: './public',
     port: 8080,
-    open: true
+    open: true,
   },
   module: {
     rules: [
@@ -32,11 +32,11 @@ module.exports = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public')
+    path: path.resolve(__dirname, 'public'),
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname,'src'),
+      '@': path.resolve(__dirname, 'src'),
     },
   },
 }
