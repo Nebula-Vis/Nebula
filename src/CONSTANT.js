@@ -16,6 +16,7 @@ export const OPTIONS = [
   'scale',
   'x',
   'y',
+  'z',
   'color',
   'order',
   'size',
@@ -26,6 +27,7 @@ export const OPTIONS = [
   'bottomEdge',
   'style',
   'type',
+  'aggregate',
 ]
 
 // index = 0，默认参数
@@ -33,7 +35,18 @@ export const ACTION_TO_OPTIONS = {
   select: ['items', 'ranges'],
   filter: ['items'],
   navigate: ['scale'],
-  encode: ['x', 'y', 'color', 'size', 'label', 'bottomEdge', 'style', 'type'],
+  encode: [
+    'x',
+    'y',
+    'z',
+    'aggregate',
+    'color',
+    'size',
+    'label',
+    'bottomEdge',
+    'style',
+    'type',
+  ],
   reconfigure: ['order'],
   set: ['data', 'dataset', 'value'],
   append: ['data', 'dataset'],

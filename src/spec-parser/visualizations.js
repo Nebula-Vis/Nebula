@@ -10,6 +10,7 @@ import Input from '../visualizations/input'
 import Slider from '../visualizations/slider'
 import VegaLite from '../visualizations/vega-lite'
 import Map from '../visualizations/Map'
+import Heatmap2D from '../visualizations/heatmap-2D'
 import ReactiveProperty from '../reactive-prop'
 
 export default class VisualizationsSpecParser {
@@ -158,6 +159,8 @@ class Visualization {
         return new VegaLite(props)
       case 'map':
         return new Map(props)
+      case 'heatmap2d':
+        return new Heatmap2D(props)
       default:
         throw new SyntaxError(`No such visualization ${type.toLowerCase()}.`)
     }

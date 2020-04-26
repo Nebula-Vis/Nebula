@@ -279,6 +279,35 @@
         ]
     },
     {
+      "name": "barchart1",
+      "values": [
+        { "a": 12, "b": "blue", "c": 103, "_key": "1D1" },
+        { "a": 34, "b": "green", "c": 44, "_key": "1D2" },
+        { "a": 42, "b": "red", "c": 133, "_key": "1D3" },
+        { "a": 9, "b": "blue", "c": 66, "_key": "1D4" },
+        { "a": 75, "b": "green", "c": 153, "_key": "1D5" },
+        { "a": 45, "b": "green", "c": 60, "_key": "1D6" },
+        { "a": 25, "b": "green", "c": 100, "_key": "1D7" },
+        { "a": 66, "b": "green", "c": 13, "_key": "1D8" },
+        { "a": 12, "b": "yellow", "c": 193, "_key": "1D9" },
+        { "a": 34, "b": "blue", "c": 155, "_key": "1D10" },
+        { "a": 42, "b": "green", "c": 152, "_key": "1D11" },
+        { "a": 9, "b": "red", "c": 108, "_key": "1D12" },
+        { "a": 75, "b": "blue", "c": 141, "_key": "1D13" },
+        { "a": 45, "b": "green", "c": 111, "_key": "1D14" },
+        { "a": 25, "b": "red", "c": 162, "_key": "1D15" },
+        { "a": 66, "b": "green", "c": 103, "_key": "1D16" },
+        { "a": 12, "b": "yellow", "c": 90, "_key": "1D17" },
+        { "a": 34, "b": "blue", "c": 125, "_key": "1D18" },
+        { "a": 42, "b": "red", "c": 80, "_key": "1D19" },
+        { "a": 9, "b": "yellow", "c": 99, "_key": "1D20" },
+        { "a": 75, "b": "blue", "c": 50, "_key": "1D21" },
+        { "a": 45, "b": "red", "c": 140, "_key": "1D22" },
+        { "a": 25, "b": "yellow", "c": 66, "_key": "1D23" },
+        { "a": 66, "b": "blue", "c": 120, "_key": "1D24" }
+      ]
+    },
+    {
       "name": "miserables",
       "path": "./data/miserables.json"
     },
@@ -490,7 +519,40 @@
       "container": "6 6 3 3",
       "visualization": "scatterplot",
       "props": {
-        "data": "mapdata"
+        "data": "barchart1"
+      }
+    },
+    {
+      "id": "chart15",
+      "container": "7 7 3 3",
+      "visualization": "heatmap2d",
+      "props": {
+        "data": "barchart1",
+        "encoding": {
+          "x": "c",
+          "y": "a",
+          "z": "c",
+          "countX": 8,
+          "countY": 5,
+          "bottomEdge": "bottom",
+          "bgColor": "white",
+          "color": "blue",
+          "axisSwitch": true,
+          "rectMargin": 3,
+          "xAxisSpace": 20,
+          "yAxisSpace": 60,
+          "margin": 10
+        },
+        "aggregate": "average"
+      }
+    },
+    {
+      "id": "chart16",
+      "container": "5 5 2 2",
+      "visualization": "select",
+      "props": {
+        "options": ["count", "sum", "average"],
+        "selected": "sum"
       }
     }
   ],
@@ -505,7 +567,9 @@
     "change value in chart10, then encode y in chart0",
     "select in chart3, then select in chart0",
     "select in chart11, then select in chart12",
-    "select in chart13, then select in chart14"
+    "select in chart13, then select in chart14",
+    "select in chart15, then select in chart14",
+    "change value in chart16, then encode aggregate in chart15"
   ],
   "transformations": [
     {

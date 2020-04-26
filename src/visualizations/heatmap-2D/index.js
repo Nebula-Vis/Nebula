@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 import ReactiveProperty from '../../reactive-prop'
-import VueLineChart from './vue-line-chart'
+import VueHeatmap2D from './vue-heatmap-2D'
 import {
   getFieldsOfType,
   isArrayOfType,
@@ -8,33 +8,32 @@ import {
   boolDataHasAttributes,
 } from '../../utils'
 
-export default class LineChart {
+export default class Heatmap2D {
   constructor(props) {
     this.id = props.id || new Date() - 0
     this.data = props.data
+    this.encoding = props.encoding
     const numericFields = getFieldsOfType(this.data, 'number')
-    const x = props.x || numericFields[0]
-    const y = props.y || numericFields[1]
-    const detail = props.detail || numericFields[2]
-    const scale = props.scale
+    const x = this.encoding.x || numericFields[0]
+    const y = this.encoding.y || numericFields[1]
+    const z = this.encoding.z || numericFields[2]
     const selection = props.selection || []
-    if (!boolDataHasAttributes(this.data, x, y, detail)) {
-      throw new Error(
-        `LineChart: wrong attributes x:${x}, y:${y}, detail:${detail}`
-      )
+    if (!boolDataHasAttributes(this.data, x, y, z)) {
+      throw new Error(`BarChart: wrong attributes x:${x}, y:${y}, z:${z}`)
     }
-    // if (!this._isValidScale(scale, x)) {
-    //   throw new Error('LineChart: wrong scale format')
-    // }
 
+    this.selection = selection
     this.x = x
     this.y = y
-    this.detail = detail
-    this.scale = scale
-    this.selection = selection
+    this.z = z
+    this.aggregate = props.aggregate || 'count'
+    this.countX = this.encoding.countX
+    this.countY = this.encoding.countY
+    this.color = this.encoding.color
+    this.bgColor = this.encoding.bgColor
+    this.axisSwitch = this.encoding.axisSwitch
     this.el = null
     this.vm = null
-    this.mmz = props.data
     this._init()
   }
 
@@ -49,23 +48,19 @@ export default class LineChart {
   _init() {
     this._initReactiveProperty()
     const that = this
-    this.vm = new VueLineChart({
+    this.vm = new VueHeatmap2D({
       data: {
         id: this.id,
         data: this.data.get(),
-        defaultEncodings: {
-          detail: this.detail.get(),
-          x: this.x.get(),
-          y: this.y.get(),
-          scale: this.scale.get(),
-        },
+        encoding: this.encoding,
+        aggregate: this.aggregate.get(),
         selection: this.selection.get(),
       },
       watch: {
         data(val) {
           // TODO this.checkXY()
           this.scale = that._getScale(val, this.x)
-          this.selection = val
+          // this.selection = val
         },
       },
     })
@@ -81,9 +76,6 @@ export default class LineChart {
     this.vm.$on('selection', (val) => {
       this.selection.set(val)
     })
-    setInterval(() => {
-      this.data.set(this.mmz.slice(0, this.mmz.length * Math.random()))
-    }, 500)
   }
 
   _initReactiveProperty() {
@@ -96,13 +88,21 @@ export default class LineChart {
       'set',
       'data'
     )
-    this.detail = new ReactiveProperty(
+    this.color = new ReactiveProperty(
       this,
-      'detail',
-      this.detail,
-      '_onDetailChange',
+      'color',
+      this.color,
+      '_onColorChange',
       'encode',
-      'label'
+      'color'
+    )
+    this.bgColor = new ReactiveProperty(
+      this,
+      'bgColor',
+      this.bgColor,
+      '_onBgColorChange',
+      'encode',
+      'color'
     )
     this.x = new ReactiveProperty(
       this,
@@ -120,12 +120,45 @@ export default class LineChart {
       'encode',
       'y'
     )
-    this.scale = new ReactiveProperty(
+    this.z = new ReactiveProperty(
       this,
-      'scale',
-      this.scale,
-      '_onScaleChange',
-      'navigate'
+      'z',
+      this.z,
+      '_onZChange',
+      'encode',
+      'z'
+    )
+    this.aggregate = new ReactiveProperty(
+      this,
+      'aggregate',
+      this.aggregate,
+      '_onAggregateChange',
+      'encode',
+      'aggregate'
+    )
+    this.countX = new ReactiveProperty(
+      this,
+      'countX',
+      this.countX,
+      '_onCountXChange',
+      'encode',
+      'x'
+    )
+    this.countY = new ReactiveProperty(
+      this,
+      'countY',
+      this.countY,
+      '_onCountYChange',
+      'encode',
+      'y'
+    )
+    this.axisSwitch = new ReactiveProperty(
+      this,
+      'axisSwitch',
+      this.axisSwitch,
+      '_onAxisSwitchChange',
+      'encode',
+      'type'
     )
     this.selection = new ReactiveProperty(
       this,
@@ -144,11 +177,18 @@ export default class LineChart {
     this.vm.data = val
   }
 
-  _onDetailChange(val) {
+  _onBgColorChange(val) {
     if (typeof val !== 'string') {
       throw new TypeError(`AreaChart: expect x to be string, got ${val}`)
     }
-    this.vm.detail = val
+    this.vm.bgColor = val
+  }
+
+  _onColorChange(val) {
+    if (typeof val !== 'string') {
+      throw new TypeError(`AreaChart: expect x to be string, got ${val}`)
+    }
+    this.vm.color = val
   }
 
   _onXChange(val) {
@@ -165,11 +205,30 @@ export default class LineChart {
     this.vm.y = val
   }
 
-  _onScaleChange(val) {
-    if (this._isValidScale(val, this.x.get())) {
-      throw new TypeError(`AreaChart: wrong scale format`)
+  _onZChange(val) {
+    if (typeof val !== 'string') {
+      throw new TypeError(`AreaChart: expect y to be string, got ${val}`)
     }
-    this.vm.scale = val
+    this.vm.z = val
+  }
+
+  _onAggregateChange(val) {
+    if (typeof val !== 'string') {
+      throw new TypeError(`AreaChart: expect y to be string, got ${val}`)
+    }
+    this.vm.aggregate = val
+  }
+
+  _onCountXChange(val) {
+    this.vm.countX = val
+  }
+
+  _onCountYChange(val) {
+    this.vm.countY = val
+  }
+
+  _onAxisSwitchChange(val) {
+    this.vm.axisSwitch = val
   }
 
   _onSelectionChange(val) {
