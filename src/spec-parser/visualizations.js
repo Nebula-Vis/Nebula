@@ -7,6 +7,8 @@ import Button from '@/visualizations/button'
 import Input from '@/visualizations/input'
 import Slider from '@/visualizations/slider'
 import VegaLite from '@/visualizations/vega-lite'
+import Tree from '@/visualizations/tree'
+import TreeMap from '@/visualizations/tree-map'
 import ReactiveProperty from '@/reactive-prop'
 
 export default class VisualizationsSpecParser {
@@ -141,6 +143,10 @@ class Visualization {
         return new NodeLinkGraph(props)
       case 'select':
         return new Select(props)
+      case 'tree':
+        return new Tree(props)
+      case 'treemap':
+        return new TreeMap(props)
       case 'button':
         return new Button(props)
       case 'input':
