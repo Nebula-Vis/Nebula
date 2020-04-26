@@ -8,6 +8,9 @@ import Button from '../visualizations/button'
 import Input from '../visualizations/input'
 import Slider from '../visualizations/slider'
 import VegaLite from '../visualizations/vega-lite'
+import PieChart from '@/visualizations/pie-chart'
+import DonutChart from '@/visualizations/donut-chart'
+import SectorChart from '@/visualizations/sector-chart'
 import ReactiveProperty from '../reactive-prop'
 
 export default class VisualizationsSpecParser {
@@ -152,6 +155,12 @@ class Visualization {
         return new Slider(props)
       case 'vegalite':
         return new VegaLite(props)
+      case 'piechart':
+        return new PieChart(props)
+      case 'donutchart':
+        return new DonutChart(props)
+      case 'sectorchart':
+        return new SectorChart(props)
       default:
         throw new SyntaxError(`No such visualization ${type.toLowerCase()}.`)
     }
@@ -168,7 +177,7 @@ class Visualization {
     const value = Object.values(this._instance)
       .filter((value) => value instanceof ReactiveProperty)
       .find((value) => value.action === action && value.option === option)
-    console.log(this._instance, value)
+    // console.log(this._instance, value)
     if (!value) {
       throw new Error(
         `Visualization: no vis.prop in ${this._instance.constructor.name} matches ${action} ${option}`
