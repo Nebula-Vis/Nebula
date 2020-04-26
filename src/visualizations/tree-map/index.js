@@ -7,13 +7,11 @@ export default class TreeMap {
     this.nodeId = props.nodeId || Object.keys(props.data.nodes[0])[0] || 'id'
     this.tile = (props.encoding && props.encoding.tile) || 'treemapBinary'
     this.el = null
-
     this._init()
   }
 
   _renderSVG() {
     const { clientWidth: width, clientHeight: height } = this.el
-    console.log(width)
     const format = d3.format(',d')
     const color = d3.scaleOrdinal(d3.schemeCategory10)
     const hierarchy = d3
@@ -23,7 +21,7 @@ export default class TreeMap {
 
     const root = d3
       .treemap()
-      .tile(d3.treemapBinary)
+      .tile(d3[this.tile])
       .size([width, height])
       .padding(1)
       .round(true)(hierarchy)
@@ -102,7 +100,6 @@ export default class TreeMap {
     this.el = d3
       .select(el)
       .append('div')
-
       .style('position', 'relative')
       .style('box-sizing', 'border-box')
       .style('width', '100%')

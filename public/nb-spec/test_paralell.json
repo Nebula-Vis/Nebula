@@ -1,0 +1,183 @@
+{
+  "data": [
+    {
+      "name": "numericDataset",
+      "values": [
+        { "Unemployment": 0.4798915482899704, "id": 0 },
+        { "Unemployment": 0.49677950372069635, "id": 1 },
+        { "Unemployment": 0.9992529126936218, "id": 2 },
+        { "Unemployment": 0.7416073368990708, "id": 3 },
+        { "Unemployment": 0.5586864711090214, "id": 4 },
+        { "Unemployment": 0.17284168250747145, "id": 5 },
+        { "Unemployment": 0.7675412182080448, "id": 6 },
+        { "Unemployment": 0.5147680544858715, "id": 7 },
+        { "Unemployment": 0.21005266275530943, "id": 8 },
+        { "Unemployment": 0.33473681085298046, "id": 9 },
+        { "Unemployment": 0.3089783412547811, "id": 10 },
+        { "Unemployment": 0.1766804715491097, "id": 11 },
+        { "Unemployment": 0.5325993199285717, "id": 12 },
+        { "Unemployment": 0.8692288975709761, "id": 13 },
+        { "Unemployment": 0.2462686793132367, "id": 14 },
+        { "Unemployment": 0.8489109542514697, "id": 15 },
+        { "Unemployment": 0.6113716936013509, "id": 16 },
+        { "Unemployment": 0.30788958585088966, "id": 17 },
+        { "Unemployment": 0.13023912302048912, "id": 18 },
+        { "Unemployment": 0.740966417901842, "id": 19 }
+      ]
+    },
+    {
+      "name": "tree1",
+      "hierarchy": {
+        "name": "flare",
+        "children": [
+          {
+            "name": "analytics",
+            "children": [
+              {
+                "name": "cluster",
+                "children": [
+                  { "name": "AgglomerativeCluster", "value": 3938 },
+                  { "name": "CommunityStructure", "value": 3812 },
+                  { "name": "HierarchicalCluster", "value": 6714 },
+                  { "name": "MergeEdge", "value": 743 }
+                ]
+              },
+              {
+                "name": "graph",
+                "children": [
+                  { "name": "BetweennessCentrality", "value": 3534 },
+                  { "name": "LinkDistance", "value": 5731 },
+                  { "name": "MaxFlowMinCut", "value": 7840 },
+                  { "name": "ShortestPaths", "value": 5914 },
+                  { "name": "SpanningTree", "value": 3416 }
+                ]
+              },
+              {
+                "name": "optimization",
+                "children": [{ "name": "AspectRatioBanker", "value": 7074 }]
+              }
+            ]
+          },
+          {
+            "name": "animate",
+            "children": [
+              { "name": "Easing", "value": 17010 },
+              { "name": "FunctionSequence", "value": 5842 },
+              {
+                "name": "interpolate",
+                "children": [
+                  { "name": "ArrayInterpolator", "value": 1983 },
+                  { "name": "ColorInterpolator", "value": 2047 },
+                  { "name": "DateInterpolator", "value": 1375 },
+                  { "name": "Interpolator", "value": 8746 },
+                  { "name": "MatrixInterpolator", "value": 2202 },
+                  { "name": "NumberInterpolator", "value": 1382 },
+                  { "name": "ObjectInterpolator", "value": 1629 },
+                  { "name": "PointInterpolator", "value": 1675 },
+                  { "name": "RectangleInterpolator", "value": 2042 }
+                ]
+              },
+              { "name": "ISchedulable", "value": 1041 },
+              { "name": "Parallel", "value": 5176 },
+              { "name": "Pause", "value": 449 },
+              { "name": "Scheduler", "value": 5593 },
+              { "name": "Sequence", "value": 5534 },
+              { "name": "Transition", "value": 9201 },
+              { "name": "Transitioner", "value": 19975 },
+              { "name": "TransitionEvent", "value": 1116 },
+              { "name": "Tween", "value": 6006 }
+            ]
+          },
+          {
+            "name": "_data",
+            "children": [
+              {
+                "name": "converters",
+                "children": [
+                  { "name": "Converters", "value": 721 },
+                  { "name": "DelimitedTextConverter", "value": 4294 },
+                  { "name": "GraphMLConverter", "value": 9800 },
+                  { "name": "IDataConverter", "value": 1314 },
+                  { "name": "JSONConverter", "value": 2220 }
+                ]
+              },
+              { "name": "DataField", "value": 1759 },
+              { "name": "DataSchema", "value": 2165 },
+              { "name": "DataSet", "value": 586 },
+              { "name": "DataSource", "value": 3331 },
+              { "name": "DataTable", "value": 772 },
+              { "name": "DataUtil", "value": 3322 }
+            ]
+          },
+          {
+            "name": "display",
+            "children": [
+              { "name": "DirtySprite", "value": 8833 },
+              { "name": "LineSprite", "value": 1732 },
+              { "name": "RectSprite", "value": 3623 },
+              { "name": "TextSprite", "value": 10066 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "cars",
+      "path": "./data/cars.csv",
+      "format": "csv"
+    }
+  ],
+  "layout": {
+    "width": "1600px",
+    "height": "1200px",
+    "rows": ["1fr", "1fr", "1fr", "1fr"],
+    "columns": ["1fr", "1fr", "1fr", "1fr"]
+  },
+  "visualizations": [
+    {
+      "id": "chart1",
+      "container": "1 2 1 1",
+      "visualization": "tree",
+      "props": {
+        "data": "tree1",
+        "nodeId": "name"
+      }
+    },
+    {
+      "id": "chart2",
+      "container": "3 4 1 1",
+      "visualization": "treemap",
+      "props": {
+        "data": "tree1",
+        "nodeId": "name",
+        "tile": "treemapDice"
+      }
+    },
+    {
+      "id": "chart3",
+      "container": "3 4 2 4",
+      "visualization": "parallel",
+      "props": {
+        "data": "cars",
+        "selection": [],
+        "encoding": {
+          "color": "steelblue"
+        }
+      }
+    },
+    {
+      "id": "chart4",
+      "container": "1 2 2 4",
+      "visualization": "radar",
+      "props": {
+        "data": "cars",
+        "selection": [],
+        "encoding": {
+          "color": "steelblue"
+        }
+      }
+    }
+  ],
+  "coordinations": [],
+  "transformations": []
+}

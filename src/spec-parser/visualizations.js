@@ -9,6 +9,8 @@ import Slider from '@/visualizations/slider'
 import VegaLite from '@/visualizations/vega-lite'
 import Tree from '@/visualizations/tree'
 import TreeMap from '@/visualizations/tree-map'
+import ParallelCoordinates from '@/visualizations/parallel-coordinates'
+import Radar from '@/visualizations/radar'
 import ReactiveProperty from '@/reactive-prop'
 
 export default class VisualizationsSpecParser {
@@ -147,6 +149,10 @@ class Visualization {
         return new Tree(props)
       case 'treemap':
         return new TreeMap(props)
+      case 'parallel':
+        return new ParallelCoordinates(props)
+      case 'radar':
+        return new Radar(props)
       case 'button':
         return new Button(props)
       case 'input':
