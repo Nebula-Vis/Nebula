@@ -46,6 +46,7 @@ export default Vue.extend({
       id: '',
       data: [],
       selection: [],
+      selectedArrange: [0, 0],
       defaultEncodings: {},
       selectedData: [],
       width: 50,
@@ -161,8 +162,14 @@ export default Vue.extend({
 
       // 将选择框选中的数据输出
       const self = this
-      const brush = d3
-        .brush()
+      const brushType = this.defaultEncodings.brushType
+      let brush = d3.brush()
+      if (brushType === 'x') {
+        brush = d3.brushX()
+      } else if (brushType === 'y') {
+        brush = d3.brushY()
+      }
+      brush
         .extent([
           [0, 0],
           [
@@ -173,7 +180,21 @@ export default Vue.extend({
         .on('end', function () {
           const brushArr = d3.brushSelection(this)
           if (!brushArr) return undefined
-          const [[x0, y0], [x1, y1]] = brushArr
+          const maxXArr = [0, self.elementLayout.chartSvg.width]
+          const maxYArr = [0, self.elementLayout.chartSvg.height]
+          const [[x0, y0], [x1, y1]] =
+            brushType === 'xy'
+              ? brushArr
+              : brushType === 'x'
+              ? [
+                  [brushArr[0], maxXArr[0]],
+                  [brushArr[1], maxXArr[1]],
+                ]
+              : [
+                  [maxYArr[0], brushArr[0]],
+                  [maxYArr[1], brushArr[1]],
+                ]
+          console.log([x0, y0], [x1, y1])
           const minX = xScale.invert(x0)
           const maxY = yScale.invert(y0)
           const maxX = xScale.invert(x1)
@@ -199,6 +220,8 @@ export default Vue.extend({
           })
           if (!boolArraySame(self.selectedData, selection)) {
             self.$emit('selection', selection)
+            self.$emit('selectedArrange', [minX, maxX])
+            console.log(selection, [minX, maxX])
             self.selectedData = selection
           }
 
@@ -309,9 +332,18 @@ export default Vue.extend({
           .attr('cy', (d) =>
             this.dataFormatter.yScale(d[this.defaultEncodings.y])
           )
-          .attr('r', (d) =>
-            this.selection.find((item) => item._nbid_ === d._nbid_) ? 4 : 2
-          )
+          .attr('r', (d) => {
+            if (this.selection && this.selection.length > 0) {
+              return this.selection.find((item) => item._nbid_ === d._nbid_)
+                ? 4
+                : 2
+            } else {
+              return d[this.defaultEncodings.x] >= this.selectedArrange[0] &&
+                d[this.defaultEncodings.x] <= this.selectedArrange[1]
+                ? 4
+                : 2
+            }
+          })
           .attr('fill', `${item.color}`)
           .on('click', function (d) {
             const r = d3.select(this).attr('r')

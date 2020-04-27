@@ -469,6 +469,7 @@
         "detail": "c",
         "x": "valueA",
         "y": "valueB",
+        "brushType": "xy",
         "scale": [
           [0, 50],
           [0, 100]

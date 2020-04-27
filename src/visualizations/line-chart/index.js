@@ -23,15 +23,14 @@ export default class LineChart {
         `LineChart: wrong attributes x:${x}, y:${y}, detail:${detail}`
       )
     }
-    // if (!this._isValidScale(scale, x)) {
-    //   throw new Error('LineChart: wrong scale format')
-    // }
 
     this.x = x
     this.y = y
     this.detail = detail
+    this.brushType = props.brushType || 'xy'
     this.scale = scale
     this.selection = selection
+    this.selectedArrange = props.selectedArrange || [0, 0]
     this.el = null
     this.vm = null
     this.mmz = props.data
@@ -58,6 +57,7 @@ export default class LineChart {
           x: this.x.get(),
           y: this.y.get(),
           scale: this.scale.get(),
+          brushType: this.brushType.get(),
         },
         selection: this.selection.get(),
       },
@@ -81,9 +81,12 @@ export default class LineChart {
     this.vm.$on('selection', (val) => {
       this.selection.set(val)
     })
-    setInterval(() => {
-      this.data.set(this.mmz.slice(0, this.mmz.length * Math.random()))
-    }, 500)
+    this.vm.$on('selectedArrange', (val) => {
+      this.selectedArrange.set(val)
+    })
+    // setInterval(() => {
+    //   this.data.set(this.mmz.slice(0, this.mmz.length * Math.random()))
+    // }, 500)
   }
 
   _initReactiveProperty() {
@@ -120,6 +123,14 @@ export default class LineChart {
       'encode',
       'y'
     )
+    this.brushType = new ReactiveProperty(
+      this,
+      'brushType',
+      this.brushType,
+      '_onBrushTypeChange',
+      'encode',
+      'type'
+    )
     this.scale = new ReactiveProperty(
       this,
       'scale',
@@ -135,49 +146,72 @@ export default class LineChart {
       'select',
       'items'
     )
+    this.selectedArrange = new ReactiveProperty(
+      this,
+      'selectedArrange',
+      this.selectedArrange,
+      '_onSelectedArrangeChange',
+      'select',
+      'ranges'
+    )
   }
 
   _onDataChange(val) {
     if (!Array.isArray(val)) {
-      throw new TypeError(`AreaChart: expect data to be Array, got ${val}`)
+      throw new TypeError(`LineChart: expect data to be Array, got ${val}`)
     }
     this.vm.data = val
   }
 
   _onDetailChange(val) {
     if (typeof val !== 'string') {
-      throw new TypeError(`AreaChart: expect x to be string, got ${val}`)
+      throw new TypeError(`LineChart: expect x to be string, got ${val}`)
     }
     this.vm.detail = val
   }
 
   _onXChange(val) {
     if (typeof val !== 'string') {
-      throw new TypeError(`AreaChart: expect x to be string, got ${val}`)
+      throw new TypeError(`LineChart: expect x to be string, got ${val}`)
     }
     this.vm.x = val
   }
 
   _onYChange(val) {
     if (typeof val !== 'string') {
-      throw new TypeError(`AreaChart: expect y to be string, got ${val}`)
+      throw new TypeError(`LineChart: expect y to be string, got ${val}`)
     }
     this.vm.y = val
   }
 
+  _onBrushTypeChange(val) {
+    if (typeof val !== 'string') {
+      throw new TypeError(`LineChart: expect y to be string, got ${val}`)
+    }
+    this.vm.brushType = val
+  }
+
   _onScaleChange(val) {
     if (this._isValidScale(val, this.x.get())) {
-      throw new TypeError(`AreaChart: wrong scale format`)
+      throw new TypeError(`LineChart: wrong scale format`)
     }
     this.vm.scale = val
   }
 
   _onSelectionChange(val) {
     if (!Array.isArray(val)) {
-      throw new TypeError(`AreaChart: expect selection to be Array, got ${val}`)
+      throw new TypeError(`LineChart: expect selection to be Array, got ${val}`)
     }
 
     this.vm.selection = val
+  }
+
+  _onSelectedArrangeChange(val) {
+    if (!Array.isArray(val)) {
+      throw new TypeError(`LineChart: expect selection to be Array, got ${val}`)
+    }
+
+    this.vm.selectedArrange = val
   }
 
   _isValidScale(scale, x) {
