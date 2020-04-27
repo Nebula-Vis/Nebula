@@ -2,6 +2,7 @@ import Scatterplot from '../visualizations/scatterplot'
 import Areachart from '../visualizations/area-chart'
 import Barchart from '../visualizations/bar-chart'
 import LineUp from '../visualizations/line-up'
+import Linechart from '../visualizations/line-chart'
 import NodeLinkGraph from '../visualizations/node-link-graph'
 import Select from '../visualizations/select'
 import Button from '../visualizations/button'
@@ -12,6 +13,8 @@ import PieChart from '@/visualizations/pie-chart'
 import DonutChart from '@/visualizations/donut-chart'
 import SectorChart from '@/visualizations/sector-chart'
 import SunburstChart from '@/visualizations/sunburst-chart'
+import Map from '../visualizations/Map'
+import Heatmap2D from '../visualizations/heatmap-2D'
 import ReactiveProperty from '../reactive-prop'
 
 export default class VisualizationsSpecParser {
@@ -144,6 +147,8 @@ class Visualization {
         return new Barchart(props)
       case 'lineup':
         return new LineUp(props)
+      case 'linechart':
+        return new Linechart(props)
       case 'graph':
         return new NodeLinkGraph(props)
       case 'select':
@@ -164,6 +169,10 @@ class Visualization {
         return new SectorChart(props)
       case 'sunburstchart':
         return new SunburstChart(props)
+      case 'map':
+        return new Map(props)
+      case 'heatmap2d':
+        return new Heatmap2D(props)
       default:
         throw new SyntaxError(`No such visualization ${type.toLowerCase()}.`)
     }
@@ -180,7 +189,6 @@ class Visualization {
     const value = Object.values(this._instance)
       .filter((value) => value instanceof ReactiveProperty)
       .find((value) => value.action === action && value.option === option)
-    // console.log(this._instance, value)
     if (!value) {
       throw new Error(
         `Visualization: no vis.prop in ${this._instance.constructor.name} matches ${action} ${option}`

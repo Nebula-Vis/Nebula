@@ -4144,6 +4144,26 @@ lcid@^2.0.0:
   dependencies:
     invert-kv "^2.0.0"
 
+leaflet-draw@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npm.taobao.org/leaflet-draw/download/leaflet-draw-1.0.4.tgz#45be92f378ed253e7202fdeda1fcc71885198d46"
+  integrity sha1-Rb6S83jtJT5yAv3tofzHGIUZjUY=
+
+leaflet.chinatmsproviders@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.npm.taobao.org/leaflet.chinatmsproviders/download/leaflet.chinatmsproviders-3.0.2.tgz#df731a836a3a783d0ab8952b6c48828d1da828f6"
+  integrity sha1-33Mag2o6eD0KuJUrbEiCjR2oKPY=
+
+leaflet.heat@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npm.taobao.org/leaflet.heat/download/leaflet.heat-0.2.0.tgz#109d8cf586f0adee41f05aff031e27a77fecc229"
+  integrity sha1-EJ2M9Ybwre5B8Fr/Ax4np3/swik=
+
+leaflet@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.npm.taobao.org/leaflet/download/leaflet-1.6.0.tgz#aecbb044b949ec29469eeb31c77a88e2f448f308"
+  integrity sha1-rsuwRLlJ7ClGnusxx3qI4vRI8wg=
+
 leven@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/leven/-/leven-3.1.0.tgz#77891de834064cccba82ae7842bb6b14a13ed7f2"
@@ -6271,6 +6291,18 @@ tty-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/tty-browserify/-/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
   integrity sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=
+
+turf-inside@^3.0.12:
+  version "3.0.12"
+  resolved "https://registry.npm.taobao.org/turf-inside/download/turf-inside-3.0.12.tgz#9ba40fa6eed63bec7e7d88aa6427622c4df07066"
+  integrity sha1-m6QPpu7WO+x+fYiqZCdiLE3wcGY=
+  dependencies:
+    turf-invariant "^3.0.12"
+
+turf-invariant@^3.0.12:
+  version "3.0.12"
+  resolved "https://registry.npm.taobao.org/turf-invariant/download/turf-invariant-3.0.12.tgz#3b95253953991ebd962dd35d4f6704c287de8ebe"
+  integrity sha1-O5UlOVOZHr2WLdNdT2cEwofejr4=
 
 type-check@~0.3.2:
   version "0.3.2"

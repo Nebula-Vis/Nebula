@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 import ReactiveProperty from '../../reactive-prop'
-import VueBarChart from './vue-bar-chart'
+import VueHeatmap2D from './vue-heatmap-2D'
 import {
   getFieldsOfType,
   isArrayOfType,
@@ -8,35 +8,32 @@ import {
   boolDataHasAttributes,
 } from '../../utils'
 
-export default class BarChart {
+export default class Heatmap2D {
   constructor(props) {
     this.id = props.id || new Date() - 0
     this.data = props.data
-    this.color = props.color || '#4e79a7'
-    this.selectionColor = props.selectionColor || '#3fca2f'
+    this.encoding = props.encoding
     const numericFields = getFieldsOfType(this.data, 'number')
-    const x = props.x || numericFields[0]
-    const y = props.y || numericFields.filter((field) => field !== x)
-    const scale = this._isValidScale(props.scale, x)
-      ? props.scale
-      : this._getScale(this.data, x)
-    const selection = props.selection || this.data
-    if (!boolDataHasAttributes(this.data, x, ...y)) {
-      throw new Error(`BarChart: wrong attributes x:${x}, y:${y.join(',')}`)
-    }
-    if (!this._isValidScale(scale, x)) {
-      throw new Error('BarChart: wrong scale format')
+    const x = this.encoding.x || numericFields[0]
+    const y = this.encoding.y || numericFields[1]
+    const z = this.encoding.z || numericFields[2]
+    const selection = props.selection || []
+    if (!boolDataHasAttributes(this.data, x, y, z)) {
+      throw new Error(`BarChart: wrong attributes x:${x}, y:${y}, z:${z}`)
     }
 
+    this.selection = selection
     this.x = x
     this.y = y
-    this.scale = scale
-    this.selection = selection
-
-    // this.id = new Date().toLocaleString()
+    this.z = z
+    this.aggregate = props.aggregate || 'count'
+    this.countX = this.encoding.countX
+    this.countY = this.encoding.countY
+    this.color = this.encoding.color
+    this.bgColor = this.encoding.bgColor
+    this.axisSwitch = this.encoding.axisSwitch
     this.el = null
     this.vm = null
-
     this._init()
   }
 
@@ -51,15 +48,12 @@ export default class BarChart {
   _init() {
     this._initReactiveProperty()
     const that = this
-    this.vm = new VueBarChart({
+    this.vm = new VueHeatmap2D({
       data: {
         id: this.id,
         data: this.data.get(),
-        color: this.color.get(),
-        selectionColor: this.selectionColor.get(),
-        x: this.x.get(),
-        y: this.y.get(),
-        scale: this.scale.get(),
+        encoding: this.encoding,
+        aggregate: this.aggregate.get(),
         selection: this.selection.get(),
       },
       watch: {
@@ -102,11 +96,11 @@ export default class BarChart {
       'encode',
       'color'
     )
-    this.selectionColor = new ReactiveProperty(
+    this.bgColor = new ReactiveProperty(
       this,
-      'selectionColor',
-      this.selectionColor,
-      '_onSelectionColorChange',
+      'bgColor',
+      this.bgColor,
+      '_onBgColorChange',
       'encode',
       'color'
     )
@@ -126,12 +120,45 @@ export default class BarChart {
       'encode',
       'y'
     )
-    this.scale = new ReactiveProperty(
+    this.z = new ReactiveProperty(
       this,
-      'scale',
-      this.scale,
-      '_onScaleChange',
-      'navigate'
+      'z',
+      this.z,
+      '_onZChange',
+      'encode',
+      'z'
+    )
+    this.aggregate = new ReactiveProperty(
+      this,
+      'aggregate',
+      this.aggregate,
+      '_onAggregateChange',
+      'encode',
+      'aggregate'
+    )
+    this.countX = new ReactiveProperty(
+      this,
+      'countX',
+      this.countX,
+      '_onCountXChange',
+      'encode',
+      'x'
+    )
+    this.countY = new ReactiveProperty(
+      this,
+      'countY',
+      this.countY,
+      '_onCountYChange',
+      'encode',
+      'y'
+    )
+    this.axisSwitch = new ReactiveProperty(
+      this,
+      'axisSwitch',
+      this.axisSwitch,
+      '_onAxisSwitchChange',
+      'encode',
+      'type'
     )
     this.selection = new ReactiveProperty(
       this,
@@ -150,11 +177,11 @@ export default class BarChart {
     this.vm.data = val
   }
 
-  _onSelectionColorChange(val) {
+  _onBgColorChange(val) {
     if (typeof val !== 'string') {
       throw new TypeError(`AreaChart: expect x to be string, got ${val}`)
     }
-    this.vm.selectionColor = val
+    this.vm.bgColor = val
   }
 
   _onColorChange(val) {
@@ -178,11 +205,30 @@ export default class BarChart {
     this.vm.y = val
   }
 
-  _onScaleChange(val) {
-    if (this._isValidScale(val, this.x.get())) {
-      throw new TypeError(`AreaChart: wrong scale format`)
+  _onZChange(val) {
+    if (typeof val !== 'string') {
+      throw new TypeError(`AreaChart: expect y to be string, got ${val}`)
     }
-    this.vm.scale = val
+    this.vm.z = val
+  }
+
+  _onAggregateChange(val) {
+    if (typeof val !== 'string') {
+      throw new TypeError(`AreaChart: expect y to be string, got ${val}`)
+    }
+    this.vm.aggregate = val
+  }
+
+  _onCountXChange(val) {
+    this.vm.countX = val
+  }
+
+  _onCountYChange(val) {
+    this.vm.countY = val
+  }
+
+  _onAxisSwitchChange(val) {
+    this.vm.axisSwitch = val
   }
 
   _onSelectionChange(val) {

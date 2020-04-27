@@ -16,6 +16,7 @@ export const OPTIONS = [
   'scale',
   'x',
   'y',
+  'z',
   'color',
   'order',
   'size',
@@ -23,10 +24,16 @@ export const OPTIONS = [
   'dataset',
   'name',
   'value',
+
   'sort',
   'innerRadius',
   'aggregate',
   'count',
+  'label',
+  'bottomEdge',
+  'style',
+  'type',
+  'aggregate',
 ]
 
 // index = 0，默认参数
@@ -37,6 +44,7 @@ export const ACTION_TO_OPTIONS = {
   encode: [
     'x',
     'y',
+
     'color',
     'size',
     'name',
@@ -45,6 +53,14 @@ export const ACTION_TO_OPTIONS = {
     'innerRadius',
     'aggregate',
     'count',
+    'z',
+    'aggregate',
+    'color',
+    'size',
+    'label',
+    'bottomEdge',
+    'style',
+    'type',
   ],
   reconfigure: ['order'],
   set: ['data', 'dataset', 'value'],
