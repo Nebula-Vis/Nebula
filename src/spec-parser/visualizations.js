@@ -1,4 +1,4 @@
-import Scatterplot from '@/visualizations/scatterplot'
+import Scatterplot from '@/visualizations/scatter-plot'
 import Areachart from '@/visualizations/area-chart'
 import LineUp from '@/visualizations/line-up'
 import NodeLinkGraph from '@/visualizations/node-link-graph'
@@ -10,7 +10,7 @@ import VegaLite from '@/visualizations/vega-lite'
 import Tree from '@/visualizations/tree'
 import TreeMap from '@/visualizations/tree-map'
 import ParallelCoordinates from '@/visualizations/parallel-coordinates'
-import Radar from '@/visualizations/radar'
+import RadialCoordinates from '@/visualizations/radial-coordinates'
 import ReactiveProperty from '@/reactive-prop'
 
 export default class VisualizationsSpecParser {
@@ -151,8 +151,8 @@ class Visualization {
         return new TreeMap(props)
       case 'parallel':
         return new ParallelCoordinates(props)
-      case 'radar':
-        return new Radar(props)
+      case 'radial':
+        return new RadialCoordinates(props)
       case 'button':
         return new Button(props)
       case 'input':

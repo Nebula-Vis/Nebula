@@ -14,20 +14,14 @@ export default class Radar {
     const that = this
     const stokenColor = this.color || 'steelblue'
     const { clientWidth: width, clientHeight: height } = this.el
-    const innerRadius = Math.min(width, height) / 8
-    const outerRadius = Math.min(width, height) / 2 - 10
+    const radius = Math.min(width, height) / 2 - 10
     const svg = d3
       .create('svg')
       .attr('width', width)
       .attr('height', height)
       .attr('viewBox', `${-width / 2} ${-height / 2} ${width} ${height}`)
 
-    const radial = svg
-      .append('g')
-      .attr(
-        'transform',
-        `scale(${Math.floor((outerRadius / width) * 100) / 50})`
-      )
+    const radial = svg.append('g').attr('transform', 'scale(0.48)')
     const x = d3
       .scalePoint()
       .range([0, 2 * Math.PI])
@@ -41,8 +35,13 @@ export default class Radar {
         (d) => (
           (y[d] = d3
             .scaleLinear()
-            .domain(d3.extent(table, (p) => +p[d]))
-            .range([height, 0])),
+            .domain(
+              (([min, max, padding = 0.05 * Math.abs(min - max)]) => [
+                max + padding,
+                min - padding,
+              ])(d3.extent(table, (p) => +p[d]))
+            )
+            .range([0, height])),
           !['name', '_nbid_'].includes(d)
         )
       ))
@@ -59,9 +58,7 @@ export default class Radar {
       .data(table)
       .enter()
       .append('path')
-      .attr('d', (d) =>
-        line(dimensions.map((p) => [x(p) + Math.PI, y[p](d[p])]))
-      )
+      .attr('d', (d) => line(dimensions.map((p) => [x(p), y[p](d[p])])))
     const foreground = radial
       .append('g')
       .style('fill', 'none')
@@ -70,9 +67,7 @@ export default class Radar {
       .data(table)
       .enter()
       .append('path')
-      .attr('d', (d) =>
-        line(dimensions.map((p) => [x(p) + Math.PI, y[p](d[p])]))
-      )
+      .attr('d', (d) => line(dimensions.map((p) => [x(p), y[p](d[p])])))
 
     // Add a group element for each dimension.
     const g = radial
@@ -81,7 +76,8 @@ export default class Radar {
       .enter()
       .append('g')
       .attr('class', 'dimension')
-      .attr('transform', (d) => `rotate(${(x(d) * 180) / Math.PI})`)
+      .attr('transform', (d) => `rotate(${(x(d) * 180) / Math.PI + 180})`)
+      .style('user-select', 'none')
 
     // Add an axis and title.
     g.append('g')
@@ -185,6 +181,10 @@ export default class Radar {
       .style('overflow', 'auto')
       .node()
 
+    this.el.appendChild(this._renderSVG())
+  }
+  _onDataChange() {
+    this.el.removeChild(this.el.children[0])
     this.el.appendChild(this._renderSVG())
   }
 }

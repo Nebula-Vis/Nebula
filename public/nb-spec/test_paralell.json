@@ -115,7 +115,7 @@
               { "name": "DirtySprite", "value": 8833 },
               { "name": "LineSprite", "value": 1732 },
               { "name": "RectSprite", "value": 3623 },
-              { "name": "TextSprite", "value": 10066 }
+              { "name": "TextSprite", "value": 102066 }
             ]
           }
         ]
@@ -139,6 +139,7 @@
       "container": "1 2 1 1",
       "visualization": "tree",
       "props": {
+        "selection": null,
         "data": "tree1",
         "nodeId": "name"
       }
@@ -148,6 +149,7 @@
       "container": "3 4 1 1",
       "visualization": "treemap",
       "props": {
+        "selection": null,
         "data": "tree1",
         "nodeId": "name",
         "tile": "treemapDice"
@@ -168,7 +170,7 @@
     {
       "id": "chart4",
       "container": "1 2 2 4",
-      "visualization": "radar",
+      "visualization": "radial",
       "props": {
         "data": "cars",
         "selection": [],

@@ -67,14 +67,12 @@ export default class Parallel {
       .enter()
       .append('g')
       .attr('class', 'dimension')
-      .attr('transform', function (d) {
-        return `translate(${x(d)})`
-      })
+      .attr('transform', (d) => `translate(${x(d)})`)
+      .style('user-select', 'none')
 
     // Add an axis and title.
     g.append('g')
       .attr('class', 'axis')
-
       .each(function (d) {
         d3.select(this).call(d3.axisLeft().scale(y[d]))
       })
@@ -173,6 +171,10 @@ export default class Parallel {
       .style('overflow', 'auto')
       .node()
 
+    this.el.appendChild(this._renderSVG())
+  }
+  _onDataChange() {
+    this.el.removeChild(this.el.children[0])
     this.el.appendChild(this._renderSVG())
   }
 }

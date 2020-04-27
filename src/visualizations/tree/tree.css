@@ -1,0 +1,21 @@
+.tree .node {
+  cursor: pointer;
+}
+
+.tree .node:hover .point {
+  transition: all 200ms;
+  transform: scale(1.5, 1.5);
+}
+
+.tree .node .point {
+  transition: all 200ms;
+  cursor: pointer;
+  fill: #555;
+}
+.tree .node .point.leaf {
+  fill: #999;
+}
+
+.tree .node.selected .point {
+  fill: aqua;
+}

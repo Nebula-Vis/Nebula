@@ -1,10 +1,12 @@
 import * as d3 from 'd3'
 import ReactiveProperty from '@/reactive-prop'
-import { getFieldsOfType } from '@/utils'
+import _ from 'lodash'
+import './tree.css'
 export default class Tree {
   constructor(props) {
     this.id = props.id
     this.data = props.data.hierarchy
+    this.selection = props.selection
     this.nodeId = props.nodeId || Object.keys(props.data.nodes[0])[0] || 'id'
     this.el = null
     this._init()
@@ -28,8 +30,9 @@ export default class Tree {
       .create('svg')
       .attr('viewBox', [0, 0, width, x1 - x0 + root.dx * 2])
 
-    const g = svg
+    const tree = svg
       .append('g')
+      .attr('class', 'tree')
       .attr('font-family', 'sans-serif')
       .attr('font-size', 10)
       .attr(
@@ -37,7 +40,7 @@ export default class Tree {
         `translate(${(root.data.name.length + 1) * 5},${root.dx - x0})`
       )
 
-    const link = g
+    const link = tree
       .append('g')
       .attr('fill', 'none')
       .attr('stroke', '#555')
@@ -54,17 +57,33 @@ export default class Tree {
           .y((d) => d.x)
       )
 
-    const node = g
+    const node = tree
       .append('g')
       .attr('stroke-linejoin', 'round')
       .attr('stroke-width', 3)
       .selectAll('g')
       .data(root.descendants())
       .join('g')
+      .attr('class', (d) => {
+        const selectedNbid = _.get(this.selection.get(), 'data._nbid_', '')
+        return selectedNbid && d.data._nbid_.indexOf(selectedNbid) > -1
+          ? 'node selected'
+          : 'node'
+      })
       .attr('transform', (d) => `translate(${d.y},${d.x})`)
+      .on('click', (...cur) => this.selection.set(cur[0]))
+
+    this._onSelectionChange = (select) => {
+      d3.selectAll('.tree .node').attr('class', (d) =>
+        d.data._nbid_.indexOf(select.data._nbid_) > -1
+          ? 'node selected'
+          : 'node'
+      )
+    }
 
     node
       .append('circle')
+      .attr('class', (d) => (d.children ? 'point' : 'point leaf'))
       .attr('fill', (d) => (d.children ? '#555' : '#999'))
       .attr('r', 2.5)
 
@@ -77,9 +96,7 @@ export default class Tree {
       .clone(true)
       .lower()
       .attr('stroke', 'white')
-    // this.el.addEventListener('resize', (e) => {
-    //   console.log('resizeEvent', e.target.clientHeight, e.target.clientWidth)
-    // })
+
     return svg.node()
   }
   _init() {
@@ -98,7 +115,7 @@ export default class Tree {
       this.selection,
       '_onSelectionChange',
       'select',
-      'items'
+      'subtree'
     )
   }
   mount(el) {
@@ -118,4 +135,9 @@ export default class Tree {
 
     this.el.appendChild(this._renderSVG())
   }
+  _onDataChange() {
+    this.el.removeChild(this.el.children[0])
+    this.el.appendChild(this._renderSVG())
+  }
+  // _onSelectionChange()  in _renderSVG
 }
