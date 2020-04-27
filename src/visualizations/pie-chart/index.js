@@ -9,11 +9,13 @@ export default class PieChart {
 
     this.x = props.range
     this.y = props.value
-
     const selection = props.selection || null
 
     this.selection = selection
+    this.aggregate = props.aggregate
 
+    const count = props.count || null
+    this.count = count
     this.el = null
     this.vm = null
 
@@ -38,6 +40,8 @@ export default class PieChart {
         name: this.x.get(),
         value: this.y.get(),
         selection: this.selection.get(),
+        aggregate: that.aggregate,
+        count: that.count,
       },
       watch: {
         data(val) {

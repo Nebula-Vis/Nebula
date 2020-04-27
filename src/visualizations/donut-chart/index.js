@@ -10,9 +10,11 @@ export default class PieChart {
     this.x = props.range
     this.y = props.value
     this.sort = props.sort
-    this.innerRadius = props.innerRadius
+    this.innerRadius = props.innerRadius || null
     const selection = props.selection || null
     this.selection = selection
+    this.aggregate = props.aggregate || null
+    this.count = props.count || null
 
     this.el = null
     this.vm = null
@@ -38,8 +40,10 @@ export default class PieChart {
         name: this.x.get(),
         value: this.y.get(),
         sort: this.sort.get(),
-        innerRadius: this.innerRadius.get(),
+        innerRadius: this.innerRadius,
         selection: this.selection.get(),
+        aggregate: this.aggregate,
+        count: that.count,
       },
       watch: {
         data(val) {
@@ -96,14 +100,6 @@ export default class PieChart {
       'encode',
       'sort'
     )
-    this.innerRadius = new ReactiveProperty(
-      this,
-      'innerRadius',
-      this.innerRadius,
-      '_onInnerRadiusChange',
-      'encode',
-      'innerRadius'
-    )
     this.selection = new ReactiveProperty(
       this,
       'selection',
@@ -116,7 +112,7 @@ export default class PieChart {
 
   _onDataChange(val) {
     if (!Array.isArray(val)) {
-      throw new TypeError(`AreaChart: expect data to be Array, got ${val}`)
+      throw new TypeError(`DonutChart: expect data to be Array, got ${val}`)
     }
     this.vm.data = val
   }
@@ -140,13 +136,6 @@ export default class PieChart {
       throw new TypeError(`AreaChart: expect y to be string, got ${val}`)
     }
     this.vm.sort = val
-  }
-
-  _onInnerRadiusChange(val) {
-    if (typeof val !== 'string') {
-      throw new TypeError(`AreaChart: expect y to be string, got ${val}`)
-    }
-    this.vm.innerRadius = val
   }
 
   _onSelectionChange(val) {

@@ -13,8 +13,11 @@ export default Vue.extend({
   data() {
     return {
       id: '',
+      if_init: false,
+      rootData: null,
       data: null,
       selection: null,
+      currentSelect: null,
       margin: {
         top: 20,
         right: 20,
@@ -49,7 +52,7 @@ export default Vue.extend({
       return svg
     },
     color() {
-      const data = this.data
+      const data = this.rootData
       return d3.scaleOrdinal(
         d3.quantize(d3.interpolateRainbow, data.children.length + 1)
       )
@@ -68,43 +71,32 @@ export default Vue.extend({
   },
   watch: {
     selection: function () {
-      this.parse()
-      this.drawArc()
+      console.log(this.selection)
+      console.log(this.currentSelect)
+      if (this.selection === undefined) this.drawArc()
+      else if (this.selection.name !== this.currentSelect) {
+        this.drawArc()
+      }
+      // if(this.selection[0])
+      // this.drawArc()
     },
     data: function () {
       this.drawArc()
-      this.selection = []
+      // this.selection = []
     },
   },
   mounted() {
     this.isMounted = true
-    this.parse()
+    this.rootData = this.data
     this.drawArc()
+    if (!this.if_init) {
+      this.currentSelect = this.data.name
+      this.if_init = true
+    }
   },
   methods: {
     format: function (d) {
       return d3.format(`.${d}`)
-    },
-    parse() {
-      // console.log(`selection: ${this.selection}`)
-      // const selection = this.selection
-      // if (this.selection !== null && this.selection !== []) {
-      //   this.data = selection.data.value
-      //   console.log(this.data)
-      // }
-      // console.log(`data: ${this.data}`)
-      // for (const i in this.data.children) {
-      //   const temp = this.data.children[i]
-      //   let flag = false
-      //   for (const j in selection) {
-      //     if (selection[j]['_nbid_'] === temp['_nbid_']) {
-      //       flag = true
-      //       break
-      //     }
-      //   }
-      //   temp.selected = flag
-      // }
-      // console.log(this.data)
     },
     partition: function (data) {
       const root = d3
@@ -124,6 +116,7 @@ export default Vue.extend({
       const color = this.color
       root.each((d) => (d.current = d))
       const arc = this.arc
+      this.getSvg.innerHTML = ''
       const svg = d3.select(this.getSvg)
       svg
         .attr('viewBox', [0, 0, width, height])
@@ -183,12 +176,13 @@ export default Vue.extend({
         .on('click', clicked)
 
       function clicked(p) {
-        // that.selection = []
-        // if (!p.data.selected) {
-        //   that.selection.push(p.data)
-        // }
-        // that.$emit('selection', JSON.stringify(that.selection))
-        p.data.selected = !p.data.selected
+        if (that.currentSelect !== p.data.name) {
+          const selection = []
+          selection.push(p.data.name)
+          console.log(selection)
+          that.currentSelect = p.data.name
+          // that.$emit('selection', JSON.stringify(selection))
+        }
         parent.datum(p.parent || root)
         root.each(
           (d) =>

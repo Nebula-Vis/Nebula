@@ -75,15 +75,15 @@ export default class SunburstChart {
 
   _onDataChange(val) {
     if (!Array.isArray(val)) {
-      throw new TypeError(`SectorChart: expect data to be Array, got ${val}`)
+      throw new TypeError(`Sunburstchart: expect data to be Array, got ${val}`)
     }
     this.vm.data = val
   }
 
   _onSelectionChange(val) {
     if (typeof val !== 'string') {
-      throw new TypeError(`SectorChart: expect y to be string, got ${val}`)
+      throw new TypeError(`Sunburstchart: expect y to be string, got ${val}`)
     }
-    // this.vm.selection = JSON.parse(val)
+    this.vm.selection = JSON.parse(val)[0]
   }
 }

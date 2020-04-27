@@ -25,6 +25,8 @@ export const OPTIONS = [
   'value',
   'sort',
   'innerRadius',
+  'aggregate',
+  'count',
 ]
 
 // index = 0，默认参数
@@ -32,7 +34,18 @@ export const ACTION_TO_OPTIONS = {
   select: ['items', 'ranges'],
   filter: ['items'],
   navigate: ['scale'],
-  encode: ['x', 'y', 'color', 'size', 'name', 'value', 'sort', 'innerRadius'],
+  encode: [
+    'x',
+    'y',
+    'color',
+    'size',
+    'name',
+    'value',
+    'sort',
+    'innerRadius',
+    'aggregate',
+    'count',
+  ],
   reconfigure: ['order'],
   set: ['data', 'dataset', 'value'],
   append: ['data', 'dataset'],

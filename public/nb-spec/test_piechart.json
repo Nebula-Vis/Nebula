@@ -213,6 +213,41 @@
       }
     },
     {
+      "name": "treePie",
+      "values": [
+        {"name": "flare","value": 220},
+        {"name": "flare","value": 260},
+        {"name": "flare","value": 255},
+        {"name": "analytics","value": 230},
+        {"name": "animate","value": 210},
+        {"name": "data","value": 110},
+        {"name": "data","value": 165},
+        {"name": "data","value": 290},
+        {"name": "display","value": 162},
+        {"name": "flex","value": 101},
+        {"name": "physics","value": 244},
+        {"name": "physics","value": 131},
+        {"name": "query","value": 327}
+      ]
+    },
+    {
+      "name": "treePieBin",
+      "values": [
+        {"x": 1,"y": 222},
+        {"x": 2,"y": 12},
+        {"x": 2,"y": 644},
+        {"x": 2,"y": 134},
+        {"x": 4,"y": 45},
+        {"x": 8,"y": 67},
+        {"x": 4,"y": 95},
+        {"x": 9,"y": 137},
+        {"x": 11,"y": 24},
+        {"x": 11,"y": 74},
+        {"x": 20,"y": 65},
+        {"x": 13,"y": 13}
+      ]
+    },
+    {
       "name": "miserables",
       "path": "./data/miserables.json"
     },
@@ -224,8 +259,8 @@
   ],
   "layout": {
     "width": "1600px",
-    "height": "1000px",
-    "rows": ["1fr", "1fr", "1fr","1fr"],
+    "height": "1200px",
+    "rows": ["1fr", "1fr", "1fr","1fr","1fr"],
     "columns": ["1fr", "1fr", "1fr","3fr"]
   },
   "visualizations": [
@@ -345,10 +380,11 @@
       "container": "4 4 1 1",
       "visualization": "piechart",
       "props": {
-        "data": "pie",
-        "range": "range",
+        "data": "treePie",
+        "range": "name",
         "value": "value",
-        "sort": "descending"
+        "sort": "descending",
+        "aggregate": "average"
       }
     },
     {
@@ -356,11 +392,12 @@
       "container": "4 4 2 2",
       "visualization": "donutchart",
       "props": {
-        "data": "pie",
-        "range": "range",
+        "data": "treePie",
+        "range": "name",
         "value": "value",
         "innerRadius": 0.5,
-        "sort": "ascending"
+        "sort": "ascending",
+        "aggregate": "sum"
       }
     },
     {
@@ -368,11 +405,50 @@
       "container": "4 4 3 3",
       "visualization": "sectorchart",
       "props": {
-        "data": "pie",
-        "range": "range",
+        "data": "treePie",
+        "range": "name",
         "value": "value",
         "sort": "",
-        "innerRadius": 0.5
+        "innerRadius": 0.5,
+        "aggregate": "min"
+      }
+    },
+    {
+      "id": "chart14",
+      "container": "5 5 1 1",
+      "visualization": "donutchart",
+      "props": {
+        "data": "treePieBin",
+        "range": "x",
+        "value": "y",
+        "aggregate": "average",
+        "innerRadius": 0.2,
+        "count": 5
+      }
+    },
+    {
+      "id": "chart15",
+      "container": "5 5 2 2",
+      "visualization": "piechart",
+      "props": {
+        "data": "treePieBin",
+        "range": "x",
+        "value": "y",
+        "aggregate": "sum",
+        "count": 5
+      }
+    },
+    {
+      "id": "chart16",
+      "container": "5 5 3 3",
+      "visualization": "sectorchart",
+      "props": {
+        "data": "treePieBin",
+        "range": "x",
+        "value": "y",
+        "aggregate": "min",
+        "innerRadius": 0.2,
+        "count": 5
       }
     },
     {
@@ -382,7 +458,8 @@
       "props": {
         "data": "tree1",
         "nodeId": "name",
-        "innerRadius": 0.5
+        "innerRadius": 0.5,
+        "aggregate": "min"
       }
     }
   ],
@@ -396,7 +473,10 @@
     "change value in chart8, then encode x in chart5",
     "select in chart10, then select in chart11 and chart12",
     "select in chart11, then select in chart10 and chart12",
-    "select in chart12, then select in chart10 and chart11"
+    "select in chart12, then select in chart10 and chart11",
+    "select in chart14, then select in chart15 and chart16",
+    "select in chart15, then select in chart14 and chart16",
+    "select in chart16, then select in chart14 and chart15"
   ],
   "transformations": [
     {
