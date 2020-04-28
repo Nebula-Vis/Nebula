@@ -121,7 +121,7 @@ export default Vue.extend({
       const axisConfig = {
         x: (boolXIsDate ? d3.scaleTime() : d3.scaleLinear())
           .domain(xExtent)
-          .nice()
+          // .nice()
           .range([
             this.elementLayout.xAxisStartLocation,
             this.elementLayout.xAxisEndLocation,
@@ -148,7 +148,7 @@ export default Vue.extend({
           Math.round(this.height / (axisConfig.xSpace * this.defaultSpace))
         )
       if (boolXIsDate) {
-        xAxis.ticks(d3.timeMonth)
+        xAxis.ticks(d3.timeWeek).tickFormat(d3.timeFormat('%m-%d'))
       }
       const yAxis = d3
         .axisLeft(axisConfig.y)
@@ -156,7 +156,7 @@ export default Vue.extend({
 
       const xScale = (boolXIsDate ? d3.scaleTime() : d3.scaleLinear())
         .domain(xExtent)
-        .nice()
+        // .nice()
         .range([0, this.elementLayout.chartSvg.width])
       const yScale = d3
         .scaleLinear()

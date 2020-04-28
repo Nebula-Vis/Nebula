@@ -2,11 +2,11 @@
   "data": [
     {
       "name": "covid",
-      "path": "./data/total-cases-covid-19-by-continent.json"
+      "path": "./data/daily-cases-covid-19-by-continent.json"
     }
   ],
   "layout": {
-    "width": "300px",
+    "width": "600px",
     "height": "600px",
     "rows": ["1fr", "1fr"],
     "columns": ["1fr"]
@@ -19,7 +19,7 @@
       "props": {
         "data": "covid",
         "x": "Date",
-        "y": "Total confirmed cases of COVID-19 (cases)",
+        "y": "Daily new confirmed cases (cases)",
         "detail": "Entity",
         "brushType": "x"
       }
@@ -31,7 +31,7 @@
       "props": {
         "data": "covid",
         "range": "Entity",
-        "value": "Total confirmed cases of COVID-19 (cases)",
+        "value": "Daily new confirmed cases (cases)",
         "aggregate": "sum"
       }
     }
