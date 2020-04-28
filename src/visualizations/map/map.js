@@ -21,7 +21,7 @@ export default Vue.extend({
   data() {
     return {
       mapData: [],
-      selectedArea: [],
+      selectedArea: {},
       encoding: [],
       svgWidth: 50,
       svgHeight: 50,
@@ -208,7 +208,7 @@ export default Vue.extend({
     const drawControl = new L.Control.Draw(options)
     map.addControl(drawControl)
     map.on(L.Draw.Event.DRAWSTART, function () {
-      if (self.clickArea) self.clickArea.layer.remove()
+      if (self.clickArea) self.clickArea.remove()
       if (self.pointsLayer) self.pointsLayer.remove()
       self.points = self.drawCircle(['grey'])
     })
@@ -228,7 +228,7 @@ export default Vue.extend({
         selection.selectedArr,
       ])
       drawnItems.addLayer(layer)
-      self.clickArea = e
+      self.clickArea = layer
     })
     map.on(L.Draw.Event.DELETED, function () {
       if (self.pointsLayer) self.pointsLayer.remove()
@@ -247,8 +247,43 @@ export default Vue.extend({
       }
       self.points = self.drawCircle(self.paramStore)
     })
+    this.drawSelectedArea()
   },
   methods: {
+    drawSelectedArea() {
+      const point1 = this.map.containerPointToLatLng([0, 0])
+      const point2 = this.map.containerPointToLatLng([
+        this.svgWidth,
+        this.svgHeight,
+      ])
+      const xRange = this.selectedArea[this.mergedEncoding.x]
+      const yRange = this.selectedArea[this.mergedEncoding.y]
+      if (!xRange && !yRange) return
+      if (yRange) {
+        point1.lat = yRange[0]
+        point2.lat = yRange[1]
+      }
+      if (xRange) {
+        point1.lng = xRange[0]
+        point2.lng = xRange[1]
+      }
+      const layer = L.rectangle([point1, point2], {})
+      layer.addTo(this.map)
+      this.clickArea = layer
+      const selection = this.dealClickArea([
+        L.latLng(point1.lat, point1.lng),
+        L.latLng(point1.lat, point2.lng),
+        L.latLng(point2.lat, point2.lng),
+        L.latLng(point2.lat, point1.lng),
+      ])
+      if (this.pointsLayer) this.pointsLayer.remove()
+      this.points = this.drawCircle([
+        'grey',
+        this.mapData,
+        'blue',
+        selection.selectedArr,
+      ])
+    },
     drawCircle([color, data, color1, data1]) {
       //  eslint-disable-next-line prefer-rest-params
       const usedData = arguments && data ? data : this.mapData
@@ -351,8 +386,15 @@ export default Vue.extend({
         this.map.containerPointToLatLng([this.svgWidth, 0]),
       ]
       const dataInWindow = this.dealClickArea(parArr)
-      this.$emit('dataInWindow', dataInWindow)
-      console.log('emit data in window: ', dataInWindow)
+      this.$emit('visibleData', dataInWindow)
+      this.$emit('visibleRange', {
+        lat: [parArr[3].lat, parArr[0].lat],
+        lng: [parArr[0].lng, parArr[3].lng],
+      })
+      console.log('emit data in window: ', dataInWindow, {
+        lat: [parArr[2].lat, parArr[0].lat],
+        lng: [parArr[0].lng, parArr[2].lng],
+      })
     },
   },
 })

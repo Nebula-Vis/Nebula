@@ -13,12 +13,11 @@ export default class Map {
     this.id = props.id || new Date() - 0
     this.data = props.data
     this.areasData = props.areasData
-    this.selectedArea = props.selectedArea || []
+    this.selectedArea = props.selectedArea || {}
 
     const numericFields = getFieldsOfType(this.data, 'number')
     const x = props.x || numericFields[0]
     const y = props.y || numericFields[1]
-    const selection = props.selection || []
     if (!boolDataHasAttributes(this.data, x, y)) {
       throw new Error(`Map: wrong attributes x:${x}, y:${y}`)
     }
@@ -31,8 +30,9 @@ export default class Map {
     this.bottomEdge = props.bottomEdge
     this.mapStyle = props.mapStyle
     this.events = props.events
-    this.selection = selection
-    this.dataInWindow = []
+    this.selection = props.selection || []
+    this.visibleData = []
+    this.visibleRange = {}
     this.el = null
     this.vm = null
 
@@ -82,8 +82,11 @@ export default class Map {
     this.vm.$on('data', (val) => {
       this.data.set(val)
     })
-    this.vm.$on('dataInWindow', (val) => {
-      this.dataInWindow.set(val)
+    this.vm.$on('visibleData', (val) => {
+      this.visibleData.set(val)
+    })
+    this.vm.$on('visibleRange', (val) => {
+      this.visibleRange.set(val)
     })
     this.vm.$on('selection', (val) => {
       this.selection.set(val)
@@ -188,13 +191,21 @@ export default class Map {
       'select',
       'items'
     )
-    this.dataInWindow = new ReactiveProperty(
+    this.visibleData = new ReactiveProperty(
       this,
-      'dataInWindow',
-      this.dataInWindow,
-      '_onDataInWindowChange',
+      'visibleData',
+      this.visibleData,
+      '_onVisibleDataChange',
       'select',
       'items'
+    )
+    this.visibleRange = new ReactiveProperty(
+      this,
+      'visibleRange',
+      this.visibleRange,
+      '_onVisibleRangeChange',
+      'select',
+      'ranges'
     )
   }
 
@@ -284,8 +295,12 @@ export default class Map {
     this.vm.selection = val
   }
 
-  _onDataInWindowChange(val) {
-    this.vm._onDataInWindowChange = val
+  _onVisibleDataChange(val) {
+    this.vm.visibleData = val
+  }
+
+  _onVisibleRangeChange(val) {
+    this.vm.visibleRange = val
   }
 
   _isValidScale(scale, x) {

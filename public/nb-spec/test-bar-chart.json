@@ -78,7 +78,7 @@
           "c": "c1",
           "_key": "areaData10"
         },
-  
+
         {
           "valueA": 1,
           "valueB": 97.24,
@@ -139,7 +139,7 @@
           "c": "c2",
           "_key": "areaData20"
         },
-  
+
         {
           "valueA": 1,
           "valueB": 83.24,
@@ -200,7 +200,7 @@
           "c": "c3",
           "_key": "areaData30"
         },
-  
+
         {
           "valueA": 1,
           "valueB": 104,
@@ -266,17 +266,141 @@
     {
       "name": "mapdata",
       "values": [
-          {"y": 30.2518376789, "x": 120.1141772690, "weight": 0, "color": "red", "size": 50}, {"y": 30.2418376789, "x": 120.1391772690, "weight": 0.83, "color": "green", "size": 160},
-          {"y": 30.2548376789, "x": 120.1501772690, "weight": 1, "color": "red", "size": 68}, {"y": 30.2698376789, "x": 120.1411772690, "weight": 0.32, "color": "green", "size": 105},
-          {"y": 30.2588376789, "x": 120.1421772690, "weight": 0.23, "color": "black", "size": 87}, {"y": 30.2698376789, "x": 120.1221772690, "weight": 0.55, "size": 108},
-          {"y": 30.2608376789, "x": 120.1321772690, "weight": 0.43, "color": "black", "size": 96}, {"y": 30.2718376789, "x": 120.1331772690, "weight": 0.05, "color": "green", "size": 108},
-          {"y": 30.2708376789, "x": 120.1501772690, "weight": 0.73, "color": "blue", "size": 86}, {"y": 30.2608376789, "x": 120.1411772690, "weight": 0.15, "color": "green", "size": 107},
-          {"y": 30.2728376789, "x": 120.1401772690, "weight": 0.79, "color": "red", "size": 95}, {"y": 30.2548376789, "x": 120.1291772690, "weight": 0.26, "color": "green", "size": 69},
-          {"y": 30.2688376789, "x": 120.1381772690, "weight": 0.2, "color": "red", "size": 108}, {"y": 30.2748376789, "x": 120.1301772690, "weight": 0.38, "color": "green", "size": 90},
-          {"y": 30.2588376789, "x": 120.1331772690, "weight": 0.91, "color": "blue", "size": 97}, {"y": 30.2738376789, "x": 120.1261772690, "weight": 0.88, "color": "green", "size": 100},
-          {"y": 30.2668376789, "x": 120.1251772690, "weight": 0.9, "color": "red", "size": 89}, {"y": 30.2838376789, "x": 120.1401772690, "weight": 0.74, "color": "green", "size": 100},
-          {"y": 30.2708376789, "x": 120.1301772690, "weight": 0.4, "color": "red", "size": 100}, {"y": 30.2668376789, "x": 120.1391772690, "weight": 0.3, "color": "green", "size": 117}
-        ]
+        {
+          "y": 30.2518376789,
+          "x": 120.114177269,
+          "weight": 0,
+          "color": "red",
+          "size": 50
+        },
+        {
+          "y": 30.2418376789,
+          "x": 120.139177269,
+          "weight": 0.83,
+          "color": "green",
+          "size": 160
+        },
+        {
+          "y": 30.2548376789,
+          "x": 120.150177269,
+          "weight": 1,
+          "color": "red",
+          "size": 68
+        },
+        {
+          "y": 30.2698376789,
+          "x": 120.141177269,
+          "weight": 0.32,
+          "color": "green",
+          "size": 105
+        },
+        {
+          "y": 30.2588376789,
+          "x": 120.142177269,
+          "weight": 0.23,
+          "color": "black",
+          "size": 87
+        },
+        { "y": 30.2698376789, "x": 120.122177269, "weight": 0.55, "size": 108 },
+        {
+          "y": 30.2608376789,
+          "x": 120.132177269,
+          "weight": 0.43,
+          "color": "black",
+          "size": 96
+        },
+        {
+          "y": 30.2718376789,
+          "x": 120.133177269,
+          "weight": 0.05,
+          "color": "green",
+          "size": 108
+        },
+        {
+          "y": 30.2708376789,
+          "x": 120.150177269,
+          "weight": 0.73,
+          "color": "blue",
+          "size": 86
+        },
+        {
+          "y": 30.2608376789,
+          "x": 120.141177269,
+          "weight": 0.15,
+          "color": "green",
+          "size": 107
+        },
+        {
+          "y": 30.2728376789,
+          "x": 120.140177269,
+          "weight": 0.79,
+          "color": "red",
+          "size": 95
+        },
+        {
+          "y": 30.2548376789,
+          "x": 120.129177269,
+          "weight": 0.26,
+          "color": "green",
+          "size": 69
+        },
+        {
+          "y": 30.2688376789,
+          "x": 120.138177269,
+          "weight": 0.2,
+          "color": "red",
+          "size": 108
+        },
+        {
+          "y": 30.2748376789,
+          "x": 120.130177269,
+          "weight": 0.38,
+          "color": "green",
+          "size": 90
+        },
+        {
+          "y": 30.2588376789,
+          "x": 120.133177269,
+          "weight": 0.91,
+          "color": "blue",
+          "size": 97
+        },
+        {
+          "y": 30.2738376789,
+          "x": 120.126177269,
+          "weight": 0.88,
+          "color": "green",
+          "size": 100
+        },
+        {
+          "y": 30.2668376789,
+          "x": 120.125177269,
+          "weight": 0.9,
+          "color": "red",
+          "size": 89
+        },
+        {
+          "y": 30.2838376789,
+          "x": 120.140177269,
+          "weight": 0.74,
+          "color": "green",
+          "size": 100
+        },
+        {
+          "y": 30.2708376789,
+          "x": 120.130177269,
+          "weight": 0.4,
+          "color": "red",
+          "size": 100
+        },
+        {
+          "y": 30.2668376789,
+          "x": 120.139177269,
+          "weight": 0.3,
+          "color": "green",
+          "size": 117
+        }
+      ]
     },
     {
       "name": "barchart1",
@@ -354,7 +478,7 @@
           "size": { "value": 100 }
         },
         "selection": {
-          "multi": {"type": "multi"},
+          "multi": { "type": "multi" },
           "interval": { "type": "interval" }
         }
       }
@@ -507,12 +631,10 @@
       "visualization": "map",
       "props": {
         "data": "mapdata",
-        "selectedArea": [ 
-          30.2738376789,
-          120.150177269,
-          30.2668376789,
-          120.130177269
-        ],
+        "selectedArea": {
+          "y": [30.2668376789, 30.2738376789],
+          "x": [120.130177269, 120.150177269]
+        },
         "x": "x",
         "y": "y",
         "color": "color",
@@ -520,11 +642,11 @@
         "brushType": "xy",
         "bottomEdge": "left",
         "mapStyle": {
-          "mapLayerStyle": "TianDiTu.Normal.Map",
-          "annotionLayerStyle": "TianDiTu.Satellite.Annotion",
+          "mapLayerStyle": "Google.Normal.Map",
+          "annotionLayerStyle": null,
           "minZoom": 3,
           "maxZoom": 20,
-          "center": [30.2708376789, 120.130177269], 
+          "center": [30.2708376789, 120.130177269],
           "zoom": 13,
           "zoomControl": false,
           "attributionControl": false
