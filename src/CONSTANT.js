@@ -25,7 +25,6 @@ export const OPTIONS = [
   'dataset',
   'name',
   'value',
-
   'sort',
   'innerRadius',
   'aggregate',
@@ -45,7 +44,6 @@ export const ACTION_TO_OPTIONS = {
   encode: [
     'x',
     'y',
-
     'color',
     'size',
     'name',
