@@ -14,6 +14,7 @@ export default Vue.extend({
       isMounted: false,
       selection: [],
       selectedXRange: [],
+      xRange: [],
       brushedBins: [],
       clickedBin: undefined,
       disableClick: false,
@@ -21,7 +22,7 @@ export default Vue.extend({
       encoding: null,
       svgWidth: 400,
       svgHeight: 50,
-      xRange: [],
+      xValueRange: [],
     }
   },
   computed: {
@@ -41,13 +42,6 @@ export default Vue.extend({
           break
       }
       return `rotate(${angle})`
-    },
-    edgePoints() {
-      if (!Array.isArray(this.data)) {
-        return this.data.edgePoints
-      } else {
-        return undefined
-      }
     },
     processData() {
       if (!Array.isArray(this.data)) {
@@ -98,19 +92,26 @@ export default Vue.extend({
         left = 0
         right = this.width
       }
-      return d3.scaleLinear().domain(this.xRange).rangeRound([left, right])
+      return d3.scaleLinear().domain(this.xValueRange).rangeRound([left, right])
     },
     bins() {
       // parse dataset
-      const data = this.processData
+      const data =
+        this.xRange.length === 2
+          ? this.processData.filter(
+              (item) =>
+                item[this.fullEncoding.x] >= this.xRange[0] &&
+                item[this.fullEncoding.x] <= this.xRange[1]
+            )
+          : this.processData
       const binCount = this.fullEncoding.count
 
       const attr = this.fullEncoding.x
 
       const res = []
-      const max = d3.max(this.processData, (d) => d[attr])
-      const min = d3.min(this.processData, (d) => d[attr])
-      this.xRange = [min, max]
+      const max = this.xRange[1] || d3.max(this.processData, (d) => d[attr])
+      const min = this.xRange[0] || d3.min(this.processData, (d) => d[attr])
+      this.xValueRange = [min, max]
 
       if (this.xType === 'number') {
         const dif = (max - min) / binCount
@@ -123,8 +124,13 @@ export default Vue.extend({
           .value((d) => d[attr])
           .thresholds(res)(data)
 
-        result.forEach((d) => (d.name = `${d.x0}-${d.x1}`))
+        result.forEach((d, i) => {
+          if (i === 0) d.x0 = this.xRange[0]
+          else if (i === result.length - 1) d.x1 = this.xRange[1]
+          d.name = `${d.x0}-${d.x1}`
+        })
         this.binForAggregate(result)
+        console.log(result)
         return result
       } else {
         const set = new Set(data.map((d) => d[attr]))
@@ -183,9 +189,9 @@ export default Vue.extend({
       const height = this.height
       const margin = this.margin
       const brushended = this.brushended
-      const left = margin.left
+      const left = this.isDisplay ? margin.left : 0
       const top = margin.top
-      const right = width - margin.right
+      const right = this.isDisplay ? width - margin.right : width
       const bottom = height - margin.bottom
       return d3
         .brushX()
@@ -362,10 +368,10 @@ export default Vue.extend({
       const brushG = this.$refs.brushG
       const brushListener = this.brushListener
       d3.select(brushG).call(brushListener)
-      const brushArea = [
-        this.scaleXRange(this.selectedXRange[0]),
-        this.scaleXRange(this.selectedXRange[1]),
-      ]
+      let [x0, x1] = [this.selectedXRange[0], this.selectedXRange[1]]
+      if (x0 < this.xRange[0]) x0 = this.xRange[0]
+      if (x1 < this.xRange[1]) x1 = this.xRange[1]
+      const brushArea = [this.scaleXRange(x0), this.scaleXRange(x1)]
       this.brushended(brushArea)
       // d3.select(brushG).call(brushListener.move, brushArea)
     },
@@ -403,43 +409,6 @@ export default Vue.extend({
       this.clickedBin = bins[binIndex].name
       this.brushedBins = []
     },
-    getEdgePointsMaxAndMin() {
-      const xmin = Math.min(...this.edgePoints.map((d) => d[0]))
-      const xmax = Math.max(...this.edgePoints.map((d) => d[0]))
-      const ymin = Math.min(...this.edgePoints.map((d) => d[1]))
-      const ymax = Math.max(...this.edgePoints.map((d) => d[1]))
-      return [
-        [xmin, xmax],
-        [ymin, ymax],
-      ]
-    },
-    getXInterval() {
-      const edgePointsMaxAndMin = this.getEdgePointsMaxAndMin()
-      const xInterval = []
-      const x = []
-      const binCount = this.bins.length
-      const rectWidth = this.$refs['rectG'].getBoundingClientRect().width
-      const diff = Number.parseFloat(rectWidth / binCount).toFixed(2)
-
-      for (let i = 0; i <= binCount; i++) {
-        x.push(i * diff)
-      }
-      const xmin = edgePointsMaxAndMin[0][0]
-      const xmax = edgePointsMaxAndMin[0][1]
-
-      const x0 = x.findIndex(function (value) {
-        return value > xmin
-      })
-
-      xInterval.push(x[x0 - 1])
-      const x1 = x.findIndex(function (value) {
-        return value > xmax
-      })
-
-      xInterval.push(x[x1])
-
-      return xInterval
-    },
   },
   mounted() {
     const rect = this.$refs['svg'].getBoundingClientRect()
@@ -454,36 +423,9 @@ export default Vue.extend({
     this.drawRect()
     this.drawAxis()
     this.drawBrush()
-    if (this.edgePoints) {
-      const xInterval = this.getXInterval()
-      const container = this.$refs['container']
-
-      const x0 = xInterval[0]
-      const x1 = xInterval[1]
-      const left = this.margin.left
-
-      container.style.width = `${x1 - x0 + left}px`
-      container.style.marginLeft = `${x0}px`
-    }
   },
   watch: {
-    // selection() {
-    //   this.colorRect()
-    //   this.$emit('selection', this.selection)
-    //   console.log(this.selection)
-    // },
     data: function () {
-      if (this.edgePoints) {
-        const xInterval = this.getXInterval()
-        const container = this.$refs['container']
-
-        const x0 = xInterval[0]
-        const x1 = xInterval[1]
-        const left = this.margin.left
-
-        container.style.width = `${x1 - x0 + left}px`
-        container.style.marginLeft = `${x0}px`
-      }
       this.drawRect()
       if (this.encoding.isDisplay) {
         this.isDisplay = this.encoding.isDisplay

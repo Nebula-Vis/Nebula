@@ -446,7 +446,7 @@
       "props": {
         "data": "barchart1",
         "selectedXRange": [20, 40],
-        "xRange": [30, 50],
+        "xRange": [31, 75],
         "encoding": {
           "x": "a",
           "y": ["a", "c", "a", "c"],
@@ -455,7 +455,8 @@
           "color": "#104BA9",
           "selectionColor": "#FFA200",
           "bottomEdge": "bottom",
-          "count": 6
+          "count": 6,
+          "isDisplay": false
         }
       }
     },
