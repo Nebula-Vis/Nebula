@@ -1,21 +1,25 @@
-import Scatterplot from '../visualizations/scatterplot'
-import Areachart from '../visualizations/area-chart'
-import Barchart from '../visualizations/bar-chart'
-import LineUp from '../visualizations/line-up'
-import Linechart from '../visualizations/line-chart'
-import NodeLinkGraph from '../visualizations/node-link-graph'
-import Select from '../visualizations/select'
-import Button from '../visualizations/button'
-import Input from '../visualizations/input'
-import Slider from '../visualizations/slider'
-import VegaLite from '../visualizations/vega-lite'
+import Scatterplot from '@/visualizations/scatter-plot'
+import Areachart from '@/visualizations/area-chart'
+import Barchart from '@/visualizations/bar-chart'
+import LineUp from '@/visualizations/line-up'
+import Linechart from '@/visualizations/line-chart'
+import NodeLinkGraph from '@/visualizations/node-link-graph'
+import Select from '@/visualizations/select'
+import Button from '@/visualizations/button'
+import Input from '@/visualizations/input'
+import Slider from '@/visualizations/slider'
+import VegaLite from '@/visualizations/vega-lite'
 import PieChart from '@/visualizations/pie-chart'
 import DonutChart from '@/visualizations/donut-chart'
 import SectorChart from '@/visualizations/sector-chart'
 import SunburstChart from '@/visualizations/sunburst-chart'
-import Map from '../visualizations/Map'
-import Heatmap2D from '../visualizations/heatmap-2D'
-import ReactiveProperty from '../reactive-prop'
+import Map from '@/visualizations/Map'
+import Heatmap2D from '@/visualizations/heatmap-2D'
+import Tree from '@/visualizations/tree'
+import TreeMap from '@/visualizations/tree-map'
+import ParallelCoordinates from '@/visualizations/parallel-coordinates'
+import RadialCoordinates from '@/visualizations/radial-coordinates'
+import ReactiveProperty from '@/reactive-prop'
 
 export default class VisualizationsSpecParser {
   constructor(dataSources, layout, spec) {
@@ -153,6 +157,14 @@ class Visualization {
         return new NodeLinkGraph(props)
       case 'select':
         return new Select(props)
+      case 'tree':
+        return new Tree(props)
+      case 'treemap':
+        return new TreeMap(props)
+      case 'parallel':
+        return new ParallelCoordinates(props)
+      case 'radial':
+        return new RadialCoordinates(props)
       case 'button':
         return new Button(props)
       case 'input':

@@ -142,7 +142,7 @@ export default class BarCahrt {
       'xRange',
       this.xRange,
       '_onXRangeChange',
-      'select',
+      'set',
       'ranges'
     )
   }
