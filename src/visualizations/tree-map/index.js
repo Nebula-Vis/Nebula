@@ -120,7 +120,7 @@ export default class TreeMap {
       }
       if (d3.event.selection) {
         const [[m0, n0], [m1, n1]] = d3.event.selection
-        if (Math.abs(m0 - m1) < 3 || Math.abs(n0 - n1) < 3) {
+        if (Math.abs(m0 - m1) < 10 || Math.abs(n0 - n1) < 10) {
           that.selection.set(null)
           return resize(null)
         }
