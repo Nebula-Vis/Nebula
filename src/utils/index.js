@@ -45,6 +45,27 @@ function padExtent(extent, padding) {
   return [min - dist * padding, max + dist * padding]
 }
 
+function boolArraySame(arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false
+  }
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) {
+      return false
+    }
+  }
+  return true
+}
+
+function findItemWithKey(arr, key) {
+  if (arr) {
+    for (const i in arr) {
+      if (arr[i]._nbid_ === key) return arr[i]
+    }
+  }
+  return undefined
+}
+
 const nbLogger = { ...console }
 
 export {
@@ -55,4 +76,6 @@ export {
   isArrayOfType,
   padExtent,
   nbLogger,
+  boolArraySame,
+  findItemWithKey,
 }

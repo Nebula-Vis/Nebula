@@ -1,0 +1,489 @@
+{
+  "data": [
+    {
+      "name": "points",
+      "values": [
+        { "A": 3.2, "B": 3.7, "C": 4.2, "D": "x" },
+        { "A": 3.5, "B": 3.7, "C": 4.9, "D": "x" },
+        { "A": 3.9, "B": 3.8, "C": 6.2, "D": "x" },
+        { "A": 3.2, "B": 3.0, "C": 5.3, "D": "x" },
+        { "A": 3.6, "B": 3.0, "C": 4.4, "D": "x" },
+        { "A": 3.7, "B": 3.6, "C": 4.7, "D": "y" },
+        { "A": 3.2, "B": 4.4, "C": 5.2, "D": "y" },
+        { "A": 3.5, "B": 3.9, "C": 6.0, "D": "y" },
+        { "A": 3.1, "B": 3.2, "C": 4.0, "D": "y" },
+        { "A": 3.0, "B": 3.3, "C": 4.9, "D": "y" }
+      ]
+    },
+    {
+      "name": "pie",
+      "values": [
+        {"range": "<5","value": 2},
+        {"range": "5-9","value": 3},
+        {"range": "10-14","value": 4},
+        {"range": "15-19","value": 5},
+        {"range": "20-24","value": 4},
+        {"range": "25-29","value": 9},
+        {"range": "30-34","value": 4},
+        {"range": "35-39","value": 2},
+        {"range": "40-44","value": 7}
+      ]
+    },
+    {
+      "name": "tree1",
+      "hierarchy": {
+        "name": "flare",
+        "children": [
+          {
+            "name": "analytics",
+            "children": [
+              {
+                "name": "cluster",
+                "children": [
+                  { "name": "AgglomerativeCluster", "value": 3938 },
+                  { "name": "CommunityStructure", "value": 3812 },
+                  { "name": "HierarchicalCluster", "value": 6714 },
+                  { "name": "MergeEdge", "value": 743 }
+                ]
+              },
+              {
+                "name": "graph",
+                "children": [
+                  { "name": "BetweennessCentrality", "value": 3534 },
+                  { "name": "LinkDistance", "value": 5731 },
+                  { "name": "MaxFlowMinCut", "value": 7840 },
+                  { "name": "ShortestPaths", "value": 5914 },
+                  { "name": "SpanningTree", "value": 3416 }
+                ]
+              },
+              {
+                "name": "optimization",
+                "children": [{ "name": "AspectRatioBanker", "value": 7074 }]
+              }
+            ]
+          },
+          {
+            "name": "animate",
+            "children": [
+              { "name": "Easing", "value": 17010 },
+              { "name": "FunctionSequence", "value": 5842 },
+              {
+                "name": "interpolate",
+                "children": [
+                  { "name": "ArrayInterpolator", "value": 1983 },
+                  { "name": "ColorInterpolator", "value": 2047 },
+                  { "name": "DateInterpolator", "value": 1375 },
+                  { "name": "Interpolator", "value": 8746 },
+                  { "name": "MatrixInterpolator", "value": 2202 },
+                  { "name": "NumberInterpolator", "value": 1382 },
+                  { "name": "ObjectInterpolator", "value": 1629 },
+                  { "name": "PointInterpolator", "value": 1675 },
+                  { "name": "RectangleInterpolator", "value": 2042 }
+                ]
+              },
+              { "name": "ISchedulable", "value": 1041 },
+              { "name": "Parallel", "value": 5176 },
+              { "name": "Pause", "value": 449 },
+              { "name": "Scheduler", "value": 5593 },
+              { "name": "Sequence", "value": 5534 },
+              { "name": "Transition", "value": 9201 },
+              { "name": "Transitioner", "value": 19975 },
+              { "name": "TransitionEvent", "value": 1116 },
+              { "name": "Tween", "value": 6006 }
+            ]
+          },
+          {
+            "name": "data",
+            "children": [
+              {
+                "name": "converters",
+                "children": [
+                  { "name": "Converters", "value": 721 },
+                  { "name": "DelimitedTextConverter", "value": 4294 },
+                  { "name": "GraphMLConverter", "value": 9800 },
+                  { "name": "IDataConverter", "value": 1314 },
+                  { "name": "JSONConverter", "value": 2220 }
+                ]
+              },
+              { "name": "DataField", "value": 1759 },
+              { "name": "DataSchema", "value": 2165 },
+              { "name": "DataSet", "value": 586 },
+              { "name": "DataSource", "value": 3331 },
+              { "name": "DataTable", "value": 772 },
+              { "name": "DataUtil", "value": 3322 }
+            ]
+          },
+          {
+            "name": "display",
+            "children": [
+              { "name": "DirtySprite", "value": 8833 },
+              { "name": "LineSprite", "value": 1732 },
+              { "name": "RectSprite", "value": 3623 },
+              { "name": "TextSprite", "value": 10066 }
+            ]
+          },
+          {
+            "name": "flex",
+            "children": [{ "name": "FlareVis", "value": 4116 }]
+          },
+          {
+            "name": "physics",
+            "children": [
+              { "name": "DragForce", "value": 1082 },
+              { "name": "GravityForce", "value": 1336 },
+              { "name": "IForce", "value": 319 },
+              { "name": "NBodyForce", "value": 10498 },
+              { "name": "Particle", "value": 2822 },
+              { "name": "Simulation", "value": 9983 },
+              { "name": "Spring", "value": 2213 },
+              { "name": "SpringForce", "value": 1681 }
+            ]
+          },
+          {
+            "name": "query",
+            "children": [
+              { "name": "AggregateExpression", "value": 1616 },
+              { "name": "And", "value": 1027 },
+              { "name": "Arithmetic", "value": 3891 },
+              { "name": "Average", "value": 891 },
+              { "name": "BinaryExpression", "value": 2893 },
+              { "name": "Comparison", "value": 5103 },
+              { "name": "CompositeExpression", "value": 3677 },
+              { "name": "Count", "value": 781 },
+              { "name": "DateUtil", "value": 4141 },
+              { "name": "Distinct", "value": 933 },
+              { "name": "Expression", "value": 5130 },
+              { "name": "ExpressionIterator", "value": 3617 },
+              { "name": "Fn", "value": 3240 },
+              { "name": "If", "value": 2732 },
+              { "name": "IsA", "value": 2039 },
+              { "name": "Literal", "value": 1214 },
+              { "name": "Match", "value": 3748 },
+              { "name": "Maximum", "value": 843 },
+              {
+                "name": "methods",
+                "children": [
+                  { "name": "add", "value": 593 },
+                  { "name": "and", "value": 330 },
+                  { "name": "average", "value": 287 },
+                  { "name": "count", "value": 277 },
+                  { "name": "distinct", "value": 292 },
+                  { "name": "div", "value": 595 },
+                  { "name": "eq", "value": 594 },
+                  { "name": "fn", "value": 460 },
+                  { "name": "gt", "value": 603 },
+                  { "name": "gte", "value": 625 },
+                  { "name": "iff", "value": 748 },
+                  { "name": "isa", "value": 461 },
+                  { "name": "lt", "value": 597 },
+                  { "name": "lte", "value": 619 },
+                  { "name": "max", "value": 283 },
+                  { "name": "min", "value": 283 },
+                  { "name": "mod", "value": 591 },
+                  { "name": "mul", "value": 603 },
+                  { "name": "neq", "value": 599 },
+                  { "name": "not", "value": 386 },
+                  { "name": "or", "value": 323 },
+                  { "name": "orderby", "value": 307 },
+                  { "name": "range", "value": 772 },
+                  { "name": "select", "value": 296 },
+                  { "name": "stddev", "value": 363 },
+                  { "name": "sub", "value": 600 },
+                  { "name": "sum", "value": 280 },
+                  { "name": "update", "value": 307 },
+                  { "name": "variance", "value": 335 },
+                  { "name": "where", "value": 299 },
+                  { "name": "xor", "value": 354 },
+                  { "name": "_", "value": 264 }
+                ]
+              },
+              { "name": "Minimum", "value": 843 },
+              { "name": "Not", "value": 1554 },
+              { "name": "Or", "value": 970 },
+              { "name": "Query", "value": 13896 },
+              { "name": "Range", "value": 1594 },
+              { "name": "StringUtil", "value": 4130 },
+              { "name": "Sum", "value": 791 },
+              { "name": "Variable", "value": 1124 },
+              { "name": "Variance", "value": 1876 },
+              { "name": "Xor", "value": 1101 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "treePie",
+      "values": [
+        {"name": "flare","value": 220},
+        {"name": "flare","value": 260},
+        {"name": "flare","value": 255},
+        {"name": "analytics","value": 230},
+        {"name": "animate","value": 210},
+        {"name": "data","value": 110},
+        {"name": "data","value": 165},
+        {"name": "data","value": 290},
+        {"name": "display","value": 162},
+        {"name": "flex","value": 101},
+        {"name": "physics","value": 244},
+        {"name": "physics","value": 131},
+        {"name": "query","value": 327}
+      ]
+    },
+    {
+      "name": "treePieBin",
+      "values": [
+        {"x": 1,"y": 222},
+        {"x": 2,"y": 12},
+        {"x": 2,"y": 644},
+        {"x": 2,"y": 134},
+        {"x": 4,"y": 45},
+        {"x": 8,"y": 67},
+        {"x": 4,"y": 95},
+        {"x": 9,"y": 137},
+        {"x": 11,"y": 24},
+        {"x": 11,"y": 74},
+        {"x": 20,"y": 65},
+        {"x": 13,"y": 13}
+      ]
+    },
+    {
+      "name": "miserables",
+      "path": "./data/miserables.json"
+    },
+    {
+      "name": "iris",
+      "path": "./data/iris.csv",
+      "format": "csv"
+    }
+  ],
+  "layout": {
+    "width": "1600px",
+    "height": "1200px",
+    "rows": ["1fr", "1fr", "1fr","1fr","1fr"],
+    "columns": ["1fr", "1fr", "1fr","3fr"]
+  },
+  "visualizations": [
+    {
+      "id": "chart1",
+      "container": "1 1 1 1",
+      "visualization": "vegalite",
+      "props": {
+        "data": { "name": "points" },
+        "mark": "point",
+        "encoding": {
+          "x": { "field": "A", "type": "quantitative" },
+          "y": {
+            "field": "B",
+            "type": "quantitative",
+            "scale": { "zero": false }
+          },
+          "color": {
+            "condition": {
+              "selection": {
+                "or": ["interval", "multi"]
+              },
+              "value": "green"
+            },
+            "value": "grey"
+          },
+          "size": { "value": 100 }
+        },
+        "selection": {
+          "multi": {"type": "multi"},
+          "interval": { "type": "interval" }
+        }
+      }
+    },
+    {
+      "id": "chart2",
+      "container": "2 2 1 1",
+      "visualization": "lineup",
+      "props": {
+        "data": "points"
+      }
+    },
+    {
+      "id": "chart3",
+      "container": "3 3 1 1",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "points"
+      }
+    },
+    {
+      "id": "chart4",
+      "container": "1 1 2 2",
+      "visualization": "vegalite",
+      "props": {
+        "data": { "name": "points" },
+        "mark": "bar",
+        "encoding": {
+          "x": { "field": "A", "type": "quantitative" },
+          "y": { "field": "B", "type": "quantitative" },
+          "color": {
+            "condition": {
+              "selection": "multi",
+              "value": "green"
+            },
+            "value": "grey"
+          }
+        },
+        "selection": {
+          "multi": { "type": "multi" }
+        }
+      }
+    },
+    {
+      "id": "chart5",
+      "container": "2 2 2 2",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "points"
+      }
+    },
+    {
+      "id": "chart6",
+      "container": "3 3 2 2",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "points"
+      }
+    },
+    {
+      "id": "chart7",
+      "container": "1 1 3 3",
+      "visualization": "input",
+      "props": {
+        "value": "[\"C\", \"A\", \"B\"]"
+      }
+    },
+    {
+      "id": "chart8",
+      "container": "2 2 3 3",
+      "visualization": "select",
+      "props": {
+        "options": ["A", "B", "C"],
+        "selected": "A"
+      }
+    },
+    {
+      "id": "chart9",
+      "container": "3 3 3 3",
+      "visualization": "button",
+      "props": {
+        "text": "trigger"
+      }
+    },
+    {
+      "id": "chart10",
+      "container": "4 4 1 1",
+      "visualization": "piechart",
+      "props": {
+        "data": "treePie",
+        "range": "name",
+        "value": "value",
+        "sort": "descending",
+        "aggregate": "average"
+      }
+    },
+    {
+      "id": "chart11",
+      "container": "4 4 2 2",
+      "visualization": "donutchart",
+      "props": {
+        "data": "treePie",
+        "range": "name",
+        "value": "value",
+        "innerRadius": 0.5,
+        "sort": "ascending",
+        "aggregate": "sum"
+      }
+    },
+    {
+      "id": "chart12",
+      "container": "4 4 3 3",
+      "visualization": "sectorchart",
+      "props": {
+        "data": "treePie",
+        "range": "name",
+        "value": "value",
+        "sort": "",
+        "innerRadius": 0.5,
+        "aggregate": "min"
+      }
+    },
+    {
+      "id": "chart14",
+      "container": "5 5 1 1",
+      "visualization": "donutchart",
+      "props": {
+        "data": "treePieBin",
+        "range": "x",
+        "value": "y",
+        "aggregate": "average",
+        "innerRadius": 0.2,
+        "count": 5
+      }
+    },
+    {
+      "id": "chart15",
+      "container": "5 5 2 2",
+      "visualization": "piechart",
+      "props": {
+        "data": "treePieBin",
+        "range": "x",
+        "value": "y",
+        "aggregate": "sum",
+        "count": 5
+      }
+    },
+    {
+      "id": "chart16",
+      "container": "5 5 3 3",
+      "visualization": "sectorchart",
+      "props": {
+        "data": "treePieBin",
+        "range": "x",
+        "value": "y",
+        "aggregate": "min",
+        "innerRadius": 0.2,
+        "count": 5
+      }
+    },
+    {
+      "id": "chart13",
+      "container": "1 5 4 4",
+      "visualization": "sunburstchart",
+      "props": {
+        "data": "tree1",
+        "nodeId": "name",
+        "innerRadius": 0.5,
+        "aggregate": "min"
+      }
+    }
+  ],
+  "coordinations": [
+    "set value in chart7, then rearrange order in chart2",
+    "select in chart5 and chart6, then when chart9 clicked, intersect with $1 and $2, then highlight in chart3",
+    {
+      "how": "select in any, then select in others",
+      "visualizations": ["chart1", "chart2"]
+    },
+    "change value in chart8, then encode x in chart5",
+    "select in chart10, then select in chart11 and chart12",
+    "select in chart11, then select in chart10 and chart12",
+    "select in chart12, then select in chart10 and chart11",
+    "select in chart14, then select in chart15 and chart16",
+    "select in chart15, then select in chart14 and chart16",
+    "select in chart16, then select in chart14 and chart15"
+  ],
+  "transformations": [
+    {
+      "name": "kmeans",
+      "url": "http://localhost:8080/comp/kmeans",
+      "parameters": ["array", "k"],
+      "output": ["clusters"]
+    }
+  ]
+}

@@ -1991,6 +1991,11 @@ cssesc@^3.0.0:
   resolved "https://registry.npm.taobao.org/cssesc/download/cssesc-3.0.0.tgz#37741919903b868565e1c09ea747445cd18983ee"
   integrity sha1-N3QZGZA7hoVl4cCep0dEXNGJg+4=
 
+csv-parse@^4.9.0:
+  version "4.9.0"
+  resolved "https://registry.npm.taobao.org/csv-parse/download/csv-parse-4.9.0.tgz#a947c66d8ab31207f4933170064dd8268c511e99"
+  integrity sha1-qUfGbYqzEgf0kzFwBk3YJoxRHpk=
+
 cyclist@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
@@ -2109,6 +2114,13 @@ d3-ease@1:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/d3-ease/-/d3-ease-1.0.6.tgz#ebdb6da22dfac0a22222f2d4da06f66c416a0ec0"
   integrity sha512-SZ/lVU7LRXafqp7XtIcBdxnWl8yyLpgOmzAk0mWBI9gXNzLDx5ybZgnRbH9dN/yY5tzVBqCQ9avltSnqVwessQ==
+
+d3-ez@^3.3.15:
+  version "3.3.15"
+  resolved "https://registry.yarnpkg.com/d3-ez/-/d3-ez-3.3.15.tgz#60cbb98e7c811b26bdf1379a2c3fc8b38a90347a"
+  integrity sha512-09xRswkHjD3nAOCHAGc4YlVC0Hox3YnOM0XoX9h1eblNsNtYgAlJ7vCpyScte0flHOb9EA+e38IrzstQuiUH9A==
+  dependencies:
+    d3 "^5.9.2"
 
 d3-fetch@1:
   version "1.1.2"
@@ -2282,6 +2294,43 @@ d3@^5.15.0:
   version "5.15.0"
   resolved "https://registry.yarnpkg.com/d3/-/d3-5.15.0.tgz#ffd44958e6a3cb8a59a84429c45429b8bca5677a"
   integrity sha512-C+E80SL2nLLtmykZ6klwYj5rPqB5nlfN5LdWEAVdWPppqTD8taoJi2PxLZjPeYT8FFRR2yucXq+kBlOnnvZeLg==
+  dependencies:
+    d3-array "1"
+    d3-axis "1"
+    d3-brush "1"
+    d3-chord "1"
+    d3-collection "1"
+    d3-color "1"
+    d3-contour "1"
+    d3-dispatch "1"
+    d3-drag "1"
+    d3-dsv "1"
+    d3-ease "1"
+    d3-fetch "1"
+    d3-force "1"
+    d3-format "1"
+    d3-geo "1"
+    d3-hierarchy "1"
+    d3-interpolate "1"
+    d3-path "1"
+    d3-polygon "1"
+    d3-quadtree "1"
+    d3-random "1"
+    d3-scale "2"
+    d3-scale-chromatic "1"
+    d3-selection "1"
+    d3-shape "1"
+    d3-time "1"
+    d3-time-format "2"
+    d3-timer "1"
+    d3-transition "1"
+    d3-voronoi "1"
+    d3-zoom "1"
+
+d3@^5.9.2:
+  version "5.16.0"
+  resolved "https://registry.yarnpkg.com/d3/-/d3-5.16.0.tgz#9c5e8d3b56403c79d4ed42fbd62f6113f199c877"
+  integrity sha512-4PL5hHaHwX4m7Zr1UapXW23apo6pexCgdetdJ5kTmADpG/7T9Gkxw0M0tf/pjoB63ezCCm0u5UaFYy2aMt0Mcw==
   dependencies:
     d3-array "1"
     d3-axis "1"
@@ -3594,11 +3643,6 @@ ignore@^4.0.6:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
   integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
 
-immer@^6.0.3:
-  version "6.0.3"
-  resolved "https://registry.npm.taobao.org/immer/download/immer-6.0.3.tgz#94d5051cd724668160a900d66d85ec02816f29bd"
-  integrity sha1-lNUFHNckZoFgqQDWbYXsAoFvKb0=
-
 import-fresh@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/import-fresh/-/import-fresh-2.0.0.tgz#d81355c15612d386c61f9ddd3922d4304822a546"
@@ -4104,6 +4148,26 @@ lcid@^2.0.0:
   integrity sha512-avPEb8P8EGnwXKClwsNUgryVjllcRqtMYa49NTsbQagYuT1DcXnl1915oxWjoyGrXR6zH/Y0Zc96xWsPcoDKeA==
   dependencies:
     invert-kv "^2.0.0"
+
+leaflet-draw@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npm.taobao.org/leaflet-draw/download/leaflet-draw-1.0.4.tgz#45be92f378ed253e7202fdeda1fcc71885198d46"
+  integrity sha1-Rb6S83jtJT5yAv3tofzHGIUZjUY=
+
+leaflet.chinatmsproviders@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.npm.taobao.org/leaflet.chinatmsproviders/download/leaflet.chinatmsproviders-3.0.2.tgz#df731a836a3a783d0ab8952b6c48828d1da828f6"
+  integrity sha1-33Mag2o6eD0KuJUrbEiCjR2oKPY=
+
+leaflet.heat@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.npm.taobao.org/leaflet.heat/download/leaflet.heat-0.2.0.tgz#109d8cf586f0adee41f05aff031e27a77fecc229"
+  integrity sha1-EJ2M9Ybwre5B8Fr/Ax4np3/swik=
+
+leaflet@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.npm.taobao.org/leaflet/download/leaflet-1.6.0.tgz#aecbb044b949ec29469eeb31c77a88e2f448f308"
+  integrity sha1-rsuwRLlJ7ClGnusxx3qI4vRI8wg=
 
 leven@^3.1.0:
   version "3.1.0"
@@ -6232,6 +6296,18 @@ tty-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/tty-browserify/-/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
   integrity sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=
+
+turf-inside@^3.0.12:
+  version "3.0.12"
+  resolved "https://registry.npm.taobao.org/turf-inside/download/turf-inside-3.0.12.tgz#9ba40fa6eed63bec7e7d88aa6427622c4df07066"
+  integrity sha1-m6QPpu7WO+x+fYiqZCdiLE3wcGY=
+  dependencies:
+    turf-invariant "^3.0.12"
+
+turf-invariant@^3.0.12:
+  version "3.0.12"
+  resolved "https://registry.npm.taobao.org/turf-invariant/download/turf-invariant-3.0.12.tgz#3b95253953991ebd962dd35d4f6704c287de8ebe"
+  integrity sha1-O5UlOVOZHr2WLdNdT2cEwofejr4=
 
 type-check@~0.3.2:
   version "0.3.2"

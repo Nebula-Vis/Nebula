@@ -26,10 +26,10 @@
     }
   ],
   "layout": {
-    "width": "1000px",
+    "width": "1300px",
     "height": "1000px",
     "rows": ["1fr", "1fr", "1fr"],
-    "columns": ["1fr", "1fr", "1fr"]
+    "columns": ["1fr", "1fr", "1fr", "300px"]
   },
   "visualizations": [
     {
@@ -141,6 +141,14 @@
       "visualization": "button",
       "props": {
         "text": "trigger"
+      }
+    },
+    {
+      "id": "chart10",
+      "container": "1 1 4 4",
+      "visualization": "graph",
+      "props": {
+        "data": "miserables"
       }
     }
   ],

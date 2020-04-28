@@ -1,0 +1,600 @@
+{
+  "data": [
+    {
+      "name": "points",
+      "values": [
+        { "A": 3.2, "B": 3.7, "C": 4.2, "D": "x" },
+        { "A": 3.5, "B": 3.7, "C": 4.9, "D": "x" },
+        { "A": 3.9, "B": 3.8, "C": 6.2, "D": "x" },
+        { "A": 3.2, "B": 3.0, "C": 5.3, "D": "x" },
+        { "A": 3.6, "B": 3.0, "C": 4.4, "D": "x" },
+        { "A": 3.7, "B": 3.6, "C": 4.7, "D": "y" },
+        { "A": 3.2, "B": 4.4, "C": 5.2, "D": "y" },
+        { "A": 3.5, "B": 3.9, "C": 6.0, "D": "y" },
+        { "A": 3.1, "B": 3.2, "C": 4.0, "D": "y" },
+        { "A": 3.0, "B": 3.3, "C": 4.9, "D": "y" }
+      ]
+    },
+    {
+      "name": "linechart",
+      "values": [
+        {
+          "valueA": 1,
+          "valueB": 93.24,
+          "c": "c1",
+          "_key": "areaData1"
+        },
+        {
+          "valueA": 2,
+          "valueB": 93.24,
+          "c": "c1",
+          "_key": "areaData2"
+        },
+        {
+          "valueA": 3,
+          "valueB": 91.24,
+          "c": "c1",
+          "_key": "areaData3"
+        },
+        {
+          "valueA": 4,
+          "valueB": 90.12,
+          "c": "c1",
+          "_key": "areaData4"
+        },
+        {
+          "valueA": 5,
+          "valueB": 98.84,
+          "c": "c1",
+          "_key": "areaData5"
+        },
+        {
+          "valueA": 6,
+          "valueB": 95.24,
+          "c": "c1",
+          "_key": "areaData6"
+        },
+        {
+          "valueA": 7,
+          "valueB": 98.24,
+          "c": "c1",
+          "_key": "areaData7"
+        },
+        {
+          "valueA": 8,
+          "valueB": 96.24,
+          "c": "c1",
+          "_key": "areaData8"
+        },
+        {
+          "valueA": 9,
+          "valueB": 98.24,
+          "c": "c1",
+          "_key": "areaData9"
+        },
+        {
+          "valueA": 10,
+          "valueB": 96.24,
+          "c": "c1",
+          "_key": "areaData10"
+        },
+  
+        {
+          "valueA": 1,
+          "valueB": 97.24,
+          "c": "c2",
+          "_key": "areaData11"
+        },
+        {
+          "valueA": 2,
+          "valueB": 80,
+          "c": "c2",
+          "_key": "areaData12"
+        },
+        {
+          "valueA": 3,
+          "valueB": 100.12,
+          "c": "c2",
+          "_key": "areaData13"
+        },
+        {
+          "valueA": 4,
+          "valueB": 91.84,
+          "c": "c2",
+          "_key": "areaData14"
+        },
+        {
+          "valueA": 5,
+          "valueB": 89.24,
+          "c": "c2",
+          "_key": "areaData15"
+        },
+        {
+          "valueA": 6,
+          "valueB": 97.24,
+          "c": "c2",
+          "_key": "areaData16"
+        },
+        {
+          "valueA": 7,
+          "valueB": 90.24,
+          "c": "c2",
+          "_key": "areaData17"
+        },
+        {
+          "valueA": 8,
+          "valueB": 98.24,
+          "c": "c2",
+          "_key": "areaData18"
+        },
+        {
+          "valueA": 9,
+          "valueB": 96.24,
+          "c": "c2",
+          "_key": "areaData19"
+        },
+        {
+          "valueA": 10,
+          "valueB": 104,
+          "c": "c2",
+          "_key": "areaData20"
+        },
+  
+        {
+          "valueA": 1,
+          "valueB": 83.24,
+          "c": "c3",
+          "_key": "areaData21"
+        },
+        {
+          "valueA": 2,
+          "valueB": 103.24,
+          "c": "c3",
+          "_key": "areaData22"
+        },
+        {
+          "valueA": 3,
+          "valueB": 98.24,
+          "c": "c3",
+          "_key": "areaData23"
+        },
+        {
+          "valueA": 4,
+          "valueB": 99.12,
+          "c": "c3",
+          "_key": "areaData24"
+        },
+        {
+          "valueA": 5,
+          "valueB": 92.84,
+          "c": "c3",
+          "_key": "areaData25"
+        },
+        {
+          "valueA": 6,
+          "valueB": 100.24,
+          "c": "c3",
+          "_key": "areaData26"
+        },
+        {
+          "valueA": 7,
+          "valueB": 88.24,
+          "c": "c3",
+          "_key": "areaData27"
+        },
+        {
+          "valueA": 8,
+          "valueB": 86.24,
+          "c": "c3",
+          "_key": "areaData28"
+        },
+        {
+          "valueA": 9,
+          "valueB": 90.24,
+          "c": "c3",
+          "_key": "areaData29"
+        },
+        {
+          "valueA": 10,
+          "valueB": 100,
+          "c": "c3",
+          "_key": "areaData30"
+        },
+  
+        {
+          "valueA": 1,
+          "valueB": 104,
+          "c": "c4",
+          "_key": "areaData31"
+        },
+        {
+          "valueA": 2,
+          "valueB": 99.24,
+          "c": "c4",
+          "_key": "areaData32"
+        },
+        {
+          "valueA": 3,
+          "valueB": 80,
+          "c": "c4",
+          "_key": "areaData33"
+        },
+        {
+          "valueA": 4,
+          "valueB": 88.24,
+          "c": "c4",
+          "_key": "areaData34"
+        },
+        {
+          "valueA": 5,
+          "valueB": 90.12,
+          "c": "c4",
+          "_key": "areaData35"
+        },
+        {
+          "valueA": 6,
+          "valueB": 90.84,
+          "c": "c4",
+          "_key": "areaData36"
+        },
+        {
+          "valueA": 7,
+          "valueB": 100.24,
+          "c": "c4",
+          "_key": "areaData37"
+        },
+        {
+          "valueA": 8,
+          "valueB": 80.24,
+          "c": "c4",
+          "_key": "areaData38"
+        },
+        {
+          "valueA": 9,
+          "valueB": 86.24,
+          "c": "c4",
+          "_key": "areaData39"
+        },
+        {
+          "valueA": 10,
+          "valueB": 94.94,
+          "c": "c4",
+          "_key": "areaData40"
+        }
+      ]
+    },
+    {
+      "name": "mapdata",
+      "values": [
+          {"y": 30.2518376789, "x": 120.1141772690, "weight": 0, "color": "red", "size": 50}, {"y": 30.2418376789, "x": 120.1391772690, "weight": 0.83, "color": "green", "size": 160},
+          {"y": 30.2548376789, "x": 120.1501772690, "weight": 1, "color": "red", "size": 68}, {"y": 30.2698376789, "x": 120.1411772690, "weight": 0.32, "color": "green", "size": 105},
+          {"y": 30.2588376789, "x": 120.1421772690, "weight": 0.23, "color": "black", "size": 87}, {"y": 30.2698376789, "x": 120.1221772690, "weight": 0.55, "size": 108},
+          {"y": 30.2608376789, "x": 120.1321772690, "weight": 0.43, "color": "black", "size": 96}, {"y": 30.2718376789, "x": 120.1331772690, "weight": 0.05, "color": "green", "size": 108},
+          {"y": 30.2708376789, "x": 120.1501772690, "weight": 0.73, "color": "blue", "size": 86}, {"y": 30.2608376789, "x": 120.1411772690, "weight": 0.15, "color": "green", "size": 107},
+          {"y": 30.2728376789, "x": 120.1401772690, "weight": 0.79, "color": "red", "size": 95}, {"y": 30.2548376789, "x": 120.1291772690, "weight": 0.26, "color": "green", "size": 69},
+          {"y": 30.2688376789, "x": 120.1381772690, "weight": 0.2, "color": "red", "size": 108}, {"y": 30.2748376789, "x": 120.1301772690, "weight": 0.38, "color": "green", "size": 90},
+          {"y": 30.2588376789, "x": 120.1331772690, "weight": 0.91, "color": "blue", "size": 97}, {"y": 30.2738376789, "x": 120.1261772690, "weight": 0.88, "color": "green", "size": 100},
+          {"y": 30.2668376789, "x": 120.1251772690, "weight": 0.9, "color": "red", "size": 89}, {"y": 30.2838376789, "x": 120.1401772690, "weight": 0.74, "color": "green", "size": 100},
+          {"y": 30.2708376789, "x": 120.1301772690, "weight": 0.4, "color": "red", "size": 100}, {"y": 30.2668376789, "x": 120.1391772690, "weight": 0.3, "color": "green", "size": 117}
+        ]
+    },
+    {
+      "name": "barchart1",
+      "values": [
+        { "a": 12, "b": "blue", "c": 103, "_key": "1D1" },
+        { "a": 34, "b": "green", "c": 44, "_key": "1D2" },
+        { "a": 42, "b": "red", "c": 133, "_key": "1D3" },
+        { "a": 9, "b": "blue", "c": 66, "_key": "1D4" },
+        { "a": 75, "b": "green", "c": 153, "_key": "1D5" },
+        { "a": 45, "b": "green", "c": 60, "_key": "1D6" },
+        { "a": 25, "b": "green", "c": 100, "_key": "1D7" },
+        { "a": 66, "b": "green", "c": 13, "_key": "1D8" },
+        { "a": 12, "b": "yellow", "c": 193, "_key": "1D9" },
+        { "a": 34, "b": "blue", "c": 155, "_key": "1D10" },
+        { "a": 42, "b": "green", "c": 152, "_key": "1D11" },
+        { "a": 9, "b": "red", "c": 108, "_key": "1D12" },
+        { "a": 75, "b": "blue", "c": 141, "_key": "1D13" },
+        { "a": 45, "b": "green", "c": 111, "_key": "1D14" },
+        { "a": 25, "b": "red", "c": 162, "_key": "1D15" },
+        { "a": 66, "b": "green", "c": 103, "_key": "1D16" },
+        { "a": 12, "b": "yellow", "c": 90, "_key": "1D17" },
+        { "a": 34, "b": "blue", "c": 125, "_key": "1D18" },
+        { "a": 42, "b": "red", "c": 80, "_key": "1D19" },
+        { "a": 9, "b": "yellow", "c": 99, "_key": "1D20" },
+        { "a": 75, "b": "blue", "c": 50, "_key": "1D21" },
+        { "a": 45, "b": "red", "c": 140, "_key": "1D22" },
+        { "a": 25, "b": "yellow", "c": 66, "_key": "1D23" },
+        { "a": 66, "b": "blue", "c": 120, "_key": "1D24" }
+      ]
+    },
+    {
+      "name": "line-pie",
+      "path": "./data/total-cases-covid-19-by-continent.json"
+    },
+    {
+      "name": "miserables",
+      "path": "./data/miserables.json"
+    },
+    {
+      "name": "iris",
+      "path": "./data/iris.csv",
+      "format": "csv"
+    }
+  ],
+  "layout": {
+    "width": "1000px",
+    "height": "1000px",
+    "rows": ["1fr", "1fr", "1fr", "1fr", "1fr", "1fr", "1fr"],
+    "columns": ["1fr", "1fr", "1fr"]
+  },
+  "visualizations": [
+    {
+      "id": "chart1",
+      "container": "1 1 1 1",
+      "visualization": "vegalite",
+      "props": {
+        "data": { "name": "points" },
+        "mark": "point",
+        "encoding": {
+          "x": { "field": "A", "type": "quantitative" },
+          "y": {
+            "field": "B",
+            "type": "quantitative",
+            "scale": { "zero": false }
+          },
+          "color": {
+            "condition": {
+              "selection": {
+                "or": ["interval", "multi"]
+              },
+              "value": "green"
+            },
+            "value": "grey"
+          },
+          "size": { "value": 100 }
+        },
+        "selection": {
+          "multi": {"type": "multi"},
+          "interval": { "type": "interval" }
+        }
+      }
+    },
+    {
+      "id": "chart2",
+      "container": "2 2 1 1",
+      "visualization": "lineup",
+      "props": {
+        "data": "points"
+      }
+    },
+    {
+      "id": "chart3",
+      "container": "3 3 1 1",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "points"
+      }
+    },
+    {
+      "id": "chart4",
+      "container": "1 1 2 2",
+      "visualization": "vegalite",
+      "props": {
+        "data": { "name": "points" },
+        "mark": "bar",
+        "encoding": {
+          "x": { "field": "A", "type": "quantitative" },
+          "y": { "field": "B", "type": "quantitative" },
+          "color": {
+            "condition": {
+              "selection": "multi",
+              "value": "green"
+            },
+            "value": "grey"
+          }
+        },
+        "selection": {
+          "multi": { "type": "multi" }
+        }
+      }
+    },
+    {
+      "id": "chart5",
+      "container": "2 2 2 2",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "points"
+      }
+    },
+    {
+      "id": "chart6",
+      "container": "3 3 2 2",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "points"
+      }
+    },
+    {
+      "id": "chart7",
+      "container": "1 1 3 3",
+      "visualization": "input",
+      "props": {
+        "value": "[\"C\", \"A\", \"B\"]"
+      }
+    },
+    {
+      "id": "chart8",
+      "container": "2 2 3 3",
+      "visualization": "select",
+      "props": {
+        "options": ["A", "B", "C"],
+        "selected": "A"
+      }
+    },
+    {
+      "id": "chart9",
+      "container": "3 3 3 3",
+      "visualization": "button",
+      "props": {
+        "text": "trigger"
+      }
+    },
+    {
+      "id": "chart0",
+      "container": "4 4 1 1",
+      "visualization": "barchart",
+      "props": {
+        "data": "barchart1",
+        "selectedXRange": [20, 40],
+        "xRange": [30, 50],
+        "encoding": {
+          "x": "a",
+          "y": ["a", "c", "a", "c"],
+          "aggregate": ["sum", "sum", "average", "average"],
+          "stacked": true,
+          "color": "#104BA9",
+          "selectionColor": "#FFA200",
+          "bottomEdge": "bottom",
+          "count": 6
+        }
+      }
+    },
+    {
+      "id": "chart01",
+      "container": "4 4 2 2",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "barchart1"
+      }
+    },
+    {
+      "id": "chart10",
+      "container": "4 4 3 3",
+      "visualization": "select",
+      "props": {
+        "options": ["A", "B", "C"],
+        "selected": "A"
+      }
+    },
+    {
+      "id": "chart11",
+      "container": "5 5 1 1",
+      "visualization": "linechart",
+      "props": {
+        "data": "linechart",
+        "detail": "c",
+        "x": "valueA",
+        "y": "valueB",
+        "brushType": "xy",
+        "scale": [
+          [0, 50],
+          [0, 100]
+        ]
+      }
+    },
+    {
+      "id": "chart12",
+      "container": "5 5 3 3",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "linechart"
+      }
+    },
+    {
+      "id": "chart13",
+      "container": "6 7 1 2",
+      "visualization": "map",
+      "props": {
+        "data": "mapdata",
+        "selectedArea": [ 
+          30.2738376789,
+          120.150177269,
+          30.2668376789,
+          120.130177269
+        ],
+        "x": "x",
+        "y": "y",
+        "color": "color",
+        "size": "size",
+        "brushType": "xy",
+        "bottomEdge": "left",
+        "mapStyle": {
+          "mapLayerStyle": "TianDiTu.Normal.Map",
+          "annotionLayerStyle": "TianDiTu.Satellite.Annotion",
+          "minZoom": 3,
+          "maxZoom": 20,
+          "center": [30.2708376789, 120.130177269], 
+          "zoom": 13,
+          "zoomControl": false,
+          "attributionControl": false
+        },
+        "events": ["brush", "click"]
+      }
+    },
+    {
+      "id": "chart14",
+      "container": "6 6 3 3",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "barchart1"
+      }
+    },
+    {
+      "id": "chart15",
+      "container": "7 7 3 3",
+      "visualization": "heatmap2d",
+      "props": {
+        "data": "barchart1",
+        "encoding": {
+          "x": "c",
+          "y": "a",
+          "z": "c",
+          "countX": 8,
+          "countY": 5,
+          "bottomEdge": "bottom",
+          "bgColor": "white",
+          "color": "blue",
+          "axisSwitch": true,
+          "rectMargin": 3,
+          "xAxisSpace": 20,
+          "yAxisSpace": 60,
+          "margin": 10
+        },
+        "aggregate": "average"
+      }
+    },
+    {
+      "id": "chart16",
+      "container": "5 5 2 2",
+      "visualization": "select",
+      "props": {
+        "options": ["count", "sum", "average"],
+        "selected": "sum"
+      }
+    }
+  ],
+  "coordinations": [
+    "set value in chart7, then rearrange order in chart2",
+    "select in chart5 and chart6, then when chart9 clicked, intersect with $1 and $2, then highlight in chart3",
+    {
+      "how": "select in any, then select in others",
+      "visualizations": ["chart1", "chart2"]
+    },
+    "change value in chart8, then encode x in chart5",
+    "change value in chart10, then encode y in chart0",
+    "select in chart3, then select in chart0",
+    "select in chart11, then select in chart12",
+    "select in chart13, then select in chart14",
+    "select in chart15, then select in chart14",
+    "change value in chart16, then encode aggregate in chart15",
+    "select in chart0, then select in chart01"
+  ],
+  "transformations": [
+    {
+      "name": "kmeans",
+      "url": "http://localhost:8080/comp/kmeans",
+      "parameters": ["array", "k"],
+      "output": ["clusters"]
+    }
+  ]
+}

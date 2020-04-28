@@ -139,8 +139,12 @@ class Visualization {
         return new Scatterplot(props)
       case 'areachart':
         return new Areachart(props)
+      case 'barchart':
+        return new Barchart(props)
       case 'lineup':
         return new LineUp(props)
+      case 'linechart':
+        return new Linechart(props)
       case 'graph':
         return new NodeLinkGraph(props)
       case 'select':
@@ -161,6 +165,18 @@ class Visualization {
         return new Slider(props)
       case 'vegalite':
         return new VegaLite(props)
+      case 'piechart':
+        return new PieChart(props)
+      case 'donutchart':
+        return new DonutChart(props)
+      case 'sectorchart':
+        return new SectorChart(props)
+      case 'sunburstchart':
+        return new SunburstChart(props)
+      case 'map':
+        return new Map(props)
+      case 'heatmap2d':
+        return new Heatmap2D(props)
       default:
         throw new SyntaxError(`No such visualization ${type.toLowerCase()}.`)
     }

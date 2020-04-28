@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "name": "covid",
+      "path": "./data/total-cases-covid-19-by-continent.json"
+    }
+  ],
+  "layout": {
+    "width": "300px",
+    "height": "600px",
+    "rows": ["1fr", "1fr"],
+    "columns": ["1fr"]
+  },
+  "visualizations": [
+    {
+      "id": "chart1",
+      "container": "1 1 1 1",
+      "visualization": "linechart",
+      "props": {
+        "data": "covid",
+        "x": "Date",
+        "y": "Total confirmed cases of COVID-19 (cases)",
+        "detail": "Entity",
+        "brushType": "x"
+      }
+    },
+    {
+      "id": "chart2",
+      "container": "2 2 1 1",
+      "visualization": "piechart",
+      "props": {
+        "data": "covid",
+        "range": "Entity",
+        "value": "Total confirmed cases of COVID-19 (cases)",
+        "aggregate": "sum"
+      }
+    }
+  ],
+  "coordinations": ["select in chart1, then set data in chart2"]
+}
