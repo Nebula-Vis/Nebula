@@ -24,7 +24,7 @@
       "props": {
         "data": "cars",
         "x": "Miles_per_Gallon",
-        "y": "Horsepower"
+        "y": "Displacement"
       }
     }
   ],
