@@ -18,10 +18,12 @@
       "visualization": "barchart",
       "props": {
         "data": "houses",
-        "x": "lng1",
-        "aggregate": "count",
-        "count": 20,
-        "orientation": "up"
+        "encoding": {
+          "x": "lng1",
+          "aggregate": "count",
+          "count": 20,
+          "bottomEdge": "up"
+        }
       }
     },
     {
@@ -30,10 +32,12 @@
       "visualization": "barchart",
       "props": {
         "data": "houses",
-        "x": "lat1",
-        "aggregate": "count",
-        "count": 20,
-        "orientation": "left"
+        "encoding": {
+          "x": "lat1",
+          "aggregate": "count",
+          "count": 20,
+          "bottomEdge": "left"
+        }
       }
     },
     {
@@ -42,12 +46,14 @@
       "visualization": "barchart",
       "props": {
         "data": "houses",
-        "x": "lat1",
-        "y": ["Living Rooms", "Bedrooms", "Floor Size"],
-        "aggregate": "average",
-        "count": 20,
-        "orientation": "right",
-        "stacked": true
+        "encoding": {
+          "x": "lat1",
+          "y": ["Living Rooms", "Bedrooms", "Floor Size"],
+          "aggregate": "average",
+          "count": 20,
+          "bottomEdge": "right",
+          "stacked": true
+        }
       }
     },
     {
@@ -56,20 +62,34 @@
       "visualization": "barchart",
       "props": {
         "data": "houses",
-        "x": "lng1",
-        "y": ["Living Rooms", "Bedrooms", "Floor Size"],
-        "aggregate": "average",
-        "count": 20,
-        "orientation": "down",
-        "stacked": true
+        "encoding": {
+          "x": "lng1",
+          "y": ["Living Rooms", "Bedrooms", "Floor Size"],
+          "aggregate": "average",
+          "count": 20,
+          "bottomEdge": "down",
+          "stacked": true
+        }
       }
     },
     {
       "id": "map",
       "container": "3 3 3 3",
-      "visualization": "scatterplot",
+      "visualization": "map",
       "props": {
-        "data": "houses"
+        "data": "houses",
+        "encoding": {
+          "x": "lng1",
+          "y": "lat1",
+          "mapStyle": {
+            "minZoom": 3,
+            "maxZoom": 20,
+            "center": [30.2708376789, 120.130177269],
+            "zoom": 13,
+            "zoomControl": false,
+            "attributionControl": false
+          }
+        }
       }
     },
     {
@@ -82,16 +102,5 @@
       }
     }
   ],
-  "coordinations": [
-    {
-      "how": "select items in any, then select items in others",
-      "visualizations": ["histo-top", "histo-left", "stackedbar-right", "stackedbar-bottom", "map"]
-    },
-    {
-      "how": "select ranges in any, then select ranges in others",
-      "visualizations": ["histo-top", "histo-left", "stackedbar-right", "stackedbar-bottom", "map"]
-    },
-    "navigate in map, then set ranges in histo-top, histo-left, stackedbar-right, stackedbar-bottom",
-    "reconfigure order in lineup, then encode y in stackedbar-right, stackedbar-bottom"
-  ]
+  "coordinations": []
 }

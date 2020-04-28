@@ -85,12 +85,13 @@ export default Vue.extend({
       }
     },
     mergedStyle() {
-      const mapResult = {}
-      forEach(this.defaultStyle.defaultMapStyle, (item, key) => {
-        if (this.encoding.mapStyle[key])
-          mapResult[key] = this.encoding.mapStyle[key]
-        else mapResult[key] = item
-      })
+      const mapResult = this.defaultStyle.defaultMapStyle
+      if (this.encoding.mapStyle)
+        forEach(this.defaultStyle.defaultMapStyle, (item, key) => {
+          if (this.encoding.mapStyle[key])
+            mapResult[key] = this.encoding.mapStyle[key]
+          else mapResult[key] = item
+        })
 
       return {
         mergedMapStyle: mapResult,
@@ -132,7 +133,7 @@ export default Vue.extend({
     this.svgWidth = rect.width
     this.svgHeight = rect.height
     this.zoom = this.mergedStyle.mergedMapStyle.zoom
-    if (this.encoding.events.includes('brush')) this.brushEventFlag = true
+    this.brushEventFlag = true
 
     const mapLayer = L.tileLayer.chinaProvider(
       this.mergedStyle.mergedMapStyle.mapLayerStyle,
@@ -308,17 +309,15 @@ export default Vue.extend({
             zIndex: 999,
           }
         )
-        if (this.encoding.events.includes('click')) {
-          const circlePopup = circle.bindPopup(
-            `<b>经度: ${item.x};<br>纬度: ${item.y}<br>color: ${item.color}; size: ${item.size}</b>`
-          )
-          circlePopup.on('popupopen', () => {
-            if (!(this.clickedData === item)) {
-              this.$emit('click', [item, key])
-              this.clickedData = item
-            }
-          })
-        }
+        const circlePopup = circle.bindPopup(
+          `<b>经度: ${item.x};<br>纬度: ${item.y}<br>color: ${item.color}; size: ${item.size}</b>`
+        )
+        circlePopup.on('popupopen', () => {
+          if (!(this.clickedData === item)) {
+            this.$emit('click', [item, key])
+            this.clickedData = item
+          }
+        })
         points.push(circle)
       })
       this.pointsLayer = L.layerGroup(points).addTo(this.map)
