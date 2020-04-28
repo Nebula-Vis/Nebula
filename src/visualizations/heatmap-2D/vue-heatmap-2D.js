@@ -550,7 +550,7 @@ export default Vue.extend({
       handler: function () {
         this.redrawChart()
       },
-      dee: true,
+      deep: true,
     },
   },
   mounted() {

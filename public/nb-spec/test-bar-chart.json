@@ -308,6 +308,10 @@
       ]
     },
     {
+      "name": "line-pie",
+      "path": "./data/total-cases-covid-19-by-continent.json"
+    },
+    {
       "name": "miserables",
       "path": "./data/miserables.json"
     },
@@ -440,15 +444,27 @@
       "container": "4 4 1 1",
       "visualization": "barchart",
       "props": {
-        "data": "points",
-        "selection": [
-          { "A": 3.2, "B": 3.7, "C": 4.2, "D": "x" },
-          { "A": 3.5, "B": 3.7, "C": 4.9, "D": "x" },
-          { "A": 3.9, "B": 3.8, "C": 6.2, "D": "x" }
-        ],
-        "y": "C",
-        "color": "#104BA9",
-        "selectionColor": "#FFA200"
+        "data": "barchart1",
+        "selectedXRange": [20, 40],
+        "xRange": [30, 50],
+        "encoding": {
+          "x": "a",
+          "y": ["a", "c", "a", "c"],
+          "aggregate": ["sum", "sum", "average", "average"],
+          "stacked": true,
+          "color": "#104BA9",
+          "selectionColor": "#FFA200",
+          "bottomEdge": "bottom",
+          "count": 6
+        }
+      }
+    },
+    {
+      "id": "chart01",
+      "container": "4 4 2 2",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "barchart1"
       }
     },
     {
@@ -570,7 +586,8 @@
     "select in chart11, then select in chart12",
     "select in chart13, then select in chart14",
     "select in chart15, then select in chart14",
-    "change value in chart16, then encode aggregate in chart15"
+    "change value in chart16, then encode aggregate in chart15",
+    "select in chart0, then select in chart01"
   ],
   "transformations": [
     {
