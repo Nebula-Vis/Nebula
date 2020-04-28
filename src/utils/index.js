@@ -60,7 +60,7 @@ function boolArraySame(arr1, arr2) {
 function findItemWithKey(arr, key) {
   if (arr) {
     for (const i in arr) {
-      if (arr[i]._key === key) return arr[i]
+      if (arr[i]._nbid_ === key) return arr[i]
     }
   }
   return undefined

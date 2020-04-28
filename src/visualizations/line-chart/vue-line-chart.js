@@ -115,9 +115,11 @@ export default Vue.extend({
       const ySpace = Math.ceil(yExtent[1]).toString().length
 
       // 基于数据和配置确定的坐标配置
+      const boolXIsDate =
+        this.data[0] && this.data[0][this.defaultEncodings.x] instanceof Date
+
       const axisConfig = {
-        x: d3
-          .scaleLinear()
+        x: (boolXIsDate ? d3.scaleTime() : d3.scaleLinear())
           .domain(xExtent)
           .nice()
           .range([
@@ -145,12 +147,14 @@ export default Vue.extend({
         .ticks(
           Math.round(this.height / (axisConfig.xSpace * this.defaultSpace))
         )
+      if (boolXIsDate) {
+        xAxis.ticks(d3.timeMonth)
+      }
       const yAxis = d3
         .axisLeft(axisConfig.y)
         .ticks(Math.round(this.height / this.defaultSpace))
 
-      const xScale = d3
-        .scaleLinear()
+      const xScale = (boolXIsDate ? d3.scaleTime() : d3.scaleLinear())
         .domain(xExtent)
         .nice()
         .range([0, this.elementLayout.chartSvg.width])
@@ -210,7 +214,7 @@ export default Vue.extend({
                 d[self.defaultEncodings.y] >= minY &&
                 d[self.defaultEncodings.y] <= maxY
               ) {
-                indices.push(d._key)
+                indices.push(d._nbid_)
               }
             })
           })

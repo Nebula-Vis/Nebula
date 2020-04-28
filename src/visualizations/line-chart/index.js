@@ -11,19 +11,25 @@ import {
 export default class LineChart {
   constructor(props) {
     this.id = props.id || new Date() - 0
-    this.data = props.data
-    const numericFields = getFieldsOfType(this.data, 'number')
+
+    const numericFields = getFieldsOfType(props.data, 'number')
     const x = props.x || numericFields[0]
     const y = props.y || numericFields[1]
+
+    let data = props.data
+    if (data[0] && this._isValidDateString(data[0][x])) {
+      data = this._convertDateStringToDateForX(data, x)
+    }
     const detail = props.detail || numericFields[2]
     const scale = props.scale
     const selection = props.selection || []
-    if (!boolDataHasAttributes(this.data, x, y, detail)) {
+    if (!boolDataHasAttributes(props.data, x, y, detail)) {
       throw new Error(
         `LineChart: wrong attributes x:${x}, y:${y}, detail:${detail}`
       )
     }
 
+    this.data = data
     this.x = x
     this.y = y
     this.detail = detail
@@ -160,6 +166,11 @@ export default class LineChart {
     if (!Array.isArray(val)) {
       throw new TypeError(`LineChart: expect data to be Array, got ${val}`)
     }
+    const x = this.x.get()
+    if (val[0] && this._isValidDateString(val[0][x])) {
+      val = this._convertDateStringToDateForX(val, x)
+    }
+    console.log(val)
     this.vm.data = val
   }
 
@@ -220,5 +231,14 @@ export default class LineChart {
 
   _getScale(data, x) {
     return { [x]: getDataExtent(data, x) }
+  }
+
+  _isValidDateString(str) {
+    const d = new Date(str)
+    return !isNaN(d.getTime())
+  }
+
+  _convertDateStringToDateForX(data, x) {
+    return data.map((v) => ({ ...v, [x]: new Date(v[x]) }))
   }
 }
