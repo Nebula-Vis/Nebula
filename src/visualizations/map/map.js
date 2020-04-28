@@ -111,6 +111,9 @@ export default Vue.extend({
       if (!this.mapData) return
       this.points = this.drawCircle([])
     },
+    selectedArea() {
+      this.drawSelectedArea()
+    },
   },
   created() {
     switch (this.axes) {
@@ -221,6 +224,16 @@ export default Vue.extend({
         return
       const selection = self.dealClickArea(e.layer._latlngs[0])
       self.$emit('selection', selection.selectedArr)
+      self.$emit('selectedArea', {
+        [self.mergedEncoding.y]: [
+          e.layer._latlngs[0][3].lat,
+          e.layer._latlngs[0][1].lat,
+        ],
+        [self.mergedEncoding.x]: [
+          e.layer._latlngs[0][1].lng,
+          e.layer._latlngs[0][3].lng,
+        ],
+      })
       if (self.pointsLayer) self.pointsLayer.remove()
       self.points = self.drawCircle([
         'grey',
@@ -249,9 +262,11 @@ export default Vue.extend({
       self.points = self.drawCircle(self.paramStore)
     })
     this.drawSelectedArea()
+    this.onMapPan()
   },
   methods: {
     drawSelectedArea() {
+      if (this.clickArea) this.clickArea.remove()
       const point1 = this.map.containerPointToLatLng([0, 0])
       const point2 = this.map.containerPointToLatLng([
         this.svgWidth,
@@ -310,7 +325,12 @@ export default Vue.extend({
           }
         )
         const circlePopup = circle.bindPopup(
-          `<b>经度: ${item.x};<br>纬度: ${item.y}<br>color: ${item.color}; size: ${item.size}</b>`
+          (() => {
+            let result = '<b>'
+            for (const i in item) result += `${i}: ${item[i]}<br>`
+            result += '</b>'
+            return result
+          })()
         )
         circlePopup.on('popupopen', () => {
           if (!(this.clickedData === item)) {
@@ -387,13 +407,10 @@ export default Vue.extend({
       const dataInWindow = this.dealClickArea(parArr)
       this.$emit('visibleData', dataInWindow)
       this.$emit('visibleRange', {
-        lat: [parArr[3].lat, parArr[0].lat],
-        lng: [parArr[0].lng, parArr[3].lng],
+        [this.mergedEncoding.y]: [parArr[2].lat, parArr[0].lat],
+        [this.mergedEncoding.x]: [parArr[0].lng, parArr[2].lng],
       })
-      console.log('emit data in window: ', dataInWindow, {
-        lat: [parArr[2].lat, parArr[0].lat],
-        lng: [parArr[0].lng, parArr[2].lng],
-      })
+      this.drawSelectedArea()
     },
   },
 })

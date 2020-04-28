@@ -22,7 +22,7 @@ export default class BarCahrt {
       props.encoding.aggregate ||
       (props.encoding.stacked ? y.map((item) => 'count') : 'count')
     this.selection = selection
-    this.selectedXRange = props.selectedXRange || []
+    this.selectedXRange = props.selectedXRange || {}
     this.xRange = props.xRange || []
     this.stacked = props.encoding.stacked
     this.el = null
@@ -67,9 +67,15 @@ export default class BarCahrt {
       watch: {
         data(val) {
           this.selection = []
-          this.selectedXRange = []
-          this.xRange = []
+          this.selectedXRange = {}
         },
+        // xRange: {
+        //   handler: function () {
+        //     this.selection = []
+        //     this.selectedXRange = {}
+        //   },
+        //   deep: true,
+        // },
       },
     })
     this.vm.$on('selection', (val) => {
@@ -142,7 +148,7 @@ export default class BarCahrt {
       'xRange',
       this.xRange,
       '_onXRangeChange',
-      'select',
+      'navigate',
       'ranges'
     )
   }
@@ -193,20 +199,20 @@ export default class BarCahrt {
   }
 
   _onSelectedXRangeChange(val) {
-    if (!Array.isArray(val)) {
-      throw new TypeError(
-        `BarChart: expect selectedXRange to be Array, got ${val}`
-      )
-    }
+    // if (!Array.isArray(val)) {
+    //   throw new TypeError(
+    //     `BarChart: expect selectedXRange to be Array, got ${val}`
+    //   )
+    // }
     this.vm.selectedXRange = val
   }
 
   _onXRangeChange(val) {
-    if (!Array.isArray(val)) {
-      throw new TypeError(
-        `BarChart: expect selectedXRange to be Array, got ${val}`
-      )
-    }
+    // if (!Array.isArray(val)) {
+    //   throw new TypeError(
+    //     `BarChart: expect selectedXRange to be Array, got ${val}`
+    //   )
+    // }
     this.vm.xRange = val
   }
 }

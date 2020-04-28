@@ -29,7 +29,6 @@ export default class Map {
     this.brushType = props.brushType
     this.bottomEdge = props.bottomEdge
     this.mapStyle = props.mapStyle
-    this.events = props.events
     this.selection = props.selection || []
     this.visibleData = []
     this.visibleRange = {}
@@ -64,7 +63,6 @@ export default class Map {
           brushType: this.brushType.get(),
           bottomEdge: this.bottomEdge.get(),
           mapStyle: this.mapStyle.get(),
-          events: this.events.get(),
         },
         selection: this.selection.get(),
       },
@@ -90,6 +88,9 @@ export default class Map {
     })
     this.vm.$on('selection', (val) => {
       this.selection.set(val)
+    })
+    this.vm.$on('selectedArea', (val) => {
+      this.selectedArea.set(val)
     })
   }
 
@@ -167,14 +168,6 @@ export default class Map {
       'encode',
       'style'
     )
-    this.events = new ReactiveProperty(
-      this,
-      'events',
-      this.events,
-      '_onEventsChange',
-      'encode',
-      'type'
-    )
     this.selectedArea = new ReactiveProperty(
       this,
       'selectedArea',
@@ -196,7 +189,7 @@ export default class Map {
       'visibleData',
       this.visibleData,
       '_onVisibleDataChange',
-      'select',
+      'navigate',
       'items'
     )
     this.visibleRange = new ReactiveProperty(
@@ -204,7 +197,7 @@ export default class Map {
       'visibleRange',
       this.visibleRange,
       '_onVisibleRangeChange',
-      'select',
+      'navigate',
       'ranges'
     )
   }
@@ -272,17 +265,10 @@ export default class Map {
     this.vm.mapStyle = val
   }
 
-  _onEventsChange(val) {
-    if (!Array.isArray(val)) {
-      throw new TypeError(`Map: expect events to be array, got ${val}`)
-    }
-    this.vm.events = val
-  }
-
   _onSelectedAreaChange(val) {
-    if (!Array.isArray(val)) {
-      throw new TypeError(`Map: expect selection to be Array, got ${val}`)
-    }
+    // if (!Array.isArray(val)) {
+    //   throw new TypeError(`Map: expect selection to be Array, got ${val}`)
+    // }
 
     this.vm.selectedArea = val
   }

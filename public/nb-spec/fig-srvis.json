@@ -6,10 +6,10 @@
     }
   ],
   "layout": {
-    "width": "1250px",
-    "height": "950px",
-    "rows": ["100px", "150px", "500px", "150px"],
-    "columns": ["100px", "150px", "500px", "150px", "1fr"]
+    "width": "1550px",
+    "height": "1250px",
+    "rows": ["100px", "150px", "800px", "150px"],
+    "columns": ["100px", "150px", "800px", "150px", "1fr"]
   },
   "visualizations": [
     {
@@ -22,7 +22,8 @@
           "x": "lng1",
           "aggregate": "count",
           "count": 20,
-          "bottomEdge": "up"
+          "bottomEdge": "bottom",
+          "isDisplay": true
         }
       }
     },
@@ -36,7 +37,8 @@
           "x": "lat1",
           "aggregate": "count",
           "count": 20,
-          "bottomEdge": "left"
+          "bottomEdge": "right",
+          "isDisplay": false
         }
       }
     },
@@ -48,11 +50,12 @@
         "data": "houses",
         "encoding": {
           "x": "lat1",
-          "y": ["Living Rooms", "Bedrooms", "Floor Size"],
-          "aggregate": "average",
+          "y": ["Living Rooms", "Bedrooms"],
+          "aggregate": ["count", "count"],
           "count": 20,
-          "bottomEdge": "right",
-          "stacked": true
+          "bottomEdge": "left",
+          "stacked": true,
+          "isDisplay": false
         }
       }
     },
@@ -65,10 +68,13 @@
         "encoding": {
           "x": "lng1",
           "y": ["Living Rooms", "Bedrooms", "Floor Size"],
-          "aggregate": "average",
+          "aggregate": ["average", "average", "average"],
           "count": 20,
-          "bottomEdge": "down",
-          "stacked": true
+          "color": "#104BA9",
+          "selectionColor": "#FFA200",
+          "bottomEdge": "top",
+          "stacked": true,
+          "isDisplay": false
         }
       }
     },
@@ -78,17 +84,17 @@
       "visualization": "map",
       "props": {
         "data": "houses",
-        "encoding": {
-          "x": "lng1",
-          "y": "lat1",
-          "mapStyle": {
-            "minZoom": 3,
-            "maxZoom": 20,
-            "center": [30.2708376789, 120.130177269],
-            "zoom": 13,
-            "zoomControl": false,
-            "attributionControl": false
-          }
+        "x": "lng1",
+        "y": "lat1", 
+        "brushType": "xy",
+        "bottomEdge": "bottom",
+        "mapStyle": {
+          "minZoom": 3,
+          "maxZoom": 20,
+          "center": [30.2708376789, 120.130177269],
+          "zoom": 10,
+          "zoomControl": false,
+          "attributionControl": false
         }
       }
     },
@@ -102,5 +108,16 @@
       }
     }
   ],
-  "coordinations": []
+  "coordinations": [
+    {
+      "how": "select items in any, then select items in others",
+      "visualizations": ["histo-top", "histo-left", "stackedbar-right", "stackedbar-bottom", "map"]
+    },
+    {
+      "how": "select ranges in any, then select ranges in others",
+      "visualizations": ["histo-top", "histo-left", "stackedbar-right", "stackedbar-bottom", "map"]
+    },
+    "navigate ranges in map, then navigate ranges in histo-top, histo-left, stackedbar-right, stackedbar-bottom",
+    "reconfigure order in lineup, then encode y in stackedbar-right, stackedbar-bottom"
+  ]
 }

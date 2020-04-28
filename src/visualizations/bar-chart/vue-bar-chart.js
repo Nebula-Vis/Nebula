@@ -13,8 +13,8 @@ export default Vue.extend({
       },
       isMounted: false,
       selection: [],
-      selectedXRange: [],
-      xRange: [],
+      selectedXRange: {},
+      xRange: {},
       brushedBins: [],
       clickedBin: undefined,
       disableClick: false,
@@ -23,32 +23,45 @@ export default Vue.extend({
       svgWidth: 400,
       svgHeight: 50,
       xValueRange: [],
+      data: [],
     }
   },
   computed: {
     rotation() {
-      let angle = 0
+      let transform = ''
       switch (this.fullEncoding.bottomEdge) {
-        case 'right':
-          angle = -90
-          break
         case 'left':
-          angle = 90
+          transform = `rotate(90)  scale(-1, 1) translate(${-this
+            .svgWidth}, ${-this.svgHeight})`
+          break
+        case 'right':
+          transform = `rotate(90) scale(-1, -1) translate(${-this.svgWidth}, 0)`
           break
         case 'top':
-          angle = 180
+          transform = `scale(1, -1) translate(0, ${-this.svgHeight})`
           break
         default:
           break
       }
-      return `rotate(${angle})`
+      return transform
     },
     processData() {
+      let curData = []
       if (!Array.isArray(this.data)) {
-        return this.data.data
+        curData = this.data.data
       } else {
-        return this.data
+        curData = this.data
       }
+      const tempArr = this.xRange[this.fullEncoding.x] || []
+      const data =
+        tempArr.length === 2
+          ? curData.filter(
+              (item) =>
+                item[this.fullEncoding.x] >= tempArr[0] &&
+                item[this.fullEncoding.x] <= tempArr[1]
+            )
+          : curData
+      return data
     },
     fullEncoding() {
       const defaultEncoding = {
@@ -78,7 +91,6 @@ export default Vue.extend({
         left = 0
         right = this.width
       }
-
       return d3
         .scaleBand()
         .domain(this.bins.map((d) => d.name))
@@ -96,21 +108,15 @@ export default Vue.extend({
     },
     bins() {
       // parse dataset
-      const data =
-        this.xRange.length === 2
-          ? this.processData.filter(
-              (item) =>
-                item[this.fullEncoding.x] >= this.xRange[0] &&
-                item[this.fullEncoding.x] <= this.xRange[1]
-            )
-          : this.processData
+      const tempArr = this.xRange[this.fullEncoding.x] || []
+      const data = this.processData
       const binCount = this.fullEncoding.count
 
       const attr = this.fullEncoding.x
 
       const res = []
-      const max = this.xRange[1] || d3.max(this.processData, (d) => d[attr])
-      const min = this.xRange[0] || d3.min(this.processData, (d) => d[attr])
+      const max = tempArr[1] || d3.max(this.processData, (d) => d[attr])
+      const min = tempArr[0] || d3.min(this.processData, (d) => d[attr])
       this.xValueRange = [min, max]
 
       if (this.xType === 'number') {
@@ -122,15 +128,15 @@ export default Vue.extend({
         const result = d3
           .histogram()
           .value((d) => d[attr])
+          .domain(this.xValueRange)
           .thresholds(res)(data)
 
         result.forEach((d, i) => {
-          if (i === 0) d.x0 = this.xRange[0]
-          else if (i === result.length - 1) d.x1 = this.xRange[1]
+          if (i === 0) d.x0 = tempArr[0] || d.x0
+          else if (i === result.length - 1) d.x1 = tempArr[1] || d.x1
           d.name = `${d.x0}-${d.x1}`
         })
         this.binForAggregate(result)
-        console.log(result)
         return result
       } else {
         const set = new Set(data.map((d) => d[attr]))
@@ -153,14 +159,14 @@ export default Vue.extend({
       if (!this.isMounted) {
         return
       }
-      return this.$refs.svg.getBoundingClientRect().width
+      return this.svgWidth
     },
     height() {
       // get svg height
       if (!this.isMounted) {
         return
       }
-      return this.$refs.svg.getBoundingClientRect().height
+      return this.svgHeight
     },
     scaleY() {
       // scale of yAxis
@@ -233,8 +239,15 @@ export default Vue.extend({
       const x = this.scaleX
       const selection = brushArea || d3.event.selection
       const brush = this.brushListener
+      const brushG = this.$refs.brushG
       if (!brushArea && !(d3.event.sourceEvent instanceof MouseEvent)) return
-
+      if (
+        brushArea &&
+        (brushArea[0] === undefined || brushArea[1] === undefined)
+      ) {
+        d3.select(brushG).call(brush.clear)
+        return
+      }
       if (!selection) {
         this.selection = null
         this.brushedBins = []
@@ -249,14 +262,18 @@ export default Vue.extend({
       const band = x.bandwidth()
 
       const x0 = Math.round((selection[0] - minRange) / band)
-      const x1 = Math.round((selection[1] - minRange) / band)
+      let x1 = Math.round((selection[1] - minRange) / band)
       const res = [x(bins[x0].name), x(bins[x0].name) + (x1 - x0) * band]
       const selected = _.concat.apply(null, bins.slice(x0, x1))
+      if (x1 >= bins.length) x1 = bins.length - 1
       // this.selection = selected
-      this.$emit('selection', selected)
-      this.$emit('selectedXRange', [x0, x1])
+      if (!brushArea) {
+        this.$emit('selection', selected)
+        this.$emit('selectedXRange', {
+          [this.fullEncoding.x]: [bins[x0].x0, bins[x1].x1],
+        })
+      }
       this.brushedBins = bins.slice(x0, x1).map((d) => d.name)
-      const brushG = this.$refs.brushG
       d3.select(brushG).transition().call(brush.move, res)
     },
     drawRect() {
@@ -267,6 +284,8 @@ export default Vue.extend({
       const color = this.fullEncoding.color
       const rect = this.getRect
       const self = this
+      d3.select(this.$refs['rectG']).selectAll('rect').remove()
+      d3.select(this.$refs['colorG']).selectAll('rect').remove()
 
       if (this.fullEncoding.stacked) {
         const colorArr = this.fullEncoding.y.map(() =>
@@ -281,7 +300,7 @@ export default Vue.extend({
           .attr('fill', color)
         bins.forEach((item) => {
           item.stackArr.forEach((item1, index) => {
-            d3.select('#rectG')
+            d3.select(this.$refs['colorG'])
               .append('rect')
               .attr('x', x(item.name))
               .attr('y', y(item1[1]))
@@ -290,14 +309,17 @@ export default Vue.extend({
               .attr('fill', `#${colorArr[index]}`)
           })
         })
-      } else
-        rect
-          .data(bins)
-          .attr('x', (d) => x(d.name))
-          .attr('y', (d) => y(d.num))
-          .attr('width', x.bandwidth())
-          .attr('height', (d) => y(0) - y(d.num))
-          .attr('fill', color)
+      } else {
+        bins.forEach((item) => {
+          d3.select(this.$refs['rectG'])
+            .append('rect')
+            .attr('x', x(item.name))
+            .attr('y', y(item.num))
+            .attr('width', x.bandwidth())
+            .attr('height', y(0) - y(item.num))
+            .attr('fill', color)
+        })
+      }
     },
     drawAxis() {
       // draw axis
@@ -368,16 +390,12 @@ export default Vue.extend({
       const brushG = this.$refs.brushG
       const brushListener = this.brushListener
       d3.select(brushG).call(brushListener)
-      let [x0, x1] = [this.selectedXRange[0], this.selectedXRange[1]]
-      if (x0 < this.xRange[0]) x0 = this.xRange[0]
-      if (x1 < this.xRange[1]) x1 = this.xRange[1]
+      const [x0, x1] = this.selectedXRange[this.fullEncoding.x] || []
       const brushArea = [this.scaleXRange(x0), this.scaleXRange(x1)]
       this.brushended(brushArea)
-      // d3.select(brushG).call(brushListener.move, brushArea)
     },
     getBrushArea(x0, x1) {},
     colorRect() {
-      // change the color of the selected rects
       const color = this.fullEncoding.color
       const selectionColor = this.fullEncoding.selectionColor
       const rect = this.getRect
@@ -388,32 +406,14 @@ export default Vue.extend({
         selectedBins.includes(d.name) ? selectionColor : color
       )
     },
-    handleClick(event) {
-      if (this.disableClick) return
-
-      const clickX = event.layerX
-
-      const x = this.scaleX
-      const minRange = x.range()[0]
-      const band = x.bandwidth()
-
-      const binIndex = Math.floor((clickX - minRange) / band)
-      if (binIndex >= this.bins.length) {
-        this.selection = []
-        this.clickedBin = undefined
-        return
-      }
-
-      const bins = this.bins
-      this.selection = bins[binIndex]
-      this.clickedBin = bins[binIndex].name
-      this.brushedBins = []
-    },
   },
   mounted() {
-    const rect = this.$refs['svg'].getBoundingClientRect()
-    this.svgWidth = rect.width
-    this.svgHeight = rect.height
+    const rect = this.$refs['container'].getBoundingClientRect()
+    const from = this.fullEncoding.bottomEdge
+    this.svgWidth =
+      from === 'left' || from === 'right' ? rect.height : rect.width
+    this.svgHeight =
+      from === 'left' || from === 'right' ? rect.width : rect.height
     if (typeof this.encoding.isDisplay != 'undefined') {
       this.isDisplay = this.encoding.isDisplay
     }
@@ -425,20 +425,22 @@ export default Vue.extend({
     this.drawBrush()
   },
   watch: {
-    data: function () {
+    selectedXRange() {
+      this.drawBrush()
+    },
+    processData: function () {
       this.drawRect()
       if (this.encoding.isDisplay) {
         this.isDisplay = this.encoding.isDisplay
       }
       if (this.isDisplay) {
         this.$nextTick(function () {
-          this.drawAxis()
-          this.selection = []
-          const brush = this.brushListener
-          const brushG = this.$refs.brushG
-          d3.select(brushG).transition().call(brush.clear)
+          this.drawAxis()``
         })
       }
+    },
+    xRange() {
+      this.drawBrush()
     },
     encoding: {
       handler: function () {
@@ -463,21 +465,24 @@ export default Vue.extend({
     },
   },
   template: `
-<div style="position: relative; width: 100%; height: 100%;">
-  <div ref="container">
-    <svg width="100%" height="100%" ref="svg" :transform="rotation">
-      <g ref="rectG" id="rectG">
-        <template v-for="(value, index) in bins">
-          <rect :key="'rect' + index" />
+<div style="position: relative; width: 100%; height: 100%;" ref="container">
+  <div>
+    <svg width="100%" height="100%" ref="svg">
+      <g :transform="rotation">
+        <g ref="rectG" id="rectG">
+          <template v-for="(value, index) in bins">
+            <rect :key="'rect' + index" />
+          </template>
+        </g>
+        <g ref="colorG"></g>
+
+        <g ref="brushG" />
+
+        <template v-if="isDisplay">
+          <g ref="xAxis" />
+          <g ref="yAxis" />
         </template>
       </g>
-
-      <g ref="brushG" @click="handleClick" />
-
-      <template v-if="isDisplay">
-        <g ref="xAxis" />
-        <g ref="yAxis" />
-      </template>
       <!-- <line v-show="!isDisplayAxis" ref="line"></line> -->
     </svg>
   </div>
