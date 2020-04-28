@@ -1,0 +1,11 @@
+.treemap .leaf {
+  cursor: crosshair;
+}
+.treemap .leaf:hover rect {
+  transition: all 200ms;
+  opacity: 0.8;
+}
+
+.treemap .leaf.selected rect {
+  opacity: 0.5;
+}

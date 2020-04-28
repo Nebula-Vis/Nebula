@@ -12,6 +12,7 @@ export const ACTIONS = [
 
 export const OPTIONS = [
   'items',
+  'subtree', // for sub tree selection
   'ranges',
   'scale',
   'x',
@@ -24,7 +25,6 @@ export const OPTIONS = [
   'dataset',
   'name',
   'value',
-
   'sort',
   'innerRadius',
   'aggregate',
@@ -38,13 +38,12 @@ export const OPTIONS = [
 
 // index = 0，默认参数
 export const ACTION_TO_OPTIONS = {
-  select: ['items', 'ranges'],
+  select: ['items', 'ranges', 'subtree'],
   filter: ['items'],
   navigate: ['scale'],
   encode: [
     'x',
     'y',
-
     'color',
     'size',
     'name',

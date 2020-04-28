@@ -1,13 +1,14 @@
 import * as d3 from 'd3'
 import ReactiveProperty from '@/reactive-prop'
-import { getFieldsOfType } from '@/utils'
+import _ from 'lodash'
+import './tree.css'
 export default class Tree {
   constructor(props) {
     this.id = props.id
     this.data = props.data.hierarchy
+    this.selection = props.selection
     this.nodeId = props.nodeId || Object.keys(props.data.nodes[0])[0] || 'id'
     this.el = null
-    this.treeData = null
     this._init()
   }
 
@@ -29,8 +30,9 @@ export default class Tree {
       .create('svg')
       .attr('viewBox', [0, 0, width, x1 - x0 + root.dx * 2])
 
-    const g = svg
+    const tree = svg
       .append('g')
+      .attr('class', 'tree')
       .attr('font-family', 'sans-serif')
       .attr('font-size', 10)
       .attr(
@@ -38,7 +40,7 @@ export default class Tree {
         `translate(${(root.data.name.length + 1) * 5},${root.dx - x0})`
       )
 
-    const link = g
+    const link = tree
       .append('g')
       .attr('fill', 'none')
       .attr('stroke', '#555')
@@ -55,17 +57,33 @@ export default class Tree {
           .y((d) => d.x)
       )
 
-    const node = g
+    const node = tree
       .append('g')
       .attr('stroke-linejoin', 'round')
       .attr('stroke-width', 3)
       .selectAll('g')
       .data(root.descendants())
       .join('g')
+      .attr('class', (d) => {
+        const selectedNbid = _.get(this.selection.get(), 'data._nbid_', '')
+        return selectedNbid && d.data._nbid_.indexOf(selectedNbid) > -1
+          ? 'node selected'
+          : 'node'
+      })
       .attr('transform', (d) => `translate(${d.y},${d.x})`)
+      .on('click', (...cur) => this.selection.set(cur[0]))
+
+    this._onSelectionChange = (select) => {
+      d3.selectAll('.tree .node').attr('class', (d) =>
+        d.data._nbid_.indexOf(select.data._nbid_) > -1
+          ? 'node selected'
+          : 'node'
+      )
+    }
 
     node
       .append('circle')
+      .attr('class', (d) => (d.children ? 'point' : 'point leaf'))
       .attr('fill', (d) => (d.children ? '#555' : '#999'))
       .attr('r', 2.5)
 
@@ -78,9 +96,7 @@ export default class Tree {
       .clone(true)
       .lower()
       .attr('stroke', 'white')
-    // this.el.addEventListener('resize', (e) => {
-    //   console.log('resizeEvent', e.target.clientHeight, e.target.clientWidth)
-    // })
+
     return svg.node()
   }
   _init() {
@@ -99,7 +115,7 @@ export default class Tree {
       this.selection,
       '_onSelectionChange',
       'select',
-      'items'
+      'subtree'
     )
   }
   mount(el) {
@@ -119,98 +135,9 @@ export default class Tree {
 
     this.el.appendChild(this._renderSVG())
   }
-}
-
-const b = {
-  name: 'flare',
-  children: [
-    {
-      name: 'analytics',
-      children: [
-        {
-          name: 'cluster',
-          children: [
-            { name: 'AgglomerativeCluster', value: 3938 },
-            { name: 'CommunityStructure', value: 3812 },
-            { name: 'HierarchicalCluster', value: 6714 },
-            { name: 'MergeEdge', value: 743 },
-          ],
-        },
-        {
-          name: 'graph',
-          children: [
-            { name: 'BetweennessCentrality', value: 3534 },
-            { name: 'LinkDistance', value: 5731 },
-            { name: 'MaxFlowMinCut', value: 7840 },
-            { name: 'ShortestPaths', value: 5914 },
-            { name: 'SpanningTree', value: 3416 },
-          ],
-        },
-        {
-          name: 'optimization',
-          children: [{ name: 'AspectRatioBanker', value: 7074 }],
-        },
-      ],
-    },
-    {
-      name: 'animate',
-      children: [
-        { name: 'Easing', value: 17010 },
-        { name: 'FunctionSequence', value: 5842 },
-        {
-          name: 'interpolate',
-          children: [
-            { name: 'ArrayInterpolator', value: 1983 },
-            { name: 'ColorInterpolator', value: 2047 },
-            { name: 'DateInterpolator', value: 1375 },
-            { name: 'Interpolator', value: 8746 },
-            { name: 'MatrixInterpolator', value: 2202 },
-            { name: 'NumberInterpolator', value: 1382 },
-            { name: 'ObjectInterpolator', value: 1629 },
-            { name: 'PointInterpolator', value: 1675 },
-            { name: 'RectangleInterpolator', value: 2042 },
-          ],
-        },
-        { name: 'ISchedulable', value: 1041 },
-        { name: 'Parallel', value: 5176 },
-        { name: 'Pause', value: 449 },
-        { name: 'Scheduler', value: 5593 },
-        { name: 'Sequence', value: 5534 },
-        { name: 'Transition', value: 9201 },
-        { name: 'Transitioner', value: 19975 },
-        { name: 'TransitionEvent', value: 1116 },
-        { name: 'Tween', value: 6006 },
-      ],
-    },
-    {
-      name: '_data',
-      children: [
-        {
-          name: 'converters',
-          children: [
-            { name: 'Converters', value: 721 },
-            { name: 'DelimitedTextConverter', value: 4294 },
-            { name: 'GraphMLConverter', value: 9800 },
-            { name: 'IDataConverter', value: 1314 },
-            { name: 'JSONConverter', value: 2220 },
-          ],
-        },
-        { name: 'DataField', value: 1759 },
-        { name: 'DataSchema', value: 2165 },
-        { name: 'DataSet', value: 586 },
-        { name: 'DataSource', value: 3331 },
-        { name: 'DataTable', value: 772 },
-        { name: 'DataUtil', value: 3322 },
-      ],
-    },
-    {
-      name: 'display',
-      children: [
-        { name: 'DirtySprite', value: 8833 },
-        { name: 'LineSprite', value: 1732 },
-        { name: 'RectSprite', value: 3623 },
-        { name: 'TextSprite', value: 10066 },
-      ],
-    },
-  ],
+  _onDataChange() {
+    this.el.removeChild(this.el.children[0])
+    this.el.appendChild(this._renderSVG())
+  }
+  // _onSelectionChange()  in _renderSVG
 }
