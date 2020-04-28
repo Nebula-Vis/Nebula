@@ -1,0 +1,97 @@
+{
+  "data": [
+    {
+      "name": "houses",
+      "path": "./data/houses.json"
+    }
+  ],
+  "layout": {
+    "width": "1250px",
+    "height": "950px",
+    "rows": ["100px", "150px", "500px", "150px"],
+    "columns": ["100px", "150px", "500px", "150px", "1fr"]
+  },
+  "visualizations": [
+    {
+      "id": "histo-top",
+      "container": "1 1 3 3",
+      "visualization": "barchart",
+      "props": {
+        "data": "houses",
+        "x": "lng1",
+        "aggregate": "count",
+        "count": 20,
+        "orientation": "up"
+      }
+    },
+    {
+      "id": "histo-left",
+      "container": "3 3 1 1",
+      "visualization": "barchart",
+      "props": {
+        "data": "houses",
+        "x": "lat1",
+        "aggregate": "count",
+        "count": 20,
+        "orientation": "left"
+      }
+    },
+    {
+      "id": "stackedbar-right",
+      "container": "3 3 4 4",
+      "visualization": "barchart",
+      "props": {
+        "data": "houses",
+        "x": "lat1",
+        "y": ["Living Rooms", "Bedrooms", "Floor Size"],
+        "aggregate": "average",
+        "count": 20,
+        "orientation": "right",
+        "stacked": true
+      }
+    },
+    {
+      "id": "stackedbar-bottom",
+      "container": "4 4 3 3",
+      "visualization": "barchart",
+      "props": {
+        "data": "houses",
+        "x": "lng1",
+        "y": ["Living Rooms", "Bedrooms", "Floor Size"],
+        "aggregate": "average",
+        "count": 20,
+        "orientation": "down",
+        "stacked": true
+      }
+    },
+    {
+      "id": "map",
+      "container": "3 3 3 3",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "houses"
+      }
+    },
+    {
+      "id": "lineup",
+      "container": "1 4 5 5",
+      "visualization": "lineup",
+      "props": {
+        "data": "houses",
+        "order": ["Living Rooms", "Bedrooms", "Floor Size"]
+      }
+    }
+  ],
+  "coordinations": [
+    {
+      "how": "select items in any, then select items in others",
+      "visualizations": ["histo-top", "histo-left", "stackedbar-right", "stackedbar-bottom", "map"]
+    },
+    {
+      "how": "select ranges in any, then select ranges in others",
+      "visualizations": ["histo-top", "histo-left", "stackedbar-right", "stackedbar-bottom", "map"]
+    },
+    "navigate in map, then set ranges in histo-top, histo-left, stackedbar-right, stackedbar-bottom",
+    "reconfigure order in lineup, then encode y in stackedbar-right, stackedbar-bottom"
+  ]
+}
