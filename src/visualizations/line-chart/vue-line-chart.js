@@ -191,19 +191,17 @@ export default Vue.extend({
               ? brushArr
               : brushType === 'x'
               ? [
-                  [brushArr[0], maxXArr[0]],
-                  [brushArr[1], maxXArr[1]],
+                  [brushArr[0], maxYArr[0]],
+                  [brushArr[1], maxYArr[1]],
                 ]
               : [
-                  [maxYArr[0], brushArr[0]],
-                  [maxYArr[1], brushArr[1]],
+                  [maxXArr[0], brushArr[0]],
+                  [maxXArr[1], brushArr[1]],
                 ]
-          console.log([x0, y0], [x1, y1])
           const minX = xScale.invert(x0)
           const maxY = yScale.invert(y0)
           const maxX = xScale.invert(x1)
           const minY = yScale.invert(y1)
-
           const indices = []
           const selection = []
           forEach(self.rowData, (item) => {
