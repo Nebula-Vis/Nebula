@@ -28,6 +28,12 @@ export default class BarCahrt {
     this.selectionColor = props.selectionColor
     this.stacked = props.stacked
     this.isDisplay = props.isDisplay
+    this.margin = props.margin || {
+      top: 20,
+      right: 20,
+      bottom: 35,
+      left: 30,
+    }
 
     this.selection = selection
     this.selectedXRange = props.selectedXRange || {}
@@ -63,6 +69,7 @@ export default class BarCahrt {
         selection: this.selection.get(),
         selectedXRange: this.selectedXRange.get(),
         xRange: this.xRange.get(),
+        margin: this.margin,
         encoding: {
           x: this.x.get(),
           y: this.y.get(),

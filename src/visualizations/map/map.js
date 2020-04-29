@@ -76,7 +76,7 @@ export default Vue.extend({
           zoomControl: false, // 是否有缩放控件
           attributionControl: false, // 是否有归因控件
         },
-        circleColor: 'blue',
+        circleColor: '#1C74BD',
       }
     },
     mergedStyle() {
@@ -137,10 +137,19 @@ export default Vue.extend({
         })
       },
     })
-    const mapLayer = new LayerCst(
-      this.mergedStyle.mergedMapStyle.mapLayerStyle,
-      { maxZoom, minZoom }
-    )
+    let mapLayer = new LayerCst(this.mergedStyle.mergedMapStyle.mapLayerStyle, {
+      maxZoom,
+      minZoom,
+    })
+    if (!this.encoding.mapStyle.mapLayerStyle) {
+      mapLayer = L.tileLayer.chinaProvider(
+        this.mergedStyle.mergedMapStyle.mapLayerStyle,
+        {
+          maxZoom,
+          minZoom,
+        }
+      )
+    }
     const annotionLayer = new LayerCst(
       this.mergedStyle.mergedMapStyle.annotionLayerStyle,
       { maxZoom, minZoom }
@@ -163,7 +172,7 @@ export default Vue.extend({
     this.map = map
     const drawnItems = new L.FeatureGroup()
     map.addLayer(drawnItems)
-
+    this.drawnItems = drawnItems
     const self = this
     const options = {
       position: 'topleft',
@@ -322,7 +331,7 @@ export default Vue.extend({
             fillOpacity: 1,
             //  radius: (item[mE.size] * Math.pow(2, 13-this.zoom)),
             radius: 80 * Math.pow(2, 13 - this.zoom),
-            zIndex: 999,
+            weight: 1,
           }
         )
         const circlePopup = circle.bindPopup(
@@ -341,7 +350,8 @@ export default Vue.extend({
         })
         points.push(circle)
       })
-      this.pointsLayer = L.layerGroup(points).addTo(this.map)
+      this.pointsLayer = L.layerGroup(points)
+      this.pointsLayer.addTo(this.map)
       this.paramStore = [color, data, color1, data1]
       return points
     },

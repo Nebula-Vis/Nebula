@@ -8,8 +8,8 @@
   "layout": {
     "width": "1550px",
     "height": "1250px",
-    "rows": ["150px", "800px", "150px"],
-    "columns": ["150px", "800px", "150px", "1fr"]
+    "rows": ["100px", "800px", "100px"],
+    "columns": ["100px", "800px", "100px", "1fr"]
   },
   "visualizations": [
     {
@@ -23,7 +23,6 @@
         "brushType": "xy",
         "bottomEdge": "bottom",
         "mapStyle": {
-          "mapLayerStyle": "//www.google.cn/maps/vt?lyrs=m@189&gl=zh&x={x}&y={y}&z={z}",
           "annotionLayerStyle": "//t{s}.tianditu.com/DataServer?T=eva_w&X={x}&Y={y}&L={z}&tk={key}",
           "minZoom": 3,
           "maxZoom": 20,
@@ -46,6 +45,12 @@
         "count": 100,
         "color": "#7AB9EE",
         "bottomEdge": "bottom",
+        "margin":{
+          "right": 0,
+          "left": 0,
+          "top": 0,
+          "bottom": 0
+        },
         "isDisplay": false
       }
     },
@@ -60,6 +65,12 @@
         "count": 100,
         "bottomEdge": "right",
         "color": "#7AB9EE",
+        "margin":{
+          "right": 0,
+          "left": 0,
+          "top": 0,
+          "bottom": 0
+        },
         "isDisplay": false
       }
     },
@@ -80,6 +91,12 @@
         "count": 100,
         "bottomEdge": "left-mirror",
         "color": ["#CDE1C0", "#FFD9A3", "#81C5CB", "#E5D2E7"],
+        "margin":{
+          "right": 0,
+          "left": 0,
+          "top": 0,
+          "bottom": 0
+        },
         "stacked": true,
         "isDisplay": false
       }
@@ -102,6 +119,12 @@
         "color": ["#CDE1C0", "#FFD9A3", "#81C5CB", "#E5D2E7"],
         "selectionColor": "#FFA200",
         "bottomEdge": "top-mirror",
+        "margin":{
+          "right": 0,
+          "left": 0,
+          "top": 0,
+          "bottom": 0
+        },
         "stacked": true,
         "isDisplay": false
       }

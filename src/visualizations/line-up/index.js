@@ -21,7 +21,7 @@ export default class LineUp {
     this._data = null
     this._filteredData = null
     this.color = props.color
-    this.colors = d3.scaleOrdinal(d3.schemeSet2)
+    this.colors = d3.scaleOrdinal(this.color || d3.schemeSet2)
 
     this._init()
   }
@@ -98,11 +98,7 @@ export default class LineUp {
 
     order.forEach((attr) => {
       const extent = d3.extent(data, (d) => d[attr])
-      builder.column(
-        LineUpJS.buildNumberColumn(attr, padExtent(extent, 0.2)).color(
-          this.colors(attr)
-        )
-      )
+      builder.column(LineUpJS.buildNumberColumn(attr).color(this.colors(attr)))
     })
 
     return builder
