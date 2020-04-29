@@ -65,7 +65,7 @@ export default class VegaLite {
   async mount(el) {
     this.el = this._getElNode(el)
     this.view = (await embed(this.el, this.spec, { actions: false })).view
-    this._addReactivePropInternalUpdateListeners()
+    if (this.spec.selection) this._addReactivePropInternalUpdateListeners()
     this._addOnReactivePropertySetListeners()
   }
 
@@ -84,6 +84,7 @@ export default class VegaLite {
   }
 
   _addReactivePropInternalUpdateListeners() {
+    if (!this.spec.selection) return
     Object.entries(this.spec.selection).forEach(([name, spec]) => {
       this.view.addDataListener(`${name}_store`, (n, rawValue) => {
         // log all data
@@ -112,6 +113,7 @@ export default class VegaLite {
   }
 
   _addOnReactivePropertySetListeners() {
+    if (!this.spec.selection) return
     Object.entries(this.spec.selection).forEach(([name, spec]) => {
       this[`_onSelection${name}Set`] = function (val) {
         if (spec._value === val) return
