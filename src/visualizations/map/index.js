@@ -12,7 +12,6 @@ export default class Map {
   constructor(props) {
     this.id = props.id || new Date() - 0
     this.data = props.data
-    this.areasData = props.areasData
     this.selectedArea = props.selectedArea || {}
 
     const numericFields = getFieldsOfType(this.data, 'number')
@@ -29,7 +28,7 @@ export default class Map {
     this.brushType = props.brushType
     this.bottomEdge = props.bottomEdge
     this.mapStyle = props.mapStyle
-    this.selection = props.selection || []
+    this.selection = props.selection || props.data
     this.visibleData = []
     this.visibleRange = {}
     this.el = null
@@ -53,7 +52,6 @@ export default class Map {
       data: {
         id: this.id,
         mapData: this.data.get(),
-        areasData: this.areasData.get(),
         selectedArea: this.selectedArea.get(),
         encoding: {
           x: this.x.get(),
@@ -70,7 +68,7 @@ export default class Map {
         data(val) {
           // TODO this.checkXY()
           this.scale = that._getScale(val, this.x)
-          // this.selection = val
+          this.selection = val
         },
       },
     })
@@ -101,14 +99,6 @@ export default class Map {
       'data',
       this.data,
       '_onDataChange',
-      'set',
-      'data'
-    )
-    this.areasData = new ReactiveProperty(
-      this,
-      'areasData',
-      this.areasData,
-      '_onAreasDataChange',
       'set',
       'data'
     )
@@ -207,13 +197,6 @@ export default class Map {
       throw new TypeError(`Map: expect data to be Array, got ${val}`)
     }
     this.vm.data = val
-  }
-
-  _onAreasDataChange(val) {
-    if (!Array.isArray(val)) {
-      throw new TypeError(`Map: expect data to be Array, got ${val}`)
-    }
-    this.vm.areasData = val
   }
 
   _onXChange(val) {

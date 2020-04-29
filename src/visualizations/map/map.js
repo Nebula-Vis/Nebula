@@ -22,7 +22,7 @@ export default Vue.extend({
     return {
       mapData: [],
       selectedArea: {},
-      encoding: [],
+      encoding: {},
       svgWidth: 50,
       svgHeight: 50,
       brushEventFlag: false,
@@ -46,12 +46,7 @@ export default Vue.extend({
   },
   computed: {
     mergedEncoding() {
-      const result = {}
-      forEach(this.defaultEncoding, (item, key) => {
-        if (this.encoding[key]) result[key] = this.encoding[key]
-        else result[key] = item
-      })
-      return result
+      return { ...this.defaultEncoding, ...this.encoding }
     },
     defaultStyle() {
       const xArr = d3.extent(this.mapData, (d) => {
@@ -77,7 +72,7 @@ export default Vue.extend({
           minZoom: 3, // 最小缩放倍数
           maxZoom: 20, // 最大缩放倍数
           centerPoint: centerPoint, // 中心点坐标，默认为所有点中心
-          zoom: 13, // 初始缩放倍数
+          zoom: 10, // 初始缩放倍数
           zoomControl: false, // 是否有缩放控件
           attributionControl: false, // 是否有归因控件
         },
@@ -85,16 +80,11 @@ export default Vue.extend({
       }
     },
     mergedStyle() {
-      const mapResult = this.defaultStyle.defaultMapStyle
-      if (this.encoding.mapStyle)
-        forEach(this.defaultStyle.defaultMapStyle, (item, key) => {
-          if (this.encoding.mapStyle[key])
-            mapResult[key] = this.encoding.mapStyle[key]
-          else mapResult[key] = item
-        })
-
       return {
-        mergedMapStyle: mapResult,
+        mergedMapStyle: {
+          ...this.defaultStyle.defaultMapStyle,
+          ...this.encoding.mapStyle,
+        },
         circleColor: this.encoding.circleColor
           ? this.encoding.circleColor
           : this.defaultStyle.circleColor,
@@ -299,6 +289,16 @@ export default Vue.extend({
         'blue',
         selection.selectedArr,
       ])
+      // if (!this.selectedArea) {
+      //   const parArr = [
+      //     this.map.containerPointToLatLng([0, 0]),
+      //     this.map.containerPointToLatLng([0, this.svgHeight]),
+      //     this.map.containerPointToLatLng([this.svgWidth, this.svgHeight]),
+      //     this.map.containerPointToLatLng([this.svgWidth, 0]),
+      //   ]
+      //   const dataInWindow = this.dealClickArea(parArr)
+      //   this.$emit('selection', dataInWindow)
+      // }
     },
     drawCircle([color, data, color1, data1]) {
       //  eslint-disable-next-line prefer-rest-params

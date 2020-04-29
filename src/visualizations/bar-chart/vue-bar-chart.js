@@ -16,14 +16,13 @@ export default Vue.extend({
       selectedXRange: {},
       xRange: {},
       brushedBins: [],
-      clickedBin: undefined,
-      disableClick: false,
       isDisplay: true,
       encoding: null,
       svgWidth: 400,
       svgHeight: 50,
       xValueRange: [],
       data: [],
+      containerSize: [400, 100],
     }
   },
   computed: {
@@ -31,14 +30,27 @@ export default Vue.extend({
       let transform = ''
       switch (this.fullEncoding.bottomEdge) {
         case 'left':
+          transform = `rotate(90) translate(0, ${-this.svgHeight})`
+          break
+        case 'right':
+          transform = `rotate(-90) translate(${-this.svgWidth}, 0)`
+          break
+        case 'top-mirror':
+          transform = `scale(1, -1) translate(0, ${-this.svgHeight})`
+          break
+        case 'left-mirror':
           transform = `rotate(90)  scale(-1, 1) translate(${-this
             .svgWidth}, ${-this.svgHeight})`
           break
-        case 'right':
-          transform = `rotate(90) scale(-1, -1) translate(${-this.svgWidth}, 0)`
+        case 'right-mirror':
+          transform = 'rotate(-90) scale(-1, 1)'
           break
         case 'top':
-          transform = `scale(1, -1) translate(0, ${-this.svgHeight})`
+          transform = `scale(-1, -1) translate(${-this.svgWidth}, ${-this
+            .svgHeight})`
+          break
+        case 'bottom-mirror':
+          transform = `scale(-1, 1) translate(${-this.svgWidth}, 0)`
           break
         default:
           break
@@ -230,6 +242,10 @@ export default Vue.extend({
           num = sum
         } else if (this.fullEncoding.aggregate === 'average') {
           num = sum / (num || 1)
+        } else if (this.fullEncoding.aggregate === 'min') {
+          num = d3.min(item, (d) => d[this.fullEncoding.y]) || 0
+        } else if (this.fullEncoding.aggregate === 'max') {
+          num = d3.max(item, (d) => d[this.fullEncoding.y]) || 0
         }
         item.num = num
       })
@@ -251,26 +267,28 @@ export default Vue.extend({
       if (!selection) {
         this.selection = null
         this.brushedBins = []
-        this.disableClick = false
         return
       }
-      this.clickedBin = undefined
-      this.disableClick = true
 
       const bins = this.bins
       const minRange = x(bins[0].name)
       const band = x.bandwidth()
 
-      const x0 = Math.round((selection[0] - minRange) / band)
+      let x0 = Math.round((selection[0] - minRange) / band)
       let x1 = Math.round((selection[1] - minRange) / band)
+      if (x0 < 0) x0 = 0
+      else if (x0 > bins.length) x0 = bins.length
+      if (x1 < 0) x1 = 0
+      else if (x1 > bins.length) x1 = bins.length
       const res = [x(bins[x0].name), x(bins[x0].name) + (x1 - x0) * band]
-      const selected = _.concat.apply(null, bins.slice(x0, x1))
-      if (x1 >= bins.length) x1 = bins.length - 1
-      // this.selection = selected
+      const selected = _.concat.apply(null, bins.slice(x0, x1 + 1))
       if (!brushArea) {
         this.$emit('selection', selected)
         this.$emit('selectedXRange', {
-          [this.fullEncoding.x]: [bins[x0].x0, bins[x1].x1],
+          [this.fullEncoding.x]: [
+            bins[x0].x0,
+            x1 === bins.length ? bins[x1 - 1].x1 : bins[x1].x0,
+          ],
         })
       }
       this.brushedBins = bins.slice(x0, x1).map((d) => d.name)
@@ -288,16 +306,6 @@ export default Vue.extend({
       d3.select(this.$refs['colorG']).selectAll('rect').remove()
 
       if (this.fullEncoding.stacked) {
-        const colorArr = this.fullEncoding.y.map(() =>
-          `000000${Math.floor(Math.random() * 16777216).toString(16)}`.slice(-6)
-        )
-        rect
-          .data(bins)
-          .attr('x', (d) => x(d.name))
-          .attr('y', (d) => y(d.num))
-          .attr('width', x.bandwidth())
-          .attr('height', (d) => y(0) - y(d.num))
-          .attr('fill', color)
         bins.forEach((item) => {
           item.stackArr.forEach((item1, index) => {
             d3.select(this.$refs['colorG'])
@@ -306,7 +314,7 @@ export default Vue.extend({
               .attr('y', y(item1[1]))
               .attr('width', x.bandwidth())
               .attr('height', y(0) - y(item1[0]))
-              .attr('fill', `#${colorArr[index]}`)
+              .attr('fill', color[index])
           })
         })
       } else {
@@ -318,6 +326,7 @@ export default Vue.extend({
             .attr('width', x.bandwidth())
             .attr('height', y(0) - y(item.num))
             .attr('fill', color)
+            .attr('id', item.name)
         })
       }
     },
@@ -400,20 +409,22 @@ export default Vue.extend({
       const selectionColor = this.fullEncoding.selectionColor
       const rect = this.getRect
       const selectedBins = this.brushedBins.slice(0)
-      if (this.clickedBin) selectedBins.push(this.clickedBin)
-
-      rect.attr('fill', (d) =>
-        selectedBins.includes(d.name) ? selectionColor : color
-      )
+      const targePar = d3.select(this.$refs['rectG']).selectAll('rect')
+      targePar.attr('fill', (a, b, c) => {
+        return selectedBins.includes(c[b].id) ? selectionColor : color
+      })
+    },
+    reverseWidthAndHeight(from, num1, num2) {
+      if (from.includes('left') || from.includes('right')) return num2
+      return num1
     },
   },
   mounted() {
     const rect = this.$refs['container'].getBoundingClientRect()
     const from = this.fullEncoding.bottomEdge
-    this.svgWidth =
-      from === 'left' || from === 'right' ? rect.height : rect.width
-    this.svgHeight =
-      from === 'left' || from === 'right' ? rect.width : rect.height
+    this.svgWidth = this.reverseWidthAndHeight(from, rect.width, rect.height)
+    this.svgHeight = this.reverseWidthAndHeight(from, rect.height, rect.width)
+    this.containerSize = [rect.width, rect.height]
     if (typeof this.encoding.isDisplay != 'undefined') {
       this.isDisplay = this.encoding.isDisplay
     }
@@ -425,8 +436,12 @@ export default Vue.extend({
     this.drawBrush()
   },
   watch: {
+    selection() {
+      this.colorRect()
+    },
     selectedXRange() {
       this.drawBrush()
+      this.colorRect()
     },
     processData: function () {
       this.drawRect()
@@ -435,12 +450,13 @@ export default Vue.extend({
       }
       if (this.isDisplay) {
         this.$nextTick(function () {
-          this.drawAxis()``
+          this.drawAxis()
         })
       }
     },
     xRange() {
       this.drawBrush()
+      this.colorRect()
     },
     encoding: {
       handler: function () {
@@ -467,7 +483,7 @@ export default Vue.extend({
   template: `
 <div style="position: relative; width: 100%; height: 100%;" ref="container">
   <div>
-    <svg width="100%" height="100%" ref="svg">
+    <svg :width="containerSize[0]" :height="containerSize[1]" ref="svg">
       <g :transform="rotation">
         <g ref="rectG" id="rectG">
           <template v-for="(value, index) in bins">
