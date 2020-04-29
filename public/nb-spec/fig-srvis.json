@@ -8,21 +8,23 @@
   "layout": {
     "width": "1550px",
     "height": "1250px",
-    "rows": ["100px", "150px", "800px", "150px"],
-    "columns": ["100px", "150px", "800px", "150px", "1fr"]
+    "rows": ["150px", "800px", "150px"],
+    "columns": ["150px", "800px", "150px", "1fr"]
   },
   "visualizations": [
     {
       "id": "map",
-      "container": "3 3 3 3",
+      "container": "2 2 2 2",
       "visualization": "map",
       "props": {
         "data": "houses",
         "x": "lng1",
-        "y": "lat1", 
+        "y": "lat1",
         "brushType": "xy",
         "bottomEdge": "bottom",
         "mapStyle": {
+          "mapLayerStyle": "//www.google.cn/maps/vt?lyrs=m@189&gl=zh&x={x}&y={y}&z={z}",
+          "annotionLayerStyle": "//t{s}.tianditu.com/DataServer?T=eva_w&X={x}&Y={y}&L={z}&tk={key}",
           "minZoom": 3,
           "maxZoom": 20,
           "centerPoint": [30.2708376789, 120.130177269],
@@ -34,59 +36,70 @@
     },
     {
       "id": "histo-top",
-      "container": "1 1 3 3",
+      "container": "1 1 2 2",
       "visualization": "barchart",
       "props": {
         "data": "houses",
         "x": "lng1",
         "aggregate": "max",
         "y": "Floor Size",
-        "count": 20,
+        "count": 100,
+        "color": "#7AB9EE",
         "bottomEdge": "bottom",
         "isDisplay": false
       }
     },
     {
       "id": "histo-left",
-      "container": "3 3 1 1",
+      "container": "2 2 1 1",
       "visualization": "barchart",
       "props": {
         "data": "houses",
         "x": "lat1",
         "aggregate": "count",
-        "count": 20,
+        "count": 100,
         "bottomEdge": "right",
-        "color": "green",
+        "color": "#7AB9EE",
         "isDisplay": false
       }
     },
     {
       "id": "stackedbar-right",
-      "container": "3 3 4 4",
+      "container": "2 2 3 3",
       "visualization": "barchart",
       "props": {
         "data": "houses",
         "x": "lat1",
-        "y": ["Living Rooms", "Bedrooms"],
-        "aggregate": ["count", "count"],
-        "count": 20,
+        "y": [
+          "Living Rooms",
+          "Bedrooms",
+          "Unit Price",
+          "Floor Size"
+        ],
+        "aggregate": ["sum", "sum", "average", "min"],
+        "count": 100,
         "bottomEdge": "left-mirror",
-        "color": "green",
+        "color": ["#CDE1C0", "#FFD9A3", "#81C5CB", "#E5D2E7"],
         "stacked": true,
         "isDisplay": false
       }
     },
     {
       "id": "stackedbar-bottom",
-      "container": "4 4 3 3",
+      "container": "3 3 2 2",
       "visualization": "barchart",
       "props": {
         "data": "houses",
         "x": "lng1",
-        "y": ["Living Rooms", "Bedrooms", "Floor Size"],
-        "aggregate": ["average", "average", "average"],
-        "count": 20,
-        "color": ["#FF0000", "#FF7400", "#009999", "#00CC00"],
+        "y": [
+          "Living Rooms",
+          "Bedrooms",
+          "Unit Price",
+          "Floor Size"
+        ],
+        "aggregate": ["sum", "sum", "average", "min"],
+        "count": 100,
+        "color": ["#CDE1C0", "#FFD9A3", "#81C5CB", "#E5D2E7"],
         "selectionColor": "#FFA200",
         "bottomEdge": "top-mirror",
         "stacked": true,
@@ -95,11 +108,12 @@
     },
     {
       "id": "lineup",
-      "container": "1 4 5 5",
+      "container": "1 3 4 4",
       "visualization": "lineup",
       "props": {
         "data": "houses",
-        "order": ["Living Rooms", "Bedrooms", "Floor Size"]
+        "order": ["Living Rooms", "Bedrooms", "Floor Size"],
+        "color": ["#CDE1C0", "#FFD9A3", "#81C5CB"]
       }
     }
   ],
@@ -107,7 +121,13 @@
     "select items in map, then set data in histo-top, histo-left, stackedbar-right, stackedbar-bottom, and lineup",
     {
       "how": "select ranges in any, then select ranges in others",
-      "visualizations": ["histo-top", "histo-left", "stackedbar-right", "stackedbar-bottom", "map"]
+      "visualizations": [
+        "histo-top",
+        "histo-left",
+        "stackedbar-right",
+        "stackedbar-bottom",
+        "map"
+      ]
     },
     "navigate ranges in map, then navigate ranges in histo-top, histo-left, stackedbar-right, stackedbar-bottom",
     "reconfigure order in lineup, then encode y in stackedbar-right, stackedbar-bottom"

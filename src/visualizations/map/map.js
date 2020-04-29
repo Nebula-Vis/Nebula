@@ -127,25 +127,26 @@ export default Vue.extend({
     this.svgHeight = rect.height
     this.zoom = this.mergedStyle.mergedMapStyle.zoom
     this.brushEventFlag = true
-
-    const mapLayer = L.tileLayer.chinaProvider(
+    const { maxZoom, minZoom } = this.mergedStyle.mergedMapStyle
+    const LayerCst = L.TileLayer.extend({
+      initialize: function (url, options) {
+        L.TileLayer.prototype.initialize.call(this, url, {
+          subdomains: ['0', '1', '2', '3', '4', '5', '6', '7'],
+          key: '174705aebfe31b79b3587279e211cb9a',
+          ...options,
+        })
+      },
+    })
+    const mapLayer = new LayerCst(
       this.mergedStyle.mergedMapStyle.mapLayerStyle,
-      {
-        maxZoom: this.mergedStyle.mergedMapStyle.maxZoom,
-        minZoom: this.mergedStyle.mergedMapStyle.minZoom,
-      }
+      { maxZoom, minZoom }
     )
-    const layers = [mapLayer]
-    if (this.mergedStyle.mergedMapStyle.annotionLayerStyle) {
-      const annotionLayer = L.tileLayer.chinaProvider(
-        this.mergedStyle.mergedMapStyle.annotionLayerStyle,
-        {
-          maxZoom: this.mergedStyle.mergedMapStyle.maxZoom,
-          minZoom: this.mergedStyle.mergedMapStyle.minZoom,
-        }
-      )
-      layers.push(annotionLayer)
-    }
+    const annotionLayer = new LayerCst(
+      this.mergedStyle.mergedMapStyle.annotionLayerStyle,
+      { maxZoom, minZoom }
+    )
+    const layers = [mapLayer, annotionLayer]
+
     const map = L.map(this.$refs.map, {
       minZoom: this.mergedStyle.mergedMapStyle.minZoom,
       maxZoom: this.mergedStyle.mergedMapStyle.maxZoom,

@@ -642,8 +642,8 @@
         "brushType": "xy",
         "bottomEdge": "left",
         "mapStyle": {
-          "mapLayerStyle": "Google.Normal.Map",
-          "annotionLayerStyle": null,
+          "mapLayerStyle": "//t{s}.tianditu.com/DataServer?T=vec_w&X={x}&Y={y}&L={z}&tk={key}",
+          "annotionLayerStyle": "//t{s}.tianditu.com/DataServer?T=eva_w&X={x}&Y={y}&L={z}&tk={key}",
           "minZoom": 3,
           "maxZoom": 20,
           "center": [30.2708376789, 120.130177269],

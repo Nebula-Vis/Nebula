@@ -48,7 +48,6 @@
     "d3-ez": "^3.3.15",
     "leaflet": "^1.6.0",
     "leaflet-draw": "^1.0.4",
-    "leaflet.chinatmsproviders": "^3.0.2",
     "leaflet.heat": "^0.2.0",
     "lineupjs": "^3.3.0",
     "lodash": "^4.17.15",

@@ -20,7 +20,7 @@ export default class LineUp {
     this._order = null
     this._data = null
     this._filteredData = null
-
+    this.color = props.color
     this.colors = d3.scaleOrdinal(d3.schemeSet2)
 
     this._init()
