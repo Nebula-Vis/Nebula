@@ -26,6 +26,7 @@ export default Vue.extend({
       aggregate: '',
       aggregateData: [],
       innerRadius: 0,
+      colors: null,
       count: null, // if data bin
       diff: 5,
       margin: {
@@ -113,14 +114,21 @@ export default Vue.extend({
     color() {
       const data = this.aggregateData
       const name = this.name
-      return d3
-        .scaleOrdinal()
-        .domain(data.map((d) => d[name]))
-        .range(
-          d3
-            .quantize((t) => d3.interpolateSpectral(t * 0.8 + 0.1), data.length)
-            .reverse()
-        )
+      if (this.colors === null) {
+        return d3
+          .scaleOrdinal()
+          .domain(data.map((d) => d[name]))
+          .range(
+            d3
+              .quantize(
+                (t) => d3.interpolateSpectral(t * 0.8 + 0.1),
+                data.length
+              )
+              .reverse()
+          )
+      } else {
+        return d3.scaleOrdinal(this.colors).domain(data.map((d) => d[name]))
+      }
     },
     rangeMin() {
       const data = this.data
