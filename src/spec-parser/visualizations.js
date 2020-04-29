@@ -19,6 +19,7 @@ import Tree from '@/visualizations/tree'
 import TreeMap from '@/visualizations/tree-map'
 import ParallelCoordinates from '@/visualizations/parallel-coordinates'
 import RadialCoordinates from '@/visualizations/radial-coordinates'
+import DangerousHtml from '@/visualizations/dangerous-html'
 import ReactiveProperty from '@/reactive-prop'
 
 export default class VisualizationsSpecParser {
@@ -185,6 +186,8 @@ class Visualization {
         return new Map(props)
       case 'heatmap2d':
         return new Heatmap2D(props)
+      case 'dangerous-html':
+        return new DangerousHtml(props)
       default:
         throw new SyntaxError(`No such visualization ${type.toLowerCase()}.`)
     }

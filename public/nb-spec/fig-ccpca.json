@@ -10,15 +10,35 @@
     }
   ],
   "layout": {
-    "width": "450px",
-    "height": "300px",
-    "rows": ["1fr", "1fr", "1fr", "1fr", "1fr"],
-    "columns": ["1fr", "2fr"]
+    "width": "1350px",
+    "height": "900px",
+    "rows": [
+      "1fr",
+      "1fr",
+      "1fr",
+      "1fr",
+      "1fr",
+      "60px",
+      "40px",
+      "1fr",
+      "1fr",
+      "1fr",
+      "1fr"
+    ],
+    "columns": ["220px", "1fr", "1fr", "1fr", "1fr", "1fr", "1fr", "250px"]
   },
   "visualizations": [
     {
+      "id": "nav",
+      "container": "1 1 1 1",
+      "visualization": "dangerous-html",
+      "props": {
+        "html": "<b></b>"
+      }
+    },
+    {
       "id": "select-clustering",
-      "container": "2 2 1 1",
+      "container": "6 6 2 2",
       "visualization": "select",
       "props": {
         "label": "clustering",
@@ -28,15 +48,23 @@
     },
     {
       "id": "input",
-      "container": "3 3 1 1",
+      "container": "6 6 3 3",
       "visualization": "input",
       "props": {
         "label": "parameter"
       }
     },
     {
+      "id": "button",
+      "container": "6 6 4 4",
+      "visualization": "button",
+      "props": {
+        "text": "cluster"
+      }
+    },
+    {
       "id": "scatterplot",
-      "container": "1 5 2 2",
+      "container": "1 5 2 4",
       "visualization": "vegalite",
       "props": {
         "data": { "name": "empty" },
@@ -49,12 +77,14 @@
       }
     }
   ],
-  "coordinations": ["set value in select-clustering, set value in input, then cluster with cars-vector, $1, and $2, then set data in scatterplot"],
+  "coordinations": [
+    "set value in select-clustering, set value in input, then when button clicked cluster with cars-vector, $1, and $2, then set data in scatterplot"
+  ],
   "transformations": [
     {
       "name": "cluster",
-      "url": "http://host:port/path",
-      "parameters": ["vector-array", "method", "parameter"],
+      "url": "http://localhost:7001/api/cars/format",
+      "parameters": ["vectorArray", "method", "parameter"],
       "output": ["labeled-data"]
     }
   ]

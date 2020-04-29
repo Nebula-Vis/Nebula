@@ -40,6 +40,7 @@ class ExternalTransformation {
   constructor(name, url, parameterNames, outputNames) {
     this._name = name
     this._url = url
+    this.trigger = null
     this._parameterNames = parameterNames
     this._outputNames = outputNames
     // trigger
@@ -69,6 +70,8 @@ class ExternalTransformation {
 
   async run() {
     // if (!this.trigger) return
+    if (this.trigger && !this.trigger.get()) return
+    if (this.trigger) this.trigger.set(false)
 
     const paramObj = {}
 
@@ -78,9 +81,12 @@ class ExternalTransformation {
 
     const resp = await fetch(this._url, {
       method: 'POST',
-      body: paramObj,
+      body: JSON.stringify(paramObj),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
-    const result = resp.json()
+    const result = await resp.json()
     for (const outputName of this._outputNames) {
       this[outputName].set(result[outputName])
     }

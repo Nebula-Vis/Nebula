@@ -15,11 +15,6 @@ export default class VegaLite {
     if (this.spec.height === undefined) {
       this.spec.height = 'container'
     }
-    // // this.spec.autosize = {
-    //   type: 'fit',
-    //   resize: true,
-    //   contains: 'padding',
-    // }
 
     this.data = null
     this.x = this.spec.encoding.x.field
@@ -146,6 +141,7 @@ export default class VegaLite {
   async _onDataSet(data) {
     this.view.data(this.dataName, data)
     await this.view.runAsync()
+    console.log('ondataset', data)
     // TODO update selection, scale?
   }
 
