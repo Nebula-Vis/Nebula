@@ -23,7 +23,8 @@
         "brushType": "xy",
         "bottomEdge": "bottom",
         "mapStyle": {
-          "annotionLayerStyle": "//t{s}.tianditu.com/DataServer?T=eva_w&X={x}&Y={y}&L={z}&tk={key}",
+          "mapLayerStyle": "//map.geoq.cn/ArcGIS/rest/services/ChinaOnlineStreetGray/MapServer/tile/{z}/{y}/{x}",
+          "annotionLayerStyle": "http://t{s}.tianditu.com/DataServer?T=eva_w&X={x}&Y={y}&L={z}&tk={key}",
           "minZoom": 3,
           "maxZoom": 20,
           "centerPoint": [30.2708376789, 120.130177269],
@@ -49,7 +50,7 @@
           "right": 0,
           "left": 0,
           "top": 0,
-          "bottom": 0
+          "bottom": 5
         },
         "isDisplay": false
       }
@@ -69,7 +70,7 @@
           "right": 0,
           "left": 0,
           "top": 0,
-          "bottom": 0
+          "bottom": 5
         },
         "isDisplay": false
       }
@@ -84,18 +85,18 @@
         "y": [
           "Living Rooms",
           "Bedrooms",
-          "Unit Price",
           "Floor Size"
         ],
-        "aggregate": ["sum", "sum", "average", "min"],
+        "aggregate": ["sum", "sum", "max"],
+        "scaleY": [1, 1, 0.01],
         "count": 100,
+        "color": ["#CDE1C0", "#FFD9A3", "#81C5CB"],
         "bottomEdge": "left-mirror",
-        "color": ["#CDE1C0", "#FFD9A3", "#81C5CB", "#E5D2E7"],
         "margin":{
           "right": 0,
           "left": 0,
           "top": 0,
-          "bottom": 0
+          "bottom": 5
         },
         "stacked": true,
         "isDisplay": false
@@ -111,19 +112,18 @@
         "y": [
           "Living Rooms",
           "Bedrooms",
-          "Unit Price",
           "Floor Size"
         ],
-        "aggregate": ["sum", "sum", "average", "min"],
+        "aggregate": ["sum", "sum", "max"],
+        "scaleY": [1, 1, 0.01],
         "count": 100,
-        "color": ["#CDE1C0", "#FFD9A3", "#81C5CB", "#E5D2E7"],
-        "selectionColor": "#FFA200",
+        "color": ["#CDE1C0", "#FFD9A3", "#81C5CB"],
         "bottomEdge": "top-mirror",
         "margin":{
           "right": 0,
           "left": 0,
           "top": 0,
-          "bottom": 0
+          "bottom": 5
         },
         "stacked": true,
         "isDisplay": false

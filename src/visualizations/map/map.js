@@ -242,6 +242,7 @@ export default Vue.extend({
         selection.selectedArr,
       ])
       drawnItems.addLayer(layer)
+      drawnItems.bringToFront()
       self.clickArea = layer
     })
     map.on(L.Draw.Event.DELETED, function () {
@@ -249,10 +250,11 @@ export default Vue.extend({
       self.points = self.drawCircle(['blue'])
     })
     map.on('moveend', self.onMapPan)
+    // map.on('move', self.onMapPan)
 
     self.points = this.drawCircle([])
 
-    this.map.on('zoom', function () {
+    this.map.on('zoomend', function () {
       self.zoom = self.map.getZoom()
       if (self.points) {
         self.points.forEach((item) => {
@@ -262,7 +264,6 @@ export default Vue.extend({
       self.points = self.drawCircle(self.paramStore)
     })
     this.drawSelectedArea()
-    this.onMapPan()
   },
   methods: {
     drawSelectedArea() {
@@ -352,6 +353,7 @@ export default Vue.extend({
       })
       this.pointsLayer = L.layerGroup(points)
       this.pointsLayer.addTo(this.map)
+      // this.pointsLayer.bringToBack()
       this.paramStore = [color, data, color1, data1]
       return points
     },

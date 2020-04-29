@@ -22,18 +22,21 @@ export default class BarCahrt {
     this.y = y
     this.aggregate =
       props.aggregate || (props.stacked ? y.map((item) => 'count') : 'count')
+    this.scaleY = props.scaleY || (props.stacked ? y.map((item) => 1) : 1)
     this.count = props.count
     this.bottomEdge = props.bottomEdge
     this.color = color
-    this.selectionColor = props.selectionColor
+    this.selectionColor = props.selectionColor || color
     this.stacked = props.stacked
     this.isDisplay = props.isDisplay
-    this.margin = props.margin || {
+    const defaultMargin = {
       top: 20,
       right: 20,
       bottom: 35,
       left: 30,
+      between: 1,
     }
+    this.margin = { ...defaultMargin, ...props.margin }
 
     this.selection = selection
     this.selectedXRange = props.selectedXRange || {}
@@ -74,6 +77,7 @@ export default class BarCahrt {
           x: this.x.get(),
           y: this.y.get(),
           aggregate: this.aggregate.get(),
+          scaleY: this.scaleY,
           stacked: this.stacked,
           color: this.color,
           count: this.count,
@@ -184,7 +188,7 @@ export default class BarCahrt {
     ) {
       throw new TypeError(`BarChart: expect y to be string, got ${val}`)
     }
-    this.vm.y = val
+    this.vm.encoding.y = val
   }
 
   _onSelectionChange(val) {

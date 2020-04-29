@@ -5,12 +5,7 @@ export default Vue.extend({
   name: 'BarCahrt',
   data() {
     return {
-      margin: {
-        top: 20,
-        right: 20,
-        bottom: 35,
-        left: 30,
-      },
+      margin: {},
       isMounted: false,
       selection: [],
       selectedXRange: {},
@@ -23,6 +18,9 @@ export default Vue.extend({
       xValueRange: [],
       data: [],
       containerSize: [400, 100],
+      scaleColor: (d) => d,
+      scaleAggregate: (d) => d,
+      scaleScaleY: (d) => d,
     }
   },
   computed: {
@@ -226,29 +224,52 @@ export default Vue.extend({
         let sum = 0
         let num = item.length
         item.forEach((item) => (sum += item[this.fullEncoding.y]))
+        const [aggregate, multi] = [
+          this.fullEncoding.aggregate,
+          this.fullEncoding.scaleY,
+        ]
         if (this.fullEncoding.stacked) {
           let curSum = 0
           item.stackArr = this.fullEncoding.y.map((y, index) => {
             let tempSum = 0
             item.forEach((item1) => (tempSum += item1[y]))
-            if (this.fullEncoding.aggregate[index] === 'count') tempSum = num
-            else if (this.fullEncoding.aggregate[index] === 'average')
-              tempSum = tempSum / (num || 1)
+            const [tempA, tempS] = [this.scaleAggregate(y), this.scaleScaleY(y)]
+            tempSum *= tempS
+            if (tempA === 'count') tempSum = num * tempS
+            else if (tempA === 'average') tempSum = tempSum / (num || 1)
             curSum += tempSum
             return [tempSum, curSum]
           })
           num = curSum
         } else if (this.fullEncoding.aggregate === 'sum') {
-          num = sum
+          num = sum * multi
         } else if (this.fullEncoding.aggregate === 'average') {
-          num = sum / (num || 1)
+          num = (sum / (num || 1)) * multi
         } else if (this.fullEncoding.aggregate === 'min') {
-          num = d3.min(item, (d) => d[this.fullEncoding.y]) || 0
+          num = (d3.min(item, (d) => d[this.fullEncoding.y]) || 0) * multi
         } else if (this.fullEncoding.aggregate === 'max') {
-          num = d3.max(item, (d) => d[this.fullEncoding.y]) || 0
+          num = (d3.max(item, (d) => d[this.fullEncoding.y]) || 0) * multi
         }
         item.num = num
       })
+    },
+    getAggregate(rowAggregate) {
+      if (typeof rowAggregate === 'string') {
+        const arr = rowAggregate.split('-')
+        arr[1] = Number(arr[1]) || 1
+        return arr
+      } else if (
+        Object.prototype.toString.call(rowAggregate) === '[object Array]'
+      ) {
+        const aggregate = []
+        const multi = []
+        rowAggregate.forEach((item) => {
+          const tempArr = item.split('-')
+          aggregate.push(tempArr[0])
+          multi.push(Number(tempArr[1]) || 1)
+        })
+        return [aggregate, multi]
+      }
     },
     brushended(brushArea) {
       // brush event handler
@@ -310,20 +331,21 @@ export default Vue.extend({
           item.stackArr.forEach((item1, index) => {
             d3.select(this.$refs['colorG'])
               .append('rect')
-              .attr('x', x(item.name))
+              .attr('x', x(item.name) - this.margin.between)
               .attr('y', y(item1[1]))
-              .attr('width', x.bandwidth())
+              .attr('width', x.bandwidth() - this.margin.between * 2)
               .attr('height', y(0) - y(item1[0]))
-              .attr('fill', color[index])
+              .attr('fill', this.scaleColor(this.fullEncoding.y[index]))
+            // console.log(this.scaleColor(this.fullEncoding.y[index]))
           })
         })
       } else {
         bins.forEach((item) => {
           d3.select(this.$refs['rectG'])
             .append('rect')
-            .attr('x', x(item.name))
+            .attr('x', x(item.name) - this.margin.between)
             .attr('y', y(item.num))
-            .attr('width', x.bandwidth())
+            .attr('width', x.bandwidth() - this.margin.between * 2)
             .attr('height', y(0) - y(item.num))
             .attr('fill', color)
             .attr('id', item.name)
@@ -420,6 +442,18 @@ export default Vue.extend({
     },
   },
   mounted() {
+    this.scaleColor = d3
+      .scaleOrdinal()
+      .domain(this.fullEncoding.y)
+      .range(this.fullEncoding.color)
+    this.scaleAggregate = d3
+      .scaleOrdinal()
+      .domain(this.fullEncoding.y)
+      .range(this.fullEncoding.aggregate)
+    this.scaleScaleY = d3
+      .scaleOrdinal()
+      .domain(this.fullEncoding.y)
+      .range(this.fullEncoding.scaleY)
     const rect = this.$refs['container'].getBoundingClientRect()
     const from = this.fullEncoding.bottomEdge
     this.svgWidth = this.reverseWidthAndHeight(from, rect.width, rect.height)
