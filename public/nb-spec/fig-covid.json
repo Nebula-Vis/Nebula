@@ -6,8 +6,8 @@
     }
   ],
   "layout": {
-    "width": "600px",
-    "height": "600px",
+    "width": "500px",
+    "height": "750px",
     "rows": ["1fr", "1fr"],
     "columns": ["1fr"]
   },

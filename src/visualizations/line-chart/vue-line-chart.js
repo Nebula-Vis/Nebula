@@ -8,11 +8,11 @@ export default Vue.extend({
   template: `
 <div style="position: relative; width: 100%; height: 100%;">
   <div style="position: absolute; top: 3px; left: calc(100% - 50px); width: 50px;">
-    <div v-for="l in legends" :key="l[0]" :style="{ color: l[1] }">
+    <div v-for="l in legends" :key="l[0]" :style="{ color: l[1], fontSize: '10px', textAlign:'right',fontWeight: 600 }">
       {{ l[0] }}
     </div>
   </div>
-  <svg width="100%" height="100%" ref="svg" style="position: absolute; left: 0;">
+  <svg width="calc(100% - 40px)" height="100%" ref="svg" style="position: absolute; left: 0;">
     <g
       class="axis"
       ref="x-axis2"
