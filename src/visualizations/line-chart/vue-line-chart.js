@@ -224,7 +224,6 @@ export default Vue.extend({
           if (!boolArraySame(self.selectedData, selection)) {
             self.$emit('selection', selection)
             self.$emit('selectedArrange', [minX, maxX])
-            console.log(selection, [minX, maxX])
             self.selectedData = selection
           }
 
