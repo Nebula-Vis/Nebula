@@ -11,6 +11,7 @@ export default class PieChart {
     this.y = props.value
     const selection = props.selection || null
 
+    this.colors = props.colors || null
     this.selection = selection
     this.aggregate = props.aggregate
 
@@ -42,6 +43,7 @@ export default class PieChart {
         selection: this.selection.get(),
         aggregate: that.aggregate,
         count: that.count,
+        colors: that.colors,
       },
       watch: {
         data(val) {

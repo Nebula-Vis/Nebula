@@ -14,6 +14,7 @@ export default class PieChart {
     const selection = props.selection || null
     this.aggregate = props.aggregate || null
     this.count = props.count || null
+    this.colors = props.colors || null
 
     this.selection = selection
 
@@ -44,6 +45,7 @@ export default class PieChart {
         innerRadius: this.innerRadius.get(),
         aggregate: this.aggregate,
         count: that.count,
+        colors: that.colors,
       },
       watch: {
         data(val) {
