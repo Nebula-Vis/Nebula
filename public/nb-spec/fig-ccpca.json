@@ -1,0 +1,61 @@
+{
+  "data": [
+    {
+      "name": "cars-vector",
+      "path": "./data/cars-vector-array.json"
+    },
+    {
+      "name": "empty",
+      "values": []
+    }
+  ],
+  "layout": {
+    "width": "450px",
+    "height": "300px",
+    "rows": ["1fr", "1fr", "1fr", "1fr", "1fr"],
+    "columns": ["1fr", "2fr"]
+  },
+  "visualizations": [
+    {
+      "id": "select-clustering",
+      "container": "2 2 1 1",
+      "visualization": "select",
+      "props": {
+        "label": "clustering",
+        "options": ["k-means", "DBSCAN", "MeanShift"],
+        "selected": "k-means"
+      }
+    },
+    {
+      "id": "input",
+      "container": "3 3 1 1",
+      "visualization": "input",
+      "props": {
+        "label": "parameter"
+      }
+    },
+    {
+      "id": "scatterplot",
+      "container": "1 5 2 2",
+      "visualization": "vegalite",
+      "props": {
+        "data": { "name": "empty" },
+        "mark": "point",
+        "encoding": {
+          "x": { "field": "x", "type": "quantitative" },
+          "y": { "field": "y", "type": "quantitative" },
+          "color": { "field": "label", "type": "nominal" }
+        }
+      }
+    }
+  ],
+  "coordinations": ["set value in select-clustering, set value in input, then cluster with cars-vector, $1, and $2, then set data in scatterplot"],
+  "transformations": [
+    {
+      "name": "cluster",
+      "url": "http://host:port/path",
+      "parameters": ["vector-array", "method", "parameter"],
+      "output": ["labeled-data"]
+    }
+  ]
+}

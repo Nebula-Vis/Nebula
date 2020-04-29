@@ -5,6 +5,7 @@ export default class Input {
   constructor(props) {
     this.id = props.id
     this.value = props.value || ''
+    this.label = props.label
 
     this.el = null
 
@@ -28,12 +29,29 @@ export default class Input {
     }
     this.el = d3.select(el).node()
 
-    d3.select(this.el)
+    const flexContainer = d3
+      .select(this.el)
+      .style('padding', '0 20px')
       .style('display', 'flex')
+      .style('flex-direction', 'column')
       .style('align-items', 'center')
-      .style('justify-content', 'center')
+    // .style('justify-content', 'center')
+
+    if (this.label) {
+      flexContainer
+        .append('div')
+        .style('width', '100%')
+        .append('label')
+        .text(this.label)
+    }
+
+    flexContainer
+
+      .append('div')
+      .style('width', '100%')
+
       .append('input')
-      .style('width', '70%')
+      .style('width', '100%')
       .node()
       .addEventListener(
         // 'input',
@@ -47,6 +65,7 @@ export default class Input {
           }
         }
       )
+
     this._onValueSet(this.value.get())
   }
 

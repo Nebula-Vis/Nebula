@@ -59,6 +59,14 @@ class ExternalTransformation {
     }
   }
 
+  getParameterNameByIndex(index) {
+    return this._parameterNames[index]
+  }
+
+  getOutputNameByIndex(index) {
+    return this._outputNames[index]
+  }
+
   async run() {
     // if (!this.trigger) return
 
