@@ -21,7 +21,15 @@
         "x": "Date",
         "y": "Daily new confirmed cases (cases)",
         "detail": "Entity",
-        "brushType": "x"
+        "brushType": "x",
+        "colors": [
+          "#4e79a7",
+          "#f28e2c",
+          "#e15759",
+          "#76b7b2",
+          "#59a14f",
+          "#edc949"
+        ]
       }
     },
     {
@@ -32,7 +40,15 @@
         "data": "covid",
         "range": "Entity",
         "value": "Daily new confirmed cases (cases)",
-        "aggregate": "sum"
+        "aggregate": "sum",
+        "colors": [
+          "#4e79a7",
+          "#f28e2c",
+          "#e15759",
+          "#76b7b2",
+          "#59a14f",
+          "#edc949"
+        ]
       }
     }
   ],

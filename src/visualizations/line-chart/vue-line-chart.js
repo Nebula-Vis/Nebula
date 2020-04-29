@@ -37,7 +37,7 @@ export default Vue.extend({
     <g ref="paths" id="path">
       <g v-if="dataFormatter.brushListener" ref="brush"></g>
     </g>
-    <g ref="circles" id="circle"></g>
+    <g v-if='showCircle' ref="circles" id="circle"></g>
   </svg>
 </div>
   `,
@@ -58,6 +58,7 @@ export default Vue.extend({
       brushIndices: {},
       paths: null,
       circles: null,
+      showCircle: false,
     }
   },
   computed: {
