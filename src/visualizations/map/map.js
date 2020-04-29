@@ -1,7 +1,5 @@
 import Vue from 'vue/dist/vue.js'
 import * as d3 from 'd3'
-import { boolArraySame } from '../../utils'
-import { forEach, inRange } from 'lodash'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet.chinatmsproviders'
@@ -10,6 +8,7 @@ import 'leaflet-draw/dist/leaflet.draw.css'
 import 'leaflet-draw'
 import turf from 'turf-inside'
 import './map.css'
+import mapstyles from '../../utils/mapstyles'
 
 export default Vue.extend({
   name: 'Map',
@@ -155,7 +154,6 @@ export default Vue.extend({
       { maxZoom, minZoom }
     )
     const layers = [mapLayer, annotionLayer]
-
     const map = L.map(this.$refs.map, {
       minZoom: this.mergedStyle.mergedMapStyle.minZoom,
       maxZoom: this.mergedStyle.mergedMapStyle.maxZoom,
@@ -169,6 +167,7 @@ export default Vue.extend({
       layers: layers,
       deawControl: true,
     })
+    console.log(mapstyles)
     this.map = map
     const drawnItems = new L.FeatureGroup()
     map.addLayer(drawnItems)
@@ -264,6 +263,7 @@ export default Vue.extend({
       self.points = self.drawCircle(self.paramStore)
     })
     this.drawSelectedArea()
+    this.onMapPan()
   },
   methods: {
     drawSelectedArea() {

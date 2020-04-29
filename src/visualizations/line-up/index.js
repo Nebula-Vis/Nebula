@@ -203,6 +203,7 @@ export default class LineUp {
     style.innerHTML = `
       .lu-row [data-id^=col] {
         overflow-y: hidden;
+        border-radius: 5px;
       }
       .lineup-engine>main {
         overflow: -moz-scrollbars-none;
