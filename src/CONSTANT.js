@@ -40,7 +40,7 @@ export const OPTIONS = [
 export const ACTION_TO_OPTIONS = {
   select: ['items', 'ranges', 'subtree'],
   filter: ['items'],
-  navigate: ['scale'],
+  navigate: ['scale', 'items', 'ranges'],
   encode: [
     'x',
     'y',
