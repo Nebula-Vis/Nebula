@@ -46,10 +46,8 @@ export default class Input {
     }
 
     flexContainer
-
       .append('div')
       .style('width', '100%')
-
       .append('input')
       .style('width', '100%')
       .node()
