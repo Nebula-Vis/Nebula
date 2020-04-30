@@ -1,19 +1,9 @@
-{
-  "data": [
-    {
-      "name": "covid",
-      "path": "./data/daily-cases-covid-19-by-continent.json"
-    }
-  ],
+{ "data": [ { "name": "covid", "path": "./data/daily-cases-covid-19-by-continent.json" } ],
   "layout": {
-    "width": "500px",
-    "height": "750px",
-    "rows": ["1fr", "1fr"],
-    "columns": ["1fr"]
-  },
+    "width": "300px", "height": "500px",
+    "rows": ["1fr", "1fr"], "columns": ["1fr"] },
   "visualizations": [
-    {
-      "id": "chart1",
+    { "id": "line-chart",
       "container": "1 1 1 1",
       "visualization": "linechart",
       "props": {
@@ -21,36 +11,23 @@
         "x": "Date",
         "y": "Daily new confirmed cases (cases)",
         "detail": "Entity",
-        "brushType": "x",
-        "colors": [
-          "#4e79a7",
-          "#f28e2c",
-          "#e15759",
-          "#76b7b2",
-          "#59a14f",
-          "#edc949"
-        ]
+        "brushType": "x"
       }
     },
     {
-      "id": "chart2",
+      "id": "pie-chart",
       "container": "2 2 1 1",
       "visualization": "piechart",
       "props": {
         "data": "covid",
         "range": "Entity",
         "value": "Daily new confirmed cases (cases)",
-        "aggregate": "sum",
-        "colors": [
-          "#4e79a7",
-          "#f28e2c",
-          "#e15759",
-          "#76b7b2",
-          "#59a14f",
-          "#edc949"
-        ]
-      }
-    }
-  ],
-  "coordinations": ["select in chart1, then set data in chart2"]
+        "aggregate": "sum" }}],
+  "coordinations": ["select in line-chart, then set data in pie-chart"],
+  "coordinations-low": [
+    { "data-visualization": [
+        { "name": "$selection", 
+          "bind": ["line-chart.selection", "pie-chart.data.unidirectional"]}]}]
+
+
 }

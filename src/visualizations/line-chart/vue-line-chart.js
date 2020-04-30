@@ -81,11 +81,12 @@ export default Vue.extend({
       const detail = this.defaultEncodings.detail
 
       let nC = 0
+      const colors = this.defaultEncodings.colors || d3.schemeSet2
       this.dataSorted.forEach((d) => {
         if (!rowData[d[detail]]) {
           rowData[d[detail]] = {
             rows: [],
-            color: d3.schemeTableau10[nC],
+            color: colors[nC],
           }
           nC += 1
         }
@@ -149,7 +150,7 @@ export default Vue.extend({
           Math.round(this.height / (axisConfig.xSpace * this.defaultSpace))
         )
       if (boolXIsDate) {
-        xAxis.ticks(d3.timeWeek).tickFormat(d3.timeFormat('%m-%d'))
+        xAxis.ticks(d3.timeMonth).tickFormat(d3.timeFormat('%m-%d'))
       }
       const yAxis = d3
         .axisLeft(axisConfig.y)
