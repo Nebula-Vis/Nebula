@@ -71,8 +71,9 @@ export default class CoordinationConstructor {
     for (const paramName in transformation.output) {
       const reactivePropInTransformation = instance[paramName]
       const paramValue = transformation.output[paramName] // array
+      const reactivePropsOfOutputInData = data[paramValue].unidirectionalBind
 
-      paramValue.forEach((param) => {
+      reactivePropsOfOutputInData.forEach((param) => {
         this._addUnidirectionalLinkInTwoProps(
           reactivePropInTransformation,
           param.prop

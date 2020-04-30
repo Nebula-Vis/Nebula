@@ -85,9 +85,10 @@ export default class LowLevelCoordinationSpecParser {
           paramObj[paramName] = param
         } else if (type === 'output') {
           paramName = transformation.getOutputNameByIndex(index)
-          paramObj[paramName] = param.map((paramStr) => {
-            return this._parsePropStrInDataSpec(paramStr)
-          })
+          paramObj[paramName] = param
+          // param.map((paramStr) => {
+          //   return this._parsePropStrInDataSpec(paramStr)
+          // })
         }
       })
     } else {
@@ -96,7 +97,7 @@ export default class LowLevelCoordinationSpecParser {
         paramObj[paramName] = spec[paramName]
       }
     }
-
+    // console.log(paramObj)
     if (type === 'output') return paramObj
 
     // load data sources in input
