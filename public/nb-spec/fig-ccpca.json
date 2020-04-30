@@ -1,0 +1,110 @@
+{
+  "data": [
+    {
+      "name": "cars-vector",
+      "path": "./data/cars-nonull.json"
+    },
+    {
+      "name": "empty",
+      "values": []
+    }
+  ],
+  "layout": {
+    "width": "1350px",
+    "height": "900px",
+    "rows": [
+      "50px",
+      "50px",
+      "50px",
+      "50px",
+      "50px",
+      "50px",
+      "50px",
+      "50px",
+      "50px",
+      "1fr",
+      "1fr",
+      "1fr",
+      "1fr",
+      "60px",
+      "60px",
+      "1fr",
+      "1fr",
+      "1fr",
+      "1fr"
+    ],
+    "columns": ["100px", "100px", "100px", "100px", "100px", "1fr", "1fr"]
+  },
+  "visualizations": [
+    {
+      "id": "nav",
+      "container": "1 1 1 1",
+      "visualization": "dangerous-html",
+      "props": {
+        "html": "<b></b>"
+      }
+    },
+    {
+      "id": "select-reduction",
+      "container": "1 1 1 2",
+      "visualization": "select",
+      "props": {
+        "label": "reduction",
+        "options": ["PCA", "TSNE", "LLE"],
+        "selected": "PCA"
+      }
+    },
+    {
+      "id": "select-clustering",
+      "container": "2 2 1 2",
+      "visualization": "select",
+      "props": {
+        "label": "clustering",
+        "options": ["k-means", "DBSCAN", "MeanShift"],
+        "selected": "DBSCAN"
+      }
+    },
+    {
+      "id": "input",
+      "container": "3 4 1 2",
+      "visualization": "input",
+      "props": {
+        "label": "parameters",
+        "value": "{ \"n_clusters\": 4, \"n_components\": 2 }"
+      }
+    },
+    {
+      "id": "button",
+      "container": "5 5 1 2",
+      "visualization": "button",
+      "props": {
+        "text": "cluster"
+      }
+    },
+    {
+      "id": "scatterplot",
+      "container": "1 6 3 5",
+      "visualization": "vegalite",
+      "props": {
+        "data": { "name": "empty" },
+        "mark": "point",
+        "encoding": {
+          "x": { "field": "x", "type": "quantitative" },
+          "y": { "field": "y", "type": "quantitative" },
+          "color": { "field": "label", "type": "nominal" }
+        }
+      }
+    }
+  ],
+  "coordinations": [
+    "set value in select-reduction, set value in select-clustering, set value in input, then when button clicked reduction&cluster with cars-vector, $1, $2 and $3, then set data in scatterplot"
+  ],
+  "transformations": [
+    {
+      "name": "reduction&cluster",
+      "url": "http://localhost:7001/api/cars/format",
+      "parameters": ["input", "reductionMethod", "clusterMethod", "parameters"],
+      "output": ["labeled-data"]
+    }
+  ]
+}

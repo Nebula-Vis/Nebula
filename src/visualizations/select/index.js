@@ -4,6 +4,7 @@ import ReactiveProperty from '@/reactive-prop'
 export default class Select {
   constructor(props) {
     this.id = props.id
+    this.label = props.label
     this.options = props.options || []
     this.selected = props.selected || null
 
@@ -36,12 +37,27 @@ export default class Select {
     }
     this.el = d3.select(el).node()
 
-    d3.select(this.el)
+    const flexContainer = d3
+      .select(this.el)
+      .style('padding', '0 20px')
       .style('display', 'flex')
+      .style('flex-direction', 'column')
       .style('align-items', 'center')
-      .style('justify-content', 'center')
+    // .style('justify-content', 'center')
+
+    if (this.label) {
+      flexContainer
+        .append('div')
+        .style('width', '100%')
+        .append('label')
+        .text(this.label)
+    }
+
+    flexContainer
+      .append('div')
+      .style('width', '100%')
       .append('select')
-      .style('width', '70%')
+      .style('width', '100%')
       .node()
       .addEventListener('change', (event) => {
         this.selected.set(event.target.value)
@@ -59,6 +75,7 @@ export default class Select {
       .data(options)
       .join('option')
       .attr('value', (d) => d)
+      .attr('selected', (d) => (d === this.selected.get() ? true : null))
       .text((d) => d)
   }
 
