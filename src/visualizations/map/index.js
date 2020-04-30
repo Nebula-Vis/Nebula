@@ -23,7 +23,7 @@ export default class Map {
 
     this.x = x
     this.y = y
-    this.circleColor = props.circleColor || d3.schemeSet3[0]
+    this.circleColor = props.circleColor || d3.schemeSet2[0]
     this.colorField = props.colorField
     this.sizeField = props.sizeField
     this.brushType = props.brushType

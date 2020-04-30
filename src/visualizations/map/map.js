@@ -176,7 +176,7 @@ export default Vue.extend({
       draw: {
         polyline: {
           shapeOptions: {
-            color: d3.schemeSet3[2],
+            color: d3.schemeSet2[2],
             weight: 10,
           },
         },
@@ -187,7 +187,7 @@ export default Vue.extend({
             message: "<strong>Oh snap!<strong> you can't draw that!", //  Message that will show when intersect
           },
           shapeOptions: {
-            color: d3.schemeSet3[2],
+            color: d3.schemeSet2[2],
           },
           showArea: true,
           showLength: true,
@@ -195,7 +195,7 @@ export default Vue.extend({
         rectangle: {
           shapeOptions: {
             clickable: false,
-            color: d3.schemeSet3[4],
+            color: d3.schemeSet2[4],
           },
         },
         circle: false,
@@ -284,7 +284,7 @@ export default Vue.extend({
         point2.lng = xRange[1]
       }
       const layer = L.rectangle([point1, point2], {
-        color: d3.schemeSet3[4],
+        color: d3.schemeSet2[4],
       })
       layer.addTo(this.map)
       this.clickArea = layer

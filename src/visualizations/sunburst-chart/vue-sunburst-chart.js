@@ -53,7 +53,7 @@ export default Vue.extend({
     },
     color() {
       const data = this.rootData
-      return d3.scaleOrdinal(d3.schemeSet3)
+      return d3.scaleOrdinal(d3.schemeSet2)
     },
     arc() {
       const radius = this.radius

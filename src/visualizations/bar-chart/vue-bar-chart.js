@@ -337,7 +337,7 @@ export default Vue.extend({
               .attr('y', y(item1[1]))
               .attr('width', x.bandwidth() - this.margin.between * 2)
               .attr('height', y(0) - y(item1[0]))
-              // .attr('fill', d3.schemeSet3[index])
+              // .attr('fill', d3.schemeSet2[index])
               .attr('fill', this.scaleColor(this.fullEncoding.y[index]))
           })
         })
@@ -518,7 +518,10 @@ export default Vue.extend({
           })
         }
         const tempArr = new Array(...this.encoding.y)
-        if (!boolArrayContentSame(tempArr, this.yArr)) {
+        if (
+          this.fullEncoding.stacked &&
+          !boolArrayContentSame(tempArr, this.yArr)
+        ) {
           this.yArr = tempArr
         }
       },
