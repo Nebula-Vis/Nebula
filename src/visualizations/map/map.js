@@ -8,7 +8,6 @@ import 'leaflet-draw/dist/leaflet.draw.css'
 import 'leaflet-draw'
 import turf from 'turf-inside'
 import './map.css'
-import mapstyles from '../../utils/mapstyles'
 
 export default Vue.extend({
   name: 'Map',
@@ -167,7 +166,6 @@ export default Vue.extend({
       layers: layers,
       deawControl: true,
     })
-    console.log(mapstyles)
     this.map = map
     const drawnItems = new L.FeatureGroup()
     map.addLayer(drawnItems)
