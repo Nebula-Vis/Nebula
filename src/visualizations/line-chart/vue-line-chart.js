@@ -149,7 +149,7 @@ export default Vue.extend({
           Math.round(this.height / (axisConfig.xSpace * this.defaultSpace))
         )
       if (boolXIsDate) {
-        xAxis.ticks(d3.timeWeek).tickFormat(d3.timeFormat('%m-%d'))
+        xAxis.ticks(d3.timeMonth).tickFormat(d3.timeFormat('%m-%d'))
       }
       const yAxis = d3
         .axisLeft(axisConfig.y)
