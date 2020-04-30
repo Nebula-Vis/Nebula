@@ -11,7 +11,7 @@ export default Vue.extend({
     <svg width="100%">
       <g v-for="(l, index) in legends" :key="l[0]">
         <line x1="0" x2="20" :y1="10 + index * 15" :y2="10 + index * 15" :style="{stroke: l[1]}" />
-        <text x="25" :y="15 + index * 15" :fill="l[1]">{{l[0]}}</text>
+        <text x="25" :y="15 + index * 15">{{l[0]}}</text>
       </g>
     </svg>
   </div>
