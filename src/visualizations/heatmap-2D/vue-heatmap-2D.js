@@ -6,7 +6,7 @@ import { boolArraySame } from '../../utils'
 export default Vue.extend({
   name: 'Heatmap-2D',
   template: `
-<div class="HeatChart-root">
+<div style="position: relative; width: 100%; height: 100%;">
   <svg width="100%" height="100%" ref="svg">
     <g width="100%" height="100%" ref="rects"></g>
     <g

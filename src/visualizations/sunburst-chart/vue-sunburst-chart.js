@@ -4,7 +4,7 @@ import * as d3 from 'd3'
 export default Vue.extend({
   name: 'SunburstChart',
   template: `
-      <div class="SunburstChart-root">
+      <div style="position: relative; width: 100%; height: 100%;">
           <svg width="100%" height="100%" ref="svg">
               <!-- <line v-show="!isDisplayAxis" ref="line"></line> -->
           </svg>

@@ -5,7 +5,7 @@ import * as d3Ez from 'd3-ez'
 export default Vue.extend({
   name: 'SectorChart',
   template: `
-      <div class="Sectorchart-root">
+      <div style="position: relative; width: 100%; height: 100%;">
           <svg width="100%" height="100%" ref="svg">
 <!--              <g>-->
 <!--                  <template v-for="(value,index) in data">-->
