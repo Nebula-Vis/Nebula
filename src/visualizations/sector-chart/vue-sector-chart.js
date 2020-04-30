@@ -134,11 +134,7 @@ export default Vue.extend({
       return d3
         .scaleOrdinal()
         .domain(data.map((d) => d[name]))
-        .range(
-          d3
-            .quantize((t) => d3.interpolateSpectral(t * 0.8 + 0.1), data.length)
-            .reverse()
-        )
+        .range(d3.schemeSet3)
     },
     rangeMin() {
       const data = this.data

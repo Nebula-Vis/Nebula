@@ -4,7 +4,7 @@ import * as d3 from 'd3'
 export default Vue.extend({
   name: 'DonutChart',
   template: `
-      <div class="Donutchart-root">
+      <div style="position: relative; width: 100%; height: 100%;">
           <svg width="100%" height="100%" ref="svg">
 <!--              <g>-->
 <!--                  <template v-for="(value,index) in aggregateData">-->
@@ -116,11 +116,7 @@ export default Vue.extend({
       return d3
         .scaleOrdinal()
         .domain(data.map((d) => d[name]))
-        .range(
-          d3
-            .quantize((t) => d3.interpolateSpectral(t * 0.8 + 0.1), data.length)
-            .reverse()
-        )
+        .range(d3.schemeSet3)
     },
     rangeMin() {
       const data = this.data

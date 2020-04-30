@@ -57,6 +57,16 @@ function boolArraySame(arr1, arr2) {
   return true
 }
 
+function boolArrayContentSame(arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false
+  }
+  for (let i = 0; i < arr1.length; i++) {
+    if (!arr2.includes(arr1[i])) return false
+  }
+  return true
+}
+
 function findItemWithKey(arr, key) {
   if (arr) {
     for (const i in arr) {
@@ -77,5 +87,6 @@ export {
   padExtent,
   nbLogger,
   boolArraySame,
+  boolArrayContentSame,
   findItemWithKey,
 }

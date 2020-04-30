@@ -84,7 +84,7 @@ export default Vue.extend({
         if (!rowData[d[detail]]) {
           rowData[d[detail]] = {
             rows: [],
-            color: d3.schemeTableau10[nC],
+            color: d3.schemeSet3[nC],
           }
           nC += 1
         }

@@ -29,8 +29,8 @@ export default class Heatmap2D {
     this.aggregate = props.aggregate || 'count'
     this.countX = this.encoding.countX
     this.countY = this.encoding.countY
-    this.color = this.encoding.color
-    this.bgColor = this.encoding.bgColor
+    this.color = this.encoding.color || d3.schemeSet3[0]
+    this.bgColor = this.encoding.bgColor || d3.schemeSet3[1]
     this.axisSwitch = this.encoding.axisSwitch
     this.el = null
     this.vm = null

@@ -1,5 +1,6 @@
 import * as d3 from 'd3'
 import _ from 'lodash'
+import { boolArrayContentSame } from '../../utils/index'
 import Vue from 'vue/dist/vue.js'
 export default Vue.extend({
   name: 'BarCahrt',
@@ -18,6 +19,7 @@ export default Vue.extend({
       xValueRange: [],
       data: [],
       containerSize: [400, 100],
+      yArr: null,
       scaleColor: (d) => d,
       scaleAggregate: (d) => d,
       scaleScaleY: (d) => d,
@@ -335,8 +337,8 @@ export default Vue.extend({
               .attr('y', y(item1[1]))
               .attr('width', x.bandwidth() - this.margin.between * 2)
               .attr('height', y(0) - y(item1[0]))
+              // .attr('fill', d3.schemeSet3[index])
               .attr('fill', this.scaleColor(this.fullEncoding.y[index]))
-            // console.log(this.scaleColor(this.fullEncoding.y[index]))
           })
         })
       } else {
@@ -440,20 +442,25 @@ export default Vue.extend({
       if (from.includes('left') || from.includes('right')) return num2
       return num1
     },
+    initScale() {
+      this.scaleColor = d3
+        .scaleOrdinal()
+        .domain(this.fullEncoding.y)
+        .range(this.fullEncoding.color)
+      this.scaleAggregate = d3
+        .scaleOrdinal()
+        .domain(this.fullEncoding.y)
+        .range(this.fullEncoding.aggregate)
+      this.scaleScaleY = d3
+        .scaleOrdinal()
+        .domain(this.fullEncoding.y)
+        .range(this.fullEncoding.scaleY)
+      this.ySet = new Set(this.fullEncoding.y)
+    },
   },
   mounted() {
-    this.scaleColor = d3
-      .scaleOrdinal()
-      .domain(this.fullEncoding.y)
-      .range(this.fullEncoding.color)
-    this.scaleAggregate = d3
-      .scaleOrdinal()
-      .domain(this.fullEncoding.y)
-      .range(this.fullEncoding.aggregate)
-    this.scaleScaleY = d3
-      .scaleOrdinal()
-      .domain(this.fullEncoding.y)
-      .range(this.fullEncoding.scaleY)
+    this.initScale()
+    if (this.fullEncoding.stacked) this.yArr = new Array(...this.fullEncoding.y)
     const rect = this.$refs['container'].getBoundingClientRect()
     const from = this.fullEncoding.bottomEdge
     this.svgWidth = this.reverseWidthAndHeight(from, rect.width, rect.height)
@@ -510,8 +517,15 @@ export default Vue.extend({
             d3.select(brushG).call(brush.clear)
           })
         }
+        const tempArr = new Array(...this.encoding.y)
+        if (!boolArrayContentSame(tempArr, this.yArr)) {
+          this.yArr = tempArr
+        }
       },
       deep: true,
+    },
+    yArr() {
+      this.initScale()
     },
   },
   template: `

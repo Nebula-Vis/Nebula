@@ -72,7 +72,7 @@ export default Vue.extend({
       selection: null,
 
       // other options
-      colors: d3.schemeSet2,
+      colors: d3.schemeSet3,
       showAxis: true,
       showBrush: false,
 

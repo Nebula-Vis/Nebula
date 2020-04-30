@@ -74,7 +74,7 @@ export default Vue.extend({
           zoomControl: false, // 是否有缩放控件
           attributionControl: false, // 是否有归因控件
         },
-        circleColor: '#1C74BD',
+        circleColor: this.encoding.circleColor,
       }
     },
     mergedStyle() {
@@ -176,7 +176,7 @@ export default Vue.extend({
       draw: {
         polyline: {
           shapeOptions: {
-            color: '#f357a1',
+            color: d3.schemeSet3[2],
             weight: 10,
           },
         },
@@ -187,7 +187,7 @@ export default Vue.extend({
             message: "<strong>Oh snap!<strong> you can't draw that!", //  Message that will show when intersect
           },
           shapeOptions: {
-            color: '#bada55',
+            color: d3.schemeSet3[2],
           },
           showArea: true,
           showLength: true,
@@ -195,6 +195,7 @@ export default Vue.extend({
         rectangle: {
           shapeOptions: {
             clickable: false,
+            color: d3.schemeSet3[4],
           },
         },
         circle: false,
@@ -235,7 +236,7 @@ export default Vue.extend({
       self.points = self.drawCircle([
         'grey',
         self.mapData,
-        'blue',
+        self.encoding.circleColor,
         selection.selectedArr,
       ])
       drawnItems.addLayer(layer)
@@ -244,7 +245,7 @@ export default Vue.extend({
     })
     map.on(L.Draw.Event.DELETED, function () {
       if (self.pointsLayer) self.pointsLayer.remove()
-      self.points = self.drawCircle(['blue'])
+      self.points = self.drawCircle([self.encoding.circleColor])
     })
     map.on('moveend', self.onMapPan)
     // map.on('move', self.onMapPan)
@@ -282,7 +283,9 @@ export default Vue.extend({
         point1.lng = xRange[0]
         point2.lng = xRange[1]
       }
-      const layer = L.rectangle([point1, point2], {})
+      const layer = L.rectangle([point1, point2], {
+        color: d3.schemeSet3[4],
+      })
       layer.addTo(this.map)
       this.clickArea = layer
       const selection = this.dealClickArea([
@@ -295,7 +298,7 @@ export default Vue.extend({
       this.points = this.drawCircle([
         'grey',
         this.mapData,
-        'blue',
+        this.encoding.circleColor,
         selection.selectedArr,
       ])
       // if (!this.selectedArea) {

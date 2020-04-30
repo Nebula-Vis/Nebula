@@ -23,8 +23,9 @@ export default class Map {
 
     this.x = x
     this.y = y
-    this.color = props.color
-    this.size = props.size
+    this.circleColor = props.circleColor || d3.schemeSet3[0]
+    this.colorField = props.colorField
+    this.sizeField = props.sizeField
     this.brushType = props.brushType
     this.bottomEdge = props.bottomEdge
     this.mapStyle = props.mapStyle
@@ -56,8 +57,9 @@ export default class Map {
         encoding: {
           x: this.x.get(),
           y: this.y.get(),
-          color: this.color.get(),
-          size: this.size.get(),
+          circleColor: this.circleColor,
+          color: this.colorField.get(),
+          size: this.sizeField.get(),
           brushType: this.brushType.get(),
           bottomEdge: this.bottomEdge.get(),
           mapStyle: this.mapStyle.get(),
@@ -118,18 +120,18 @@ export default class Map {
       'encode',
       'y'
     )
-    this.color = new ReactiveProperty(
+    this.colorField = new ReactiveProperty(
       this,
-      'color',
-      this.color,
+      'colorField',
+      this.colorField,
       '_onColorChange',
       'encode',
       'color'
     )
-    this.size = new ReactiveProperty(
+    this.sizeField = new ReactiveProperty(
       this,
-      'size',
-      this.size,
+      'sizeField',
+      this.sizeField,
       '_onSizeChange',
       'encode',
       'size'
@@ -203,49 +205,49 @@ export default class Map {
     if (typeof val !== 'string') {
       throw new TypeError(`Map: expect x to be string, got ${val}`)
     }
-    this.vm.x = val
+    this.vm.encoding.x = val
   }
 
   _onYChange(val) {
     if (typeof val !== 'string') {
       throw new TypeError(`Map: expect y to be string, got ${val}`)
     }
-    this.vm.y = val
+    this.vm.encoding.y = val
   }
 
   _onColorChange(val) {
     if (typeof val !== 'string') {
       throw new TypeError(`Map: expect y to be string, got ${val}`)
     }
-    this.vm.color = val
+    this.vm.encoding.colorField = val
   }
 
   _onSizeChange(val) {
     if (typeof val !== 'string') {
       throw new TypeError(`Map: expect y to be string, got ${val}`)
     }
-    this.vm.size = val
+    this.vm.encoding.size = val
   }
 
   _onBrushTypeChange(val) {
     if (typeof val !== 'string') {
       throw new TypeError(`Map: expect y to be string, got ${val}`)
     }
-    this.vm.brushType = val
+    this.vm.encoding.brushType = val
   }
 
   _onBottomEdgeChange(val) {
     if (typeof val !== 'string') {
       throw new TypeError(`Map: expect y to be string, got ${val}`)
     }
-    this.vm.bottomEdge = val
+    this.vm.encoding.bottomEdge = val
   }
 
   _onMapStyleChange(val) {
     if (Object.prototype.toString.call(val) !== '[object Object]') {
       throw new TypeError(`Map: expect y to be object, got ${val}`)
     }
-    this.vm.mapStyle = val
+    this.vm.encoding.mapStyle = val
   }
 
   _onSelectedAreaChange(val) {

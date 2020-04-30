@@ -14,9 +14,8 @@ export default class BarCahrt {
         ? numericFields.filter((field) => field !== x)
         : numericFields[1])
     const selection = props.selection || this.data
-    let color = props.color || '#FF7400'
-    if (props.stacked && !Array.isArray(props.color))
-      color = y.map(() => props.color)
+    let color = props.color || d3.schemeSet3[0]
+    if (props.stacked && !Array.isArray(props.color)) color = d3.schemeSet3
 
     this.x = x
     this.y = y

@@ -22,6 +22,7 @@
         "y": "lat1",
         "brushType": "xy",
         "bottomEdge": "bottom",
+        "circleColor": "#80B1D3",
         "mapStyle": {
           "mapLayerStyle": "//map.geoq.cn/ArcGIS/rest/services/ChinaOnlineStreetGray/MapServer/tile/{z}/{y}/{x}",
           "annotionLayerStyle": "http://t{s}.tianditu.com/DataServer?T=eva_w&X={x}&Y={y}&L={z}&tk={key}",
@@ -44,7 +45,6 @@
         "aggregate": "max",
         "y": "Floor Size",
         "count": 100,
-        "color": "#7AB9EE",
         "bottomEdge": "bottom",
         "margin":{
           "right": 0,
@@ -65,7 +65,6 @@
         "aggregate": "count",
         "count": 100,
         "bottomEdge": "right",
-        "color": "#7AB9EE",
         "margin":{
           "right": 0,
           "left": 0,
