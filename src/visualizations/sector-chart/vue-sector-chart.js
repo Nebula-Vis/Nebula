@@ -136,7 +136,7 @@ export default Vue.extend({
         return d3
           .scaleOrdinal()
           .domain(data.map((d) => d[name]))
-          .range(d3.schemeSet3)
+          .range(d3.schemeSet2)
       } else {
         return d3.scaleOrdinal(this.colors).domain(data.map((d) => d[name]))
       }

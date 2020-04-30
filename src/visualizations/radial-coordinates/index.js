@@ -4,7 +4,7 @@ export default class Radar {
   constructor(props) {
     this.id = props.id
     this.data = props.data
-    this.color = (props.encoding && props.encoding.color) || d3.schemeSet3[0]
+    this.color = (props.encoding && props.encoding.color) || d3.schemeSet2[0]
     this.el = null
     this._init()
   }
@@ -12,7 +12,7 @@ export default class Radar {
   _renderSVG() {
     const table = this.data.get()
     const that = this
-    const stokenColor = this.color || d3.schemeSet3[1]
+    const stokenColor = this.color || d3.schemeSet2[1]
     const { clientWidth: width, clientHeight: height } = this.el
     const radius = Math.min(width, height) / 2 - 10
     const svg = d3

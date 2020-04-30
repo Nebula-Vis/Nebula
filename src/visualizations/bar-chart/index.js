@@ -14,8 +14,8 @@ export default class BarCahrt {
         ? numericFields.filter((field) => field !== x)
         : numericFields[1])
     const selection = props.selection || this.data
-    let color = props.color || d3.schemeSet3[0]
-    if (props.stacked && !Array.isArray(props.color)) color = d3.schemeSet3
+    let color = props.color || d3.schemeSet2[0]
+    if (props.stacked && !Array.isArray(props.color)) color = d3.schemeSet2
 
     this.x = x
     this.y = y
@@ -23,7 +23,7 @@ export default class BarCahrt {
       props.aggregate || (props.stacked ? y.map((item) => 'count') : 'count')
     this.scaleY = props.scaleY || (props.stacked ? y.map((item) => 1) : 1)
     this.count = props.count
-    this.bottomEdge = props.bottomEdge
+    this.bottomEdge = props.bottomEdge || 'bottom'
     this.color = color
     this.selectionColor = props.selectionColor || color
     this.stacked = props.stacked

@@ -16,8 +16,8 @@ export default class NodeLinkGraph {
     this.nodeId = props.nodeId || 'id'
     this.selection = props.selection || this.data.nodes
 
-    this.color = d3.schemeSet3[0]
-    this.selectionColor = d3.schemeSet3[1]
+    this.color = d3.schemeSet2[0]
+    this.selectionColor = d3.schemeSet2[1]
     this.circleRadius = 5
 
     this._init()
