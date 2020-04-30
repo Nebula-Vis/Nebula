@@ -26,6 +26,7 @@ export default Vue.extend({
       aggregate: '',
       aggregateData: [],
       innerRadius: 0,
+      colors: null,
       count: null, // if data bin
       diff: 5,
       margin: {
@@ -113,10 +114,14 @@ export default Vue.extend({
     color() {
       const data = this.aggregateData
       const name = this.name
-      return d3
-        .scaleOrdinal()
-        .domain(data.map((d) => d[name]))
-        .range(d3.schemeSet3)
+      if (this.colors === null) {
+        return d3
+          .scaleOrdinal()
+          .domain(data.map((d) => d[name]))
+          .range(d3.schemeSet3)
+      } else {
+        return d3.scaleOrdinal(this.colors).domain(data.map((d) => d[name]))
+      }
     },
     rangeMin() {
       const data = this.data
@@ -306,6 +311,16 @@ export default Vue.extend({
           this.$emit('selection', JSON.stringify(this.selection))
           d.data.selected = !d.data.selected
         })
+        .on('mouseover', (d) => {
+          if (d.endAngle - d.startAngle < 0.5)
+            d3.select(`#donut_chart_text${d['index']}`)
+              .style('display', 'unset')
+              .style('z-index', 999)
+        })
+        .on('mouseout', (d) => {
+          if (d.endAngle - d.startAngle < 0.5)
+            d3.select(`#donut_chart_text${d['index']}`).style('display', 'none')
+        })
 
       svg
         .append('g')
@@ -315,9 +330,14 @@ export default Vue.extend({
         .selectAll('text')
         .data(arcs)
         .join('text')
+        .attr('id', (d) => `donut_chart_text${d['index']}`)
+        .style('display', (d) => {
+          if (d.endAngle - d.startAngle < 0.5) return 'none'
+        })
         .attr('transform', (d) => `translate(${arcLabel.centroid(d)})`)
         .call((text) =>
           text
+            // .filter((d) => d.endAngle - d.startAngle > 0.5)
             .append('tspan')
             .attr('y', '-0.4em')
             .attr('font-weight', 'bold')
@@ -325,7 +345,7 @@ export default Vue.extend({
         )
         .call((text) =>
           text
-            .filter((d) => d.endAngle - d.startAngle > 0.25)
+            // .filter((d) => d.endAngle - d.startAngle > 0.5)
             .append('tspan')
             .attr('x', 0)
             .attr('y', '0.7em')

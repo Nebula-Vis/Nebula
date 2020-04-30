@@ -8,11 +8,11 @@ export default Vue.extend({
   template: `
 <div style="position: relative; width: 100%; height: 100%;">
   <div style="position: absolute; top: 3px; left: calc(100% - 50px); width: 50px;">
-    <div v-for="l in legends" :key="l[0]" :style="{ color: l[1] }">
+    <div v-for="l in legends" :key="l[0]" :style="{ color: l[1], fontSize: '10px', fontWeight: 600 }">
       {{ l[0] }}
     </div>
   </div>
-  <svg width="100%" height="100%" ref="svg" style="position: absolute; left: 0;">
+  <svg width="calc(100% - 50px)" height="100%" ref="svg" style="position: absolute; left: 0;">
     <g
       class="axis"
       ref="x-axis2"
@@ -37,7 +37,7 @@ export default Vue.extend({
     <g ref="paths" id="path">
       <g v-if="dataFormatter.brushListener" ref="brush"></g>
     </g>
-    <g ref="circles" id="circle"></g>
+    <g v-if='showCircle' ref="circles" id="circle"></g>
   </svg>
 </div>
   `,
@@ -58,6 +58,7 @@ export default Vue.extend({
       brushIndices: {},
       paths: null,
       circles: null,
+      showCircle: false,
     }
   },
   computed: {
@@ -80,11 +81,12 @@ export default Vue.extend({
       const detail = this.defaultEncodings.detail
 
       let nC = 0
+      const colors = this.defaultEncodings.colors || d3.schemeSet3
       this.dataSorted.forEach((d) => {
         if (!rowData[d[detail]]) {
           rowData[d[detail]] = {
             rows: [],
-            color: d3.schemeSet3[nC],
+            color: colors[nC],
           }
           nC += 1
         }
@@ -121,7 +123,7 @@ export default Vue.extend({
       const axisConfig = {
         x: (boolXIsDate ? d3.scaleTime() : d3.scaleLinear())
           .domain(xExtent)
-          .nice()
+          // .nice()
           .range([
             this.elementLayout.xAxisStartLocation,
             this.elementLayout.xAxisEndLocation,
@@ -148,7 +150,7 @@ export default Vue.extend({
           Math.round(this.height / (axisConfig.xSpace * this.defaultSpace))
         )
       if (boolXIsDate) {
-        xAxis.ticks(d3.timeMonth)
+        xAxis.ticks(d3.timeMonth).tickFormat(d3.timeFormat('%m-%d'))
       }
       const yAxis = d3
         .axisLeft(axisConfig.y)
@@ -156,7 +158,7 @@ export default Vue.extend({
 
       const xScale = (boolXIsDate ? d3.scaleTime() : d3.scaleLinear())
         .domain(xExtent)
-        .nice()
+        // .nice()
         .range([0, this.elementLayout.chartSvg.width])
       const yScale = d3
         .scaleLinear()
@@ -223,7 +225,6 @@ export default Vue.extend({
           if (!boolArraySame(self.selectedData, selection)) {
             self.$emit('selection', selection)
             self.$emit('selectedArrange', [minX, maxX])
-            console.log(selection, [minX, maxX])
             self.selectedData = selection
           }
 

@@ -24,11 +24,29 @@
       "props": {
         "data": "cars",
         "x": "Miles_per_Gallon",
-        "y": "Horsepower"
+        "y": "Displacement"
       }
     }
   ],
   "coordinations": [
     "select in chart1 and chart2, then intersect, then highlight in chart1 and chart2"
+  ],
+  "coordinations-low": [
+    {
+      "data-visualization": [
+        { "name": "$selection1", "bind": ["chart1.selection"] },
+        { "name": "$selection2", "bind": ["chart2.selection"] },
+        {
+          "name": "$intersection",
+          "bind": ["chart1.selection.unidirectional", "chart2.selection.unidirectional"]
+        }
+      ],
+      "transformation": {
+        "name": "intersect",
+        "input": ["$selection1", "$selection2"],
+        "output": ["$intersection"],
+        "triggers": "any"
+      }
+    }
   ]
 }

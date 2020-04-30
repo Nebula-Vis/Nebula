@@ -25,6 +25,7 @@ export default Vue.extend({
       diff: 5,
       aggregate: '',
       aggregateData: [],
+      colors: null,
       count: null, // if data bin
       margin: {
         top: 20,
@@ -101,10 +102,14 @@ export default Vue.extend({
     color() {
       const data = this.aggregateData
       const name = this.name
-      return d3
-        .scaleOrdinal()
-        .domain(data.map((d) => d[name]))
-        .range(d3.schemeSet3)
+      if (this.colors === null) {
+        return d3
+          .scaleOrdinal()
+          .domain(data.map((d) => d[name]))
+          .range(d3.schemeSet3)
+      } else {
+        return d3.scaleOrdinal(this.colors).domain(data.map((d) => d[name]))
+      }
     },
     rangeMin() {
       const data = this.data
@@ -139,6 +144,10 @@ export default Vue.extend({
     this.drawArc()
   },
   methods: {
+    midAngle: function (d) {
+      return d.startAngle + (d.endAngle - d.startAngle) / 2
+    },
+
     parse() {
       const selection = this.selection
       const aggregateData = {}
@@ -256,6 +265,7 @@ export default Vue.extend({
       this.aggregateData = data
     },
     drawArc: function () {
+      const that = this
       // draw all arcs
       const color = this.color
       const arcs = this.arcs
@@ -266,6 +276,7 @@ export default Vue.extend({
       const value = this.value
       const data = this.aggregateData
       const arcLabel = this.arcLabel
+      const radius = this.outerRadius
       svg.selectAll('g').remove()
       svg
         .append('g')
@@ -284,6 +295,7 @@ export default Vue.extend({
         .text((d) => `${d.data[name]}: ${d.data[value].toLocaleString()}`)
         .attr('cursor', 'pointer')
         .on('click', (d, i, nodes) => {
+          console.log(d)
           // eslint-disable-next-line no-array-constructor
           this.selection = []
           if (!d.data.selected) {
@@ -294,6 +306,16 @@ export default Vue.extend({
           this.$emit('selection', JSON.stringify(this.selection))
           d.data.selected = !d.data.selected
         })
+        .on('mouseover', (d) => {
+          if (d.endAngle - d.startAngle < 0.5)
+            d3.select(`#pie_chart_text${d['index']}`)
+              .style('display', 'unset')
+              .style('z-index', 999)
+        })
+        .on('mouseout', (d) => {
+          if (d.endAngle - d.startAngle < 0.5)
+            d3.select(`#pie_chart_text${d['index']}`).style('display', 'none')
+        })
 
       svg
         .append('g')
@@ -303,9 +325,14 @@ export default Vue.extend({
         .selectAll('text')
         .data(arcs)
         .join('text')
+        .attr('id', (d) => `pie_chart_text${d['index']}`)
+        .style('display', (d) => {
+          if (d.endAngle - d.startAngle < 0.5) return 'none'
+        })
         .attr('transform', (d) => `translate(${arcLabel.centroid(d)})`)
         .call((text) =>
           text
+            // .filter((d) => d.endAngle - d.startAngle > 0.5)
             .append('tspan')
             .attr('y', '-0.4em')
             .attr('font-weight', 'bold')
@@ -313,7 +340,7 @@ export default Vue.extend({
         )
         .call((text) =>
           text
-            .filter((d) => d.endAngle - d.startAngle > 0.25)
+            // .filter((d) => d.endAngle - d.startAngle > 0.5)
             .append('tspan')
             .attr('x', 0)
             .attr('y', '0.7em')
