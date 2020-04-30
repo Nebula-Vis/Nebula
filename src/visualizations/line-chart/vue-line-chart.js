@@ -81,7 +81,7 @@ export default Vue.extend({
       const detail = this.defaultEncodings.detail
 
       let nC = 0
-      const colors = this.defaultEncodings.colors || d3.schemeSet3
+      const colors = this.defaultEncodings.colors || d3.schemeSet2
       this.dataSorted.forEach((d) => {
         if (!rowData[d[detail]]) {
           rowData[d[detail]] = {

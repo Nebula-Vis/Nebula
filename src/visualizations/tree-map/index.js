@@ -17,7 +17,7 @@ export default class TreeMap {
     const { clientWidth: width, clientHeight: height } = this.el
     const that = this
     const format = d3.format(',d')
-    const color = d3.scaleOrdinal(d3.schemeSet3)
+    const color = d3.scaleOrdinal(d3.schemeSet2)
     const hierarchy = d3
       .hierarchy(this.data.get())
       .sum((d) => d.value)
