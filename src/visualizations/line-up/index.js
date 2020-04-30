@@ -83,6 +83,7 @@ export default class LineUp {
 
   _buildLineUp() {
     const builder = this._getDataBuilder(this.data.get(), this.order.get())
+    console.log(this.data.get(), this.order.get())
 
     builder.defaultRanking()
     builder.sidePanel(false)
@@ -105,7 +106,12 @@ export default class LineUp {
   }
 
   _onDataSet(data) {
+    console.log(data)
     if (_.isEqual(data, this._data)) return
+
+    // TODO
+    if (!data || !data.length) return
+
     const datum = data[0]
     const order = this.order.get().filter((attr) => datum[attr] !== undefined)
     const builder = this._getDataBuilder(data, order)
@@ -124,8 +130,11 @@ export default class LineUp {
   }
 
   _onSelectionSet(selection) {
+    console.log(selection)
     if (selection === this._selection) return
-    const data = this.data.get()
+    const data = this.data.get() || []
+
+    console.log(data)
 
     const dataMap = new Map()
     data.forEach((d, i) => {
@@ -186,11 +195,10 @@ export default class LineUp {
       _.debounce(() => {
         const order = this.lineup.data
           .getFirstRanking()
-          .children.slice(this.name ? 4 : 3)
+          .children.slice(4)
           .map((c) => c.desc.column)
         this._order = order
         this.order.set(order)
-        console.log(this.order.get())
       }, 50)
     )
   }
@@ -203,7 +211,6 @@ export default class LineUp {
     style.innerHTML = `
       .lu-row [data-id^=col] {
         overflow-y: hidden;
-        border-radius: 5px;
       }
       .lineup-engine>main {
         overflow: -moz-scrollbars-none;
