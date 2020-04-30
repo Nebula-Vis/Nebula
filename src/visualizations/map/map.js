@@ -39,6 +39,7 @@ export default Vue.extend({
         size: undefined,
         brushType: 'xy',
         bottomEdge: 'bottom',
+        brushColor: d3.schemeSet2[2],
       },
     }
   },
@@ -176,7 +177,7 @@ export default Vue.extend({
       draw: {
         polyline: {
           shapeOptions: {
-            color: d3.schemeSet2[2],
+            color: this.mergedEncoding.brushColor,
             weight: 10,
           },
         },
@@ -187,7 +188,7 @@ export default Vue.extend({
             message: "<strong>Oh snap!<strong> you can't draw that!", //  Message that will show when intersect
           },
           shapeOptions: {
-            color: d3.schemeSet2[2],
+            color: this.mergedEncoding.brushColor,
           },
           showArea: true,
           showLength: true,
@@ -195,7 +196,7 @@ export default Vue.extend({
         rectangle: {
           shapeOptions: {
             clickable: false,
-            color: d3.schemeSet2[4],
+            color: this.mergedEncoding.brushColor,
           },
         },
         circle: false,
@@ -284,7 +285,7 @@ export default Vue.extend({
         point2.lng = xRange[1]
       }
       const layer = L.rectangle([point1, point2], {
-        color: d3.schemeSet2[4],
+        color: this.mergedEncoding.brushColor,
       })
       layer.addTo(this.map)
       this.clickArea = layer
@@ -301,16 +302,6 @@ export default Vue.extend({
         this.encoding.circleColor,
         selection.selectedArr,
       ])
-      // if (!this.selectedArea) {
-      //   const parArr = [
-      //     this.map.containerPointToLatLng([0, 0]),
-      //     this.map.containerPointToLatLng([0, this.svgHeight]),
-      //     this.map.containerPointToLatLng([this.svgWidth, this.svgHeight]),
-      //     this.map.containerPointToLatLng([this.svgWidth, 0]),
-      //   ]
-      //   const dataInWindow = this.dealClickArea(parArr)
-      //   this.$emit('selection', dataInWindow)
-      // }
     },
     drawCircle([color, data, color1, data1]) {
       //  eslint-disable-next-line prefer-rest-params
