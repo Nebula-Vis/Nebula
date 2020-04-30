@@ -140,7 +140,7 @@
     }
   ],
   "coordinations": [
-    "select items in map, then set data in histo-top, histo-left, stackedbar-right, stackedbar-bottom, and lineup",
+    "select items in map, then set data in histo-top, histo-left, stackedbar-right, and stackedbar-bottom, select items in lineup",
     {
       "how": "select ranges in any, then select ranges in others",
       "visualizations": [
@@ -152,6 +152,7 @@
       ]
     },
     "navigate ranges in map, then navigate ranges in histo-top, histo-left, stackedbar-right, stackedbar-bottom",
+    "navigate items in map, then set data in lineup",
     "reconfigure order in lineup, then encode y in stackedbar-right, stackedbar-bottom"
   ]
 }

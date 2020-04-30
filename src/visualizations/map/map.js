@@ -419,7 +419,7 @@ export default Vue.extend({
         this.map.containerPointToLatLng([this.svgWidth, 0]),
       ]
       const dataInWindow = this.dealClickArea(parArr)
-      this.$emit('visibleData', dataInWindow)
+      this.$emit('visibleData', dataInWindow.selectedArr)
       this.$emit('visibleRange', {
         [this.mergedEncoding.y]: [parArr[2].lat, parArr[0].lat],
         [this.mergedEncoding.x]: [parArr[0].lng, parArr[2].lng],
