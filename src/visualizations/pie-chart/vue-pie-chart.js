@@ -107,12 +107,13 @@ export default Vue.extend({
           .scaleOrdinal()
           .domain(data.map((d) => d[name]))
           .range(
-            d3
-              .quantize(
-                (t) => d3.interpolateSpectral(t * 0.8 + 0.1),
-                data.length
-              )
-              .reverse()
+            d3.schemeSet2
+            // d3
+            //   .quantize(
+            //     (t) => d3.interpolateSpectral(t * 0.8 + 0.1),
+            //     data.length
+            //   )
+            //   .reverse()
           )
       } else {
         return d3.scaleOrdinal(this.colors).domain(data.map((d) => d[name]))
