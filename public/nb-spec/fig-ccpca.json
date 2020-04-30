@@ -60,7 +60,7 @@
       "visualization": "select",
       "props": {
         "label": "clustering",
-        "options": ["kMeans", "DBSCAN", "MeanShift"],
+        "options": ["k-means", "DBSCAN", "MeanShift"],
         "selected": "DBSCAN"
       }
     },
