@@ -4,7 +4,7 @@ import * as d3 from 'd3'
 export default Vue.extend({
   name: 'PieChart',
   template: `
-      <div class="Piechart-root">
+      <div style="position: relative; width: 100%; height: 100%;">
           <svg width="100%" height="100%" ref="svg">
 <!--              <g>-->
 <!--                  <template v-for="(value,index) in aggregateData">-->

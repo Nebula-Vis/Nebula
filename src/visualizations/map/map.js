@@ -12,7 +12,7 @@ import './map.css'
 export default Vue.extend({
   name: 'Map',
   template: `
-<div class="geomap-root">
+<div style="position: relative; width: 100%; height: 100%;">
   <div id="mapid" ref="map"></div>
 </div>
   `,
