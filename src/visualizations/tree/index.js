@@ -34,7 +34,7 @@ export default class Tree {
       .append('g')
       .attr('class', 'tree')
       .attr('font-family', 'sans-serif')
-      .attr('font-size', 10)
+      .attr('font-size', 12)
       .attr(
         'transform',
         `translate(${(root.data.name.length + 1) * 5},${root.dx - x0})`

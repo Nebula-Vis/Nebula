@@ -349,7 +349,7 @@ export default Vue.extend({
       svg
         .append('g')
         .attr('font-family', 'sans-serif')
-        .attr('font-size', 10)
+        .attr('font-size', 12)
         .attr('text-anchor', 'middle')
         .selectAll('text')
         .data(arcs)

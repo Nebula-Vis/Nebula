@@ -449,7 +449,7 @@
     "width": "1000px",
     "height": "1000px",
     "rows": ["1fr", "1fr", "1fr", "1fr", "1fr", "1fr", "1fr"],
-    "columns": ["1fr", "1fr", "1fr"]
+    "columns": ["400px", "1fr", "1fr"]
   },
   "visualizations": [
     {
@@ -587,9 +587,22 @@
     {
       "id": "chart01",
       "container": "4 4 2 2",
-      "visualization": "scatterplot",
+      "visualization": "barchart",
       "props": {
-        "data": "barchart1"
+        "data": "barchart1",
+        "selectedXRange": [20, 40],
+        "xRange": [31, 75],
+        "encoding": {
+          "x": "a",
+          "y": ["a", "c", "a", "c"],
+          "aggregate": ["sum", "sum", "average", "average"],
+          "stacked": true,
+          "color": "#104BA9",
+          "selectionColor": "#FFA200",
+          "bottomEdge": "bottom",
+          "count": 6,
+          "isDisplay": false
+        }
       }
     },
     {
