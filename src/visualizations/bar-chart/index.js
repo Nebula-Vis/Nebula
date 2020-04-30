@@ -7,24 +7,37 @@ export default class BarCahrt {
     this.id = props.id
     this.data = props.data
     const numericFields = getFieldsOfType(this.data, 'number')
-    const x = props.encoding.x || numericFields[0]
+    const x = props.x || numericFields[0]
     const y =
-      props.encoding.y ||
-      (props.encoding.stacked
+      props.y ||
+      (props.stacked
         ? numericFields.filter((field) => field !== x)
         : numericFields[1])
     const selection = props.selection || this.data
+    let color = props.color || '#FF7400'
+    if (props.stacked && !Array.isArray(props.color))
+      color = y.map(() => props.color)
 
-    this.encoding = props.encoding
     this.x = x
     this.y = y
     this.aggregate =
-      props.encoding.aggregate ||
-      (props.encoding.stacked ? y.map((item) => 'count') : 'count')
+      props.aggregate || (props.stacked ? y.map((item) => 'count') : 'count')
+    this.count = props.count
+    this.bottomEdge = props.bottomEdge
+    this.color = color
+    this.selectionColor = props.selectionColor
+    this.stacked = props.stacked
+    this.isDisplay = props.isDisplay
+    this.margin = props.margin || {
+      top: 20,
+      right: 20,
+      bottom: 35,
+      left: 30,
+    }
+
     this.selection = selection
-    this.selectedXRange = props.selectedXRange || []
+    this.selectedXRange = props.selectedXRange || {}
     this.xRange = props.xRange || []
-    this.stacked = props.encoding.stacked
     this.el = null
     this.vm = null
 
@@ -56,19 +69,23 @@ export default class BarCahrt {
         selection: this.selection.get(),
         selectedXRange: this.selectedXRange.get(),
         xRange: this.xRange.get(),
+        margin: this.margin,
         encoding: {
-          ...this.encoding,
           x: this.x.get(),
           y: this.y.get(),
-          stacked: this.stacked.get(),
           aggregate: this.aggregate.get(),
+          stacked: this.stacked,
+          color: this.color,
+          count: this.count,
+          selectionColor: this.selectionColor,
+          bottomEdge: this.bottomEdge,
+          isDisplay: this.isDisplay,
         },
       },
       watch: {
         data(val) {
           this.selection = []
-          this.selectedXRange = []
-          this.xRange = []
+          this.selectedXRange = {}
         },
       },
     })
@@ -113,14 +130,6 @@ export default class BarCahrt {
       'encode',
       'aggregate'
     )
-    this.stacked = new ReactiveProperty(
-      this,
-      'stacked',
-      this.stacked,
-      '_onStackedChange',
-      'encode',
-      'type'
-    )
     this.selection = new ReactiveProperty(
       this,
       'selection',
@@ -142,7 +151,7 @@ export default class BarCahrt {
       'xRange',
       this.xRange,
       '_onXRangeChange',
-      'set',
+      'navigate',
       'ranges'
     )
   }
@@ -178,13 +187,6 @@ export default class BarCahrt {
     this.vm.y = val
   }
 
-  _onStackedChange(val) {
-    if (typeof val !== 'string') {
-      throw new TypeError(`BarChart: expect y to be string, got ${val}`)
-    }
-    this.vm.stacked = val
-  }
-
   _onSelectionChange(val) {
     if (!Array.isArray(val)) {
       throw new TypeError(`BarChart: expect selection to be Array, got ${val}`)
@@ -193,20 +195,20 @@ export default class BarCahrt {
   }
 
   _onSelectedXRangeChange(val) {
-    if (!Array.isArray(val)) {
-      throw new TypeError(
-        `BarChart: expect selectedXRange to be Array, got ${val}`
-      )
-    }
+    // if (!Array.isArray(val)) {
+    //   throw new TypeError(
+    //     `BarChart: expect selectedXRange to be Array, got ${val}`
+    //   )
+    // }
     this.vm.selectedXRange = val
   }
 
   _onXRangeChange(val) {
-    if (!Array.isArray(val)) {
-      throw new TypeError(
-        `BarChart: expect selectedXRange to be Array, got ${val}`
-      )
-    }
+    // if (!Array.isArray(val)) {
+    //   throw new TypeError(
+    //     `BarChart: expect selectedXRange to be Array, got ${val}`
+    //   )
+    // }
     this.vm.xRange = val
   }
 }

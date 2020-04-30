@@ -12,13 +12,11 @@ export default class Map {
   constructor(props) {
     this.id = props.id || new Date() - 0
     this.data = props.data
-    this.areasData = props.areasData
-    this.selectedArea = props.selectedArea || []
+    this.selectedArea = props.selectedArea || {}
 
     const numericFields = getFieldsOfType(this.data, 'number')
     const x = props.x || numericFields[0]
     const y = props.y || numericFields[1]
-    const selection = props.selection || []
     if (!boolDataHasAttributes(this.data, x, y)) {
       throw new Error(`Map: wrong attributes x:${x}, y:${y}`)
     }
@@ -30,9 +28,9 @@ export default class Map {
     this.brushType = props.brushType
     this.bottomEdge = props.bottomEdge
     this.mapStyle = props.mapStyle
-    this.events = props.events
-    this.selection = selection
-    this.dataInWindow = []
+    this.selection = props.selection || props.data
+    this.visibleData = []
+    this.visibleRange = {}
     this.el = null
     this.vm = null
 
@@ -54,7 +52,6 @@ export default class Map {
       data: {
         id: this.id,
         mapData: this.data.get(),
-        areasData: this.areasData.get(),
         selectedArea: this.selectedArea.get(),
         encoding: {
           x: this.x.get(),
@@ -64,7 +61,6 @@ export default class Map {
           brushType: this.brushType.get(),
           bottomEdge: this.bottomEdge.get(),
           mapStyle: this.mapStyle.get(),
-          events: this.events.get(),
         },
         selection: this.selection.get(),
       },
@@ -72,7 +68,7 @@ export default class Map {
         data(val) {
           // TODO this.checkXY()
           this.scale = that._getScale(val, this.x)
-          // this.selection = val
+          this.selection = val
         },
       },
     })
@@ -82,11 +78,17 @@ export default class Map {
     this.vm.$on('data', (val) => {
       this.data.set(val)
     })
-    this.vm.$on('dataInWindow', (val) => {
-      this.dataInWindow.set(val)
+    this.vm.$on('visibleData', (val) => {
+      this.visibleData.set(val)
+    })
+    this.vm.$on('visibleRange', (val) => {
+      this.visibleRange.set(val)
     })
     this.vm.$on('selection', (val) => {
       this.selection.set(val)
+    })
+    this.vm.$on('selectedArea', (val) => {
+      this.selectedArea.set(val)
     })
   }
 
@@ -97,14 +99,6 @@ export default class Map {
       'data',
       this.data,
       '_onDataChange',
-      'set',
-      'data'
-    )
-    this.areasData = new ReactiveProperty(
-      this,
-      'areasData',
-      this.areasData,
-      '_onAreasDataChange',
       'set',
       'data'
     )
@@ -164,14 +158,6 @@ export default class Map {
       'encode',
       'style'
     )
-    this.events = new ReactiveProperty(
-      this,
-      'events',
-      this.events,
-      '_onEventsChange',
-      'encode',
-      'type'
-    )
     this.selectedArea = new ReactiveProperty(
       this,
       'selectedArea',
@@ -188,13 +174,21 @@ export default class Map {
       'select',
       'items'
     )
-    this.dataInWindow = new ReactiveProperty(
+    this.visibleData = new ReactiveProperty(
       this,
-      'dataInWindow',
-      this.dataInWindow,
-      '_onDataInWindowChange',
-      'select',
+      'visibleData',
+      this.visibleData,
+      '_onVisibleDataChange',
+      'navigate',
       'items'
+    )
+    this.visibleRange = new ReactiveProperty(
+      this,
+      'visibleRange',
+      this.visibleRange,
+      '_onVisibleRangeChange',
+      'navigate',
+      'ranges'
     )
   }
 
@@ -203,13 +197,6 @@ export default class Map {
       throw new TypeError(`Map: expect data to be Array, got ${val}`)
     }
     this.vm.data = val
-  }
-
-  _onAreasDataChange(val) {
-    if (!Array.isArray(val)) {
-      throw new TypeError(`Map: expect data to be Array, got ${val}`)
-    }
-    this.vm.areasData = val
   }
 
   _onXChange(val) {
@@ -261,17 +248,10 @@ export default class Map {
     this.vm.mapStyle = val
   }
 
-  _onEventsChange(val) {
-    if (!Array.isArray(val)) {
-      throw new TypeError(`Map: expect events to be array, got ${val}`)
-    }
-    this.vm.events = val
-  }
-
   _onSelectedAreaChange(val) {
-    if (!Array.isArray(val)) {
-      throw new TypeError(`Map: expect selection to be Array, got ${val}`)
-    }
+    // if (!Array.isArray(val)) {
+    //   throw new TypeError(`Map: expect selection to be Array, got ${val}`)
+    // }
 
     this.vm.selectedArea = val
   }
@@ -284,8 +264,12 @@ export default class Map {
     this.vm.selection = val
   }
 
-  _onDataInWindowChange(val) {
-    this.vm._onDataInWindowChange = val
+  _onVisibleDataChange(val) {
+    this.vm.visibleData = val
+  }
+
+  _onVisibleRangeChange(val) {
+    this.vm.visibleRange = val
   }
 
   _isValidScale(scale, x) {
