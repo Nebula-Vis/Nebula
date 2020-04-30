@@ -419,18 +419,33 @@ export default class HighLevelCoordinationSpecParser {
         input: howObj.transformation.parameters,
         output: [],
       }
-      const outputCount = Number(
-        _.maxBy(howObj.destination, (o) =>
-          Number(o.value.slice(1))
-        ).value.slice(1)
-      )
-      whatObj.transformation.output = new Array(outputCount).fill([])
+      // output
+      // 通过destination，初始化transformation.output
+      let maxParamIndex = 0
       howObj.destination.forEach((d) => {
-        const index = Number(d.value.slice(1)) - 1
-        const visPropStr = this._visualizationsManager
+        const paramValue = parseInt(d.value.slice(1))
+        if (paramValue > maxParamIndex) maxParamIndex = paramValue
+      })
+      const outputArray = new Array(maxParamIndex)
+        .fill(0)
+        .map((v, i) => `$output${i + 1}`)
+      whatObj.transformation.output = outputArray
+      // 填data-visualization中的内容
+      outputArray.forEach((d) => {
+        whatObj['data-visualization'].push({
+          name: d,
+          bind: [],
+        })
+      })
+      howObj.destination.forEach((d) => {
+        const dataName = `${d.value[0]}output${d.value[1]}`
+        const dataObj = whatObj['data-visualization'].find(
+          (d) => d.name === dataName
+        )
+        const visprop = this._visualizationsManager
           .getVisualizationById(d.vis)
           .getVisPropByActionOption(d.method, d.option)
-        whatObj.transformation.output[index].push(visPropStr)
+        dataObj.bind.push(`${visprop}.unidirectional`)
       })
     }
     return whatObj

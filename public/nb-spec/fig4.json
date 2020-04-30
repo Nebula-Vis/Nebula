@@ -28,10 +28,10 @@
       }
     }
   ],
-  "coordinations-low": [
+  "coordinations": [
     "select in chart1 and chart2, then intersect, then highlight in chart1 and chart2"
   ],
-  "coordinations": [
+  "coordinations-low": [
     {
       "data-visualization": [
         { "name": "$selection1", "bind": ["chart1.selection"] },
