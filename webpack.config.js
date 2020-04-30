@@ -31,8 +31,10 @@ module.exports = {
     ],
   },
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public'),
+    path: path.resolve(__dirname, 'public'),    // 如果要打包 注释掉这句话
+    filename: 'nebula.min.js',
+    library: 'nebula',
+    libraryTarget: 'umd',
   },
   resolve: {
     alias: {
