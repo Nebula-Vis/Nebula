@@ -10,6 +10,7 @@
     "test": "mocha --require @babel/register",
     "commit": "git-cz"
   },
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Nebula-Vis/Nebula.git"

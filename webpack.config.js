@@ -31,9 +31,9 @@ module.exports = {
     ],
   },
   output: {
-    path: path.resolve(__dirname, 'public'),    // 如果要打包 注释掉这句话
+    // path: path.resolve(__dirname, 'public'),    // 如果要打包 注释掉这句话
     filename: 'nebula.min.js',
-    library: 'nebula',
+    library: 'nebula-vis',
     libraryTarget: 'umd',
   },
   resolve: {
