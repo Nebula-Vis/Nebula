@@ -89,7 +89,7 @@
         "aggregate": ["sum", "sum", "max"],
         "scaleY": [1, 1, 0.01],
         "count": 100,
-        "color": ["#CDE1C0", "#FFD9A3", "#81C5CB"],
+        "color": ["#fc8d62", "#8da0cb", "#a6d854"],
         "bottomEdge": "left-mirror",
         "margin":{
           "right": 0,
@@ -116,7 +116,7 @@
         "aggregate": ["sum", "sum", "max"],
         "scaleY": [1, 1, 0.01],
         "count": 100,
-        "color": ["#CDE1C0", "#FFD9A3", "#81C5CB"],
+        "color": ["#fc8d62", "#8da0cb", "#a6d854"],
         "bottomEdge": "top-mirror",
         "margin":{
           "right": 0,
@@ -135,7 +135,7 @@
       "props": {
         "data": "houses",
         "order": ["Living Rooms", "Bedrooms", "Floor Size"],
-        "color": ["#CDE1C0", "#FFD9A3", "#81C5CB"]
+        "color": ["#fc8d62", "#8da0cb", "#a6d854"]
       }
     }
   ],

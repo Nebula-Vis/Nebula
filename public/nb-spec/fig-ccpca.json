@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "name": "cars-vector",
+      "name": "cars",
       "path": "./data/cars-nonull.json"
     },
     {
@@ -33,7 +33,7 @@
       "1fr",
       "1fr"
     ],
-    "columns": ["100px", "100px", "100px", "100px", "100px", "1fr", "1fr"]
+    "columns": ["70px", "70px", "100px", "100px", "150px", "1fr", "1fr"]
   },
   "visualizations": [
     {
@@ -78,7 +78,7 @@
       "container": "5 5 1 2",
       "visualization": "button",
       "props": {
-        "text": "cluster"
+        "text": "run"
       }
     },
     {
@@ -97,7 +97,7 @@
     }
   ],
   "coordinations": [
-    "set value in select-reduction, set value in select-clustering, set value in input, then when button clicked reduction&cluster with cars-vector, $1, $2 and $3, then set data in scatterplot"
+    "set value in select-reduction, set value in select-clustering, set value in input, then when button clicked reduction&cluster with cars, $1, $2 and $3, then set data in scatterplot"
   ],
   "transformations": [
     {

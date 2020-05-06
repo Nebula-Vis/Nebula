@@ -8,7 +8,7 @@ export default Vue.extend({
   template: `
 <div style="position: relative; width: 100%; height: 100%;">
   <div style="position: absolute; top: 3px; left: calc(100% - 50px); width: 50px;">
-    <div v-for="l in legends" :key="l[0]" :style="{ color: l[1], fontSize: '10px', fontWeight: 600 }">
+    <div v-for="l in legends" :key="l[0]" :style="{ color: l[1], fontSize: '12px', fontWeight: 'bold', fontFamily: 'Arial' }">
       {{ l[0] }}
     </div>
   </div>

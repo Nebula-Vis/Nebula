@@ -22,7 +22,7 @@ export default Vue.extend({
     </defs>
     <g class="brush-g" />
     <g class="points-g" :clip-path="\`url(#\${id}-clip)\`">
-      <circle v-for="(mark, i) in marks" :key="i" v-bind="mark" :r="size" />
+      <circle v-for="(mark, i) in marks" :key="i" v-bind="mark" :r="size" :fill-opacity="0.7" />
     </g>
     <g class="zoom-g" />
     <g class="axes-g" style="user-select:none" v-if="showAxis">

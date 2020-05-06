@@ -33,7 +33,7 @@ export default class Scatterplot {
     this.selection = props.selection || props.data
     this.size = props.size === undefined ? 4 : +props.size
     this.color = props.color || d3.schemeSet2[0]
-    this.alternateColor = props.alternateColor || d3.schemeSet2[1]
+    this.alternateColor = props.alternateColor || '#eee'
     this.filteredData = props.filteredData || []
 
     // this.id = new Date().toLocaleString()
