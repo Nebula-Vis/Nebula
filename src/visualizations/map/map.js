@@ -213,7 +213,7 @@ export default Vue.extend({
     map.on(L.Draw.Event.DRAWSTART, function () {
       if (self.clickArea) self.clickArea.remove()
       if (self.pointsLayer) self.pointsLayer.remove()
-      self.points = self.drawCircle(['grey'])
+      self.points = self.drawCircle([d3.schemeSet2[7]])
     })
     map.on(L.Draw.Event.CREATED, function (e) {
       const type = e.layerType
@@ -235,7 +235,7 @@ export default Vue.extend({
       })
       if (self.pointsLayer) self.pointsLayer.remove()
       self.points = self.drawCircle([
-        'grey',
+        d3.schemeSet2[7],
         self.mapData,
         self.encoding.circleColor,
         selection.selectedArr,
@@ -297,7 +297,7 @@ export default Vue.extend({
       ])
       if (this.pointsLayer) this.pointsLayer.remove()
       this.points = this.drawCircle([
-        'grey',
+        d3.schemeSet2[7],
         this.mapData,
         this.encoding.circleColor,
         selection.selectedArr,

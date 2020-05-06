@@ -7,12 +7,15 @@ export default Vue.extend({
   name: 'LineChart',
   template: `
 <div style="position: relative; width: 100%; height: 100%;">
-  <div style="position: absolute; top: 3px; left: calc(100% - 50px); width: 50px;">
-    <div v-for="l in legends" :key="l[0]" :style="{ color: l[1], fontSize: '12px', fontWeight: 'bold', fontFamily: 'Arial' }">
-      {{ l[0] }}
-    </div>
+  <div :style="{position: 'absolute', top: '3px', left: legendWidth[1], width: legendWidth[0]}">
+    <svg width="100%">
+      <g v-for="(l, index) in legends" :key="l[0]">
+        <line x1="0" x2="20" :y1="10 + index * 15" :y2="10 + index * 15" :style="{stroke: l[1]}" />
+        <text x="25" :y="15 + index * 15">{{l[0]}}</text>
+      </g>
+    </svg>
   </div>
-  <svg width="calc(100% - 50px)" height="100%" ref="svg" style="position: absolute; left: 0;">
+  <svg :width="legendWidth[1]" height="100%" ref="svg" style="position: absolute; left: 0;">
     <g
       class="axis"
       ref="x-axis2"
@@ -64,11 +67,18 @@ export default Vue.extend({
   computed: {
     legends() {
       const keys = Object.keys(this.rowData)
+      let maxLen = 0
       const legends = []
       forEach(keys, (key) => {
-        legends.push([key, this.rowData[key].color])
+        maxLen = Math.max(maxLen, key.length)
+        legends.push([key, this.rowData[key].color, maxLen])
       })
       return legends
+    },
+    legendWidth() {
+      const strLen = this.legends[this.legends.length - 1][2] || 0
+      const len = 50 + strLen * 5
+      return [`${len}px`, `calc(100% - ${len}px`]
     },
     dataSorted() {
       const tempData = cloneDeep(this.data)
