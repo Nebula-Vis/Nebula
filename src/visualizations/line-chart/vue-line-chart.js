@@ -49,7 +49,7 @@ export default Vue.extend({
       id: '',
       data: [],
       selection: [],
-      selectedArrange: [0, 0],
+      selectedXRange: [0, 0],
       defaultEncodings: {},
       selectedData: [],
       width: 50,
@@ -234,7 +234,8 @@ export default Vue.extend({
           })
           if (!boolArraySame(self.selectedData, selection)) {
             self.$emit('selection', selection)
-            self.$emit('selectedArrange', [minX, maxX])
+            const x = this.defaultEncodings.x
+            self.$emit('selectedXRange', { [x]: [minX, maxX] })
             self.selectedData = selection
           }
 
@@ -351,8 +352,11 @@ export default Vue.extend({
                 ? 4
                 : 2
             } else {
-              return d[this.defaultEncodings.x] >= this.selectedArrange[0] &&
-                d[this.defaultEncodings.x] <= this.selectedArrange[1]
+              const selectedXRange = this.selectedXRange[
+                this.defaultEncodings.x
+              ]
+              return d[this.defaultEncodings.x] >= selectedXRange[0] &&
+                d[this.defaultEncodings.x] <= selectedXRange[1]
                 ? 4
                 : 2
             }

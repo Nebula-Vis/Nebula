@@ -133,6 +133,14 @@ export default class BarCahrt {
       'encode',
       'aggregate'
     )
+    this.count = new ReactiveProperty(
+      this,
+      'count',
+      this.count,
+      '_onCountChange',
+      'encode',
+      'count'
+    )
     this.selection = new ReactiveProperty(
       this,
       'selection',
@@ -171,6 +179,13 @@ export default class BarCahrt {
       throw new TypeError(`BarChart: expect x to be string, got ${val}`)
     }
     this.vm.aggregate = val
+  }
+
+  _onCountChange(val) {
+    if (typeof val !== 'number') {
+      throw new TypeError(`BarChart: expect x to be number, got ${val}`)
+    }
+    this.vm.count = val
   }
 
   _onXChange(val) {

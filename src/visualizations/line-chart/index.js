@@ -36,7 +36,7 @@ export default class LineChart {
     this.brushType = props.brushType || 'xy'
     this.scale = scale
     this.selection = selection
-    this.selectedArrange = props.selectedArrange || [0, 0]
+    this.selectedXRange = props.selectedXRange || [0, 0]
     this.el = null
     this.vm = null
     this.mmz = props.data
@@ -87,8 +87,8 @@ export default class LineChart {
     this.vm.$on('selection', (val) => {
       this.selection.set(val)
     })
-    this.vm.$on('selectedArrange', (val) => {
-      this.selectedArrange.set(val)
+    this.vm.$on('selectedXRange', (val) => {
+      this.selectedXRange.set(val)
     })
     // setInterval(() => {
     //   this.data.set(this.mmz.slice(0, this.mmz.length * Math.random()))
@@ -152,11 +152,11 @@ export default class LineChart {
       'select',
       'items'
     )
-    this.selectedArrange = new ReactiveProperty(
+    this.selectedXRange = new ReactiveProperty(
       this,
-      'selectedArrange',
-      this.selectedArrange,
-      '_onSelectedArrangeChange',
+      'selectedXRange',
+      this.selectedXRange,
+      '_onSelectedXRangeChange',
       'select',
       'ranges'
     )
@@ -217,12 +217,12 @@ export default class LineChart {
     this.vm.selection = val
   }
 
-  _onSelectedArrangeChange(val) {
+  _onSelectedXRangeChange(val) {
     if (!Array.isArray(val)) {
       throw new TypeError(`LineChart: expect selection to be Array, got ${val}`)
     }
 
-    this.vm.selectedArrange = val
+    this.vm.selectedXRange = val
   }
 
   _isValidScale(scale, x) {
