@@ -5,6 +5,7 @@ export default class Parallel {
     this.id = props.id
     this.data = props.data
     this.color = (props.encoding && props.encoding.color) || d3.schemeSet2[0]
+    this.selection = props.selection || []
     this.el = null
     this._init()
   }

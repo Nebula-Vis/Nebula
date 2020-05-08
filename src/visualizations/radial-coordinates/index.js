@@ -5,6 +5,7 @@ export default class Radar {
     this.id = props.id
     this.data = props.data
     this.color = (props.encoding && props.encoding.color) || d3.schemeSet2[0]
+    this.selection = props.selection || []
     this.el = null
     this._init()
   }
@@ -47,7 +48,7 @@ export default class Radar {
       ))
     )
 
-    const line = d3.lineRadial().curve(d3.curveLinearClosed)
+    const line = d3.lineRadial().curve(d3.curveCardinalClosed)
     // Render unhighlight
     radial
       .append('g')
