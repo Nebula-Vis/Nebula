@@ -9,7 +9,6 @@ export default class PieChart {
 
     this.x = props.range
     this.y = props.value
-    this.sort = props.sort
     this.innerRadius = props.innerRadius || null
     const selection = props.selection || null
     this.selection = selection
@@ -40,7 +39,6 @@ export default class PieChart {
         data: this.data.get(),
         name: this.x.get(),
         value: this.y.get(),
-        sort: this.sort.get(),
         innerRadius: this.innerRadius,
         selection: this.selection.get(),
         aggregate: this.aggregate,
@@ -94,14 +92,6 @@ export default class PieChart {
       'encode',
       'y'
     )
-    this.sort = new ReactiveProperty(
-      this,
-      'sort',
-      this.sort,
-      '_onSortChange',
-      'encode',
-      'sort'
-    )
     this.selection = new ReactiveProperty(
       this,
       'selection',
@@ -131,13 +121,6 @@ export default class PieChart {
       throw new TypeError(`AreaChart: expect y to be string, got ${val}`)
     }
     this.vm.y = val
-  }
-
-  _onSortChange(val) {
-    if (typeof val !== 'string') {
-      throw new TypeError(`AreaChart: expect y to be string, got ${val}`)
-    }
-    this.vm.sort = val
   }
 
   _onSelectionChange(val) {
