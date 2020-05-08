@@ -42,7 +42,7 @@ export default class PieChart {
         name: this.x.get(),
         value: this.y.get(),
         selection: this.selection.get(),
-        innerRadius: this.innerRadius.get(),
+        innerRadius: this.innerRadius,
         aggregate: this.aggregate,
         count: that.count,
         colors: that.colors,
@@ -94,14 +94,6 @@ export default class PieChart {
       'encode',
       'y'
     )
-    this.innerRadius = new ReactiveProperty(
-      this,
-      'innerRadius',
-      this.innerRadius,
-      '_onInnerRadiusChange',
-      'encode',
-      'innerRadius'
-    )
     this.selection = new ReactiveProperty(
       this,
       'selection',
@@ -131,13 +123,6 @@ export default class PieChart {
       throw new TypeError(`SectorChart: expect y to be string, got ${val}`)
     }
     this.vm.y = val
-  }
-
-  _onInnerRadiusChange(val) {
-    if (typeof val !== 'string') {
-      throw new TypeError(`AreaChart: expect y to be string, got ${val}`)
-    }
-    this.vm.innerRadius = val
   }
 
   _onSelectionChange(val) {
