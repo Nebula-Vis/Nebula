@@ -6,9 +6,7 @@ A sunburst chart visualization (tree struct) for demonstrating coordination.
 
 ## Reactive Properties
 
-| property      | type   | description                                   | method    | target    | callback              | internal listener             |
-| ---------     | -----  | --------------------------------------        | ----------|-----------|-------------------    |---------------------------    |
-|data           |Array   |the data items                                 |set        |data       |`_onDataChange`        |`this.vm.$on('data',...)`      |
-|x              |string  |the data attribute encoded by x channel (range)|encode     |x          |`_onXChange`           |-                              |
-|y              |string  |the data attribute encoded by y channel (value)|encode     |y          |`_onYChange`           |-                              |
-|selection      |Array   |the data items                                 |select     |items      |`_onSelectionChange`   |`this.vm.$on('selection',...)` |
+| property      | type       | description                                   | method    | target    | callback              | internal listener             |
+| ---------     | -----      | --------------------------------------        | ----------|-----------|-------------------    |---------------------------    |
+|data           |hierarchy   |the data items                                 |set        |data       |`_onDataChange`        |`this.vm.$on('data',...)`      |
+|selection      |hierarchy   |the data items                                 |select     |items      |`_onSelectionChange`   |`this.vm.$on('selection',...)` |
