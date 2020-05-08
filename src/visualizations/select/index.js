@@ -19,7 +19,8 @@ export default class Select {
       'options',
       this.options,
       '_onOptionsSet',
-      'set'
+      'set',
+      'data'
     )
     this.selected = new ReactiveProperty(
       this,

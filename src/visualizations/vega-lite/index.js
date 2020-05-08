@@ -33,7 +33,8 @@ export default class VegaLite {
       'data',
       this.spec.data.values,
       '_onDataSet',
-      'set'
+      'set',
+      'data'
     )
     if (this.spec.selection) {
       const data = this.data.get()

@@ -120,7 +120,8 @@ export default class Scatterplot {
       'scale',
       this.scale,
       '_onScaleChange',
-      'navigate'
+      'navigate',
+      'ranges'
     )
     this.selection = new ReactiveProperty(
       this,

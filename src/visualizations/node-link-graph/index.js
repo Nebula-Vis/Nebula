@@ -44,7 +44,8 @@ export default class NodeLinkGraph {
       'data',
       this.data,
       '_onDataSet',
-      'set'
+      'set',
+      'data'
     )
     this.selection = new ReactiveProperty(
       this,
