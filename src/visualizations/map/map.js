@@ -140,19 +140,24 @@ export default Vue.extend({
       maxZoom,
       minZoom,
     })
-    if (!this.encoding.mapStyle.mapLayerStyle) {
-      mapLayer = L.tileLayer.chinaProvider(
-        this.mergedStyle.mergedMapStyle.mapLayerStyle,
-        {
-          maxZoom,
-          minZoom,
-        }
-      )
-    }
-    const annotionLayer = new LayerCst(
+    let annotionLayer = new LayerCst(
       this.mergedStyle.mergedMapStyle.annotionLayerStyle,
       { maxZoom, minZoom }
     )
+    const mapStyle = this.encoding.mapStyle.mapLayerStyle
+    const annotionStyle = this.encoding.mapStyle.annotionLayerStyle
+    if (!mapStyle || !mapStyle.includes('/')) {
+      mapLayer = L.tileLayer.chinaProvider(mapStyle, {
+        maxZoom,
+        minZoom,
+      })
+    }
+    if (!annotionStyle.includes('/')) {
+      annotionLayer = L.tileLayer.chinaProvider(annotionStyle, {
+        maxZoom,
+        minZoom,
+      })
+    }
     const layers = [mapLayer, annotionLayer]
     const map = L.map(this.$refs.map, {
       minZoom: this.mergedStyle.mergedMapStyle.minZoom,

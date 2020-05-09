@@ -1,6 +1,6 @@
-# AreaChart
+# Map
 
-A simple area chart visualization for demonstrating coordination.
+A simple map visualization for demonstrating coordination.
 
 > Note: has vue inside 🤦‍♀️
 
