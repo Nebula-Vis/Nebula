@@ -15,7 +15,6 @@ export default class Radar {
     const that = this
     const stokenColor = this.color || d3.schemeSet2[1]
     const { clientWidth: width, clientHeight: height } = this.el
-    const radius = Math.min(width, height) / 2 - 10
     const svg = d3
       .create('svg')
       .attr('width', width)
@@ -42,13 +41,13 @@ export default class Radar {
                 min - padding,
               ])(d3.extent(table, (p) => +p[d]))
             )
-            .range([0, height])),
+            .range([height, 0])),
           !['name', '_nbid_'].includes(d)
         )
       ))
     )
 
-    const line = d3.lineRadial().curve(d3.curveCardinalClosed)
+    const line = d3.lineRadial().curve(d3.curveLinearClosed)
     // Render unhighlight
     radial
       .append('g')
@@ -138,8 +137,8 @@ export default class Radar {
       foreground.style('display', (d) =>
         actives.every(
           (active) =>
-            active.extent[1] <= d[active.dimension] &&
-            d[active.dimension] <= active.extent[0]
+            active.extent[1] >= d[active.dimension] &&
+            d[active.dimension] >= active.extent[0]
         )
           ? (selected.push(d), null)
           : 'none'

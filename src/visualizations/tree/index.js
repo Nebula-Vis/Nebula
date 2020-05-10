@@ -139,5 +139,9 @@ export default class Tree {
     this.el.removeChild(this.el.children[0])
     this.el.appendChild(this._renderSVG())
   }
+
+  _onSelectionChange() {
+    console.log('motherfucker')
+  }
   // _onSelectionChange()  in _renderSVG
 }

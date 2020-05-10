@@ -16,6 +16,7 @@
   fill: #999;
 }
 
-.tree .node.selected .point {
-  fill: aqua;
+.tree .node.selected .point,
+.tree .node.selected text {
+  fill: #e06738;
 }

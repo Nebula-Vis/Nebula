@@ -49,15 +49,6 @@ export default class TreeMap {
       })
       .attr('transform', (d) => `translate(${d.x0},${d.y0})`)
 
-    this._onSelectionChange = (select) => {
-      if (!select) d3.selectAll('.treemap .leaf').attr('class', 'leaf')
-      else
-        d3.selectAll('.treemap .leaf').attr('class', (d) =>
-          d.data._nbid_.indexOf(select.data._nbid_) > -1
-            ? 'leaf selected'
-            : 'leaf'
-        )
-    }
     leaf.append('title').text(
       (d) =>
         `${d
@@ -78,11 +69,7 @@ export default class TreeMap {
       .attr('width', (d) => d.x1 - d.x0)
       .attr('height', (d) => d.y1 - d.y0)
 
-    leaf
-      .append('clipPath')
-      .attr('id', (d) => `${d.data._nbid_}_clipPath`)
-      .append('use')
-    // .attr('xlink:href', (d) => d.leafUid.href)
+    leaf.append('clipPath').attr('id', (d) => `${d.data._nbid_}_clipPath`)
     leaf
       .append('text')
       .attr('clip-path', (d) => d.clipUid)
@@ -101,30 +88,42 @@ export default class TreeMap {
       )
       .text((d) => d)
 
-    const brushG = d3
+    const brushF = d3
       .brush()
       .extent([
         [0, 0],
         [width, height],
       ])
-      .on('end', brush)
-    svg.append('g').attr('class', 'brush').call(brushG)
-
-    d3.select('.treemap .brush').on('click', function () {
-      console.log(this)
-    })
-
-    function brush() {
-      const resize = (extent) => {
-        d3.select(this).transition().call(brushG.move, extent)
+      .on('end', brush, 1000)
+    const brushG = svg.append('g').attr('class', 'brush')
+    const resize = (extent) => {
+      brushG.transition().call(brushF.move, extent)
+    }
+    brushF(brushG)
+    this._onSelectionChange = (select) => {
+      if (!select) resize(null)
+      else {
+        root.descendants().forEach(
+          (d) => (
+            d.data._nbid_ === select.data._nbid_ &&
+              resize([
+                [d.x0, d.y0],
+                [d.x1, d.y1],
+              ]) &&
+              console.log(d),
+            d.data._nbid_.indexOf(select.data._nbid_) > -1
+              ? 'leaf selected'
+              : 'leaf'
+          )
+        )
       }
-      if (d3.event.selection) {
+    }
+    function brush(area) {
+      if (d3.event.selection || area) {
         const [[m0, n0], [m1, n1]] = d3.event.selection
         if (Math.abs(m0 - m1) < 10 || Math.abs(n0 - n1) < 10) {
-          that.selection.set(null)
-          return resize(null)
+          return that.selection.set(null)
         }
-        // 被范围覆盖的leaves
         const coverings = root
           .leaves()
           .filter(
@@ -147,18 +146,14 @@ export default class TreeMap {
             })
           : null
         if (deepestAncestor) {
-          const { x0, y0, x1, y1 } = deepestAncestor
-          if ([m0, n0, m1, n1].join('') !== [x0, y0, x1, y1].join('')) {
-            that.selection.set(deepestAncestor)
-            resize([
-              [x0, y0],
-              [x1, y1],
-            ])
-          }
+          that.selection.set(deepestAncestor)
+          // const { x0, y0, x1, y1 } = deepestAncestor
+          // if ([m0, n0, m1, n1].join('') !== [x0, y0, x1, y1].join('')) {
+          //   that.selection.set(deepestAncestor)
+          // }
         }
       }
     }
-
     return svg.node()
   }
 
