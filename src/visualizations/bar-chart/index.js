@@ -79,7 +79,7 @@ export default class BarCahrt {
           scaleY: this.scaleY,
           stacked: this.stacked,
           color: this.color,
-          count: this.count,
+          count: this.count.get(),
           selectionColor: this.selectionColor,
           bottomEdge: this.bottomEdge,
           isDisplay: this.isDisplay,

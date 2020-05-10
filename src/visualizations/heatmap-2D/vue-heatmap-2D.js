@@ -568,9 +568,18 @@ export default Vue.extend({
       if (this.mergedEncoding.axisSwitch) {
         d3.select(this.$refs['x-axis']).call(this.axisConfig.xAxis)
         d3.select(this.$refs['y-axis']).call(this.axisConfig.yAxis)
-        d3.selectAll('.axis text').style('user-select', 'none')
-        d3.selectAll('.axis path').style('display', 'none')
-        d3.selectAll('.axis line').style('display', 'none')
+        d3.select(this.$refs['y-axis'])
+          .selectAll('.axis path')
+          .style('display', 'none')
+        d3.select(this.$refs['y-axis'])
+          .selectAll('.axis line')
+          .style('display', 'none')
+        d3.select(this.$refs['x-axis'])
+          .selectAll('.axis path')
+          .style('display', 'none')
+        d3.select(this.$refs['x-axis'])
+          .selectAll('.axis line')
+          .style('display', 'none')
       }
       let y = 0
       this.parsedData.resultArr.forEach((item) => {
