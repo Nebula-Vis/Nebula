@@ -2,6 +2,7 @@ import ReactiveProperty from '@/reactive-prop'
 
 import Intersect from './intersect'
 import ItemsToRanges from './items-to-ranges'
+import RangesToItems from './ranges-to-items'
 import Match from './match'
 
 export default class TransformationsManager {
@@ -13,6 +14,7 @@ export default class TransformationsManager {
     this.intersect = Intersect
     this['items-to-ranges'] = ItemsToRanges
     this.match = Match
+    this['ranges-to-items'] = RangesToItems
   }
 
   addExternalTransformations(transformation) {

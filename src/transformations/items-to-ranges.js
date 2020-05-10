@@ -1,4 +1,3 @@
-import * as d3 from 'd3'
 import ReactiveProperty from '@/reactive-prop'
 import { getDataExtent, getFieldsOfType } from '@/utils'
 
