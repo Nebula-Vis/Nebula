@@ -69,8 +69,6 @@ export default Vue.extend({
   },
   watch: {
     selection: function () {
-      console.log(this.selection)
-      console.log(this.currentSelect)
       if (this.selection === undefined) this.drawArc()
       else if (this.selection.name !== this.currentSelect) {
         this.drawArc()
@@ -177,7 +175,6 @@ export default Vue.extend({
         if (that.currentSelect !== p.data.name) {
           const selection = []
           selection.push(p.data.name)
-          console.log(selection)
           that.currentSelect = p.data.name
           // that.$emit('selection', JSON.stringify(selection))
         }

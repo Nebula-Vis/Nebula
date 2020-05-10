@@ -142,7 +142,6 @@ export default class VegaLite {
   async _onDataSet(data) {
     this.view.data(this.dataName, data)
     await this.view.runAsync()
-    console.log('ondataset', data)
     // TODO update selection, scale?
   }
 

@@ -170,7 +170,6 @@ export default class LineChart {
     if (val[0] && this._isValidDateString(val[0][x])) {
       val = this._convertDateStringToDateForX(val, x)
     }
-    console.log(val)
     this.vm.data = val
   }
 

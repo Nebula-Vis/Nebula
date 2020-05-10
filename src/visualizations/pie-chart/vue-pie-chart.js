@@ -295,7 +295,6 @@ export default Vue.extend({
         .text((d) => `${d.data[name]}: ${d.data[value].toLocaleString()}`)
         .attr('cursor', 'pointer')
         .on('click', (d, i, nodes) => {
-          console.log(d)
           // eslint-disable-next-line no-array-constructor
           this.selection = []
           if (!d.data.selected) {

@@ -83,7 +83,6 @@ export default class LineUp {
 
   _buildLineUp() {
     const builder = this._getDataBuilder(this.data.get(), this.order.get())
-    console.log(this.data.get(), this.order.get())
 
     builder.defaultRanking()
     builder.sidePanel(false)
@@ -106,7 +105,6 @@ export default class LineUp {
   }
 
   _onDataSet(data) {
-    console.log(data)
     if (_.isEqual(data, this._data)) return
 
     // TODO
@@ -130,11 +128,8 @@ export default class LineUp {
   }
 
   _onSelectionSet(selection) {
-    console.log(selection)
     if (selection === this._selection) return
     const data = this.data.get() || []
-
-    console.log(data)
 
     const dataMap = new Map()
     data.forEach((d, i) => {

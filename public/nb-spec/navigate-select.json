@@ -1,0 +1,47 @@
+{
+  "coordinations": [
+    {
+      "data-visualization": [
+        { "name": "$d1", "bind": ["chart1.scale"] },
+        { "name": "$d2", "bind": ["chart2.data"] },
+        { "name": "$d3", "bind": ["chart2.selection.unidirectional"] }
+      ],
+      "transformation": {
+        "name": "ranges-to-items",
+        "input": ["$d1", "$d2"],
+        "output": ["$d3"]
+      }
+    }
+  ],
+  "visualizations": [
+    {
+      "id": "chart1",
+      "visualization": "scatterplot",
+      "container": "1 1 1 1",
+      "props": {
+        "data": "cars"
+      }
+    },
+    {
+      "id": "chart2",
+      "visualization": "scatterplot",
+      "container": "1 1 2 2",
+      "props": {
+        "data": "cars"
+      }
+    }
+  ],
+  "layout": {
+    "width": "600px",
+    "height": "300px",
+    "rows": ["1fr"],
+    "columns": ["1fr", "1fr"]
+  },
+  "data": [
+    {
+      "name": "cars",
+      "path": "/data/cars.csv",
+      "format": "csv"
+    }
+  ]
+}
