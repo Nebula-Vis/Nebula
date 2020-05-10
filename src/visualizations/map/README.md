@@ -1,6 +1,6 @@
-# AreaChart
+# Map
 
-A simple area chart visualization for demonstrating coordination.
+A simple map visualization for demonstrating coordination.
 
 > Note: has vue inside 🤦‍♀️
 
@@ -18,3 +18,15 @@ A simple area chart visualization for demonstrating coordination.
 | visibleRange | `Object<string, number[]>` | The data range that is visible in the map. **Default**: `{}`. | navigate | ranges |
 | mapStyle | `Object<string, number | string | boolean | array>` | The data range that is visible in the map. **Default**: `{}`. | - | - |
 | circleColor | `string` | The color of the circle in the map. **Default**: `#80B1D3`. | - | - |
+
+### Mapstyle Object
+| Property  | Type | Description | Method | Target |
+| -------------- | -------------- | --------------------------------------- | ------ | ------ |
+| minZoom  | `number` |  The min zoom level of the map. **Default**: `3`. | - | - |
+| maxZoom  | `number` |  The max zoom level of the map. **Default**: `20`. | - | - |
+| zoom  | `number` |  The initial zoom level of the map. **Default**: `10`. | - | - |
+| zoomControl  | `boolean` |  Is there a zoom control. **Default**: `false`. | - | - |
+| attributionControl  | `boolean` |  Is there an attribution control. **Default**: `false`. | - | - |
+| centerPoint  | `Array` |  The center point's lat and lng of the map. **Default**: the average lat and lng of all these data. | - | - |
+| mapLayerStyle  | `string` |  The style of the map layer. **Default**: `Geoq.Normal.Gray`. | - | - |
+| annotionLayerStyle  | `string` |  The style of the annotion layer. **Default**: ``. | - | - |
