@@ -190,7 +190,7 @@ export default class LineUp {
       _.debounce(() => {
         const order = this.lineup.data
           .getFirstRanking()
-          .children.slice(4)
+          .children.slice(this.name ? 4 : 3)
           .map((c) => c.desc.column)
         this._order = order
         this.order.set(order)
