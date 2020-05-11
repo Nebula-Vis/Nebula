@@ -18,6 +18,7 @@ export default class CoordinationSpecParser {
   }
 
   parse(spec) {
+    if (!Array.isArray(spec)) return []
     const coordinationObjs = []
 
     const highLevelSpec = spec.filter((s) => {
