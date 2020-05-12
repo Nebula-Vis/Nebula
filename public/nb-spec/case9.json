@@ -1,0 +1,49 @@
+{
+  "data": [
+    {
+      "name": "cars",
+      "path": "./data/cars.json"
+    }
+  ],
+  "layout": {
+    "width": "550px",
+    "height": "350px",
+    "rows": ["100px", "100px", "1fr"],
+    "columns": ["200px", "1fr"]
+  },
+  "visualizations": [
+    {
+      "id": "chart1",
+      "container": "1 1 1 1",
+      "visualization": "slider",
+      "props": {
+        "min": 1,
+        "max": 6,
+        "value": 3
+      }
+    },
+    {
+      "id": "chart2",
+      "container": "2 2 1 1",
+      "visualization": "select",
+      "props": {
+        "options": ["#feb72b", "#4cbbb9", "#fa744f"],
+        "selected": "#feb72b"
+      }
+    },
+    {
+      "id": "chart3",
+      "container": "1 3 2 2",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "cars",
+        "x": "Horsepower",
+        "y": "Acceleration"
+      }
+    }
+  ],
+  "coordinations": [
+    "set value in chart1, then encode size in chart3",
+    "set value in chart2, then encode color in chart3"
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "data": [
+    {
+      "name": "cars-kmeans",
+      "path": "./data/cars-kmeans.json"
+    },
+    {
+      "name": "cars-dbscan",
+      "path": "./data/cars-dbscan.json"
+    }
+  ],
+  "layout": {
+    "width": "700px",
+    "height": "350px",
+    "rows": ["1fr"],
+    "columns": ["1fr", "1fr"]
+  },
+  "visualizations": [
+    {
+      "id": "chart1",
+      "container": "1 1 1 1",
+      "visualization": "vegalite",
+      "props": {
+        "data": { "name": "cars-kmeans" },
+        "mark": "point",
+        "encoding": {
+          "x": { "field": "Horsepower", "type": "quantitative" },
+          "y": { "field": "Acceleration", "type": "quantitative" },
+          "color": { "field": "label", "type": "nominal" },
+          "opacity": {
+            "condition": { "selection": "brush", "value": 1 },
+            "value": 0.4
+          }
+        },
+        "selection": {
+          "brush": {
+            "type": "interval"
+          }
+        }
+      }
+    },
+    {
+      "id": "chart2",
+      "container": "1 1 2 2",
+      "visualization": "vegalite",
+      "props": {
+        "data": { "name": "cars-dbscan" },
+        "mark": "point",
+        "encoding": {
+          "x": { "field": "Horsepower", "type": "quantitative" },
+          "y": { "field": "Acceleration", "type": "quantitative" },
+          "color": { "field": "label", "type": "nominal" },
+          "opacity": {
+            "condition": { "selection": "brush", "value": 1 },
+            "value": 0.4
+          }
+        },
+        "selection": {
+          "brush": {
+            "type": "interval"
+          }
+        }
+      }
+    }
+  ],
+  "coordinations": [
+    "select ranges in any, then select ranges in others"
+  ]
+}

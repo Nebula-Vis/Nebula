@@ -1,0 +1,111 @@
+{
+  "data": [
+    {
+      "name": "cars",
+      "path": "./data/cars.json"
+    }
+  ],
+  "layout": {
+    "width": "1000px",
+    "height": "1000px",
+    "rows": ["1fr", "1fr", "1fr"],
+    "columns": ["1fr", "1fr", "1fr"]
+  },
+  "visualizations": [
+    {
+      "id": "chart1",
+      "container": "1 1 1 1",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "cars",
+        "x": "Miles_per_Gallon",
+        "y": "Miles_per_Gallon"
+      }
+    },
+    {
+      "id": "chart2",
+      "container": "1 1 2 2",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "cars",
+        "x": "Miles_per_Gallon",
+        "y": "Horsepower"
+      }
+    },
+    {
+      "id": "chart3",
+      "container": "1 1 3 3",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "cars",
+        "x": "Miles_per_Gallon",
+        "y": "Acceleration"
+      }
+    },
+    {
+      "id": "chart4",
+      "container": "2 2 1 1",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "cars",
+        "x": "Horsepower",
+        "y": "Miles_per_Gallon"
+      }
+    },
+    {
+      "id": "chart5",
+      "container": "2 2 2 2",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "cars",
+        "x": "Horsepower",
+        "y": "Horsepower"
+      }
+    },
+    {
+      "id": "chart6",
+      "container": "2 2 3 3",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "cars",
+        "x": "Horsepower",
+        "y": "Acceleration"
+      }
+    },
+    {
+      "id": "chart7",
+      "container": "3 3 1 1",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "cars",
+        "x": "Acceleration",
+        "y": "Miles_per_Gallon"
+      }
+    },
+    {
+      "id": "chart8",
+      "container": "3 3 2 2",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "cars",
+        "x": "Acceleration",
+        "y": "Horsepower"
+      }
+    },
+    {
+      "id": "chart9",
+      "container": "3 3 3 3",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "cars",
+        "x": "Acceleration",
+        "y": "Acceleration"
+      }
+    }
+  ],
+  "coordinations": [
+    "navigate in any, then navigate in others",
+    "select in any, then select in others"
+  ],
+  "transformations": []
+}
