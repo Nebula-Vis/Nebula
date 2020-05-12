@@ -125,6 +125,14 @@ export default class BarCahrt {
       'encode',
       'y'
     )
+    this.order = new ReactiveProperty(
+      this,
+      'order',
+      this.y.get(),
+      '_onOrderChange',
+      'reconfigure',
+      'order'
+    )
     this.aggregate = new ReactiveProperty(
       this,
       'aggregate',
@@ -203,6 +211,10 @@ export default class BarCahrt {
       throw new TypeError(`BarChart: expect y to be string, got ${val}`)
     }
     this.vm.encoding.y = val
+  }
+
+  _onOrderChange(val) {
+    this._onYChange(val)
   }
 
   _onSelectionChange(val) {

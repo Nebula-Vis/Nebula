@@ -41,6 +41,7 @@ export default Vue.extend({
         bottomEdge: 'bottom',
         brushColor: d3.schemeSet2[2],
       },
+      visibleRange: {},
     }
   },
   computed: {
@@ -102,6 +103,17 @@ export default Vue.extend({
     },
     selectedArea() {
       this.drawSelectedArea()
+    },
+    visibleRange(val) {
+      this.map.fitBounds(
+        L.latLngBounds(
+          L.latLng(
+            val[this.mergedEncoding.y][0],
+            val[this.mergedEncoding.x][0]
+          ),
+          L.latLng(val[this.mergedEncoding.y][1], val[this.mergedEncoding.x][1])
+        )
+      )
     },
   },
   created() {
