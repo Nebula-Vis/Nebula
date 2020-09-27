@@ -35,6 +35,7 @@ export default class Scatterplot {
     this.color = props.color || d3.schemeSet2[0]
     this.alternateColor = props.alternateColor || d3.schemeSet2[7]
     this.filteredData = props.filteredData || []
+    this.shouldUpdateScales = props.shouldUpdateScales ? true : false
 
     // this.id = new Date().toLocaleString()
     this.el = null
@@ -70,7 +71,9 @@ export default class Scatterplot {
       watch: {
         data(val) {
           // TODO this.checkXY()
-          this.scale = that._getScale(val)
+          if (this.shouldUpdateScales) {
+            this.scale = that._getScale(val)
+          }
           this.selection = val
         },
       },

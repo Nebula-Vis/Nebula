@@ -1,0 +1,37 @@
+{
+  "coordinations": ["select items in chart1, then set data in chart2"],
+  "visualizations": [
+    {
+      "id": "chart1",
+      "visualization": "scatterplot",
+      "container": "1 1 1 1",
+      "props": {
+        "data": "cars"
+      }
+    },
+    {
+      "id": "chart2",
+      "visualization": "scatterplot",
+      "container": "1 1 2 2",
+      "props": {
+        "data": "cars",
+        "x": "power (hp)",
+        "y": "0-60 mph (s)",
+        "shouldUpdateScales": false
+      }
+    } 
+  ],
+  "layout": {
+    "width": "700px",
+    "height": "350px",
+    "rows": ["1fr"],
+    "columns": ["1fr", "1fr"]
+  },
+  "data": [
+    {
+      "name": "cars",
+      "path": "https://nebula-vis.github.io/data/cars.csv",
+      "format": "csv"
+    }
+  ]
+}
