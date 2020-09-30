@@ -89,8 +89,16 @@
         "data": { "name": "empty" },
         "mark": "point",
         "encoding": {
-          "x": { "field": "x", "type": "quantitative" },
-          "y": { "field": "y", "type": "quantitative" },
+          "x": {
+            "field": "x",
+            "type": "quantitative",
+            "axis": { "labels": false, "title": null }
+          },
+          "y": {
+            "field": "y",
+            "type": "quantitative",
+            "axis": { "labels": false, "title": null }
+          },
           "color": { "field": "label", "type": "nominal" }
         }
       }

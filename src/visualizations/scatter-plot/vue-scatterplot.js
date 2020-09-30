@@ -266,6 +266,7 @@ export default Vue.extend({
     drawAxis() {
       // 绘制坐标轴
       const xAxis = d3.axisBottom().scale(this.scales.x)
+      // const xAxis = d3.axisBottom().scale(this.scales.x).ticks(8)
       const yAxis = d3.axisLeft().scale(this.scales.y)
       this.svg.select('.x-axis').call(xAxis)
       this.svg.select('.y-axis').call(yAxis)

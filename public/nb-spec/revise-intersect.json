@@ -1,0 +1,49 @@
+{
+  "coordinations": [
+    "select in chart1 and chart2, then intersect with $1 and $2, then select in chart3"
+  ],
+  "visualizations": [
+    {
+      "id": "chart1",
+      "container": "1 1 1 1",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "cars",
+        "x": "Cylinders",
+        "y": "Weight_in_lbs"
+      }
+    },
+    {
+      "id": "chart2",
+      "container": "1 1 2 2",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "cars",
+        "x": "Acceleration",
+        "y": "Horsepower" 
+      }
+    },
+    {
+      "id": "chart3",
+      "container": "1 1 3 3",
+      "visualization": "scatterplot",
+      "props": {
+        "data": "cars",
+        "x": "Miles_per_Gallon",
+        "y": "Displacement"
+      }
+    }
+  ],
+  "layout": {
+    "width": "900px",
+    "height": "300px",
+    "rows": ["1fr"],
+    "columns": ["1fr", "1fr", "1fr"]
+  },
+  "data": [
+    {
+      "name": "cars",
+      "path": "https://nebula-vis.github.io/data/cars.json"
+    }
+  ]
+}

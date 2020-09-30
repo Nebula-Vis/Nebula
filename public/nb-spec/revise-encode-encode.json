@@ -1,0 +1,48 @@
+{
+  "coordinations": [
+    "set value in slider, then encode size in chart1 and chart2"
+  ],
+  "visualizations": [
+    {
+      "id": "slider",
+      "visualization": "slider",
+      "container": "1 1 1 1",
+      "props": {
+        "min": 1,
+        "max": 10,
+        "value": 4
+      }
+    },
+    {
+      "id": "chart1",
+      "visualization": "scatterplot",
+      "container": "2 2 1 1",
+      "props": {
+        "data": "cars"
+      }
+    },
+    {
+      "id": "chart2",
+      "visualization": "scatterplot",
+      "container": "1 2 2 2",
+      "props": {
+        "data": "cars",
+        "x": "power (hp)",
+        "y": "0-60 mph (s)"
+      }
+    }
+  ],
+  "layout": {
+    "width": "800px",
+    "height": "350px",
+    "rows": ["1fr"],
+    "columns": ["100px","1fr", "1fr"]
+  },
+  "data": [
+    {
+      "name": "cars",
+      "path": "https://nebula-vis.github.io/data/cars.csv",
+      "format": "csv"
+    }
+  ]
+}

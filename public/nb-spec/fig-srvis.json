@@ -7,9 +7,9 @@
   ],
   "layout": {
     "width": "1550px",
-    "height": "1250px",
-    "rows": ["100px", "800px", "100px"],
-    "columns": ["100px", "800px", "100px", "1fr"]
+    "height": "450px",
+    "rows": ["100px", "250px", "100px"],
+    "columns": ["100px", "250px", "100px", "250px"]
   },
   "visualizations": [
     {

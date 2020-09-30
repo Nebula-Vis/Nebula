@@ -1,0 +1,50 @@
+{
+  "coordinations": ["select items in chart1, then navigate ranges in chart2"],
+  "visualizations": [
+    {
+      "id": "chart1",
+      "visualization": "scatterplot",
+      "container": "1 1 1 1",
+      "props": {
+        "data": "houses",
+        "x": "lng1",
+        "y": "lat1"
+      }
+    },
+    {
+      "id": "chart2",
+      "visualization": "map",
+      "container": "1 1 2 2",
+      "props": {
+        "data": "houses",
+        "x": "lng1",
+        "y": "lat1",
+        "brushType": "xy",
+        "bottomEdge": "bottom",
+        "circleColor": "#80B1D3",
+        "mapStyle": {
+          "mapLayerStyle": "//map.geoq.cn/ArcGIS/rest/services/ChinaOnlineStreetGray/MapServer/tile/{z}/{y}/{x}",
+          "annotionLayerStyle": "http://t{s}.tianditu.com/DataServer?T=eva_w&X={x}&Y={y}&L={z}&tk={key}",
+          "minZoom": 3,
+          "maxZoom": 20,
+          "centerPoint": [30.2708376789, 120.130177269],
+          "zoom": 10,
+          "zoomControl": false,
+          "attributionControl": false
+        }
+      }
+    }
+  ],
+  "layout": {
+    "width": "700px",
+    "height": "350px",
+    "rows": ["1fr"],
+    "columns": ["1fr", "1fr"]
+  },
+  "data": [
+    {
+      "name": "houses",
+      "path": "https://nebula-vis.github.io/data/houses.json"
+    }
+  ]
+}
