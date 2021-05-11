@@ -52,7 +52,7 @@
     "leaflet.chinatmsproviders": "^3.0.2",
     "leaflet.heat": "^0.2.0",
     "lineupjs": "^3.3.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "turf-inside": "^3.0.12",
     "vega": "^5.10.0",
     "vega-embed": "^6.5.2",
